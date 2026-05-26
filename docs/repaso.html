@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 1 Repaso | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 1 Repaso | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 1 Repaso | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="feature-engineering.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-python"><i class="fa fa-check"></i>Ciencia de Datos en Python</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>3</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>3.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="3.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>3.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="3.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>3.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="3.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>3.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="3.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>3.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="3.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>3.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="3.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>3.7</b> Ajuste del modelo con Python</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>3.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="3.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>3.7.2</b> Implementación de SVM en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>3.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>4.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>4.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>4.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>4.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>4.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-2"><i class="fa fa-check"></i><b>4.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>4.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>4.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>4.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="4.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>4.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="4.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>4.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>5</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>5.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="5.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>5.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="5.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>5.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="5.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>5.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="5.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>5.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>5.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>5.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>5.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="5.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>5.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="5.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>5.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>5.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>5.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="5.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>5.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="5.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>5.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>6</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>6.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="6.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>6.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>6.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="6.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>6.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="6.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>6.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="6.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>6.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="6.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>6.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="6.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>6.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="6.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>6.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="6.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>6.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="6.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>6.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>7</b> Interpretabilidad de modelos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>7.1</b> LIME</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>7.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="7.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>7.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="7.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>7.1.3</b> Implementación con <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>7.2</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>7.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="7.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>7.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>8</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>8.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="8.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>8.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="8.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>8.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>8.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="8.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>8.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="8.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>8.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="8.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>8.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="8.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>8.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="8.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>8.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="8.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>8.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>8.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>8.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="8.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>8.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>8.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>8.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="8.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>8.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="repaso" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Capítulo 1</span> Repaso<a href="repaso.html#repaso" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>En los cursos anteriores, hemos hablando a cerca del proceso completo de Ciencia de Datos, para poder empezar con la segunda parte del curso de Analisis Supervisado, valele la pena hacer un breve repaso de lo que hemos estudiado hasta el momento.</p>
+<div id="machine-learning" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Machine Learning<a href="repaso.html#machine-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Machine Learning</strong> o –aprendizaje automático– es una rama de la inteligencia artificial que permite que las máquinas aprendan de los patrones existentes en los datos. Se usan métodos computacionales para aprender de datos con el fin de producir reglas para mejorar el desempeño en alguna tarea o toma de decisión. (Está enfocado en la programación de máquinas para aprender de los patrones existentes en datos principalmente estructurados y anticiparse al futuro)</p>
+<p><img src="img/01-repaso/02_ml.png" width="600pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/01-repaso/03_supervisado_robo.png" width="600pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tipos-de-aprendizaje" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Tipos de aprendizaje<a href="repaso.html#tipos-de-aprendizaje" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Platicamos en el módulo pasado que al hablar de Machine Learning, existen distintos tipos de aprendizaje, siendo los más comúnes:</p>
+<ul>
+<li>Aprendizaje supervisado</li>
+<li>Aprendizaje no supervisado</li>
+</ul>
+<p>Otreos ejemplos de especialidades son</p>
+<ul>
+<li>Aprendizaje profundo</li>
+<li>Aprendizaje por refuerzo</li>
+</ul>
+<p>La diferencia entre el análisis supervisado y el no supervisado es la etiqueta, es decir, en el análisis supervisado tenemos una etiqueta “correcta” y el objetivo de los algoritmos es predecir esta etiqueta.</p>
+<div id="aprendizaje-supervisado" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Aprendizaje supervisado<a href="repaso.html#aprendizaje-supervisado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Conocemos la respuesta correcta de antemano.</p></li>
+<li><p>Esta respuesta correcta fue “etiquetada” por un humano (la mayoría de las veces, en algunas circunstancias puede ser generada por otro algoritmo).</p></li>
+<li><p>Debido a que conocemos la respuesta correcta, existen muchas métricas de desempeño del modelo para verificar que nuestro algoritmo está haciendo las cosas “bien”.</p></li>
+</ul>
+<div id="tipos-de-aprendizaje-supervisado-regresión-vs-clasificación" class="section level4 hasAnchor" number="1.2.1.1">
+<h4><span class="header-section-number">1.2.1.1</span> Tipos de aprendizaje supervisado (Regresión vs clasificación)<a href="repaso.html#tipos-de-aprendizaje-supervisado-regresión-vs-clasificación" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Existen dos tipos principales de aprendizaje supervisado, esto depende del tipo de la variable respuesta:</p>
+<ul>
+<li><p>Los algoritmos de <strong>clasificación</strong> se usan cuando el resultado deseado es una etiqueta discreta, es decir, clasifican un elemento dentro de diversas clases.</p></li>
+<li><p>En un problema de <strong>regresión</strong>, la variable target o variable a predecir es un valor numérico.</p></li>
+</ul>
+<p><br/></p>
+<p><img src="img/01-repaso/13_regresion_clasificacion.png" width="700pt" height="450pt" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="aprendizaje-no-supervisado" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Aprendizaje no supervisado<a href="repaso.html#aprendizaje-no-supervisado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Aquí no tenemos la respuesta correcta de antemano ¿cómo podemos saber que el algoritmo está bien o mal?</p></li>
+<li><p>Estadísticamente podemos verificar que el algoritmo está bien</p></li>
+<li><p>Siempre tenemos que verificar con el cliente si los resultados que estamos obteniendo tienen sentido de negocio. Por ejemplo, número de grupos y características</p></li>
+</ul>
+<p><img src="img/01-repaso/14_nosupervisado_robo.png" width="473" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="errores-sesgo-vs-varianza" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Errores: Sesgo vs varianza<a href="repaso.html#errores-sesgo-vs-varianza" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En el mundo de Machine Learning cuando desarrollamos un modelo nos esforzamos para hacer que sea lo más preciso, ajustando los parámetros, pero la realidad es que no se puede construir un modelo 100% preciso ya que nunca pueden estar libres de errores.</p>
+<p>Comprender cómo las diferentes fuentes de error generan sesgo y varianza nos ayudará a mejorar el proceso de ajuste de datos, lo que resulta en modelos más precisos, adicionalmente también evitará el error de sobreajuste y falta de ajuste.</p>
+<ul>
+<li><strong>Error por sesgo:</strong></li>
+</ul>
+<p>Es la diferencia entre la predicción esperada de nuestro modelo y los valores verdaderos. Aunque al final nuestro objetivo es siempre construir modelos que puedan predecir datos muy cercanos a los valores verdaderos, no siempre es tan fácil porque algunos algoritmos son simplemente demasiado rígidos para aprender señales complejas del conjunto de datos.</p>
+<p>Imagina ajustar una regresión lineal a un conjunto de datos que tiene un patrón no lineal, no importa cuántas observaciones más recopiles, una regresión lineal no podrá modelar las curvas en esos datos. Esto se conoce como <em>underfitting</em>.</p>
+<ul>
+<li><strong>Error por varianza:</strong></li>
+</ul>
+<p>Se refiere a la cantidad que la estimación de la función objetivo cambiará si se utiliza diferentes datos de entrenamiento. La función objetivo se estima a partir de los datos de entrenamiento mediante un algoritmo de Machine Learning, por lo que deberíamos esperar que el algoritmo tenga alguna variación. Idealmente no debería cambiar demasiado de un conjunto de datos de entrenamiento a otro.</p>
+<p><img src="img/01-repaso/3-1-3-biasvar.png" width="650pt" height="350pt" style="display: block; margin: auto;" /></p>
+<p>Los algoritmos de Machine Learning que tienen una gran varianza están fuertemente influenciados por los detalles de los datos de entrenamiento, esto significa que los detalles de la capacitación influyen en el número y los tipos de parámetros utilizados para caracterizar la función de mapeo.</p>
+<ul>
+<li><strong>Error irreducible:</strong>
+El error irreducible no se puede reducir, independientemente de qué algoritmo se usa. También se le conoce como ruido y, por lo general, proviene por factores como variables desconocidas que influyen en el mapeo de las variables de entrada a la variable de salida, un conjunto de características incompleto o un problema mal enmarcado. Acá es importante comprender que no importa cuán bueno hagamos nuestro modelo, nuestros datos tendrán cierta cantidad de ruido o un error irreductible que no se puede eliminar.</li>
+</ul>
+</div>
+<div id="partición-de-datos" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Partición de datos<a href="repaso.html#partición-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Cuando hay una gran cantidad de datos disponibles, una estrategia inteligente es asignar subconjuntos específicos de datos para diferentes tareas, en lugar de asignar la mayor cantidad posible solo a la estimación de los parámetros del modelo.</p>
+<p>Si el conjunto inicial de datos no es lo suficientemente grande, habrá cierta superposición
+de cómo y cuándo se asignan nuestros datos, y es importante contar con una metodología
+sólida para la partición de datos.</p>
+<div id="métodos-comunes-para-particionar-datos" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> Métodos comunes para particionar datos<a href="repaso.html#métodos-comunes-para-particionar-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El enfoque principal para la validación del modelo es dividir el conjunto de datos existente en dos conjuntos distintos:</p>
+<ul>
+<li><p><strong>Entrenamiento:</strong> Este conjunto suele contener la mayoría de los datos, los cuales
+sirven para la construcción de modelos donde se pueden ajustar diferentes modelos,
+se investigan estrategias de ingeniería de características, etc.</p>
+<p>La mayor parte del proceso de modelado se utiliza este conjunto.</p></li>
+<li><p><strong>Prueba:</strong> La otra parte de las observaciones se coloca en este conjunto.
+Estos datos se mantienen en reserva hasta que se elijan uno o dos modelos como los de mejor rendimiento.</p>
+<p>El conjunto de prueba se utiliza como árbitro final para determinar la eficiencia del modelo,
+por lo que es fundamental mirar el conjunto de prueba una sola vez.</p></li>
+</ul>
+<p>Supongamos que asignamos el <span class="math inline">\(80\%\)</span> de los datos al conjunto de entrenamiento y el <span class="math inline">\(20\%\)</span> restante a las pruebas. El método más común es utilizar un muestreo aleatorio simple.
+En Python, <code>scikit-learn</code> tiene herramientas para realizar divisiones de datos como esta;
+la función <code>train_test_split()</code> cubre este propósito.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="repaso.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-2"><a href="repaso.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="repaso.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> load_ames</span>
+<span id="cb1-4"><a href="repaso.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="repaso.html#cb1-5" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> load_ames()</span>
+<span id="cb1-6"><a href="repaso.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="repaso.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fijar una semilla para que los resultados puedan ser reproducibles.</span></span>
+<span id="cb1-8"><a href="repaso.html#cb1-8" aria-hidden="true" tabindex="-1"></a>ames_train, ames_test <span class="op">=</span> train_test_split(</span>
+<span id="cb1-9"><a href="repaso.html#cb1-9" aria-hidden="true" tabindex="-1"></a>    ames,</span>
+<span id="cb1-10"><a href="repaso.html#cb1-10" aria-hidden="true" tabindex="-1"></a>    train_size<span class="op">=</span><span class="fl">0.80</span>,</span>
+<span id="cb1-11"><a href="repaso.html#cb1-11" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb1-12"><a href="repaso.html#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-13"><a href="repaso.html#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="repaso.html#cb1-14" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-15"><a href="repaso.html#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;train&quot;</span>: ames_train.shape,</span>
+<span id="cb1-16"><a href="repaso.html#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;test&quot;</span>: ames_test.shape,</span>
+<span id="cb1-17"><a href="repaso.html#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;total&quot;</span>: ames.shape,</span>
+<span id="cb1-18"><a href="repaso.html#cb1-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## {&#39;train&#39;: (1168, 81), &#39;test&#39;: (292, 81), &#39;total&#39;: (1460, 81)}</code></pre>
+<p>La información impresa denota la cantidad de datos en el conjunto de entrenamiento
+<span class="math inline">\((n = 2,344)\)</span>, la cantidad en el conjunto de prueba <span class="math inline">\((n = 586)\)</span>
+y el tamaño del grupo original de muestras <span class="math inline">\((n = 2,930)\)</span>.</p>
+<p>El objeto <code>ames_split</code> es un objeto <em>rsplit</em> y solo contiene la información de partición; para obtener los conjuntos de datos resultantes, aplicamos dos funciones más:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="repaso.html#cb3-1" aria-hidden="true" tabindex="-1"></a>ames_train.shape</span></code></pre></div>
+<pre><code>## (1168, 81)</code></pre>
+<div class="infobox tip">
+<p>No hay un porcentaje de división óptimo para el conjunto de entrenamiento y prueba.</p>
+<p>Los porcentajes de división más comunes comunes son:</p>
+<ul>
+<li>Entrenamiento: <span class="math inline">\(80\%\)</span>, Prueba: <span class="math inline">\(20\%\)</span></li>
+<li>Entrenamiento: <span class="math inline">\(67\%\)</span>, Prueba: <span class="math inline">\(33\%\)</span></li>
+<li>Entrenamiento: <span class="math inline">\(50\%\)</span>, Prueba: <span class="math inline">\(50\%\)</span></li>
+</ul>
+</div>
+</div>
+<div id="conjunto-de-validación" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Conjunto de validación<a href="repaso.html#conjunto-de-validación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El conjunto de validación se definió originalmente cuando los investigadores se dieron cuenta de que medir el rendimiento del conjunto de entrenamiento conducía a resultados que eran demasiado optimistas.</p>
+<p>Esto llevó a modelos que se sobreajustaban, lo que significa que se desempeñaron muy bien en el conjunto de entrenamiento pero mal en el conjunto de prueba.</p>
+<p>Para combatir este problema, se retuvo un pequeño conjunto de datos de <em>validación</em> y se utilizó para medir el rendimiento del modelo mientras este está siendo entrenado. Una vez que la tasa de error del conjunto de validación comenzara a aumentar, la capacitación se detendría.</p>
+<p>En otras palabras, el conjunto de validación es un medio para tener una idea aproximada de qué tan bien se desempeñó el modelo antes del conjunto de prueba.</p>
+<p>Por otra parte esta primera particíón de datos evolucionó hasta la manera en que usualmente se hacen con más de una validación:</p>
+<p><img src="img/04-ml/18_1_cross_validation.png" width="500pt" height="350pt" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="recetas-y-tratamiento-de-datos" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Recetas y tratamiento de datos<a href="repaso.html#recetas-y-tratamiento-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La ingenería de datos y procesamiento de datos es parte vital del desarrollo de un buen modelo.</p>
+<p>En este curso analizaremos distintos métodos de machine learning que permitirán predecir una respuesta numérica o categórica. Usaremos el lenguaje de programación <em>Python</em> para dicho procesamiento.</p>
+<p>Hay varios pasos que se deben de seguir para crear un modelo útil:</p>
+<ul>
+<li>Recopilación de datos.</li>
+<li>Limpieza de datos.</li>
+<li>Creación de nuevas variables.</li>
+<li>Estimación de parámetros.</li>
+<li>Selección y ajuste del modelo.</li>
+<li>Evaluación del rendimiento.</li>
+</ul>
+<p>Al comienzo de un proyecto, generalmente hay un conjunto finito de datos disponibles para todas estas tareas.</p>
+<div class="infobox advice">
+<p><strong>OJO:</strong> A medida que los datos se reutilizan para múltiples tareas, aumentan los riesgos de agregar sesgos o grandes efectos de errores metodológicos.</p>
+</div>
+<div id="pre-procesamiento-de-datos" class="section level3 hasAnchor" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Pre-procesamiento de datos<a href="repaso.html#pre-procesamiento-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="img/04-ml/3-2-1-preprocesamiento.png" width="800pt" height="200pt" style="display: block; margin: auto;" /></p>
+<p>Como punto de partida para nuestro flujo de trabajo de aprendizaje automático, necesitaremos datos de entrada.
+En la mayoría de los casos, estos datos se cargarán y almacenarán en forma de <code>DataFrame</code> de pandas.
+Incluirán una o varias variables predictoras y, en caso de aprendizaje supervisado, también incluirán un resultado conocido.</p>
+<p>Sin embargo, no todos los modelos pueden lidiar con diferentes problemas de datos y, a menudo,
+necesitamos transformar los datos para obtener el mejor rendimiento posible del modelo.
+Este proceso se denomina pre-procesamiento y puede incluir una amplia gama de pasos, como:</p>
+<ul>
+<li>Dicotomización de variables</li>
+<li>Near Zero Value (nzv) o Varianza Cero</li>
+<li><strong>Imputaciones</strong></li>
+<li><strong>Des-correlacionar</strong></li>
+<li>Normalizar</li>
+<li>Transformar</li>
+<li>Creación de nuevas variables</li>
+<li>Interacciones</li>
+</ul>
+<p>En la tabla, <span class="math inline">\(\checkmark\)</span> indica que el método es obligatorio para el modelo y <span class="math inline">\(\times\)</span> indica que no lo es. El símbolo <span class="math inline">\(\circ\)</span> significa que la técnica puede ayudar al modelo, pero no es obligatorio.</p>
+<p><img src="img/04-ml/3-2-1-preprocesamiento-modelos.png" width="600pt" height="650pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="recetas" class="section level3 hasAnchor" number="1.5.2">
+<h3><span class="header-section-number">1.5.2</span> Recetas<a href="repaso.html#recetas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="img/04-ml/3-2-3-recetas.png" width="150pt" height="150pt" style="display: block; margin: auto auto auto 0;" /></p>
+<p>Una receta es una <strong>serie de pasos o instrucciones para el procesamiento de datos.</strong>
+A diferencia del método de fórmula dentro de una función de modelado, <strong>la receta define los pasos sin ejecutarlos</strong> inmediatamente; es sólo una especificación de lo que se debe hacer. La estructura de una receta sigue los siguientes pasos:</p>
+<ol style="list-style-type: decimal">
+<li>Inicialización <strong><code>Pipeline()</code></strong> o <strong><code>ColumnTransformer()</code></strong></li>
+<li>Transformación mediante pasos como <strong><code>SimpleImputer()</code></strong>, <strong><code>StandardScaler()</code></strong>, <strong><code>OneHotEncoder()</code></strong></li>
+<li>Preparación <strong><code>fit()</code></strong></li>
+<li>Aplicación <strong><code>transform()</code></strong> o <strong><code>predict()</code></strong></li>
+</ol>
+<p>La siguiente sección explica la estructura y flujo de transformaciones:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="repaso.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb5-2"><a href="repaso.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb5-3"><a href="repaso.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb5-4"><a href="repaso.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder, StandardScaler</span>
+<span id="cb5-5"><a href="repaso.html#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="repaso.html#cb5-6" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> dataset.drop(columns<span class="op">=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb5-7"><a href="repaso.html#cb5-7" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> dataset[<span class="st">&quot;response&quot;</span>]</span>
+<span id="cb5-8"><a href="repaso.html#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="repaso.html#cb5-9" aria-hidden="true" tabindex="-1"></a>numeric_features <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span><span class="st">&quot;number&quot;</span>).columns</span>
+<span id="cb5-10"><a href="repaso.html#cb5-10" aria-hidden="true" tabindex="-1"></a>categorical_features <span class="op">=</span> X_train.select_dtypes(exclude<span class="op">=</span><span class="st">&quot;number&quot;</span>).columns</span>
+<span id="cb5-11"><a href="repaso.html#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="repaso.html#cb5-12" aria-hidden="true" tabindex="-1"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb5-13"><a href="repaso.html#cb5-13" aria-hidden="true" tabindex="-1"></a>    transformers<span class="op">=</span>[</span>
+<span id="cb5-14"><a href="repaso.html#cb5-14" aria-hidden="true" tabindex="-1"></a>        (<span class="st">&quot;num&quot;</span>, Pipeline([</span>
+<span id="cb5-15"><a href="repaso.html#cb5-15" aria-hidden="true" tabindex="-1"></a>            (<span class="st">&quot;imputer&quot;</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">&quot;median&quot;</span>)),</span>
+<span id="cb5-16"><a href="repaso.html#cb5-16" aria-hidden="true" tabindex="-1"></a>            (<span class="st">&quot;scaler&quot;</span>, StandardScaler()),</span>
+<span id="cb5-17"><a href="repaso.html#cb5-17" aria-hidden="true" tabindex="-1"></a>        ]), numeric_features),</span>
+<span id="cb5-18"><a href="repaso.html#cb5-18" aria-hidden="true" tabindex="-1"></a>        (<span class="st">&quot;cat&quot;</span>, Pipeline([</span>
+<span id="cb5-19"><a href="repaso.html#cb5-19" aria-hidden="true" tabindex="-1"></a>            (<span class="st">&quot;imputer&quot;</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">&quot;most_frequent&quot;</span>)),</span>
+<span id="cb5-20"><a href="repaso.html#cb5-20" aria-hidden="true" tabindex="-1"></a>            (<span class="st">&quot;onehot&quot;</span>, OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">&quot;ignore&quot;</span>)),</span>
+<span id="cb5-21"><a href="repaso.html#cb5-21" aria-hidden="true" tabindex="-1"></a>        ]), categorical_features),</span>
+<span id="cb5-22"><a href="repaso.html#cb5-22" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb5-23"><a href="repaso.html#cb5-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-24"><a href="repaso.html#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="repaso.html#cb5-25" aria-hidden="true" tabindex="-1"></a>preprocessor.fit(X_train, y_train)</span>
+<span id="cb5-26"><a href="repaso.html#cb5-26" aria-hidden="true" tabindex="-1"></a>receta_aplicacion <span class="op">=</span> preprocessor.transform(new_dataset)</span></code></pre></div>
+<div id="transformaciones-generales" class="section level4 hasAnchor" number="1.5.2.1">
+<h4><span class="header-section-number">1.5.2.1</span> Transformaciones generales<a href="repaso.html#transformaciones-generales" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>En cuanto a las transformaciones posibles, existe una gran cantidad de funciones que soportan este proceso. En esta sección se muestran algunas de las transformaciones más comunes y sus equivalentes habituales en pandas y scikit-learn:</p>
+<ul>
+<li><p><code>DataFrame.loc[]</code> o <code>ColumnTransformer</code>: Selecciona un subconjunto de variables específicas en el conjunto de datos.</p></li>
+<li><p><code>DataFrame.assign()</code>: Crea una nueva variable o modifica una existente.</p></li>
+<li><p><code>DataFrame.apply()</code> o transformadores personalizados: modifica variables seleccionadas usando una función común.</p></li>
+<li><p><code>DataFrame.query()</code> o máscaras booleanas: elimina filas de acuerdo con una condición.</p></li>
+<li><p><code>DataFrame.sort_values()</code>: Ordena el conjunto de datos de acuerdo con una o más variables.</p></li>
+<li><p><code>DataFrame.drop()</code> o <code>ColumnTransformer</code>: elimina variables según su nombre, tipo o función.</p></li>
+<li><p><code>VarianceThreshold</code>: realiza una selección de variables eliminando aquellas cuya varianza se encuentre cercana a cero.</p></li>
+<li><p><code>DataFrame.dropna()</code>: elimina todos los renglones que tengan alguna variable con valores perdidos.</p></li>
+<li><p><code>StandardScaler</code>: centra y escala las variables numéricas especificadas.</p></li>
+<li><p><code>MinMaxScaler</code>: transforma el rango de un conjunto de variables numéricas al especificado.</p></li>
+<li><p><code>PolynomialFeatures(interaction_only=True)</code> o variables creadas con pandas: crea interacciones entre variables.</p></li>
+<li><p><code>DataFrame.assign()</code>: crea una nueva variable a partir del cociente entre dos variables.</p></li>
+<li><p><code>X.columns</code>: selecciona todos los predictores del conjunto de entrenamiento para aplicarles alguna de las funciones mencionadas.</p></li>
+<li><p><code>make_column_selector(dtype_include=np.number)</code>: selecciona todos los predictores numéricos.</p></li>
+<li><p><code>make_column_selector(dtype_exclude=np.number)</code>: selecciona todos los predictores categóricos.</p></li>
+</ul>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="feature-engineering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

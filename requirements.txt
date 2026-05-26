@@ -1,0 +1,17 @@
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+seaborn
+ipython
+xgboost
+shap
+lime
+geopandas
+dbfread
+pyreadstat
+statsmodels
+joblib
+scikit-optimize
+plotnine

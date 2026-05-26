@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 4 Bagging &amp; Boosting | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 4 Bagging &amp; Boosting | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 4 Bagging &amp; Boosting | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="support-vector-machine-svm-svr.html"/>
+<link rel="next" href="workflowsets-stacking.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-python"><i class="fa fa-check"></i>Ciencia de Datos en Python</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>3</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>3.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="3.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>3.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="3.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>3.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="3.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>3.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="3.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>3.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="3.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>3.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="3.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>3.7</b> Ajuste del modelo con Python</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>3.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="3.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>3.7.2</b> Implementación de SVM en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>3.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>4.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>4.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>4.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>4.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>4.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-2"><i class="fa fa-check"></i><b>4.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>4.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>4.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>4.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="4.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>4.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="4.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>4.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>5</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>5.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="5.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>5.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="5.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>5.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="5.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>5.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="5.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>5.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>5.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>5.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>5.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="5.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>5.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="5.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>5.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>5.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>5.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="5.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>5.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="5.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>5.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>6</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>6.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="6.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>6.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>6.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="6.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>6.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="6.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>6.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="6.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>6.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="6.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>6.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="6.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>6.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="6.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>6.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="6.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>6.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="6.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>6.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>7</b> Interpretabilidad de modelos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>7.1</b> LIME</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>7.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="7.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>7.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="7.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>7.1.3</b> Implementación con <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>7.2</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>7.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="7.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>7.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>8</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>8.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="8.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>8.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="8.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>8.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>8.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="8.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>8.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="8.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>8.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="8.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>8.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="8.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>8.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="8.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>8.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="8.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>8.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>8.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>8.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="8.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>8.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>8.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>8.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="8.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>8.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bagging-boosting" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Bagging &amp; Boosting<a href="bagging-boosting.html#bagging-boosting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>El <em>bagging o agregación bootstrap</em>, <strong>es un método de aprendizaje por conjuntos que se usa comúnmente para reducir la varianza dentro de un conjunto de datos ruidoso</strong>. En este método, se selecciona una muestra aleatoria de datos en un conjunto de entrenamiento con reemplazo, lo que significa que los puntos de datos individuales se pueden elegir más de una vez. Después de generar varias muestras de datos, estos modelos se entrenan de forma independiente y, según el tipo de tarea (regresión o clasificación), el promedio o la mayoría de esas predicciones producen una estimación más precisa.</p>
+<p><img src="img/05-bagging/bagging.jpeg" width="900pt" height="500pt" style="display: block; margin: auto;" /></p>
+<p><strong>Nota:</strong> El algoritmo de bosque aleatorio se considera una extensión del método de bagging, utilizando tanto bagging como la aleatoriedad de características para crear un bosque no correlacionado de árboles de decisión.</p>
+<div id="aprendizaje-conjunto" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Aprendizaje conjunto<a href="bagging-boosting.html#aprendizaje-conjunto" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El aprendizaje conjunto da crédito a la idea de la “sabiduría de las multitudes”, lo que sugiere que <strong>la toma de decisiones de un grupo más grande de individuos (modelos) suele ser mejor que la de un individuo.</strong></p>
+<p>El aprendizaje en conjunto <strong>es un grupo (o conjunto) de individuos o modelos, que trabajan colectivamente para lograr una mejor predicción final</strong>. Un solo modelo, también conocido como aprendiz básico puede no funcionar bien individualmente debido a una gran variación o un alto sesgo, sin embargo, cuando se agregan individuos débiles, pueden formar un individuo fuerte, ya que su combinación reduce el sesgo o la varianza, lo que produce un mejor rendimiento del modelo.</p>
+<p><img src="img/05-bagging/ramitas.jpg" width="600pt" height="350pt" style="display: block; margin: auto;" /></p>
+<p>Los métodos de conjunto se ilustran con frecuencia utilizando árboles de decisión, ya que este algoritmo puede ser propenso a sobreajustar (alta varianza y bajo sesgo) y también puede prestarse a desajuste (baja varianza y alto sesgo) cuando es muy pequeño, como un árbol de decisión con un nivel.</p>
+<p><strong>Nota:</strong> Cuando un algoritmo se adapta o no se adapta a su conjunto de entrenamiento, no se puede generalizar bien a nuevos conjuntos de datos, por lo que se utilizan métodos de conjunto para contrarrestar este comportamiento y permitir la generalización del modelo a nuevos conjuntos de datos.</p>
+</div>
+<div id="bagging-vs.-boosting" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Bagging vs. boosting<a href="bagging-boosting.html#bagging-vs.-boosting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><em>Bagging</em> y el <em>boosting (refuerzo o impulso)</em> son dos tipos principales de métodos de aprendizaje por conjuntos. La principal diferencia entre estos métodos de aprendizaje es la forma en que se capacitan.</p>
+<p>En <strong><em>bagging</em>, los modelos se entrenan en paralelo, pero en el <em>boosting</em>, aprenden secuencialmente.</strong> Esto significa que se construyen una serie de modelos y con cada nueva iteración del modelo, se incrementan los pesos de los datos clasificados erróneamente en el modelo anterior. Esta redistribución de pesos ayuda al algoritmo a identificar los parámetros en los que necesita enfocarse para mejorar su desempeño.</p>
+<p><img src="img/05-bagging/bagging-boosting.jpeg" width="600pt" height="350pt" style="display: block; margin: auto;" /></p>
+<p>Un ejemplo de modelo secuencial es: <strong>Adaboost</strong> y significa “algoritmo de boosting adaptativo”, es uno de los algoritmos de boosting más populares, ya que fue uno de los primeros de su tipo. Otros tipos de algoritmos de booting incluyen <strong>XGBoost</strong>, <em>GradientBoost</em> y <em>BrownBoost</em>.</p>
+<p>Otra diferencia en la que difieren <em>bagging</em> y <em>boosting</em> son los escenarios en los que se utilizan. Por ejemplo, los métodos de <em>bagging</em> se utilizan típicamente en modelos débiles que exhiben alta varianza y bajo sesgo, mientras que los métodos de <em>boosting</em> se aprovechan cuando se observa baja varianza y alto sesgo.</p>
+<div class="infobox note">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<p>Bagging realiza replicaciones bootstrap y ajusta un árbol a cada muestra de manera independiente, mientras que boosting ajusta un árbol a una versión modificada del conjunto original de datos, la cual se modifica en cada iteración de entrenamiento.</p>
+</div>
+<div id="error-out-of-bag" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Error Out-Of-Bag<a href="bagging-boosting.html#error-out-of-bag" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Este error es conocido como “OOB”. Se trata de un enfoque distinto a KFCV en donde el error predictivo es calculado a través de los elementos que <strong>no fueron seleccionados</strong> en la muestra bootstrap. Recordemos que en las muestras bootstrap algunos elementos son seleccionados más de una vez, mientras que otros no aparecen en la muestra. Empíricamente, en cada replicación bootstrap se observan 2/3 partes de la muestra y el resto queda “fuera de la bolsa” (OOB) de entrenamiento.</p>
+<p>Si <strong>B</strong> es el número de replicaciones bootstrap, entonces cada observación <em>i</em> recibe cerca de B/3 predicciones, las cuales son usadas para estimar el error predictivo. Para obtener una única predicción en cada observación, las B/3 predicciones son promediadas.</p>
+</div>
+</div>
+<div id="algoritmo-bagging" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Algoritmo Bagging<a href="bagging-boosting.html#algoritmo-bagging" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>Bootstrapping</strong>: <em>Bagging</em> aprovecha una técnica de muestreo de <em>bootstrapping</em> para crear muestras diversas. Este método de remuestreo genera diferentes subconjuntos a partir del conjunto de datos de entrenamiento original seleccionando puntos de datos al azar y con reemplazo. Esto significa que cada vez que selecciona un punto del conjunto de entrenamiento, puede seleccionar la misma instancia varias veces. Como resultado, un valor se repite dos veces (o más) en una muestra y algunos no aparecen.</p></li>
+<li><p><strong>Entrenamiento paralelo</strong>: estos ejemplos de <em>bootstrap</em> se entrenan de forma independiente y en paralelo entre sí utilizando modelos débiles o básicos.</p></li>
+<li><p><strong>Agregación</strong>: Finalmente, dependiendo de la tarea (regresión o clasificación), se toma un promedio o la mayoría de las predicciones para calcular una estimación más precisa. En el caso de la regresión, se toma un promedio de todos los resultados predichos por los clasificadores individuales; esto se conoce como <strong>votación suave</strong>.</p></li>
+</ol>
+<p>Para problemas de clasificación, se acepta la clase con mayor mayoría de votos; esto se conoce como <strong>votación en firme o votación por mayoría</strong>.</p>
+<div id="ventajas-y-desventajas-de-bagging" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Ventajas y desventajas de bagging<a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Hay una serie de ventajas y desventajas clave que presenta el método de bagging cuando se usa para problemas de clasificación o regresión.</p>
+<p><strong>Ventajas</strong></p>
+<ul>
+<li><p><strong>Facilidad de implementación</strong>: las bibliotecas de <em>Python</em> como <code>scikit-learn</code> facilitan la combinación de las predicciones de los aprendices o estimadores base para mejorar el rendimiento del modelo.</p></li>
+<li><p><strong>Reducción de varianza</strong>: bagging puede reducir la varianza dentro de un algoritmo de aprendizaje. Esto es particularmente útil con datos de alta dimensión, donde los valores faltantes pueden conducir a una mayor varianza, lo que los hace más propensos a sobreajustarse y evitar la generalización precisa a nuevos conjuntos de datos.</p></li>
+</ul>
+<p><strong>Desventajas</strong></p>
+<ul>
+<li><p><strong>Pérdida de interpretabilidad</strong>: es difícil obtener información empresarial muy precisa a través del bagging debido al promedio involucrado en las predicciones. Si bien el resultado es más preciso que cualquier punto de datos individual, un conjunto de datos más exacto o completo también podría producir más precisión dentro de un solo modelo de clasificación o regresión.</p></li>
+<li><p><strong>Computacionalmente costoso</strong>: <em>bagging</em> se ralentiza y se vuelve más intensivo a medida que aumenta el número de iteraciones. Por lo tanto, no es adecuado para aplicaciones en tiempo real. Los sistemas agrupados o una gran cantidad de núcleos de procesamiento son ideales para crear rápidamente conjuntos en bolsas en conjuntos de prueba grandes.</p></li>
+<li><p><strong>Menos flexible</strong>: como técnica, <em>bagging</em> funciona particularmente bien con algoritmos que son menos estables. Uno que sea más estable o esté sujeto a grandes cantidades de sesgo no proporciona tanto beneficio ya que hay menos variación dentro del conjunto de datos del modelo.</p></li>
+</ul>
+</div>
+<div id="aplicaciónes-de-bagging" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Aplicaciónes de Bagging<a href="bagging-boosting.html#aplicaciónes-de-bagging" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La técnica de <em>bagging</em> se utiliza en una gran cantidad de industrias, proporcionando información sobre el valor del mundo real y perspectivas interesantes. Los casos de uso clave incluyen:</p>
+<ul>
+<li><p><strong>TI</strong>: <em>bagging</em> también puede mejorar la precisión y exactitud en los sistemas de TI, como los sistemas de detección de intrusiones en la red.</p></li>
+<li><p><strong>Medio ambiente</strong>: los métodos de conjunto, como bagging, se han aplicado en el campo de la teledetección (técnica de adquisición de datos de la superficie terrestre desde sensores instalados en plataformas espaciales).</p></li>
+<li><p><strong>Finanzas</strong>: <em>bagging</em> también se ha aprovechado con modelos de aprendizaje profundo en la industria financiera, automatizando tareas críticas, incluida la detección de fraudes, evaluaciones de riesgo crediticio y problemas de precios de opciones.</p></li>
+</ul>
+</div>
+<div id="implementación-en-python-2" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Implementación en <em>Python</em><a href="bagging-boosting.html#implementación-en-python-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb195"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb195-1"><a href="bagging-boosting.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb195-2"><a href="bagging-boosting.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.utils <span class="im">import</span> resample</span>
+<span id="cb195-3"><a href="bagging-boosting.html#cb195-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-4"><a href="bagging-boosting.html#cb195-4" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> load_ames()</span>
+<span id="cb195-5"><a href="bagging-boosting.html#cb195-5" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">20211212</span>)</span>
+<span id="cb195-6"><a href="bagging-boosting.html#cb195-6" aria-hidden="true" tabindex="-1"></a>boot_indices <span class="op">=</span> [</span>
+<span id="cb195-7"><a href="bagging-boosting.html#cb195-7" aria-hidden="true" tabindex="-1"></a>    rng.choice(ames.index, size<span class="op">=</span><span class="bu">len</span>(ames), replace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb195-8"><a href="bagging-boosting.html#cb195-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>)</span>
+<span id="cb195-9"><a href="bagging-boosting.html#cb195-9" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb196-1"><a href="bagging-boosting.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se entrena un modelo para cada muestra.</span></span>
+<span id="cb196-2"><a href="bagging-boosting.html#cb196-2" aria-hidden="true" tabindex="-1"></a>coef_rows <span class="op">=</span> []</span>
+<span id="cb196-3"><a href="bagging-boosting.html#cb196-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample_id, idx <span class="kw">in</span> <span class="bu">enumerate</span>(boot_indices, start<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb196-4"><a href="bagging-boosting.html#cb196-4" aria-hidden="true" tabindex="-1"></a>    sample <span class="op">=</span> ames.loc[idx]</span>
+<span id="cb196-5"><a href="bagging-boosting.html#cb196-5" aria-hidden="true" tabindex="-1"></a>    X_boot <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb196-6"><a href="bagging-boosting.html#cb196-6" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb196-7"><a href="bagging-boosting.html#cb196-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;log10_Gr_Liv_Area&quot;</span>: np.log10(sample[<span class="st">&quot;Gr_Liv_Area&quot;</span>]),</span>
+<span id="cb196-8"><a href="bagging-boosting.html#cb196-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Full_Bath&quot;</span>: sample[<span class="st">&quot;Full_Bath&quot;</span>],</span>
+<span id="cb196-9"><a href="bagging-boosting.html#cb196-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Year_Built&quot;</span>: sample[<span class="st">&quot;Year_Built&quot;</span>],</span>
+<span id="cb196-10"><a href="bagging-boosting.html#cb196-10" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb196-11"><a href="bagging-boosting.html#cb196-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb196-12"><a href="bagging-boosting.html#cb196-12" aria-hidden="true" tabindex="-1"></a>    y_boot <span class="op">=</span> sample[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb196-13"><a href="bagging-boosting.html#cb196-13" aria-hidden="true" tabindex="-1"></a>    lm_boot <span class="op">=</span> LinearRegression(fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X_boot, y_boot)</span>
+<span id="cb196-14"><a href="bagging-boosting.html#cb196-14" aria-hidden="true" tabindex="-1"></a>    coef_rows.extend(</span>
+<span id="cb196-15"><a href="bagging-boosting.html#cb196-15" aria-hidden="true" tabindex="-1"></a>        {<span class="st">&quot;sample&quot;</span>: sample_id, <span class="st">&quot;term&quot;</span>: term, <span class="st">&quot;estimate&quot;</span>: estimate}</span>
+<span id="cb196-16"><a href="bagging-boosting.html#cb196-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> term, estimate <span class="kw">in</span> <span class="bu">zip</span>(X_boot.columns, lm_boot.coef_)</span>
+<span id="cb196-17"><a href="bagging-boosting.html#cb196-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb196-18"><a href="bagging-boosting.html#cb196-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb196-19"><a href="bagging-boosting.html#cb196-19" aria-hidden="true" tabindex="-1"></a>ames_coefs <span class="op">=</span> pd.DataFrame(coef_rows)</span>
+<span id="cb196-20"><a href="bagging-boosting.html#cb196-20" aria-hidden="true" tabindex="-1"></a>ames_coefs.head()</span></code></pre></div>
+<pre><code>##    sample               term       estimate
+## 0       1  log10_Gr_Liv_Area  180049.790664
+## 1       1          Full_Bath   50195.353318
+## 2       1         Year_Built    -237.182053
+## 3       2  log10_Gr_Liv_Area  189779.676537
+## 4       2          Full_Bath   47609.868202</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb198-1"><a href="bagging-boosting.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluación de resultados.</span></span>
+<span id="cb198-2"><a href="bagging-boosting.html#cb198-2" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> ames_coefs[<span class="st">&quot;term&quot;</span>].unique()</span>
+<span id="cb198-3"><a href="bagging-boosting.html#cb198-3" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(terms), figsize<span class="op">=</span>(<span class="dv">5</span> <span class="op">*</span> <span class="bu">len</span>(terms), <span class="dv">4</span>))</span>
+<span id="cb198-4"><a href="bagging-boosting.html#cb198-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, term <span class="kw">in</span> <span class="bu">zip</span>(axes, terms):</span>
+<span id="cb198-5"><a href="bagging-boosting.html#cb198-5" aria-hidden="true" tabindex="-1"></a>    ax.hist(ames_coefs.loc[ames_coefs[<span class="st">&quot;term&quot;</span>].eq(term), <span class="st">&quot;estimate&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span>
+<span id="cb198-6"><a href="bagging-boosting.html#cb198-6" aria-hidden="true" tabindex="-1"></a>    ax.set_title(term)</span>
+<span id="cb198-7"><a href="bagging-boosting.html#cb198-7" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">&quot;estimate&quot;</span>)</span></code></pre></div>
+<pre><code>## (array([  3.,  13.,  40.,  60., 128., 121.,  83.,  35.,  15.,   2.]), array([146348.11005425, 156672.8965913 , 166997.68312834, 177322.46966539,
+##        187647.25620244, 197972.04273948, 208296.82927653, 218621.61581358,
+##        228946.40235062, 239271.18888767, 249595.97542472]), &lt;BarContainer object of 10 artists&gt;)
+## Text(0.5, 1.0, &#39;log10_Gr_Liv_Area&#39;)
+## Text(0.5, 0, &#39;estimate&#39;)
+## (array([  4.,  17.,  50.,  94., 123., 114.,  62.,  28.,   4.,   4.]), array([39345.85042479, 41855.30166731, 44364.75290983, 46874.20415235,
+##        49383.65539486, 51893.10663738, 54402.5578799 , 56912.00912242,
+##        59421.46036493, 61930.91160745, 64440.36284997]), &lt;BarContainer object of 10 artists&gt;)
+## Text(0.5, 1.0, &#39;Full_Bath&#39;)
+## Text(0.5, 0, &#39;estimate&#39;)
+## (array([  2.,  12.,  35.,  78., 116., 130.,  68.,  43.,  12.,   4.]), array([-345.74371627, -329.95785752, -314.17199877, -298.38614002,
+##        -282.60028127, -266.81442252, -251.02856377, -235.24270502,
+##        -219.45684627, -203.67098752, -187.88512877]), &lt;BarContainer object of 10 artists&gt;)
+## Text(0.5, 1.0, &#39;Year_Built&#39;)
+## Text(0.5, 0, &#39;estimate&#39;)</code></pre>
+<div class="sourceCode" id="cb200"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb200-1"><a href="bagging-boosting.html#cb200-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-89-1.png" width="1440" /></p>
+</div>
+</div>
+<div id="algoritmo-boosting" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Algoritmo Boosting<a href="bagging-boosting.html#algoritmo-boosting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Tradicionalmente, la construcción de una aplicación de aprendizaje automático consistía en tomar un solo estimador, es decir:</p>
+<ul>
+<li>Un regresor logístico</li>
+<li>Un árbol de decisión</li>
+<li>Una máquina de vectores de soporte</li>
+<li>Una red neuronal artificial</li>
+</ul>
+<p>Para posteriormente ser entrenado por un conjunto de datos.</p>
+<p>Luego nacieron los <strong>métodos de conjunto</strong>, los cuales pueden describirse como <strong>técnicas que utilizan un grupo de modelos “débiles” juntos, con el fin de crear uno más fuerte y agregado</strong>.</p>
+<p>El <em>Boosting</em> consiste en la idea de filtrar o <strong>ponderar los datos</strong> que se utilizan para capacitar a nuestro conjunto de modelos “débiles”, para que <strong>cada nuevo modelo pondere o “solo se entrene” con observaciones que han sido mal clasificadas por los anteriores modelos.</strong></p>
+<p><img src="img/05-bagging/boosting2.png" width="800pt" height="400pt" style="display: block; margin: auto;" /></p>
+<p>Al hacer esto, nuestro conjunto de modelos aprende a hacer predicciones precisas sobre todo tipo de datos, no solo sobre las observaciones más comunes o fáciles. Además, si uno de los modelos individuales es muy malo para hacer predicciones sobre algún tipo de observación, no importa, ya que los otros <span class="math inline">\(N - 1\)</span> modelos probablemente lo compensarán.</p>
+<p><img src="img/05-bagging/boosting.png" width="600pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p>Como se puede ver en la imagen anterior, en <em>boosting</em> el conjunto de datos se pondera (representado por los diferentes tamaños de los datos), de modo que las observaciones que fueron clasificadas incorrectamente por el clasificador <span class="math inline">\(n\)</span> reciben más importancia en el entrenamiento del modelo <span class="math inline">\(n + 1\)</span>. En general, <strong>los métodos de conjunto reducen el sesgo y la varianza de nuestros modelos de aprendizaje automático</strong>.</p>
+<div class="infobox note">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<p>Los modelos bootstrap buscan aprender lentamente patrones relevantes a lo largo de muchas iteraciones, de forma que se vaya haciendo un ajuste lento pero preciso.</p>
+</div>
+<p>El proceso de entrenamiento depende del algoritmo <em>boosting</em> que estemos usando <em>(Adaboost, LigthGBM, XGBoost, <span class="math inline">\(\dots\)</span>)</em>, pero generalmente sigue este patrón:</p>
+<ol style="list-style-type: decimal">
+<li><p>Todas las muestras de datos comienzan con los mismos pesos. Estas muestras se utilizan para entrenar un modelo individual (digamos un árbol de decisión).</p></li>
+<li><p>Se calcula el error de predicción para cada muestra, <strong>aumentando los pesos de aquellas muestras que han tenido un error mayor</strong>, para hacerlas más importantes para el entrenamiento del siguiente modelo individual.</p></li>
+<li><p>Dependiendo de qué tan bien le fue a este modelo individual en sus predicciones, se le asigna una importancia/peso.</p></li>
+<li><p>Los datos ponderados se pasan al modelo posterior y se repiten lo pasos 2) y 3). Este paso se repite hasta que se haya alcanzado un cierto número de modelos o hasta que el error esté por debajo de un cierto umbral.</p></li>
+</ol>
+<p><img src="img/05-bagging/boosting-training.png" width="600pt" height="350pt" style="display: block; margin: auto;" /></p>
+<p>En algunos casos, los modelos de <em>boosting</em> se entrenan con un peso fijo específico para cada modelo (llamado tasa de aprendizaje) y en lugar de dar a cada muestra un peso individual, los modelos se entrenan tratando de predecir las diferencias entre las predicciones anteriores en las muestras y los valores reales de la variable objetivo. Esta diferencia es conocida como residuales.</p>
+<p>La forma de ajustar el modelo sigue los siguientes pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Se fija <span class="math inline">\(\hat{f}(x)=0\)</span> y <span class="math inline">\(r_i=y_i\)</span> para todos los elementos del conjunto de entrenamiento</p></li>
+<li><p>Para <span class="math inline">\(b=1,2,...,B\)</span>, repetir:</p></li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>Ajustar un árbol <span class="math inline">\(\hat{f}^b\)</span> al conjunto de entrenamiento <span class="math inline">\((X, r)\)</span></p></li>
+<li><p>Actualizar el ajuste <span class="math inline">\(\hat{f}(x)\)</span> al añadir una nueva versión restringida de un nuevo árbol:</p></li>
+</ol>
+<p><span class="math display">\[\hat{F}_b(X) \leftarrow \hat{F}_{b-1}(X) + \alpha_b\hat{h}_b(X, r_{b-1})\]</span>
+c) Actualizar los residuos:</p>
+<p><span class="math display">\[r_b \leftarrow r_{b-1} - \alpha_b\hat{f}^b(x_i)\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Resultado del modelo <em>Boosting</em>:</li>
+</ol>
+<p><span class="math display">\[\hat{F}=\sum_{b=1}^{B}\alpha_b\hat{F}_b(x)\]</span>
+Para calcular <span class="math inline">\(\alpha_b\)</span> en cada iteración, se usa la siguiente fórmula:</p>
+<p><span class="math display">\[\underset{\alpha}{\operatorname{argmin}}=\sum_{i=1}^{b}{L(Y_i, \hat{F}_{i-1}(X_i)+\alpha \hat{h}_i(X_i, r_{i-1}))}\]</span>
+Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdida diferenciable.</p>
+<div id="predicciones-de-boosting" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Predicciones de <em>Boosting</em><a href="bagging-boosting.html#predicciones-de-boosting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La forma en que un modelo de <em>boosting</em> hace predicciones sobre nuevos datos es muy simple. Cuando obtenemos una nueva observación con sus características, se pasa a través de cada uno de los modelos individuales, haciendo que cada modelo haga su propia predicción.</p>
+<p>Luego, teniendo en cuenta el peso de cada uno de estos modelos, todas estas predicciones se escalan y combinan, y se da una predicción global final.</p>
+<p><img src="img/05-bagging/boosting-predicciones.png" width="610pt" height="350pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="modelos-boosting" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Modelos <em>Boosting</em><a href="bagging-boosting.html#modelos-boosting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>XGBoost</strong></p>
+<p>Abreviatura de <em>eXtreme Gradient Boosting</em>, como en <em>Gradient Boosting</em>, ajustamos los árboles a los residuos de las predicciones de árboles anteriores, sin embargo, en lugar de usar árboles de decisión de tamaño fijo convencionales, <strong><em>XGBoost</em> usa un tipo diferente de árboles</strong>.</p>
+<p>Estos árboles se construyen calculando puntuaciones de similitud entre las observaciones que terminan en un nodo de salida. Además, <em>XGBoost</em> permite la regularización, reduciendo el posible sobreajuste de nuestros árboles individuales y, por lo tanto, del modelo de conjunto general.</p>
+<p>Por último, <em>XGBoost</em> está optimizado para superar el límite de los recursos computacionales de los algoritmos de árbol impulsados, lo que lo convierte en un algoritmo rápido y de muy alto rendimiento en términos de tiempo y cálculo.</p>
+<p><img src="img/05-bagging/sequential_trees.png" width="800pt" height="400pt" style="display: block; margin: auto;" /></p>
+<p><strong>Adaboost</strong></p>
+<p>Abreviatura de <em>Adaptive Boosting, AdaBoost</em> funciona mediante el proceso descrito anteriormente de entrenar secuencialmente, predecir y actualizar los pesos de las muestras mal clasificadas y de los modelos débiles correspondientes.</p>
+<p>Se usa principalmente con <em>Decision Tree Stumps</em>: árboles de decisión con solo un nodo raíz y dos nodos de salida, donde solo se evalúa una característica de los datos. Como podemos ver, al tener en cuenta solo una característica de nuestros datos para hacer predicciones, cada pivote es un modelo muy débil. Sin embargo, al combinar muchos de ellos, se puede construir un modelo de conjunto muy robusto y preciso.</p>
+<p><img src="img/05-bagging/adaboost.png" width="700pt" height="350pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="implementación-en-python-3" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Implementación en Python<a href="bagging-boosting.html#implementación-en-python-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="xgboost-para-regresión" class="section level3 hasAnchor" number="4.4.4">
+<h3><span class="header-section-number">4.4.4</span> XGBoost para regresión<a href="bagging-boosting.html#xgboost-para-regresión" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Paso 1: Separación inicial de datos (test, train)</strong></p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb201-1"><a href="bagging-boosting.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier, XGBRegressor</span>
+<span id="cb201-2"><a href="bagging-boosting.html#cb201-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb201-3"><a href="bagging-boosting.html#cb201-3" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> load_ames()</span>
+<span id="cb201-4"><a href="bagging-boosting.html#cb201-4" aria-hidden="true" tabindex="-1"></a>ames_train, ames_test <span class="op">=</span> train_test_split(ames, train_size<span class="op">=</span><span class="fl">0.75</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span>
+<span id="cb201-5"><a href="bagging-boosting.html#cb201-5" aria-hidden="true" tabindex="-1"></a>X_ames_train <span class="op">=</span> ames_train.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
+<span id="cb201-6"><a href="bagging-boosting.html#cb201-6" aria-hidden="true" tabindex="-1"></a>y_ames_train <span class="op">=</span> ames_train[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb201-7"><a href="bagging-boosting.html#cb201-7" aria-hidden="true" tabindex="-1"></a>X_ames_test <span class="op">=</span> ames_test.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
+<span id="cb201-8"><a href="bagging-boosting.html#cb201-8" aria-hidden="true" tabindex="-1"></a>y_ames_test <span class="op">=</span> ames_test[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb201-9"><a href="bagging-boosting.html#cb201-9" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span></code></pre></div>
+<p>Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.</p>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb202-1"><a href="bagging-boosting.html#cb202-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="op">=</span> make_ames_pipeline(</span>
+<span id="cb202-2"><a href="bagging-boosting.html#cb202-2" aria-hidden="true" tabindex="-1"></a>    XGBRegressor(objective<span class="op">=</span><span class="st">&quot;reg:squarederror&quot;</span>, random_state<span class="op">=</span><span class="dv">4595</span>, tree_method<span class="op">=</span><span class="st">&quot;hist&quot;</span>),</span>
+<span id="cb202-3"><a href="bagging-boosting.html#cb202-3" aria-hidden="true" tabindex="-1"></a>    scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb202-4"><a href="bagging-boosting.html#cb202-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb202-5"><a href="bagging-boosting.html#cb202-5" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x16ffb8fd0&gt;),
+##                                                  (&#39;...
+##                               feature_types=None, gamma=None, grow_policy=None,
+##                               importance_type=None,
+##                               interaction_constraints=None, learning_rate=None,
+##                               max_bin=None, max_cat_threshold=None,
+##                               max_cat_to_onehot=None, max_delta_step=None,
+##                               max_depth=None, max_leaves=None,
+##                               min_child_weight=None, missing=nan,
+##                               monotone_constraints=None, multi_strategy=None,
+##                               n_estimators=None, n_jobs=None,
+##                               num_parallel_tree=None, random_state=4595, ...))])</code></pre>
+<p>Recordemos que un <code>Pipeline</code> contiene los pasos a seguir; usamos <code>fit()</code> para estimar transformaciones y modelo, y <code>transform()</code> o <code>predict()</code> para aplicarlo a nuevos datos.</p>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb204-1"><a href="bagging-boosting.html#cb204-1" aria-hidden="true" tabindex="-1"></a>xgboost_reg_model <span class="op">=</span> XGBRegressor(</span>
+<span id="cb204-2"><a href="bagging-boosting.html#cb204-2" aria-hidden="true" tabindex="-1"></a>    objective<span class="op">=</span><span class="st">&quot;reg:squarederror&quot;</span>,</span>
+<span id="cb204-3"><a href="bagging-boosting.html#cb204-3" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb204-4"><a href="bagging-boosting.html#cb204-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">4595</span>,</span>
+<span id="cb204-5"><a href="bagging-boosting.html#cb204-5" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb204-6"><a href="bagging-boosting.html#cb204-6" aria-hidden="true" tabindex="-1"></a>    tree_method<span class="op">=</span><span class="st">&quot;hist&quot;</span>,</span>
+<span id="cb204-7"><a href="bagging-boosting.html#cb204-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb204-8"><a href="bagging-boosting.html#cb204-8" aria-hidden="true" tabindex="-1"></a>xgboost_reg_model</span></code></pre></div>
+<pre><code>## XGBRegressor(base_score=None, booster=None, callbacks=None,
+##              colsample_bylevel=None, colsample_bynode=None,
+##              colsample_bytree=None, device=None, early_stopping_rounds=None,
+##              enable_categorical=False, eval_metric=None, feature_types=None,
+##              gamma=None, grow_policy=None, importance_type=None,
+##              interaction_constraints=None, learning_rate=None, max_bin=None,
+##              max_cat_threshold=None, max_cat_to_onehot=None,
+##              max_delta_step=None, max_depth=None, max_leaves=None,
+##              min_child_weight=None, missing=nan, monotone_constraints=None,
+##              multi_strategy=None, n_estimators=300, n_jobs=-1,
+##              num_parallel_tree=None, random_state=4595, ...)</code></pre>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb206-1"><a href="bagging-boosting.html#cb206-1" aria-hidden="true" tabindex="-1"></a>xgboost_reg_workflow <span class="op">=</span> make_ames_pipeline(xgboost_reg_model, scale_numeric<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb206-2"><a href="bagging-boosting.html#cb206-2" aria-hidden="true" tabindex="-1"></a>xgboost_reg_workflow</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f860fd0&gt;),
+##                                                  (&#39;...
+##                               feature_types=None, gamma=None, grow_policy=None,
+##                               importance_type=None,
+##                               interaction_constraints=None, learning_rate=None,
+##                               max_bin=None, max_cat_threshold=None,
+##                               max_cat_to_onehot=None, max_delta_step=None,
+##                               max_depth=None, max_leaves=None,
+##                               min_child_weight=None, missing=nan,
+##                               monotone_constraints=None, multi_strategy=None,
+##                               n_estimators=300, n_jobs=-1,
+##                               num_parallel_tree=None, random_state=4595, ...))])</code></pre>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb208-1"><a href="bagging-boosting.html#cb208-1" aria-hidden="true" tabindex="-1"></a>xgboost_param_distributions <span class="op">=</span> {</span>
+<span id="cb208-2"><a href="bagging-boosting.html#cb208-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__max_depth&quot;</span>: randint(<span class="dv">3</span>, <span class="dv">12</span>),</span>
+<span id="cb208-3"><a href="bagging-boosting.html#cb208-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__min_child_weight&quot;</span>: randint(<span class="dv">1</span>, <span class="dv">20</span>),</span>
+<span id="cb208-4"><a href="bagging-boosting.html#cb208-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__gamma&quot;</span>: loguniform(<span class="fl">1e-8</span>, <span class="dv">10</span>),</span>
+<span id="cb208-5"><a href="bagging-boosting.html#cb208-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__learning_rate&quot;</span>: loguniform(<span class="fl">1e-3</span>, <span class="fl">0.3</span>),</span>
+<span id="cb208-6"><a href="bagging-boosting.html#cb208-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__subsample&quot;</span>: uniform(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb208-7"><a href="bagging-boosting.html#cb208-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__colsample_bytree&quot;</span>: uniform(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb208-8"><a href="bagging-boosting.html#cb208-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__reg_alpha&quot;</span>: loguniform(<span class="fl">1e-8</span>, <span class="dv">1</span>),</span>
+<span id="cb208-9"><a href="bagging-boosting.html#cb208-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__reg_lambda&quot;</span>: loguniform(<span class="fl">1e-2</span>, <span class="dv">10</span>),</span>
+<span id="cb208-10"><a href="bagging-boosting.html#cb208-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb208-11"><a href="bagging-boosting.html#cb208-11" aria-hidden="true" tabindex="-1"></a>xgboost_param_distributions</span></code></pre></div>
+<pre><code>## {&#39;model__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x305e35dd0&gt;, &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x305f1dd50&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301c58a50&gt;, &#39;model__learning_rate&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x16ffd4510&gt;, &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301c35fd0&gt;, &#39;model__colsample_bytree&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x305b11cd0&gt;, &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x305d879d0&gt;, &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x305d87a10&gt;}</code></pre>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb210-1"><a href="bagging-boosting.html#cb210-1" aria-hidden="true" tabindex="-1"></a>xgboost_reg_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb210-2"><a href="bagging-boosting.html#cb210-2" aria-hidden="true" tabindex="-1"></a>    xgboost_reg_workflow,</span>
+<span id="cb210-3"><a href="bagging-boosting.html#cb210-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>xgboost_param_distributions,</span>
+<span id="cb210-4"><a href="bagging-boosting.html#cb210-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb210-5"><a href="bagging-boosting.html#cb210-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
+<span id="cb210-6"><a href="bagging-boosting.html#cb210-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;r2&quot;</span>,</span>
+<span id="cb210-7"><a href="bagging-boosting.html#cb210-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">4595</span>,</span>
+<span id="cb210-8"><a href="bagging-boosting.html#cb210-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb210-9"><a href="bagging-boosting.html#cb210-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb210-10"><a href="bagging-boosting.html#cb210-10" aria-hidden="true" tabindex="-1"></a>xgboost_reg_tune_result.fit(X_ames_train, y_ames_train)</span></code></pre></div>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb211-1"><a href="bagging-boosting.html#cb211-1" aria-hidden="true" tabindex="-1"></a>xgboost_reg_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb211-2"><a href="bagging-boosting.html#cb211-2" aria-hidden="true" tabindex="-1"></a>    xgboost_reg_workflow,</span>
+<span id="cb211-3"><a href="bagging-boosting.html#cb211-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>xgboost_param_distributions,</span>
+<span id="cb211-4"><a href="bagging-boosting.html#cb211-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb211-5"><a href="bagging-boosting.html#cb211-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
+<span id="cb211-6"><a href="bagging-boosting.html#cb211-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;r2&quot;</span>,</span>
+<span id="cb211-7"><a href="bagging-boosting.html#cb211-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">4595</span>,</span>
+<span id="cb211-8"><a href="bagging-boosting.html#cb211-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb211-9"><a href="bagging-boosting.html#cb211-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb211-10"><a href="bagging-boosting.html#cb211-10" aria-hidden="true" tabindex="-1"></a>xgboost_reg_tune_result.fit(X_ames_train, y_ames_train)</span></code></pre></div>
+<pre><code>## RandomizedSearchCV(cv=KFold(n_splits=5, random_state=4595, shuffle=True),
+##                    estimator=Pipeline(steps=[(&#39;features&#39;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                                                                            kw_args={&#39;keep_target&#39;: False,
+##                                                                                     &#39;large&#39;: False})),
+##                                              (&#39;preprocess&#39;,
+##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                                                 SimpleImputer(strategy=&#39;median&#39;))]),...
+##                                         &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x305f1dd50&gt;,
+##                                         &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x305d879d0&gt;,
+##                                         &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x305d87a10&gt;,
+##                                         &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301c35fd0&gt;},
+##                    random_state=4595, scoring=&#39;r2&#39;)</code></pre>
+<div class="sourceCode" id="cb213"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb213-1"><a href="bagging-boosting.html#cb213-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(xgboost_reg_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__colsample_bytree  ...  std_test_score
+## 19                       0.691437  ...        0.049334
+## 5                        0.852345  ...        0.050029
+## 4                        0.583382  ...        0.066528
+## 7                        0.814819  ...        0.072462
+## 0                        0.800576  ...        0.079564
+## 18                       0.678742  ...        0.059924
+## 14                       0.920303  ...        0.035467
+## 2                        0.894882  ...        0.080474
+## 17                       0.976587  ...        0.038602
+## 8                        0.690134  ...        0.086821
+## 
+## [10 rows x 10 columns]</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb215-1"><a href="bagging-boosting.html#cb215-1" aria-hidden="true" tabindex="-1"></a>xgb_reg_results <span class="op">=</span> pd.DataFrame(xgboost_reg_tune_result.cv_results_)</span>
+<span id="cb215-2"><a href="bagging-boosting.html#cb215-2" aria-hidden="true" tabindex="-1"></a>xgb_reg_results.plot.scatter(x<span class="op">=</span><span class="st">&quot;param_model__learning_rate&quot;</span>, y<span class="op">=</span><span class="st">&quot;mean_test_score&quot;</span>, logx<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<pre><code>## &lt;Axes: xlabel=&#39;param_model__learning_rate&#39;, ylabel=&#39;mean_test_score&#39;&gt;</code></pre>
+<div class="sourceCode" id="cb217"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb217-1"><a href="bagging-boosting.html#cb217-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;XGBoost regression: R2 por learning rate&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;XGBoost regression: R2 por learning rate&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb219-1"><a href="bagging-boosting.html#cb219-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(xgboost_reg_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__colsample_bytree  ...  std_test_score
+## 19                       0.691437  ...        0.049334
+## 5                        0.852345  ...        0.050029
+## 4                        0.583382  ...        0.066528
+## 7                        0.814819  ...        0.072462
+## 0                        0.800576  ...        0.079564
+## 18                       0.678742  ...        0.059924
+## 14                       0.920303  ...        0.035467
+## 2                        0.894882  ...        0.080474
+## 17                       0.976587  ...        0.038602
+## 8                        0.690134  ...        0.086821
+## 
+## [10 rows x 10 columns]</code></pre>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb221-1"><a href="bagging-boosting.html#cb221-1" aria-hidden="true" tabindex="-1"></a>best_xgboost_reg_model <span class="op">=</span> xgboost_reg_tune_result.best_params_</span>
+<span id="cb221-2"><a href="bagging-boosting.html#cb221-2" aria-hidden="true" tabindex="-1"></a>best_xgboost_reg_model</span></code></pre></div>
+<pre><code>## {&#39;model__colsample_bytree&#39;: 0.691436870810012, &#39;model__gamma&#39;: 2.9429403730186566e-05, &#39;model__learning_rate&#39;: 0.012382434981818662, &#39;model__max_depth&#39;: 7, &#39;model__min_child_weight&#39;: 11, &#39;model__reg_alpha&#39;: 6.567112932607011e-08, &#39;model__reg_lambda&#39;: 0.1091464668939047, &#39;model__subsample&#39;: 0.9301553331293302}</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb223-1"><a href="bagging-boosting.html#cb223-1" aria-hidden="true" tabindex="-1"></a>final_xgboost_reg_model <span class="op">=</span> xgboost_reg_tune_result.best_estimator_</span>
+<span id="cb223-2"><a href="bagging-boosting.html#cb223-2" aria-hidden="true" tabindex="-1"></a>final_xgboost_reg_model</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x305de1450&gt;),
+##                                                  (&#39;...
+##                               grow_policy=None, importance_type=None,
+##                               interaction_constraints=None,
+##                               learning_rate=0.012382434981818662, max_bin=None,
+##                               max_cat_threshold=None, max_cat_to_onehot=None,
+##                               max_delta_step=None, max_depth=7, max_leaves=None,
+##                               min_child_weight=11, missing=nan,
+##                               monotone_constraints=None, multi_strategy=None,
+##                               n_estimators=300, n_jobs=-1,
+##                               num_parallel_tree=None, random_state=4595, ...))])</code></pre>
+<p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos data leakage. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb225-1"><a href="bagging-boosting.html#cb225-1" aria-hidden="true" tabindex="-1"></a>xgb_reg_importance <span class="op">=</span> permutation_importance(</span>
+<span id="cb225-2"><a href="bagging-boosting.html#cb225-2" aria-hidden="true" tabindex="-1"></a>    final_xgboost_reg_model,</span>
+<span id="cb225-3"><a href="bagging-boosting.html#cb225-3" aria-hidden="true" tabindex="-1"></a>    X_ames_test,</span>
+<span id="cb225-4"><a href="bagging-boosting.html#cb225-4" aria-hidden="true" tabindex="-1"></a>    y_ames_test,</span>
+<span id="cb225-5"><a href="bagging-boosting.html#cb225-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;r2&quot;</span>,</span>
+<span id="cb225-6"><a href="bagging-boosting.html#cb225-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb225-7"><a href="bagging-boosting.html#cb225-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">4595</span>,</span>
+<span id="cb225-8"><a href="bagging-boosting.html#cb225-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb225-9"><a href="bagging-boosting.html#cb225-9" aria-hidden="true" tabindex="-1"></a>xgb_reg_importance_df <span class="op">=</span> (</span>
+<span id="cb225-10"><a href="bagging-boosting.html#cb225-10" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
+<span id="cb225-11"><a href="bagging-boosting.html#cb225-11" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb225-12"><a href="bagging-boosting.html#cb225-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: X_ames_test.columns,</span>
+<span id="cb225-13"><a href="bagging-boosting.html#cb225-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Importance&quot;</span>: xgb_reg_importance.importances_mean,</span>
+<span id="cb225-14"><a href="bagging-boosting.html#cb225-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;StDev&quot;</span>: xgb_reg_importance.importances_std,</span>
+<span id="cb225-15"><a href="bagging-boosting.html#cb225-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb225-16"><a href="bagging-boosting.html#cb225-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb225-17"><a href="bagging-boosting.html#cb225-17" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importance&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb225-18"><a href="bagging-boosting.html#cb225-18" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">25</span>)</span>
+<span id="cb225-19"><a href="bagging-boosting.html#cb225-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb225-20"><a href="bagging-boosting.html#cb225-20" aria-hidden="true" tabindex="-1"></a>xgb_reg_importance_df.sort_values(<span class="st">&quot;Importance&quot;</span>).plot.barh(</span>
+<span id="cb225-21"><a href="bagging-boosting.html#cb225-21" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importance&quot;</span>, xerr<span class="op">=</span><span class="st">&quot;StDev&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>)</span>
+<span id="cb225-22"><a href="bagging-boosting.html#cb225-22" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## &lt;Axes: ylabel=&#39;Variable&#39;&gt;</code></pre>
+<div class="sourceCode" id="cb227"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb227-1"><a href="bagging-boosting.html#cb227-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Importancia de las variables&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-107-3.png" width="768" /></p>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb229-1"><a href="bagging-boosting.html#cb229-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb229-2"><a href="bagging-boosting.html#cb229-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb229-3"><a href="bagging-boosting.html#cb229-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Sale_Price&quot;</span>: y_ames_test.to_numpy(),</span>
+<span id="cb229-4"><a href="bagging-boosting.html#cb229-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pred_xgb_reg&quot;</span>: final_xgboost_reg_model.predict(X_ames_test),</span>
+<span id="cb229-5"><a href="bagging-boosting.html#cb229-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb229-6"><a href="bagging-boosting.html#cb229-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb229-7"><a href="bagging-boosting.html#cb229-7" aria-hidden="true" tabindex="-1"></a>results.head()</span></code></pre></div>
+<pre><code>##    Sale_Price   pred_xgb_reg
+## 0      253000  231041.281250
+## 1      161750  146788.437500
+## 2       89471  119800.835938
+## 3      314813  304862.625000
+## 4      180500  179838.734375</code></pre>
+<div class="sourceCode" id="cb231"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb231-1"><a href="bagging-boosting.html#cb231-1" aria-hidden="true" tabindex="-1"></a>regression_metrics(results[<span class="st">&quot;Sale_Price&quot;</span>], results[<span class="st">&quot;pred_xgb_reg&quot;</span>]).assign(</span>
+<span id="cb231-2"><a href="bagging-boosting.html#cb231-2" aria-hidden="true" tabindex="-1"></a>    estimate<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;estimate&quot;</span>].<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb231-3"><a href="bagging-boosting.html#cb231-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##   metric  estimate
+## 0   rmse  29900.56
+## 1    mae  16791.62
+## 2   mape      0.10
+## 3    rsq      0.85
+## 4    ccc      0.92</code></pre>
+<div class="sourceCode" id="cb233"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb233-1"><a href="bagging-boosting.html#cb233-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(results[<span class="st">&quot;pred_xgb_reg&quot;</span>], results[<span class="st">&quot;Sale_Price&quot;</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span></code></pre></div>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x305f16b90&gt;</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb235-1"><a href="bagging-boosting.html#cb235-1" aria-hidden="true" tabindex="-1"></a>lims <span class="op">=</span> [results[[<span class="st">&quot;pred_xgb_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">min</span>().<span class="bu">min</span>(), results[[<span class="st">&quot;pred_xgb_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">max</span>().<span class="bu">max</span>()]</span>
+<span id="cb235-2"><a href="bagging-boosting.html#cb235-2" aria-hidden="true" tabindex="-1"></a>plt.plot(lims, lims, color<span class="op">=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x305a955d0&gt;]</code></pre>
+<div class="sourceCode" id="cb237"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb237-1"><a href="bagging-boosting.html#cb237-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Prediction&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Prediction&#39;)</code></pre>
+<div class="sourceCode" id="cb239"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb239-1"><a href="bagging-boosting.html#cb239-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Observation&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;Observation&#39;)</code></pre>
+<div class="sourceCode" id="cb241"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb241-1"><a href="bagging-boosting.html#cb241-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Comparison&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Comparison&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-110-5.png" width="672" /></p>
+</div>
+<div id="xgboost-para-clasificación" class="section level3 hasAnchor" number="4.4.5">
+<h3><span class="header-section-number">4.4.5</span> XGBoost para clasificación<a href="bagging-boosting.html#xgboost-para-clasificación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Paso 1: Separación inicial de datos (test, train)</strong></p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb243-1"><a href="bagging-boosting.html#cb243-1" aria-hidden="true" tabindex="-1"></a>telco <span class="op">=</span> load_telco(<span class="st">&quot;data/Churn.csv&quot;</span>)</span>
+<span id="cb243-2"><a href="bagging-boosting.html#cb243-2" aria-hidden="true" tabindex="-1"></a>telco_train, telco_test <span class="op">=</span> train_test_split(</span>
+<span id="cb243-3"><a href="bagging-boosting.html#cb243-3" aria-hidden="true" tabindex="-1"></a>    telco,</span>
+<span id="cb243-4"><a href="bagging-boosting.html#cb243-4" aria-hidden="true" tabindex="-1"></a>    train_size<span class="op">=</span><span class="fl">0.70</span>,</span>
+<span id="cb243-5"><a href="bagging-boosting.html#cb243-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb243-6"><a href="bagging-boosting.html#cb243-6" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>telco[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb243-7"><a href="bagging-boosting.html#cb243-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb243-8"><a href="bagging-boosting.html#cb243-8" aria-hidden="true" tabindex="-1"></a>X_telco_train <span class="op">=</span> telco_train.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb243-9"><a href="bagging-boosting.html#cb243-9" aria-hidden="true" tabindex="-1"></a>y_telco_train <span class="op">=</span> telco_train[<span class="st">&quot;Churn&quot;</span>].eq(<span class="st">&quot;Yes&quot;</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb243-10"><a href="bagging-boosting.html#cb243-10" aria-hidden="true" tabindex="-1"></a>X_telco_test <span class="op">=</span> telco_test.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb243-11"><a href="bagging-boosting.html#cb243-11" aria-hidden="true" tabindex="-1"></a>y_telco_test <span class="op">=</span> telco_test[<span class="st">&quot;Churn&quot;</span>].eq(<span class="st">&quot;Yes&quot;</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb243-12"><a href="bagging-boosting.html#cb243-12" aria-hidden="true" tabindex="-1"></a>telco_folds <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1234</span>)</span>
+<span id="cb243-13"><a href="bagging-boosting.html#cb243-13" aria-hidden="true" tabindex="-1"></a>telco_folds</span></code></pre></div>
+<pre><code>## StratifiedKFold(n_splits=5, random_state=1234, shuffle=True)</code></pre>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb245-1"><a href="bagging-boosting.html#cb245-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="op">=</span> make_telco_pipeline(</span>
+<span id="cb245-2"><a href="bagging-boosting.html#cb245-2" aria-hidden="true" tabindex="-1"></a>    XGBClassifier(eval_metric<span class="op">=</span><span class="st">&quot;logloss&quot;</span>, random_state<span class="op">=</span><span class="dv">1234</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>, tree_method<span class="op">=</span><span class="st">&quot;hist&quot;</span>),</span>
+<span id="cb245-3"><a href="bagging-boosting.html#cb245-3" aria-hidden="true" tabindex="-1"></a>    scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb245-4"><a href="bagging-boosting.html#cb245-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb245-5"><a href="bagging-boosting.html#cb245-5" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x305dd34d0&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline...
+##                                feature_types=None, gamma=None, grow_policy=None,
+##                                importance_type=None,
+##                                interaction_constraints=None, learning_rate=None,
+##                                max_bin=None, max_cat_threshold=None,
+##                                max_cat_to_onehot=None, max_delta_step=None,
+##                                max_depth=None, max_leaves=None,
+##                                min_child_weight=None, missing=nan,
+##                                monotone_constraints=None, multi_strategy=None,
+##                                n_estimators=None, n_jobs=-1,
+##                                num_parallel_tree=None, random_state=1234, ...))])</code></pre>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb247-1"><a href="bagging-boosting.html#cb247-1" aria-hidden="true" tabindex="-1"></a>xgboost_model <span class="op">=</span> XGBClassifier(</span>
+<span id="cb247-2"><a href="bagging-boosting.html#cb247-2" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb247-3"><a href="bagging-boosting.html#cb247-3" aria-hidden="true" tabindex="-1"></a>    eval_metric<span class="op">=</span><span class="st">&quot;logloss&quot;</span>,</span>
+<span id="cb247-4"><a href="bagging-boosting.html#cb247-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb247-5"><a href="bagging-boosting.html#cb247-5" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb247-6"><a href="bagging-boosting.html#cb247-6" aria-hidden="true" tabindex="-1"></a>    tree_method<span class="op">=</span><span class="st">&quot;hist&quot;</span>,</span>
+<span id="cb247-7"><a href="bagging-boosting.html#cb247-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb247-8"><a href="bagging-boosting.html#cb247-8" aria-hidden="true" tabindex="-1"></a>xgboost_model</span></code></pre></div>
+<pre><code>## XGBClassifier(base_score=None, booster=None, callbacks=None,
+##               colsample_bylevel=None, colsample_bynode=None,
+##               colsample_bytree=None, device=None, early_stopping_rounds=None,
+##               enable_categorical=False, eval_metric=&#39;logloss&#39;,
+##               feature_types=None, gamma=None, grow_policy=None,
+##               importance_type=None, interaction_constraints=None,
+##               learning_rate=None, max_bin=None, max_cat_threshold=None,
+##               max_cat_to_onehot=None, max_delta_step=None, max_depth=None,
+##               max_leaves=None, min_child_weight=None, missing=nan,
+##               monotone_constraints=None, multi_strategy=None, n_estimators=300,
+##               n_jobs=-1, num_parallel_tree=None, random_state=1234, ...)</code></pre>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb249-1"><a href="bagging-boosting.html#cb249-1" aria-hidden="true" tabindex="-1"></a>xgboost_workflow <span class="op">=</span> make_telco_pipeline(xgboost_model, scale_numeric<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb249-2"><a href="bagging-boosting.html#cb249-2" aria-hidden="true" tabindex="-1"></a>xgboost_workflow</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x301eace90&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline...
+##                                feature_types=None, gamma=None, grow_policy=None,
+##                                importance_type=None,
+##                                interaction_constraints=None, learning_rate=None,
+##                                max_bin=None, max_cat_threshold=None,
+##                                max_cat_to_onehot=None, max_delta_step=None,
+##                                max_depth=None, max_leaves=None,
+##                                min_child_weight=None, missing=nan,
+##                                monotone_constraints=None, multi_strategy=None,
+##                                n_estimators=300, n_jobs=-1,
+##                                num_parallel_tree=None, random_state=1234, ...))])</code></pre>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb251-1"><a href="bagging-boosting.html#cb251-1" aria-hidden="true" tabindex="-1"></a>xgboost_class_param_distributions <span class="op">=</span> {</span>
+<span id="cb251-2"><a href="bagging-boosting.html#cb251-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__max_depth&quot;</span>: randint(<span class="dv">2</span>, <span class="dv">10</span>),</span>
+<span id="cb251-3"><a href="bagging-boosting.html#cb251-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__min_child_weight&quot;</span>: randint(<span class="dv">1</span>, <span class="dv">20</span>),</span>
+<span id="cb251-4"><a href="bagging-boosting.html#cb251-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__gamma&quot;</span>: loguniform(<span class="fl">1e-8</span>, <span class="dv">10</span>),</span>
+<span id="cb251-5"><a href="bagging-boosting.html#cb251-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__learning_rate&quot;</span>: loguniform(<span class="fl">1e-3</span>, <span class="fl">0.3</span>),</span>
+<span id="cb251-6"><a href="bagging-boosting.html#cb251-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__subsample&quot;</span>: uniform(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb251-7"><a href="bagging-boosting.html#cb251-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__colsample_bytree&quot;</span>: uniform(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb251-8"><a href="bagging-boosting.html#cb251-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__reg_alpha&quot;</span>: loguniform(<span class="fl">1e-8</span>, <span class="dv">1</span>),</span>
+<span id="cb251-9"><a href="bagging-boosting.html#cb251-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__reg_lambda&quot;</span>: loguniform(<span class="fl">1e-2</span>, <span class="dv">10</span>),</span>
+<span id="cb251-10"><a href="bagging-boosting.html#cb251-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb251-11"><a href="bagging-boosting.html#cb251-11" aria-hidden="true" tabindex="-1"></a>xgboost_class_param_distributions</span></code></pre></div>
+<pre><code>## {&#39;model__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x301e64450&gt;, &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x305de0a50&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301e066d0&gt;, &#39;model__learning_rate&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17ba81a10&gt;, &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fc68950&gt;, &#39;model__colsample_bytree&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fc6b690&gt;, &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fc6ab10&gt;, &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fc68410&gt;}</code></pre>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb253-1"><a href="bagging-boosting.html#cb253-1" aria-hidden="true" tabindex="-1"></a>xgboost_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb253-2"><a href="bagging-boosting.html#cb253-2" aria-hidden="true" tabindex="-1"></a>    xgboost_workflow,</span>
+<span id="cb253-3"><a href="bagging-boosting.html#cb253-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>xgboost_class_param_distributions,</span>
+<span id="cb253-4"><a href="bagging-boosting.html#cb253-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb253-5"><a href="bagging-boosting.html#cb253-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
+<span id="cb253-6"><a href="bagging-boosting.html#cb253-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;average_precision&quot;</span>,</span>
+<span id="cb253-7"><a href="bagging-boosting.html#cb253-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb253-8"><a href="bagging-boosting.html#cb253-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb253-9"><a href="bagging-boosting.html#cb253-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb253-10"><a href="bagging-boosting.html#cb253-10" aria-hidden="true" tabindex="-1"></a>xgboost_tune_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb254-1"><a href="bagging-boosting.html#cb254-1" aria-hidden="true" tabindex="-1"></a>xgboost_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb254-2"><a href="bagging-boosting.html#cb254-2" aria-hidden="true" tabindex="-1"></a>    xgboost_workflow,</span>
+<span id="cb254-3"><a href="bagging-boosting.html#cb254-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>xgboost_class_param_distributions,</span>
+<span id="cb254-4"><a href="bagging-boosting.html#cb254-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb254-5"><a href="bagging-boosting.html#cb254-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
+<span id="cb254-6"><a href="bagging-boosting.html#cb254-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;average_precision&quot;</span>,</span>
+<span id="cb254-7"><a href="bagging-boosting.html#cb254-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb254-8"><a href="bagging-boosting.html#cb254-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb254-9"><a href="bagging-boosting.html#cb254-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb254-10"><a href="bagging-boosting.html#cb254-10" aria-hidden="true" tabindex="-1"></a>xgboost_tune_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
+<pre><code>## RandomizedSearchCV(cv=StratifiedKFold(n_splits=5, random_state=1234, shuffle=True),
+##                    estimator=Pipeline(steps=[(&#39;features&#39;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                                                            kw_args={&#39;keep_target&#39;: False})),
+##                                              (&#39;preprocess&#39;,
+##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                                                 SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                                                &lt;sk...
+##                                         &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x305de0a50&gt;,
+##                                         &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fc6ab10&gt;,
+##                                         &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fc68410&gt;,
+##                                         &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fc68950&gt;},
+##                    random_state=1234, scoring=&#39;average_precision&#39;)</code></pre>
+<div class="sourceCode" id="cb256"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb256-1"><a href="bagging-boosting.html#cb256-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(xgboost_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__colsample_bytree  ...  std_test_score
+## 19                       0.587637  ...        0.023157
+## 7                        0.540473  ...        0.025541
+## 15                       0.662854  ...        0.023204
+## 11                       0.791822  ...        0.024354
+## 12                       0.941827  ...        0.021115
+## 2                        0.549126  ...        0.022229
+## 4                        0.732918  ...        0.019785
+## 3                        0.944613  ...        0.020951
+## 6                        0.959058  ...        0.025378
+## 17                       0.709362  ...        0.016221
+## 
+## [10 rows x 10 columns]</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb258-1"><a href="bagging-boosting.html#cb258-1" aria-hidden="true" tabindex="-1"></a>xgb_class_results <span class="op">=</span> pd.DataFrame(xgboost_tune_result.cv_results_)</span>
+<span id="cb258-2"><a href="bagging-boosting.html#cb258-2" aria-hidden="true" tabindex="-1"></a>xgb_class_results.plot.scatter(x<span class="op">=</span><span class="st">&quot;param_model__learning_rate&quot;</span>, y<span class="op">=</span><span class="st">&quot;mean_test_score&quot;</span>, logx<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<pre><code>## &lt;Axes: xlabel=&#39;param_model__learning_rate&#39;, ylabel=&#39;mean_test_score&#39;&gt;</code></pre>
+<div class="sourceCode" id="cb260"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb260-1"><a href="bagging-boosting.html#cb260-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;XGBoost classification: PR AUC por learning rate&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;XGBoost classification: PR AUC por learning rate&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-118-7.png" width="672" /></p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb262-1"><a href="bagging-boosting.html#cb262-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(xgboost_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__colsample_bytree  ...  std_test_score
+## 19                       0.587637  ...        0.023157
+## 7                        0.540473  ...        0.025541
+## 15                       0.662854  ...        0.023204
+## 11                       0.791822  ...        0.024354
+## 12                       0.941827  ...        0.021115
+## 2                        0.549126  ...        0.022229
+## 4                        0.732918  ...        0.019785
+## 3                        0.944613  ...        0.020951
+## 6                        0.959058  ...        0.025378
+## 17                       0.709362  ...        0.016221
+## 
+## [10 rows x 10 columns]</code></pre>
+<div class="sourceCode" id="cb264"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb264-1"><a href="bagging-boosting.html#cb264-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(xgboost_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__colsample_bytree  ...  std_test_score
+## 19                       0.587637  ...        0.023157
+## 7                        0.540473  ...        0.025541
+## 15                       0.662854  ...        0.023204
+## 11                       0.791822  ...        0.024354
+## 12                       0.941827  ...        0.021115
+## 2                        0.549126  ...        0.022229
+## 4                        0.732918  ...        0.019785
+## 3                        0.944613  ...        0.020951
+## 6                        0.959058  ...        0.025378
+## 17                       0.709362  ...        0.016221
+## 
+## [10 rows x 10 columns]</code></pre>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb266-1"><a href="bagging-boosting.html#cb266-1" aria-hidden="true" tabindex="-1"></a>best_xgboost_model <span class="op">=</span> xgboost_tune_result.best_params_</span>
+<span id="cb266-2"><a href="bagging-boosting.html#cb266-2" aria-hidden="true" tabindex="-1"></a>best_xgboost_model</span></code></pre></div>
+<pre><code>## {&#39;model__colsample_bytree&#39;: 0.5876369923701457, &#39;model__gamma&#39;: 7.330845110517482e-05, &#39;model__learning_rate&#39;: 0.042596510000331385, &#39;model__max_depth&#39;: 2, &#39;model__min_child_weight&#39;: 2, &#39;model__reg_alpha&#39;: 0.00035668088457711935, &#39;model__reg_lambda&#39;: 0.9174618925556578, &#39;model__subsample&#39;: 0.684278841050076}</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb268-1"><a href="bagging-boosting.html#cb268-1" aria-hidden="true" tabindex="-1"></a>final_xgboost_model <span class="op">=</span> xgboost_tune_result.best_estimator_</span>
+<span id="cb268-2"><a href="bagging-boosting.html#cb268-2" aria-hidden="true" tabindex="-1"></a>final_xgboost_model</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f884ed0&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline...
+##                                grow_policy=None, importance_type=None,
+##                                interaction_constraints=None,
+##                                learning_rate=0.042596510000331385, max_bin=None,
+##                                max_cat_threshold=None, max_cat_to_onehot=None,
+##                                max_delta_step=None, max_depth=2,
+##                                max_leaves=None, min_child_weight=2, missing=nan,
+##                                monotone_constraints=None, multi_strategy=None,
+##                                n_estimators=300, n_jobs=-1,
+##                                num_parallel_tree=None, random_state=1234, ...))])</code></pre>
+<p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos data leakage. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo.</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb270-1"><a href="bagging-boosting.html#cb270-1" aria-hidden="true" tabindex="-1"></a>xgb_class_importance <span class="op">=</span> permutation_importance(</span>
+<span id="cb270-2"><a href="bagging-boosting.html#cb270-2" aria-hidden="true" tabindex="-1"></a>    final_xgboost_model,</span>
+<span id="cb270-3"><a href="bagging-boosting.html#cb270-3" aria-hidden="true" tabindex="-1"></a>    X_telco_test,</span>
+<span id="cb270-4"><a href="bagging-boosting.html#cb270-4" aria-hidden="true" tabindex="-1"></a>    y_telco_test,</span>
+<span id="cb270-5"><a href="bagging-boosting.html#cb270-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;average_precision&quot;</span>,</span>
+<span id="cb270-6"><a href="bagging-boosting.html#cb270-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb270-7"><a href="bagging-boosting.html#cb270-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb270-8"><a href="bagging-boosting.html#cb270-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb270-9"><a href="bagging-boosting.html#cb270-9" aria-hidden="true" tabindex="-1"></a>xgb_class_importance_df <span class="op">=</span> (</span>
+<span id="cb270-10"><a href="bagging-boosting.html#cb270-10" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
+<span id="cb270-11"><a href="bagging-boosting.html#cb270-11" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb270-12"><a href="bagging-boosting.html#cb270-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: X_telco_test.columns,</span>
+<span id="cb270-13"><a href="bagging-boosting.html#cb270-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Importance&quot;</span>: xgb_class_importance.importances_mean,</span>
+<span id="cb270-14"><a href="bagging-boosting.html#cb270-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;StDev&quot;</span>: xgb_class_importance.importances_std,</span>
+<span id="cb270-15"><a href="bagging-boosting.html#cb270-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb270-16"><a href="bagging-boosting.html#cb270-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb270-17"><a href="bagging-boosting.html#cb270-17" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importance&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb270-18"><a href="bagging-boosting.html#cb270-18" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">25</span>)</span>
+<span id="cb270-19"><a href="bagging-boosting.html#cb270-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb270-20"><a href="bagging-boosting.html#cb270-20" aria-hidden="true" tabindex="-1"></a>xgb_class_importance_df.sort_values(<span class="st">&quot;Importance&quot;</span>).plot.barh(</span>
+<span id="cb270-21"><a href="bagging-boosting.html#cb270-21" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importance&quot;</span>, xerr<span class="op">=</span><span class="st">&quot;StDev&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>)</span>
+<span id="cb270-22"><a href="bagging-boosting.html#cb270-22" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## &lt;Axes: ylabel=&#39;Variable&#39;&gt;</code></pre>
+<div class="sourceCode" id="cb272"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb272-1"><a href="bagging-boosting.html#cb272-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Importancia de las variables&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-123-9.png" width="768" /></p>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb274-1"><a href="bagging-boosting.html#cb274-1" aria-hidden="true" tabindex="-1"></a>class_prob <span class="op">=</span> final_xgboost_model.predict_proba(X_telco_test)</span>
+<span id="cb274-2"><a href="bagging-boosting.html#cb274-2" aria-hidden="true" tabindex="-1"></a>class_results <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb274-3"><a href="bagging-boosting.html#cb274-3" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb274-4"><a href="bagging-boosting.html#cb274-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;.pred_No&quot;</span>: class_prob[:, <span class="dv">0</span>],</span>
+<span id="cb274-5"><a href="bagging-boosting.html#cb274-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;.pred_Yes&quot;</span>: class_prob[:, <span class="dv">1</span>],</span>
+<span id="cb274-6"><a href="bagging-boosting.html#cb274-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Churn&quot;</span>: telco_test[<span class="st">&quot;Churn&quot;</span>].to_numpy(),</span>
+<span id="cb274-7"><a href="bagging-boosting.html#cb274-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb274-8"><a href="bagging-boosting.html#cb274-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb274-9"><a href="bagging-boosting.html#cb274-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-10"><a href="bagging-boosting.html#cb274-10" aria-hidden="true" tabindex="-1"></a>class_results.head()</span></code></pre></div>
+<pre><code>##    .pred_No  .pred_Yes Churn
+## 0  0.891880   0.108120    No
+## 1  0.755528   0.244472    No
+## 2  0.988159   0.011841    No
+## 3  0.468612   0.531388   Yes
+## 4  0.474670   0.525330   Yes</code></pre>
+<div class="sourceCode" id="cb276"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb276-1"><a href="bagging-boosting.html#cb276-1" aria-hidden="true" tabindex="-1"></a>classification_metrics(class_results[<span class="st">&quot;Churn&quot;</span>], class_results[<span class="st">&quot;.pred_Yes&quot;</span>])</span></code></pre></div>
+<pre><code>##     metric  estimate
+## 0  roc_auc  0.839844
+## 1   pr_auc  0.636793</code></pre>
+<p>A continuación, conoceremos el nivel de sensitividad y especificidad para cada punto de corte:</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb278-1"><a href="bagging-boosting.html#cb278-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="op">=</span> roc_curve_table(class_results[<span class="st">&quot;Churn&quot;</span>], class_results[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
+<span id="cb278-2"><a href="bagging-boosting.html#cb278-2" aria-hidden="true" tabindex="-1"></a>roc_curve_data.head()</span></code></pre></div>
+<pre><code>##    threshold  specificity  sensitivity
+## 0        inf     1.000000     0.000000
+## 1   0.912715     1.000000     0.001783
+## 2   0.889022     1.000000     0.016043
+## 3   0.888841     0.999356     0.019608
+## 4   0.888814     0.998711     0.019608</code></pre>
+<p>A través de estas métricas es posible crear la curva ROC:</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb280-1"><a href="bagging-boosting.html#cb280-1" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17f83b990&gt;]</code></pre>
+<div class="sourceCode" id="cb282"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb282-1"><a href="bagging-boosting.html#cb282-1" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17feea010&gt;]</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb284-1"><a href="bagging-boosting.html#cb284-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;ROC Curve&#39;)</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb286-1"><a href="bagging-boosting.html#cb286-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;1 - specificity&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;1 - specificity&#39;)</code></pre>
+<div class="sourceCode" id="cb288"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb288-1"><a href="bagging-boosting.html#cb288-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;sensitivity&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;sensitivity&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-127-11.png" width="672" /></p>
+<p>De igual manera, podemos calcular la precisión y cobertura para cada punte de corte:</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb290-1"><a href="bagging-boosting.html#cb290-1" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="op">=</span> pr_curve_table(class_results[<span class="st">&quot;Churn&quot;</span>], class_results[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
+<span id="cb290-2"><a href="bagging-boosting.html#cb290-2" aria-hidden="true" tabindex="-1"></a>pr_curve_data.head()</span></code></pre></div>
+<pre><code>##    threshold  precision  recall
+## 0   0.005051   0.265499     1.0
+## 1   0.005416   0.265625     1.0
+## 2   0.005482   0.265751     1.0
+## 3   0.005539   0.265877     1.0
+## 4   0.005541   0.266003     1.0</code></pre>
+<p>Y graficar su respectiva curva:</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb292-1"><a href="bagging-boosting.html#cb292-1" aria-hidden="true" tabindex="-1"></a>plt.plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17fc83390&gt;]</code></pre>
+<div class="sourceCode" id="cb294"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb294-1"><a href="bagging-boosting.html#cb294-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Precision vs Recall&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Precision vs Recall&#39;)</code></pre>
+<div class="sourceCode" id="cb296"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb296-1"><a href="bagging-boosting.html#cb296-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;recall&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;recall&#39;)</code></pre>
+<div class="sourceCode" id="cb298"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb298-1"><a href="bagging-boosting.html#cb298-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;precision&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;precision&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-129-13.png" width="672" /></p>
+</div>
+</div>
+<div id="ejercicios-2" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Ejercicios<a href="bagging-boosting.html#ejercicios-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ejecutar un modelo propio usando <strong>Adaboost</strong>. Cada alumno deberá proponer su propia configuración y comparar resultados con XGBoost:</p>
+<div class="sourceCode" id="cb300"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb300-1"><a href="bagging-boosting.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> AdaBoostClassifier</span>
+<span id="cb300-2"><a href="bagging-boosting.html#cb300-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb300-3"><a href="bagging-boosting.html#cb300-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb300-4"><a href="bagging-boosting.html#cb300-4" aria-hidden="true" tabindex="-1"></a>adaboost_model <span class="op">=</span> AdaBoostClassifier(</span>
+<span id="cb300-5"><a href="bagging-boosting.html#cb300-5" aria-hidden="true" tabindex="-1"></a>    estimator<span class="op">=</span>DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">123</span>),</span>
+<span id="cb300-6"><a href="bagging-boosting.html#cb300-6" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb300-7"><a href="bagging-boosting.html#cb300-7" aria-hidden="true" tabindex="-1"></a>    learning_rate<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb300-8"><a href="bagging-boosting.html#cb300-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb300-9"><a href="bagging-boosting.html#cb300-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="support-vector-machine-svm-svr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="workflowsets-stacking.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

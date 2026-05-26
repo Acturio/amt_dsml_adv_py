@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 2 Feature Engineering | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 2 Feature Engineering | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 2 Feature Engineering | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="repaso.html"/>
+<link rel="next" href="support-vector-machine-svm-svr.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-python"><i class="fa fa-check"></i>Ciencia de Datos en Python</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>3</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>3.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="3.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>3.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="3.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>3.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="3.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>3.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="3.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>3.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="3.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>3.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="3.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>3.7</b> Ajuste del modelo con Python</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>3.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="3.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>3.7.2</b> Implementación de SVM en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>3.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>4.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>4.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>4.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>4.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>4.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-2"><i class="fa fa-check"></i><b>4.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>4.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>4.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>4.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="4.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>4.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="4.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>4.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>5</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>5.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="5.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>5.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="5.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>5.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="5.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>5.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="5.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>5.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>5.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>5.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>5.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="5.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>5.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="5.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>5.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>5.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>5.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="5.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>5.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="5.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>5.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>6</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>6.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="6.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>6.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>6.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="6.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>6.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="6.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>6.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="6.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>6.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="6.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>6.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="6.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>6.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="6.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>6.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="6.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>6.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="6.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>6.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>7</b> Interpretabilidad de modelos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>7.1</b> LIME</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>7.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="7.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>7.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="7.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>7.1.3</b> Implementación con <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>7.2</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>7.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="7.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>7.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>8</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>8.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="8.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>8.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="8.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>8.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>8.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="8.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>8.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="8.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>8.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="8.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>8.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="8.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>8.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="8.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>8.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="8.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>8.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>8.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>8.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="8.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>8.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>8.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>8.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="8.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>8.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="feature-engineering" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Capítulo 2</span> Feature Engineering<a href="feature-engineering.html#feature-engineering" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="regresión-polinomial" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Regresión polinomial<a href="feature-engineering.html#regresión-polinomial" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Es común encontrar en la literatura este tema junto con la regresión múltiple, sin embargo, el alcance de esta transformación va a más allá de la regresión lineal, por lo que estudiaremos este tema como parte de la ingeniería de variables y no como un modelo lineal exclusivamente.</p>
+<p>El objetivo de la transformación polinomial dentro de la ingeniería de variables es crear nuevas variables que puedan explicar la relación entre la variable de respuesta y explicativa a través de un polinomio de grado <em>k</em>.</p>
+<p>En el siguiente gráfico se representa mediante una línea roja a la regresión lineal y mediante una curva azul al polinomio que relaciona a las variables independiente y dependiente.</p>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-19-1.png" width="768" /></p>
+<p>Es evidente que existe un mejor ajuste cuando se considera un polinomio de grado <em>k</em> en vez de la componente lineal. Este método ofrece mayor flexibilidad para el ajuste de un modelo. Será importante <strong>mediar posteriormente entre el sesgo y la varianza</strong> de forma que podamos tener un mejor ajuste sin caer en el sobreajuste. La fórmula que expresa la relación entre variable de respuesta y explicativas es ahora:</p>
+<p><span class="math display">\[Y_i \sim X_1 + X_1^2\]</span></p>
+<p>Es importante mencionar que cuando se ajusta un modelo polinomial de segundo orden, se deben mantener ambas variables en el model (la original y la cuadrática). Cuando se tenga un modelo polinomial de grado <em>k</em>, se deberán conservar los <em>k</em> elementos que componen el polinomio:</p>
+<p><span class="math display">\[Y\sim X_1+X_1^2 + ... + X_1^k\]</span></p>
+<p>Estas transformaciones son posibles realizarlas a múltiples variables que conforman el conjunto de datos que sirve de insumo para el modelo. A través de los pasos secuenciales de un <code>Pipeline</code> podemos integrar esta tarea con <code>PolynomialFeatures</code>. Veamos un ejemplo:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="feature-engineering.html#cb6-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb6-2"><a href="feature-engineering.html#cb6-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">12345</span>)</span>
+<span id="cb6-3"><a href="feature-engineering.html#cb6-3" aria-hidden="true" tabindex="-1"></a>original_data <span class="op">=</span> pd.DataFrame({<span class="st">&quot;x&quot;</span>: np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, n)})</span>
+<span id="cb6-4"><a href="feature-engineering.html#cb6-4" aria-hidden="true" tabindex="-1"></a>original_data[<span class="st">&quot;y&quot;</span>] <span class="op">=</span> original_data[<span class="st">&quot;x&quot;</span>] <span class="op">**</span> <span class="dv">3</span> <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="dv">100</span>, n)</span>
+<span id="cb6-5"><a href="feature-engineering.html#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="feature-engineering.html#cb6-6" aria-hidden="true" tabindex="-1"></a>poly_model <span class="op">=</span> Pipeline(</span>
+<span id="cb6-7"><a href="feature-engineering.html#cb6-7" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb6-8"><a href="feature-engineering.html#cb6-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">&quot;poly&quot;</span>, PolynomialFeatures(degree<span class="op">=</span><span class="dv">3</span>, include_bias<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb6-9"><a href="feature-engineering.html#cb6-9" aria-hidden="true" tabindex="-1"></a>        (<span class="st">&quot;lm&quot;</span>, LinearRegression()),</span>
+<span id="cb6-10"><a href="feature-engineering.html#cb6-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-11"><a href="feature-engineering.html#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-12"><a href="feature-engineering.html#cb6-12" aria-hidden="true" tabindex="-1"></a>poly_model.fit(original_data[[<span class="st">&quot;x&quot;</span>]], original_data[<span class="st">&quot;y&quot;</span>])</span></code></pre></div>
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;poly&#x27;, PolynomialFeatures(degree=3, include_bias=False)),
+                (&#x27;lm&#x27;, LinearRegression())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;Pipeline<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;poly&#x27;, PolynomialFeatures(degree=3, include_bias=False)),
+                (&#x27;lm&#x27;, LinearRegression())])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;PolynomialFeatures<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.preprocessing.PolynomialFeatures.html">?<span>Documentation for PolynomialFeatures</span></a></label><div class="sk-toggleable__content fitted"><pre>PolynomialFeatures(degree=3, include_bias=False)</pre></div> </div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;LinearRegression<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div></div></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="feature-engineering.html#cb7-1" aria-hidden="true" tabindex="-1"></a>poly_features <span class="op">=</span> poly_model.named_steps[<span class="st">&quot;poly&quot;</span>].transform(original_data[[<span class="st">&quot;x&quot;</span>]])</span>
+<span id="cb7-2"><a href="feature-engineering.html#cb7-2" aria-hidden="true" tabindex="-1"></a>poly_recipe <span class="op">=</span> pd.DataFrame(poly_features, columns<span class="op">=</span>[<span class="st">&quot;x_poly_1&quot;</span>, <span class="st">&quot;x_poly_2&quot;</span>, <span class="st">&quot;x_poly_3&quot;</span>])</span>
+<span id="cb7-3"><a href="feature-engineering.html#cb7-3" aria-hidden="true" tabindex="-1"></a>poly_recipe[<span class="st">&quot;y&quot;</span>] <span class="op">=</span> original_data[<span class="st">&quot;y&quot;</span>].to_numpy()</span>
+<span id="cb7-4"><a href="feature-engineering.html#cb7-4" aria-hidden="true" tabindex="-1"></a>display(poly_recipe.head())</span></code></pre></div>
+<pre><code>##     x_poly_1    x_poly_2     x_poly_3            y
+## 0 -10.000000  100.000000 -1000.000000 -1142.382504
+## 1  -9.797980   96.000408  -940.610059  -814.237214
+## 2  -9.595960   92.082441  -883.619379  -970.685553
+## 3  -9.393939   88.246097  -828.978490  -854.895814
+## 4  -9.191919   84.491378  -776.637923  -784.172254</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="feature-engineering.html#cb9-1" aria-hidden="true" tabindex="-1"></a>coeficientes <span class="op">=</span> pd.Series(</span>
+<span id="cb9-2"><a href="feature-engineering.html#cb9-2" aria-hidden="true" tabindex="-1"></a>    np.r_[poly_model.named_steps[<span class="st">&quot;lm&quot;</span>].intercept_, poly_model.named_steps[<span class="st">&quot;lm&quot;</span>].coef_],</span>
+<span id="cb9-3"><a href="feature-engineering.html#cb9-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">&quot;intercept&quot;</span>, <span class="st">&quot;x_poly_1&quot;</span>, <span class="st">&quot;x_poly_2&quot;</span>, <span class="st">&quot;x_poly_3&quot;</span>],</span>
+<span id="cb9-4"><a href="feature-engineering.html#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="feature-engineering.html#cb9-5" aria-hidden="true" tabindex="-1"></a>display(coeficientes)</span></code></pre></div>
+<pre><code>## intercept   -3.511736
+## x_poly_1    -7.251514
+## x_poly_2     0.020318
+## x_poly_3     1.107439
+## dtype: float64</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="feature-engineering.html#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="feature-engineering.html#cb11-2" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> pd.DataFrame({<span class="st">&quot;x&quot;</span>: np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">200</span>)})</span>
+<span id="cb11-3"><a href="feature-engineering.html#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(original_data[<span class="st">&quot;x&quot;</span>], original_data[<span class="st">&quot;y&quot;</span>], s<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb11-4"><a href="feature-engineering.html#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.plot(grid[<span class="st">&quot;x&quot;</span>], poly_model.predict(grid), color<span class="op">=</span><span class="st">&quot;tab:blue&quot;</span>)</span>
+<span id="cb11-5"><a href="feature-engineering.html#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Regresión polinomial&quot;</span>)</span>
+<span id="cb11-6"><a href="feature-engineering.html#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb11-7"><a href="feature-engineering.html#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;y&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
+<p>En el ejemplo anterior puede mostrarse que es a través de la ponderación de los términos polinomiales que se logra estimar a la variable de respuesta <em>Y</em>.</p>
+<p>Este mismo procedimiento puede usarse en la receta de la ingeniería de datos para realizar la predicción de una variable de respuesta mediante cualquier otro algoritmo predictivo.</p>
+</div>
+<div id="análisis-de-componentes-principales" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Análisis de Componentes Principales<a href="feature-engineering.html#análisis-de-componentes-principales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El análisis PCA (por sus siglas en inglés) es una <strong>técnica de reducción de dimensión</strong> útil tanto para el proceso de análisis exploratorio, el inferencial y predictivo. Es una técnica ampliamente usada en muchos estudios, pues permite sintetizar la información relevante y desechar aquello que no aporta tanto. Es particularmente útil en el caso de conjuntos de datos “amplios” en donde las <strong>variables están correlacionadas entre sí</strong> y donde se tienen muchas variables para cada observación.</p>
+<p>En los conjuntos de datos donde hay muchas variables presentes, no es fácil trazar los datos en su formato original, lo que dificulta tener una idea de las tendencias presentes en ellos. PCA permite ver la estructura general de los datos, identificando qué observaciones son similares entre sí y cuáles son diferentes. Esto puede permitirnos identificar grupos de muestras que son similares y determinar qué variables hacen a un grupo diferente de otro.</p>
+<p>La idea detrás de esta técnica es la siguiente:</p>
+<ul>
+<li>Se desean crear nuevas variables llamadas <strong>Componentes Principales</strong>, las cuales son creadas como combinación lineal (transformación lineal) de las variables originales, por lo que cada una de las variables nuevas contiene parcialmente información de todas las variables originales.</li>
+</ul>
+<p><span class="math display">\[Z_1 = a_{11}X_1 +a_{12}X_2 + ... + a_{1p}X_p\]</span>
+<span class="math display">\[Z_2 = a_{21}X_1 +a_{22}X_2 + ... + a_{2p}X_p\]</span>
+<span class="math display">\[...\]</span>
+<span class="math display">\[Z_p = a_{p1}X_1 +a_{p2}X_2 + ... + a_{pp}X_p\]</span></p>
+<ul>
+<li>Se desea que la primer componente principal capture la mayor varianza posible de todo el conjunto de datos.</li>
+</ul>
+<p><span class="math display">\[\forall i \in 2,...,p \quad Var(Z_1)&gt;Var(Z_i)\]</span></p>
+<ul>
+<li>La segunda componente principal deberá <strong>SER INDEPENDIENTE</strong> de la primera y deberá abarcar la mayor varianza posible del restante. Esta condición se debe cumplir para toda componente <em>i</em>, de tal forma que las nuevas componentes creadas son independientes entre sí y acumulan la mayor proporción de varianza en las primeras de ellas, dejando la mínima proporción de varianza a las últimas componentes.</li>
+</ul>
+<p><span class="math display">\[Z_1 \perp\!\!\!\perp Z_2 \quad \&amp; \quad Var(Z_1)&gt;Var(Z_2)&gt;Var(Z_i)\]</span></p>
+<ul>
+<li>El punto anterior permite desechar unas cuantas componentes (las últimas) sin perder mucha varianza.</li>
+</ul>
+<div class="infobox note">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<ul>
+<li><p><strong>A través de CPA se logra retener la mayor cantidad de varianza útil pero usando menos componentes que el número de variables originales.</strong></p></li>
+<li><p><strong>Para que este proceso sea efectivo, debe existir ALTA correlación entre las variables originales.</strong></p></li>
+</ul>
+</div>
+<p>Cuando muchas variables se correlacionan entre sí, todas contribuirán fuertemente al mismo componente principal. Cada componente principal suma un cierto porcentaje de la variación total en el conjunto de datos. Cuando sus variables iniciales estén fuertemente correlacionadas entre sí y podrá aproximar la mayor parte de la complejidad de su conjunto de datos con solo unos pocos componentes principales.</p>
+<p>Agregar componentes adicionales hace que la estimación del conjunto de datos total sea más precisa, pero también más difícil de manejar.</p>
+<div id="eigenvalores-y-eigenvectores" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Eigenvalores y eigenvectores<a href="feature-engineering.html#eigenvalores-y-eigenvectores" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los vectores propios y los valores propios vienen en pares: <strong>cada vector propio tiene un valor propio correspondiente</strong>. Los vectores propios son la ponderación que permite crear la combinación lineal de las variables para conformar cada componente principal, mientras que el valor propio es la varianza asociada a cada componente principal. Desde un punto de vista geométrico, el eigenvector es la dirección del vector determinado por la componente principal y el eigenvalor es la magnitud de dicho vector.</p>
+<div class="infobox pin">
+<ul>
+<li><p>El valor propio de una componente es la varianza de este.</p></li>
+<li><p>La suma acumulada de los primeros <span class="math inline">\(j\)</span> eigenvalores representa la varianza acumulada de las primeras <span class="math inline">\(j\)</span> componentes principales</p></li>
+</ul>
+</div>
+<p>El número de valores propios y vectores propios que existe es igual al número de dimensiones que tiene el conjunto de datos.</p>
+</div>
+<div id="implementación-en-python" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Implementación en Python<a href="feature-engineering.html#implementación-en-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="feature-engineering.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb12-2"><a href="feature-engineering.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb12-3"><a href="feature-engineering.html#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="feature-engineering.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> load_margin_index</span>
+<span id="cb12-5"><a href="feature-engineering.html#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="feature-engineering.html#cb12-6" aria-hidden="true" tabindex="-1"></a>indice_marg <span class="op">=</span> load_margin_index(<span class="st">&quot;data/IMEF_2010.dbf&quot;</span>)</span>
+<span id="cb12-7"><a href="feature-engineering.html#cb12-7" aria-hidden="true" tabindex="-1"></a>indice_marg.info()</span></code></pre></div>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## RangeIndex: 32 entries, 0 to 31
+## Data columns (total 16 columns):
+##  #   Column   Non-Null Count  Dtype  
+## ---  ------   --------------  -----  
+##  0   CVE_ENT  32 non-null     object 
+##  1   AÑO      32 non-null     int64  
+##  2   POB_TOT  32 non-null     int64  
+##  3   ANALF    32 non-null     float64
+##  4   SPRIM    32 non-null     float64
+##  5   OVSDE    32 non-null     float64
+##  6   OVSEE    32 non-null     float64
+##  7   OVSAE    32 non-null     float64
+##  8   VHAC     32 non-null     float64
+##  9   OVPT     32 non-null     float64
+##  10  PL_5000  32 non-null     float64
+##  11  PO2SM    32 non-null     float64
+##  12  IM       32 non-null     float64
+##  13  GM       32 non-null     object 
+##  14  LUGAR    32 non-null     int64  
+##  15  NOM_ENT  32 non-null     object 
+## dtypes: float64(10), int64(3), object(3)
+## memory usage: 4.1+ KB</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="feature-engineering.html#cb14-1" aria-hidden="true" tabindex="-1"></a>indice_marg[<span class="st">&quot;GM&quot;</span>].value_counts()</span></code></pre></div>
+<pre><code>## GM
+## Medio       9
+## Bajo        8
+## Alto        8
+## Muy bajo    4
+## Muy alto    3
+## Name: count, dtype: int64</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="feature-engineering.html#cb16-1" aria-hidden="true" tabindex="-1"></a>pca_features <span class="op">=</span> [<span class="st">&quot;ANALF&quot;</span>, <span class="st">&quot;SPRIM&quot;</span>, <span class="st">&quot;OVSDE&quot;</span>, <span class="st">&quot;OVSEE&quot;</span>, <span class="st">&quot;OVSAE&quot;</span>, <span class="st">&quot;VHAC&quot;</span>, <span class="st">&quot;OVPT&quot;</span>, <span class="st">&quot;PL_5000&quot;</span>, <span class="st">&quot;PO2SM&quot;</span>]</span>
+<span id="cb16-2"><a href="feature-engineering.html#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="feature-engineering.html#cb16-3" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb16-4"><a href="feature-engineering.html#cb16-4" aria-hidden="true" tabindex="-1"></a>X_pca <span class="op">=</span> scaler.fit_transform(indice_marg[pca_features])</span>
+<span id="cb16-5"><a href="feature-engineering.html#cb16-5" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">9</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb16-6"><a href="feature-engineering.html#cb16-6" aria-hidden="true" tabindex="-1"></a>pca_scores <span class="op">=</span> pca.fit_transform(X_pca)</span>
+<span id="cb16-7"><a href="feature-engineering.html#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="feature-engineering.html#cb16-8" aria-hidden="true" tabindex="-1"></a>pca_recipe <span class="op">=</span> pd.concat(</span>
+<span id="cb16-9"><a href="feature-engineering.html#cb16-9" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb16-10"><a href="feature-engineering.html#cb16-10" aria-hidden="true" tabindex="-1"></a>        indice_marg[[<span class="st">&quot;IM&quot;</span>, <span class="st">&quot;NOM_ENT&quot;</span>, <span class="st">&quot;GM&quot;</span>]].reset_index(drop<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb16-11"><a href="feature-engineering.html#cb16-11" aria-hidden="true" tabindex="-1"></a>        pd.DataFrame(pca_scores, columns<span class="op">=</span>[<span class="ss">f&quot;PC</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">&quot;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)]),</span>
+<span id="cb16-12"><a href="feature-engineering.html#cb16-12" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb16-13"><a href="feature-engineering.html#cb16-13" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb16-14"><a href="feature-engineering.html#cb16-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-15"><a href="feature-engineering.html#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="feature-engineering.html#cb16-16" aria-hidden="true" tabindex="-1"></a>pca_recipe.head()</span></code></pre></div>
+<pre><code>##          IM               NOM_ENT        GM  ...       PC7       PC8       PC9
+## 0 -0.910861        Aguascalientes      Bajo  ...  0.135596  0.031169  0.057180
+## 1 -1.140149       Baja California  Muy bajo  ... -0.073926 -0.042614  0.003122
+## 2 -0.681287   Baja California Sur      Bajo  ... -0.225205  0.039793 -0.035731
+## 3  0.433571              Campeche      Alto  ... -0.297280 -0.373325  0.023337
+## 4 -1.140004  Coahuila de Zaragoza  Muy bajo  ...  0.277471 -0.072466  0.083981
+## 
+## [5 rows x 12 columns]</code></pre>
+<p>Veamos los pasos de esta receta:</p>
+<ul>
+<li><p>Primero, debemos decirle a la receta qué datos se usan para predecir la variable de respuesta.</p></li>
+<li><p>Se actualiza el rol de las variables <em>nombre de entidad</em> y <em>grado de marginación</em> con la función <code>NOM_ENT</code>, ya que es una variable que queremos mantener por conveniencia como identificador de filas, pero no son un predictor ni variable de respuesta.</p></li>
+<li><p>Necesitamos centrar y escalar los predictores numéricos, porque estamos a punto de implementar <strong>PCA</strong>.</p></li>
+<li><p>Finalmente, usamos <code>PCA()</code> para realizar el análisis de componentes principales.</p></li>
+<li><p>La función <code>prep()</code> es la que realiza toda la preparación de la receta.</p></li>
+</ul>
+<p>Una vez que hayamos hecho eso, podremos explorar los resultados del <strong>PCA</strong>. Comencemos por ver cómo resultó el <strong>PCA</strong>. Podemos ordenar los resultados mediante la función <code>tidy()</code>, incluido el paso de <strong>PCA</strong>, que es el segundo paso. Luego hagamos una visualización para ver cómo se ven los componentes.</p>
+<p>A continuación se muestran la desviación estándar, porcentaje de varianza y porcentaje de varianza acumulada que aporta cada componente principal.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="feature-engineering.html#cb18-1" aria-hidden="true" tabindex="-1"></a>pca_summary <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb18-2"><a href="feature-engineering.html#cb18-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb18-3"><a href="feature-engineering.html#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;component&quot;</span>: [<span class="ss">f&quot;PC</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">&quot;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)],</span>
+<span id="cb18-4"><a href="feature-engineering.html#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;std&quot;</span>: np.sqrt(pca.explained_variance_),</span>
+<span id="cb18-5"><a href="feature-engineering.html#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;variance_ratio&quot;</span>: pca.explained_variance_ratio_,</span>
+<span id="cb18-6"><a href="feature-engineering.html#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cumulative_variance&quot;</span>: np.cumsum(pca.explained_variance_ratio_),</span>
+<span id="cb18-7"><a href="feature-engineering.html#cb18-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-8"><a href="feature-engineering.html#cb18-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-9"><a href="feature-engineering.html#cb18-9" aria-hidden="true" tabindex="-1"></a>pca_summary</span></code></pre></div>
+<pre><code>##   component       std  variance_ratio  cumulative_variance
+## 0       PC1  2.613184        0.735037             0.735037
+## 1       PC2  0.833984        0.074866             0.809903
+## 2       PC3  0.804701        0.069701             0.879604
+## 3       PC4  0.656747        0.046426             0.926030
+## 4       PC5  0.529347        0.030161             0.956191
+## 5       PC6  0.447737        0.021578             0.977770
+## 6       PC7  0.323057        0.011234             0.989003
+## 7       PC8  0.260703        0.007316             0.996319
+## 8       PC9  0.184921        0.003681             1.000000</code></pre>
+<p>Podemos observar que en la primera componente principal, las <span class="math inline">\(9\)</span> variables que utilizó el Consejo Nacional de Población para obtener el <a href="http://www.conapo.gob.mx/work/models/CONAPO/Resource/862/4/images/06_C_AGEB.pdf">Índice de Marginación 2010</a> aportan de manera positiva en el primer componente principal.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="feature-engineering.html#cb20-1" aria-hidden="true" tabindex="-1"></a>loadings <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb20-2"><a href="feature-engineering.html#cb20-2" aria-hidden="true" tabindex="-1"></a>    pca.components_.T,</span>
+<span id="cb20-3"><a href="feature-engineering.html#cb20-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>pca_features,</span>
+<span id="cb20-4"><a href="feature-engineering.html#cb20-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="ss">f&quot;PC</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">&quot;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>)],</span>
+<span id="cb20-5"><a href="feature-engineering.html#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-6"><a href="feature-engineering.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="feature-engineering.html#cb20-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb20-8"><a href="feature-engineering.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, component <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), [<span class="st">&quot;PC1&quot;</span>, <span class="st">&quot;PC2&quot;</span>, <span class="st">&quot;PC3&quot;</span>, <span class="st">&quot;PC4&quot;</span>]):</span>
+<span id="cb20-9"><a href="feature-engineering.html#cb20-9" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> loadings[component].sort_values(key<span class="op">=</span><span class="kw">lambda</span> s: s.<span class="bu">abs</span>())</span>
+<span id="cb20-10"><a href="feature-engineering.html#cb20-10" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> np.where(values <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;tab:blue&quot;</span>, <span class="st">&quot;tab:red&quot;</span>)</span>
+<span id="cb20-11"><a href="feature-engineering.html#cb20-11" aria-hidden="true" tabindex="-1"></a>    ax.barh(values.index, values.<span class="bu">abs</span>(), color<span class="op">=</span>colors)</span>
+<span id="cb20-12"><a href="feature-engineering.html#cb20-12" aria-hidden="true" tabindex="-1"></a>    ax.set_title(component)</span>
+<span id="cb20-13"><a href="feature-engineering.html#cb20-13" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">&quot;Absolute value of contribution&quot;</span>)</span>
+<span id="cb20-14"><a href="feature-engineering.html#cb20-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-25-5.png" width="1152" /></p>
+<p>Notamos que las <span class="math inline">\(9\)</span> variables aportan entre el <span class="math inline">\(25\%\)</span> y el <span class="math inline">\(35\%\)</span> a la
+primera componente principal.</p>
+</div>
+<div id="representación-gráfica" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Representación gráfica<a href="feature-engineering.html#representación-gráfica" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="feature-engineering.html#cb21-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb21-2"><a href="feature-engineering.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gm, group <span class="kw">in</span> pca_recipe.groupby(<span class="st">&quot;GM&quot;</span>):</span>
+<span id="cb21-3"><a href="feature-engineering.html#cb21-3" aria-hidden="true" tabindex="-1"></a>    ax.scatter(group[<span class="st">&quot;PC1&quot;</span>], group[<span class="st">&quot;PC2&quot;</span>], label<span class="op">=</span>gm, alpha<span class="op">=</span><span class="fl">0.7</span>, s<span class="op">=</span><span class="dv">35</span>)</span>
+<span id="cb21-4"><a href="feature-engineering.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, row <span class="kw">in</span> group.iterrows():</span>
+<span id="cb21-5"><a href="feature-engineering.html#cb21-5" aria-hidden="true" tabindex="-1"></a>        ax.annotate(row[<span class="st">&quot;NOM_ENT&quot;</span>], (row[<span class="st">&quot;PC1&quot;</span>], row[<span class="st">&quot;PC2&quot;</span>]), fontsize<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x17fd65590&gt;
+## Text(1.1330017470316422, 0.832286855023612, &#39;Campeche&#39;)
+## Text(1.7284464407525013, 0.3649603374661646, &#39;Hidalgo&#39;)
+## Text(1.3741193012132469, -0.1322766484776937, &#39;Michoacán de Ocampo&#39;)
+## Text(1.861208333247305, 0.2587390201035541, &#39;Puebla&#39;)
+## Text(1.4742421419622944, -1.1102785956907923, &#39;San Luis Potosí&#39;)
+## Text(1.2344622502895026, 0.08347549149458004, &#39;Tabasco&#39;)
+## Text(2.8103873080431696, -1.0277230910779205, &#39;Veracruz de Ignacio de la Llave&#39;)
+## Text(1.1052586554019805, 2.5917279721610025, &#39;Yucatán&#39;)
+## &lt;matplotlib.collections.PathCollection object at 0x17fc87410&gt;
+## Text(-2.3802461171009974, 0.2304068152348222, &#39;Aguascalientes&#39;)
+## Text(-1.7803294478164762, -1.3958234393017566, &#39;Baja California Sur&#39;)
+## Text(-2.034583239428266, -0.032058466372089874, &#39;Colima&#39;)
+## Text(-1.3582563748659153, -1.07087434243872, &#39;Chihuahua&#39;)
+## Text(-2.154737393819812, -0.15353769113145788, &#39;Jalisco&#39;)
+## Text(-1.446979830339495, 0.5125679138084553, &#39;México&#39;)
+## Text(-1.8382835562444921, -0.28225972822874174, &#39;Sonora&#39;)
+## Text(-1.885244803013093, -0.1620882661489742, &#39;Tamaulipas&#39;)
+## &lt;matplotlib.collections.PathCollection object at 0x17fdb0390&gt;
+## Text(0.1371380062269162, -0.6854665181723801, &#39;Durango&#39;)
+## Text(0.1587545096868669, 0.8431122098005449, &#39;Guanajuato&#39;)
+## Text(-0.7111306529687837, -0.17356931091834216, &#39;Morelos&#39;)
+## Text(0.318364626018348, -0.420674667382409, &#39;Nayarit&#39;)
+## Text(-0.6898266344819933, 0.28705534512257064, &#39;Querétaro&#39;)
+## Text(-1.091621384157029, 0.15039193660842062, &#39;Quintana Roo&#39;)
+## Text(-0.6799076428336248, 0.2681637122234012, &#39;Sinaloa&#39;)
+## Text(-0.39156344571741064, 1.258861027129756, &#39;Tlaxcala&#39;)
+## Text(0.2710733407911827, 1.0493405572336736, &#39;Zacatecas&#39;)
+## &lt;matplotlib.collections.PathCollection object at 0x17fd6c350&gt;
+## Text(6.056502404486059, -0.13412648045787878, &#39;Chiapas&#39;)
+## Text(6.617791167142833, 0.6264721683309717, &#39;Guerrero&#39;)
+## Text(5.60851267437469, -1.71830815079636, &#39;Oaxaca&#39;)
+## &lt;matplotlib.collections.PathCollection object at 0x17fdb8dd0&gt;
+## Text(-2.979418408708472, -0.6045528511478017, &#39;Baja California&#39;)
+## Text(-2.979041271413644, 0.14672073437371164, &#39;Coahuila de Zaragoza&#39;)
+## Text(-3.8734669657017586, -0.11157867474097231, &#39;Distrito Federal&#39;)
+## Text(-3.6146257380572817, -0.2890851736309511, &#39;Nuevo León&#39;)</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="feature-engineering.html#cb23-1" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Grado de marginación de entidades&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Grado de marginación de entidades&#39;)</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="feature-engineering.html#cb25-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;PC1&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;PC1&#39;)</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="feature-engineering.html#cb27-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&quot;PC2&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;PC2&#39;)</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="feature-engineering.html#cb29-1" aria-hidden="true" tabindex="-1"></a>ax.legend()</span></code></pre></div>
+<pre><code>## &lt;matplotlib.legend.Legend object at 0x17fdbb250&gt;</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-26-7.png" width="768" /></p>
+<p>Finalmente, podemos observar como (de izquierda a derecha) los estados con grado de marginación Muy bajo, Bajo, Medio, Alto y Muy Alto respectivamente.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="feature-engineering.html#cb31-1" aria-hidden="true" tabindex="-1"></a>lm_pc1 <span class="op">=</span> LinearRegression().fit(pca_recipe[[<span class="st">&quot;IM&quot;</span>]], pca_recipe[<span class="st">&quot;PC1&quot;</span>])</span>
+<span id="cb31-2"><a href="feature-engineering.html#cb31-2" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> pd.DataFrame({<span class="st">&quot;IM&quot;</span>: np.linspace(pca_recipe[<span class="st">&quot;IM&quot;</span>].<span class="bu">min</span>(), pca_recipe[<span class="st">&quot;IM&quot;</span>].<span class="bu">max</span>(), <span class="dv">100</span>)})</span>
+<span id="cb31-3"><a href="feature-engineering.html#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="feature-engineering.html#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(pca_recipe[<span class="st">&quot;IM&quot;</span>], pca_recipe[<span class="st">&quot;PC1&quot;</span>], s<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x17fdf7650&gt;</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="feature-engineering.html#cb33-1" aria-hidden="true" tabindex="-1"></a>plt.plot(grid[<span class="st">&quot;IM&quot;</span>], lm_pc1.predict(grid), color<span class="op">=</span><span class="st">&quot;tab:blue&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17f86fe90&gt;]</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="feature-engineering.html#cb35-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Comparación: Índice Marginación Vs PCA CP1&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Comparación: Índice Marginación Vs PCA CP1&#39;)</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="feature-engineering.html#cb37-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;IM&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;IM&#39;)</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="feature-engineering.html#cb39-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;PC1&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;PC1&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-27-9.png" width="672" /></p>
+</div>
+<div id="cuántas-componentes-retener" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> ¿Cuántas componentes retener?<a href="feature-engineering.html#cuántas-componentes-retener" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Existe en la literatura basta información sobre el número de componentes a retener en un análisis de PCA. El siguiente gráfico lleva por nombre <strong>gráfico de codo</strong> y muestra el porcentaje de varianza explicado por cada componente principal.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="feature-engineering.html#cb41-1" aria-hidden="true" tabindex="-1"></a>eig <span class="op">=</span> pca_summary.assign(variance_percent<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;variance_ratio&quot;</span>] <span class="op">*</span> <span class="dv">100</span>)</span>
+<span id="cb41-2"><a href="feature-engineering.html#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="feature-engineering.html#cb41-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> eig.plot(kind<span class="op">=</span><span class="st">&quot;bar&quot;</span>, x<span class="op">=</span><span class="st">&quot;component&quot;</span>, y<span class="op">=</span><span class="st">&quot;variance_percent&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb41-4"><a href="feature-engineering.html#cb41-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span></code></pre></div>
+<pre><code>## (0.0, 100.0)</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="feature-engineering.html#cb43-1" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Porcentaje de varianza explicada&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Porcentaje de varianza explicada&#39;)</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="feature-engineering.html#cb45-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Componente&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Componente&#39;)</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="feature-engineering.html#cb47-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&quot;% varianza&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;% varianza&#39;)</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="feature-engineering.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, value <span class="kw">in</span> <span class="bu">enumerate</span>(eig[<span class="st">&quot;variance_percent&quot;</span>]):</span>
+<span id="cb49-2"><a href="feature-engineering.html#cb49-2" aria-hidden="true" tabindex="-1"></a>    ax.text(i, value <span class="op">+</span> <span class="dv">1</span>, <span class="ss">f&quot;</span><span class="sc">{</span>value<span class="sc">:.1f}</span><span class="ss">%&quot;</span>, ha<span class="op">=</span><span class="st">&quot;center&quot;</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div>
+<pre><code>## Text(0, 74.50368853519598, &#39;73.5%&#39;)
+## Text(1, 8.486594784814843, &#39;7.5%&#39;)
+## Text(2, 7.970088038000755, &#39;7.0%&#39;)
+## Text(3, 5.642641397679743, &#39;4.6%&#39;)
+## Text(4, 4.016127550559478, &#39;3.0%&#39;)
+## Text(5, 3.15781880809012, &#39;2.2%&#39;)
+## Text(6, 2.1233820254211606, &#39;1.1%&#39;)
+## Text(7, 1.731580180829312, &#39;0.7%&#39;)
+## Text(8, 1.368078679408619, &#39;0.4%&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-28-11.png" width="768" /></p>
+<p>El grafico anterior muestra que hay una diferencia muy grande entre la varianza retenida por la 1er componente principal y el resto de las variables. Dependiendo del objetivo del analisis podra elegirse el numero adecuado de componentes a retener, no obstante, la literatura sugiere retener 1 o 2 componentes principales.</p>
+<p>Regresando al tema de <strong>feature engineering</strong>, es posible realizar el proceso de componentes principales y elegir una de las dos opciones siguientes:</p>
+<ol style="list-style-type: decimal">
+<li><p>Especificar el número de componentes a retener</p></li>
+<li><p>Indicar el porcentaje de varianza a alcanzar</p></li>
+</ol>
+<p>La segunda opción elegirá tantas componentes como sean necesarias hasta alcanzar el hiperparámetro mínimo indicado. A continuación se ejemplifica:</p>
+<p><strong>Caso 1:</strong></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="feature-engineering.html#cb51-1" aria-hidden="true" tabindex="-1"></a>pca_2 <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb51-2"><a href="feature-engineering.html#cb51-2" aria-hidden="true" tabindex="-1"></a>pca_scores_2 <span class="op">=</span> pca_2.fit_transform(X_pca)</span>
+<span id="cb51-3"><a href="feature-engineering.html#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="feature-engineering.html#cb51-4" aria-hidden="true" tabindex="-1"></a>pca_recipe_2 <span class="op">=</span> pd.concat(</span>
+<span id="cb51-5"><a href="feature-engineering.html#cb51-5" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb51-6"><a href="feature-engineering.html#cb51-6" aria-hidden="true" tabindex="-1"></a>        indice_marg[[<span class="st">&quot;IM&quot;</span>, <span class="st">&quot;NOM_ENT&quot;</span>, <span class="st">&quot;GM&quot;</span>]].reset_index(drop<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb51-7"><a href="feature-engineering.html#cb51-7" aria-hidden="true" tabindex="-1"></a>        pd.DataFrame(pca_scores_2, columns<span class="op">=</span>[<span class="st">&quot;PC1&quot;</span>, <span class="st">&quot;PC2&quot;</span>]),</span>
+<span id="cb51-8"><a href="feature-engineering.html#cb51-8" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb51-9"><a href="feature-engineering.html#cb51-9" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb51-10"><a href="feature-engineering.html#cb51-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb51-11"><a href="feature-engineering.html#cb51-11" aria-hidden="true" tabindex="-1"></a>pca_recipe_2.head()</span></code></pre></div>
+<pre><code>##          IM               NOM_ENT        GM       PC1       PC2
+## 0 -0.910861        Aguascalientes      Bajo -2.380246  0.230407
+## 1 -1.140149       Baja California  Muy bajo -2.979418 -0.604553
+## 2 -0.681287   Baja California Sur      Bajo -1.780329 -1.395823
+## 3  0.433571              Campeche      Alto  1.133002  0.832287
+## 4 -1.140004  Coahuila de Zaragoza  Muy bajo -2.979041  0.146721</code></pre>
+<p><strong>Caso 2:</strong></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="feature-engineering.html#cb53-1" aria-hidden="true" tabindex="-1"></a>pca_90 <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="fl">0.90</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb53-2"><a href="feature-engineering.html#cb53-2" aria-hidden="true" tabindex="-1"></a>pca_scores_90 <span class="op">=</span> pca_90.fit_transform(X_pca)</span>
+<span id="cb53-3"><a href="feature-engineering.html#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="feature-engineering.html#cb53-4" aria-hidden="true" tabindex="-1"></a>pca_recipe_90 <span class="op">=</span> pd.concat(</span>
+<span id="cb53-5"><a href="feature-engineering.html#cb53-5" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb53-6"><a href="feature-engineering.html#cb53-6" aria-hidden="true" tabindex="-1"></a>        indice_marg[[<span class="st">&quot;IM&quot;</span>, <span class="st">&quot;NOM_ENT&quot;</span>, <span class="st">&quot;GM&quot;</span>]].reset_index(drop<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb53-7"><a href="feature-engineering.html#cb53-7" aria-hidden="true" tabindex="-1"></a>        pd.DataFrame(pca_scores_90, columns<span class="op">=</span>[<span class="ss">f&quot;PC</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">&quot;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, pca_scores_90.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>)]),</span>
+<span id="cb53-8"><a href="feature-engineering.html#cb53-8" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb53-9"><a href="feature-engineering.html#cb53-9" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb53-10"><a href="feature-engineering.html#cb53-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb53-11"><a href="feature-engineering.html#cb53-11" aria-hidden="true" tabindex="-1"></a>pca_recipe_90.head()</span></code></pre></div>
+<pre><code>##          IM               NOM_ENT        GM  ...       PC2       PC3       PC4
+## 0 -0.910861        Aguascalientes      Bajo  ...  0.230407 -0.378154  0.499679
+## 1 -1.140149       Baja California  Muy bajo  ... -0.604553  0.060667 -0.500370
+## 2 -0.681287   Baja California Sur      Bajo  ... -1.395823  0.694278 -0.406414
+## 3  0.433571              Campeche      Alto  ...  0.832287  0.153740 -0.274890
+## 4 -1.140004  Coahuila de Zaragoza  Muy bajo  ...  0.146721 -0.159512 -0.135288
+## 
+## [5 rows x 7 columns]</code></pre>
+<p>Así es como usaremos el análisis de componentes principales para mejorar la estructura de variables que sirven de input para cualquiera de los modelos posteriores. Continuaremos con un paso más de pre-procesamiento antes de comenzar a aprender nuevos modelos.</p>
+</div>
+</div>
+<div id="imputación-knn" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Imputación KNN<a href="feature-engineering.html#imputación-knn" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Antes de aprender el uso de la función de imputación, recordaremos brevemente como funciona el algoritmo de K-Nearest-Neighbor (KNN)</p>
+<p>KNN es un algoritmo de aprendizaje supervisado que podemos usar tanto para regresión como clasificación. Es un algoritmo fácil de interpretar y que permite ser flexible en el balance entre sesgo y varianza (dependiendo de los hiper-parámetros seleccionados).</p>
+<p>El algoritmo de K vecinos más cercanos realiza comparaciones entre un nuevo elemento y las observaciones anteriores que ya cuentan con etiqueta. La esencia de este algoritmo está en <strong>etiquetar a un nuevo elemento de manera similar a como están etiquetados aquellos <em>K</em> elementos que más se le parecen</strong>. Veremos este proceso para cada uno de los posibles casos:</p>
+<p><img src="img/04-ml/knn3.gif" width="800pt" height="400pt" style="display: block; margin: auto;" /></p>
+<div id="ventajas-y-limitaciones-del-clasificador-knn" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> <strong>Ventajas y limitaciones del Clasificador KNN</strong><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li>KNN no hace ninguna suposición subyacente sobre los datos.</li>
+<li>Con la adición de más puntos de datos, el clasificador evoluciona constantemente y es capaz de adaptarse rápidamente a los cambios en el conjunto de datos de entrada.</li>
+<li>Le da al usuario la flexibilidad de elegir la <a href="https://www.maartengrootendorst.com/blog/distances/">métrica de medida de distancia</a>.</li>
+</ul>
+<p><strong>Desventajas:</strong></p>
+<ul>
+<li>KNN es muy sensible a los valores atípicos.</li>
+<li>No funciona con datos faltantes.</li>
+<li>A medida que crece el conjunto de datos, la clasificación se vuelve más lenta.</li>
+<li>Existe la llamada maldición de la dimensionalidad.</li>
+</ul>
+<p>Este algoritmo es altamente usado para imputación de datos faltantes, ¿tiene lógica, cierto? Con <strong>scikit-learn</strong> podemos aplicar este paso con la clase <strong><code>KNNImputer</code></strong>.</p>
+</div>
+<div id="implementación-en-python-1" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Implementación en Python<a href="feature-engineering.html#implementación-en-python-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Veámos cómo implementar la imputación por <em>KNN</em> para datos faltantes en <em>Python</em>:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="feature-engineering.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> KNNImputer</span>
+<span id="cb55-2"><a href="feature-engineering.html#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="feature-engineering.html#cb55-3" aria-hidden="true" tabindex="-1"></a>imputer <span class="op">=</span> KNNImputer(n_neighbors<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb55-4"><a href="feature-engineering.html#cb55-4" aria-hidden="true" tabindex="-1"></a>datos_imputados <span class="op">=</span> imputer.fit_transform(datos_con_nulos)</span></code></pre></div>
+<p>Acerca de los parámetros:</p>
+<ul>
+<li><p><em>neighbors:</em> Número de vecinos</p></li>
+<li><p><em>impute_with:</em> Una llamada a <em>imp_vars</em> para especificar qué variables se usan para imputar las variables. Si una columna se incluye en ambas listas para ser imputada y para ser un predictor de imputación, se eliminará de esta última y no se usará para imputarse a sí misma.</p></li>
+<li><p><em>id:</em> Una cadena de caracteres que es exclusiva de este paso para identificarlo.</p></li>
+</ul>
+<p>La función utiliza el conjunto de entrenamiento para imputar cualquier otro conjunto de datos. La única función de distancia disponible es la distancia de <strong>Gower</strong>, que se puede utilizar para combinaciones de datos nominales y numéricos.</p>
+<div class="infobox note">
+<p><em>Acerca de <strong>Gower</strong></em> El coeficiente de similitud de Gower propuesto en 1971 permite la manipulación simultánea de variables cuantitativas y cualitativas en una base de datos, mediante la aplicación de este coeficiente se logra hallar la similitud entre individuos a los cuales se les han medido una serie de características en común. Una similaridad alta, es decir cercana a 1, indicara gran homogeneidad entre los individuos; por el contrario, una similaridad cercana a cero indica que los individuos son diferentes</p>
+</div>
+<p>Vamos a utilizar los datos de <em>biomass</em> de la libreria <em>modeldata</em> que
+contiene un conjunto de datos donde diferentes combustibles de biomasa se caracterizan por la cantidad de ciertas moléculas (carbono, hidrógeno, oxígeno, nitrógeno y azufre) y el poder calorífico superior correspondiente (HHV). En esta base hemos retirado valores aleatoriamente sobre dos variables para realizar el ejercicio.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="feature-engineering.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> KNNImputer</span>
+<span id="cb56-2"><a href="feature-engineering.html#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="feature-engineering.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> load_biomass, show_missing</span>
+<span id="cb56-4"><a href="feature-engineering.html#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="feature-engineering.html#cb56-5" aria-hidden="true" tabindex="-1"></a>biomass <span class="op">=</span> load_biomass()</span>
+<span id="cb56-6"><a href="feature-engineering.html#cb56-6" aria-hidden="true" tabindex="-1"></a>biomass_te_whole <span class="op">=</span> biomass.copy()</span>
+<span id="cb56-7"><a href="feature-engineering.html#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-8"><a href="feature-engineering.html#cb56-8" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">19735</span>)</span>
+<span id="cb56-9"><a href="feature-engineering.html#cb56-9" aria-hidden="true" tabindex="-1"></a>carb_missing <span class="op">=</span> rng.choice(biomass_te_whole.index, <span class="dv">75</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb56-10"><a href="feature-engineering.html#cb56-10" aria-hidden="true" tabindex="-1"></a>nitro_missing <span class="op">=</span> rng.choice(biomass_te_whole.index, <span class="dv">75</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb56-11"><a href="feature-engineering.html#cb56-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="feature-engineering.html#cb56-12" aria-hidden="true" tabindex="-1"></a>biomass_te_whole.loc[carb_missing, <span class="st">&quot;carbon&quot;</span>] <span class="op">=</span> np.nan</span>
+<span id="cb56-13"><a href="feature-engineering.html#cb56-13" aria-hidden="true" tabindex="-1"></a>biomass_te_whole.loc[nitro_missing, <span class="st">&quot;nitrogen&quot;</span>] <span class="op">=</span> np.nan</span>
+<span id="cb56-14"><a href="feature-engineering.html#cb56-14" aria-hidden="true" tabindex="-1"></a>biomass_te_whole[<span class="st">&quot;carb_imputed&quot;</span>] <span class="op">=</span> <span class="st">&quot;No&quot;</span></span>
+<span id="cb56-15"><a href="feature-engineering.html#cb56-15" aria-hidden="true" tabindex="-1"></a>biomass_te_whole.loc[carb_missing, <span class="st">&quot;carb_imputed&quot;</span>] <span class="op">=</span> <span class="st">&quot;Yes&quot;</span></span>
+<span id="cb56-16"><a href="feature-engineering.html#cb56-16" aria-hidden="true" tabindex="-1"></a>biomass_te_whole[<span class="st">&quot;nitro_imputed&quot;</span>] <span class="op">=</span> <span class="st">&quot;No&quot;</span></span>
+<span id="cb56-17"><a href="feature-engineering.html#cb56-17" aria-hidden="true" tabindex="-1"></a>biomass_te_whole.loc[nitro_missing, <span class="st">&quot;nitro_imputed&quot;</span>] <span class="op">=</span> <span class="st">&quot;Yes&quot;</span></span>
+<span id="cb56-18"><a href="feature-engineering.html#cb56-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-19"><a href="feature-engineering.html#cb56-19" aria-hidden="true" tabindex="-1"></a>biomass_tr <span class="op">=</span> biomass_te_whole.query(<span class="st">&quot;dataset == &#39;Training&#39;&quot;</span>).copy()</span>
+<span id="cb56-20"><a href="feature-engineering.html#cb56-20" aria-hidden="true" tabindex="-1"></a>biomass_te <span class="op">=</span> biomass_te_whole.query(<span class="st">&quot;dataset == &#39;Testing&#39;&quot;</span>).copy()</span>
+<span id="cb56-21"><a href="feature-engineering.html#cb56-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-22"><a href="feature-engineering.html#cb56-22" aria-hidden="true" tabindex="-1"></a>biomass_te_whole.loc[nitro_missing].head()</span></code></pre></div>
+<pre><code>##       dataset     carbon  hydrogen  ...        HHV  carb_imputed  nitro_imputed
+## 115  Training  51.003619  4.286540  ...  18.100509            No            Yes
+## 470   Testing  42.491629  6.211118  ...  20.855126            No            Yes
+## 299  Training  32.897363  6.860495  ...  13.200513            No            Yes
+## 524   Testing  55.528876  5.211108  ...  15.377181            No            Yes
+## 337  Training  47.496787  6.637853  ...  17.733996            No            Yes
+## 
+## [5 rows x 9 columns]</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="feature-engineering.html#cb58-1" aria-hidden="true" tabindex="-1"></a>show_missing(biomass_tr, title<span class="op">=</span><span class="st">&quot;Train&quot;</span>)</span></code></pre></div>
+<pre><code>## Train
+##    variable  missing_rate
+## 4  nitrogen          15.2
+## 1    carbon          13.6
+##    variable  missing_rate
+## 4  nitrogen          15.2
+## 1    carbon          13.6</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="feature-engineering.html#cb60-1" aria-hidden="true" tabindex="-1"></a>show_missing(biomass_te, title<span class="op">=</span><span class="st">&quot;Test&quot;</span>)</span></code></pre></div>
+<pre><code>## Test
+##    variable  missing_rate
+## 1    carbon     14.906832
+## 4  nitrogen     11.180124
+##    variable  missing_rate
+## 1    carbon     14.906832
+## 4  nitrogen     11.180124</code></pre>
+<p>En la primera opción vamos a aplicar el paso de immputación indicando qué columnas quieren ser imputadas y con cuáles variables queremos que se haga el proceso.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="feature-engineering.html#cb62-1" aria-hidden="true" tabindex="-1"></a>recipe_esp <span class="op">=</span> KNNImputer(n_neighbors<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb62-2"><a href="feature-engineering.html#cb62-2" aria-hidden="true" tabindex="-1"></a>columns_esp <span class="op">=</span> [<span class="st">&quot;carbon&quot;</span>, <span class="st">&quot;nitrogen&quot;</span>, <span class="st">&quot;hydrogen&quot;</span>, <span class="st">&quot;oxygen&quot;</span>]</span>
+<span id="cb62-3"><a href="feature-engineering.html#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="feature-engineering.html#cb62-4" aria-hidden="true" tabindex="-1"></a>imputed_esp_train <span class="op">=</span> biomass_tr.copy()</span>
+<span id="cb62-5"><a href="feature-engineering.html#cb62-5" aria-hidden="true" tabindex="-1"></a>imputed_esp_test <span class="op">=</span> biomass_te.copy()</span>
+<span id="cb62-6"><a href="feature-engineering.html#cb62-6" aria-hidden="true" tabindex="-1"></a>imputed_esp_train[columns_esp] <span class="op">=</span> recipe_esp.fit_transform(biomass_tr[columns_esp])</span>
+<span id="cb62-7"><a href="feature-engineering.html#cb62-7" aria-hidden="true" tabindex="-1"></a>imputed_esp_test[columns_esp] <span class="op">=</span> recipe_esp.transform(biomass_te[columns_esp])</span>
+<span id="cb62-8"><a href="feature-engineering.html#cb62-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="feature-engineering.html#cb62-9" aria-hidden="true" tabindex="-1"></a>show_missing(imputed_esp_train, title<span class="op">=</span><span class="st">&quot;Imputacion Train&quot;</span>)</span></code></pre></div>
+<pre><code>## Imputacion Train
+## No hay valores perdidos.
+## Empty DataFrame
+## Columns: [variable, missing_rate]
+## Index: []</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="feature-engineering.html#cb64-1" aria-hidden="true" tabindex="-1"></a>show_missing(imputed_esp_test, title<span class="op">=</span><span class="st">&quot;Imputacion Test&quot;</span>)</span></code></pre></div>
+<pre><code>## Imputacion Test
+## No hay valores perdidos.
+## Empty DataFrame
+## Columns: [variable, missing_rate]
+## Index: []</code></pre>
+<p>Sin embargo, siempre podemos pedirle al modelo que haga la imputación de todas las variables que tengan nulos, con toda la información de las demás variables disponibles (no nulas).</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="feature-engineering.html#cb66-1" aria-hidden="true" tabindex="-1"></a>numeric_predictors <span class="op">=</span> [<span class="st">&quot;carbon&quot;</span>, <span class="st">&quot;hydrogen&quot;</span>, <span class="st">&quot;oxygen&quot;</span>, <span class="st">&quot;nitrogen&quot;</span>, <span class="st">&quot;sulfur&quot;</span>]</span>
+<span id="cb66-2"><a href="feature-engineering.html#cb66-2" aria-hidden="true" tabindex="-1"></a>recipe <span class="op">=</span> KNNImputer(n_neighbors<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb66-3"><a href="feature-engineering.html#cb66-3" aria-hidden="true" tabindex="-1"></a>recipe.fit(biomass_tr[numeric_predictors])</span></code></pre></div>
+<pre><code>## KNNImputer(n_neighbors=3)</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="feature-engineering.html#cb68-1" aria-hidden="true" tabindex="-1"></a>imputed <span class="op">=</span> biomass_te.copy()</span>
+<span id="cb68-2"><a href="feature-engineering.html#cb68-2" aria-hidden="true" tabindex="-1"></a>imputed[numeric_predictors] <span class="op">=</span> recipe.transform(biomass_te[numeric_predictors])</span>
+<span id="cb68-3"><a href="feature-engineering.html#cb68-3" aria-hidden="true" tabindex="-1"></a>show_missing(imputed)</span></code></pre></div>
+<pre><code>## No hay valores perdidos.
+## Empty DataFrame
+## Columns: [variable, missing_rate]
+## Index: []</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="feature-engineering.html#cb70-1" aria-hidden="true" tabindex="-1"></a>biomass_test_original <span class="op">=</span> biomass.query(<span class="st">&quot;dataset == &#39;Testing&#39;&quot;</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb70-2"><a href="feature-engineering.html#cb70-2" aria-hidden="true" tabindex="-1"></a>imputed_plot <span class="op">=</span> imputed.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb70-3"><a href="feature-engineering.html#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-4"><a href="feature-engineering.html#cb70-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb70-5"><a href="feature-engineering.html#cb70-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(imputed_plot[<span class="st">&quot;nitrogen&quot;</span>], biomass_test_original[<span class="st">&quot;nitrogen&quot;</span>], c<span class="op">=</span>(imputed_plot[<span class="st">&quot;nitro_imputed&quot;</span>] <span class="op">==</span> <span class="st">&quot;Yes&quot;</span>))</span></code></pre></div>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x17ff587d0&gt;</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="feature-engineering.html#cb72-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">&quot;Comparación de datos reales vs imputados (Nitrógeno)&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Comparación de datos reales vs imputados (Nitrógeno)&#39;)</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb74-1"><a href="feature-engineering.html#cb74-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">&quot;Imputado&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Imputado&#39;)</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb76-1"><a href="feature-engineering.html#cb76-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">&quot;Real&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;Real&#39;)</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb78-1"><a href="feature-engineering.html#cb78-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].scatter(imputed_plot[<span class="st">&quot;carbon&quot;</span>], biomass_test_original[<span class="st">&quot;carbon&quot;</span>], c<span class="op">=</span>(imputed_plot[<span class="st">&quot;carb_imputed&quot;</span>] <span class="op">==</span> <span class="st">&quot;Yes&quot;</span>))</span></code></pre></div>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x17ffc81d0&gt;</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="feature-engineering.html#cb80-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">&quot;Comparación de datos reales vs imputados (Carbono)&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Comparación de datos reales vs imputados (Carbono)&#39;)</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb82-1"><a href="feature-engineering.html#cb82-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">&quot;Imputado&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Imputado&#39;)</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="feature-engineering.html#cb84-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">&quot;Real&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;Real&#39;)</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="feature-engineering.html#cb86-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-38-1.png" width="960" /></p>
+</div>
+</div>
+<div id="ejercicios" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Ejercicios<a href="feature-engineering.html#ejercicios" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Cada equipo estará a cargo de desarrollar una receta de <em>feature engineering</em> utilizando los pasos vistos en el curso pasado y el actual.</p></li>
+<li><p>Tendrán 15 días para probar distintas estrategias que mejoren las predicciones del precio de ventas.</p></li>
+<li><p>Se deberá entregar y explicar el código creado por el equipo. Este código servirá para los ejercicios de optimización de modelos en los siguientes capítulos.</p></li>
+</ol>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="repaso.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="support-vector-machine-svm-svr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

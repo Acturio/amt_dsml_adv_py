@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 7 Interpretabilidad de modelos | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 7 Interpretabilidad de modelos | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 7 Interpretabilidad de modelos | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sesgo-e-inequidad.html"/>
+<link rel="next" href="a-b---testing.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-python"><i class="fa fa-check"></i>Ciencia de Datos en Python</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>3</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>3.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="3.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>3.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="3.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>3.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="3.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>3.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="3.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>3.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="3.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>3.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="3.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>3.7</b> Ajuste del modelo con Python</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>3.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="3.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>3.7.2</b> Implementación de SVM en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>3.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>4.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>4.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>4.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>4.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>4.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-2"><i class="fa fa-check"></i><b>4.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>4.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>4.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>4.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="4.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>4.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="4.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>4.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>5</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>5.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="5.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>5.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="5.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>5.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="5.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>5.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="5.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>5.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>5.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>5.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>5.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="5.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>5.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="5.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>5.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>5.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>5.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="5.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>5.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="5.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>5.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>6</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>6.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="6.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>6.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>6.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="6.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>6.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="6.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>6.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="6.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>6.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="6.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>6.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="6.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>6.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="6.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>6.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="6.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>6.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="6.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>6.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>7</b> Interpretabilidad de modelos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>7.1</b> LIME</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>7.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="7.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>7.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="7.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>7.1.3</b> Implementación con <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>7.2</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>7.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="7.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>7.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>8</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>8.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="8.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>8.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="8.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>8.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>8.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="8.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>8.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="8.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>8.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="8.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>8.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="8.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>8.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="8.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>8.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="8.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>8.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>8.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>8.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="8.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>8.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>8.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>8.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="8.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>8.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interpretabilidad-de-modelos" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Capítulo 7</span> Interpretabilidad de modelos<a href="interpretabilidad-de-modelos.html#interpretabilidad-de-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Interpretabilidad:</strong> En Machine Learning, nos referimos a interpretabilidad al grado en el que un humano puede entender la causa de una decisión o clasificación, la cual nos permite identificar y evitar tener sesgo, injusticia, inequidad en los modelos que generamos.</p>
+<p>Poder interpretar nuestros modelos nos brinda más confianza en que lo que estamos haciendo es correcto (además de las métricas de desempeño). Por otro lado, para la gente que lo ocupa, permite transparentar y tener más confianza al modelo.</p>
+<p><strong>Ejemplos</strong></p>
+<ul>
+<li><p>Etiquetado: Google photos (2015) etiqueta incorrectamente personas afroamericanas como gorillas.</p></li>
+<li><p>Facial Recognition (IBM, Microsoft, Megvii): Reconocimiento para hombres blancos 99%, mujeres afroamericanas 35%.</p></li>
+<li><p>Facebook automatic translation: Arresto de un palestino por traducción incorrecta de “buenos días” en hebreo a “atácalos”.</p></li>
+</ul>
+<p><strong>Interpretabilidad en ML</strong></p>
+<ul>
+<li><p>General Data Protection Regulation (GDPR): Desde mayo de 2018 existe el right to explanation. Por ejemplo: Algoritmos de predicción de riesgo en créditos hipotecarios.</p></li>
+<li><p>Se puede tener interpretabilidad de modelos de aprendizaje supervisado.</p></li>
+<li><p>Se tiene la creencia equivocada de que en Europa no se puede ocupar Deep Learning debido a la falta de interpretabilidad y el GDPR. Esto no es verdad.</p></li>
+<li><p>Es verdad que preferimos ocupar modelos más simples porque nos permiten entender -y explicar- de manera más sencilla por qué se están tomando las decisiones.</p></li>
+<li><p>Te recomiendo leer el artículo Why should I trust you? (2016) base de mucho de lo desarrollado para interpretabilidad.</p></li>
+</ul>
+<div id="lime" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> LIME<a href="interpretabilidad-de-modelos.html#lime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Acrónimo de <em>Local Interpretable Model-Agnostic Explanation</em>. El objetivo es tener explicacion que un humano pueda entender sobre cualquier modelo supervisado a través de un <strong>modelo local más simple</strong>.</p>
+<p>La explicación se genera para cada predicción realizada. Esta basado en la suposición de que un modelo complejo es lineal en una escala local.</p>
+<p>En el contexto de LIME:</p>
+<ul>
+<li><p>Local: Se refiere a que un modelo simple es lo suficientemente bueno/igual de bueno localmente que uno complejo globalmente.</p></li>
+<li><p>Interpretable: Se refiere a que la explicación debe ser entendida por un ser humano.</p></li>
+<li><p>Model-agnostic: Se refiere a tratar a cualquier modelo de clasificación, complejo o no, como una caja negra a la que metemos observaciones y obtenemos predicciones, no nos interesa cómo genera estas predicciones, lo que nos interesa es generarlas.</p></li>
+</ul>
+<p><img src="img/08-lime/lime.png" width="700pt" height="400pt" style="display: block; margin: auto;" /></p>
+<div id="proceso" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Proceso<a href="interpretabilidad-de-modelos.html#proceso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El objetivo de <em>LIME</em> es entender por qué el modelo de machine learning hace cierta predicción, para ello <strong><em>LIME</em> prueba qué pasa con las predicciones si le brindamos al modelo las mismas observaciones pero con variaciones.</strong></p>
+<p>Genera un nuevo set de datos que consiste de una muestra permutada con sus predicciones originales. Con este nuevo set <em>LIME</em> entrena un modelo interpretable que puede ser:</p>
+<ul>
+<li>regresión lineal como LASSO</li>
+<li>regresión logística</li>
+<li>árboles de decisión</li>
+<li>Naive Bayes</li>
+<li>K-NN.</li>
+<li>etc.</li>
+</ul>
+<p>Este modelo interpretable es <strong>ponderado por la proximidad de las observaciones en la muestra a la instancia de interés</strong> (la predicción que queremos explicar).</p>
+<p>El modelo generado debe ser una buena aproximación al modelo de caja negra localmente, pero no necesariamente en forma global. A esto se le llama <em>local fidelity</em>.</p>
+<p>Para entrenar el modelo interpertable, seguimos los siguientes pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Seleccionamos la observación de la que queremos una explicación.</p></li>
+<li><p>Seleccionamos una vecindad para que <em>LIME</em> ajuste el modelo.</p></li>
+<li><p>Seleccionamos el número de features más importantes con los que queremos realizar la explicación (se recomienda que sea menor a <span class="math inline">\(10\)</span>).</p></li>
+<li><p><em>LIME</em> genera perturbaciones en una muestra de datos del conjunto de datos</p></li>
+</ol>
+<ul>
+<li><strong>Texto:</strong> “Agrega” o “quita” palabras del texto original aleatoriamente.</li>
+</ul>
+<p><img src="img/08-lime/lime_text.png" width="600pt" height="120" style="display: block; margin: auto;" /></p>
+<p><img src="img/08-lime/lime_text_2.png" width="600pt" height="200pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/08-lime/lime_text_3.png" width="600" height="210" style="display: block; margin: auto;" /></p>
+<p>La columna de probabilidad corresponde a la probabilidad de que el enunciado sea Spam o no. La columna peso corresponde a la proximidad del enunciado con variación al enunciado original y está calculado como 1 menos la proporción de palabras que fueron eliminadas.</p>
+<p>Por ejemplo: Si una de 7 palabras fueron removidas, el peso correspondería a: <span class="math inline">\(1- 1/7=0.86\)</span>.</p>
+<p>Al pasar dos enunciados al modelo de interpretabilidad se identifica que para los casos donde está la palabra <em>channel!</em> el enunciado será clasificado como spam que es el feature con mayor peso para la etiqueta spam.</p>
+<ul>
+<li><strong>Imágenes:</strong> “Apaga” y “prende” pixeles de la imágen original.</li>
+</ul>
+<p><img src="img/08-lime/frog_lime.png" width="600pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/08-lime/huskie_lime.png" width="400pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p><img src="img/08-lime/tiger.jpeg" width="400pt" height="400pt" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Datos tabulares:</strong> De cada feature genera nuevas muestras tomadas de una distribución normal con la <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span> del feature.</li>
+</ul>
+<p><img src="img/08-lime/lime_tabular_data.png" width="700pt" height="600pt" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>Las observaciones más “cercanas” tendrán más peso que el resto. <em>LIME</em> ocupa un kernel de suavizamiento exponencial.</p>
+</blockquote>
+<blockquote>
+<p>La implementación de <em>LIME</em> ocupa como kernel <span class="math inline">\(0.75\)</span> veces la raíz cuadrada del número de features que tenga nuestro dataset. ¿Eso es bueno o malo? Hasta el momento no hay una justificación matemática o estadística que justifique el definir ese número.</p>
+</blockquote>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Obtiene las predicciones del modelo de caja negra para las observaciones generadas en el paso <span class="math inline">\(3\)</span>.</p></li>
+<li><p>Calcula las distancias entre la predicción original y las obtenidas con los datos modificados.</p></li>
+</ol>
+<ul>
+<li><p><strong>Datos tabulares:</strong> Distancia euclidiana por default.</p></li>
+<li><p><strong>Datos numéricos:</strong> Se obtiene la media y desviación estándar y se discretiza a sus cuartiles.</p></li>
+<li><p><strong>Datos categóricos:</strong> Se calcula la frecuencia de cada valor.</p></li>
+<li><p><strong>Texto:</strong> Distancia coseno.</p></li>
+<li><p><strong>Imágenes:</strong> Distancia euclidiana.</p></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>Convierte la distancia a un score de similitud.</li>
+</ol>
+<ul>
+<li><p><strong>Datos tabulares:</strong> Utiliza el kernel de suavizamiento exponencial.</p></li>
+<li><p><strong>Texto:</strong> Distancia coseno.</p></li>
+<li><p><strong>Imágenes:</strong></p>
+<ul>
+<li><p>Genera un modelo simple con los datos modificados</p></li>
+<li><p>Selecciona las <span class="math inline">\(m\)</span> mejores características (depende del modelo utilizado para crear el modelo de interpretabilidad) como explicación para la predicción del modelo de caja negra.</p></li>
+</ul></li>
+</ul>
+</div>
+<div id="características-principales" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Características principales<a href="interpretabilidad-de-modelos.html#características-principales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Vecindad: kernel con suavizamiento exponencial. Peso de influencia</li>
+<li>Similitud: Con respecto a las observaciones originales.</li>
+<li>Selección de variables: Las variables que explican la predicción generada.</li>
+</ul>
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li>Fácil de implementar.</li>
+<li>Se puede ocupar en datos tabulares, imágenes y texto.</li>
+<li>Existen paquetes de implementación para Python como <code>lime</code> y <code>shap</code>.</li>
+<li>Las explicaciones son cortas (pocos features), por lo que son más fáciles de entender por un humano no entrenado en machine learning.</li>
+<li>La métrica de <em>fidelity</em> nos permite identificar qué tan confiable es el modelo de interpretabilidad en explicar las predicciones del modelo de caja negra en las vecindad del punto de interés.</li>
+<li>Se pueden ocupar otros features en el modelo de interpretabilidad que los ocupados para entrenar el de caja negra.</li>
+</ul>
+<p><strong>Desventajas:</strong></p>
+<ul>
+<li><p>La selección correcta de vecindad es el problema más grave de <em>LIME</em>. Para minimizar este problema deberemos probar con diferentes vecindades y ver cuál(es) son las de mayor sentido.</p></li>
+<li><p>Variación de las observaciones originales: ¿Qué tal que la distribución no es normal? Al muestrear de una distribución gausiana podemos ignorar correlaciones entre features.</p></li>
+<li><p>Dependiendo del tamaño de la vecindad tendremos resultados muy diferentes. Este es el mayor problema de <em>LIME</em>.</p></li>
+</ul>
+</div>
+<div id="implementación-con-python" class="section level3 hasAnchor" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> Implementación con <em>Python</em><a href="interpretabilidad-de-modelos.html#implementación-con-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb421"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb421-1"><a href="interpretabilidad-de-modelos.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lime.lime_tabular <span class="im">import</span> LimeTabularExplainer</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb422-1"><a href="interpretabilidad-de-modelos.html#cb422-1" aria-hidden="true" tabindex="-1"></a>model_rf <span class="op">=</span> make_telco_pipeline(</span>
+<span id="cb422-2"><a href="interpretabilidad-de-modelos.html#cb422-2" aria-hidden="true" tabindex="-1"></a>    RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">123</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>),</span>
+<span id="cb422-3"><a href="interpretabilidad-de-modelos.html#cb422-3" aria-hidden="true" tabindex="-1"></a>    scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb422-4"><a href="interpretabilidad-de-modelos.html#cb422-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb422-5"><a href="interpretabilidad-de-modelos.html#cb422-5" aria-hidden="true" tabindex="-1"></a>model_rf.fit(X_telco_train, y_telco_train)</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x16ffa8a10&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f949dd0&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;, RandomForestClassifier(n_jobs=-1, random_state=123))])</code></pre>
+<div class="sourceCode" id="cb424"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb424-1"><a href="interpretabilidad-de-modelos.html#cb424-1" aria-hidden="true" tabindex="-1"></a>telco_transformer <span class="op">=</span> model_rf[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb424-2"><a href="interpretabilidad-de-modelos.html#cb424-2" aria-hidden="true" tabindex="-1"></a>telco_model <span class="op">=</span> model_rf.named_steps[<span class="st">&quot;model&quot;</span>]</span>
+<span id="cb424-3"><a href="interpretabilidad-de-modelos.html#cb424-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb424-4"><a href="interpretabilidad-de-modelos.html#cb424-4" aria-hidden="true" tabindex="-1"></a>X_lime_train <span class="op">=</span> telco_transformer.transform(X_telco_train)</span>
+<span id="cb424-5"><a href="interpretabilidad-de-modelos.html#cb424-5" aria-hidden="true" tabindex="-1"></a>lime_feature_names <span class="op">=</span> model_rf.named_steps[<span class="st">&quot;preprocess&quot;</span>].get_feature_names_out()</span>
+<span id="cb424-6"><a href="interpretabilidad-de-modelos.html#cb424-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb424-7"><a href="interpretabilidad-de-modelos.html#cb424-7" aria-hidden="true" tabindex="-1"></a>explainer_caret <span class="op">=</span> LimeTabularExplainer(</span>
+<span id="cb424-8"><a href="interpretabilidad-de-modelos.html#cb424-8" aria-hidden="true" tabindex="-1"></a>    training_data<span class="op">=</span>X_lime_train,</span>
+<span id="cb424-9"><a href="interpretabilidad-de-modelos.html#cb424-9" aria-hidden="true" tabindex="-1"></a>    feature_names<span class="op">=</span>lime_feature_names,</span>
+<span id="cb424-10"><a href="interpretabilidad-de-modelos.html#cb424-10" aria-hidden="true" tabindex="-1"></a>    class_names<span class="op">=</span>telco_model.classes_,</span>
+<span id="cb424-11"><a href="interpretabilidad-de-modelos.html#cb424-11" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">&quot;classification&quot;</span>,</span>
+<span id="cb424-12"><a href="interpretabilidad-de-modelos.html#cb424-12" aria-hidden="true" tabindex="-1"></a>    discretize_continuous<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb424-13"><a href="interpretabilidad-de-modelos.html#cb424-13" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb424-14"><a href="interpretabilidad-de-modelos.html#cb424-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb424-15"><a href="interpretabilidad-de-modelos.html#cb424-15" aria-hidden="true" tabindex="-1"></a>lime_positive_label <span class="op">=</span> <span class="bu">list</span>(telco_model.classes_).index(<span class="st">&quot;Yes&quot;</span>)</span></code></pre></div>
+<p>Veamos cómo llegaron a ser la predicciones, usando <em>Lime</em>.</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb425-1"><a href="interpretabilidad-de-modelos.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_model_random_forest(newdata):</span>
+<span id="cb425-2"><a href="interpretabilidad-de-modelos.html#cb425-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> telco_model.predict_proba(newdata)</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb426-1"><a href="interpretabilidad-de-modelos.html#cb426-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> X_telco_train.iloc[[<span class="dv">1</span>]]</span>
+<span id="cb426-2"><a href="interpretabilidad-de-modelos.html#cb426-2" aria-hidden="true" tabindex="-1"></a>new_data.T</span></code></pre></div>
+<pre><code>##                               4246
+## customerID              5153-LXKDT
+## gender                        Male
+## SeniorCitizen                    0
+## Partner                        Yes
+## Dependents                     Yes
+## tenure                          68
+## PhoneService                   Yes
+## MultipleLines                  Yes
+## InternetService        Fiber optic
+## OnlineSecurity                 Yes
+## OnlineBackup                   Yes
+## DeviceProtection               Yes
+## TechSupport                     No
+## StreamingTV                    Yes
+## StreamingMovies                Yes
+## Contract                  Two year
+## PaperlessBilling               Yes
+## PaymentMethod     Electronic check
+## MonthlyCharges               110.2
+## TotalCharges                7467.5</code></pre>
+<div class="sourceCode" id="cb428"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb428-1"><a href="interpretabilidad-de-modelos.html#cb428-1" aria-hidden="true" tabindex="-1"></a>new_data_lime <span class="op">=</span> telco_transformer.transform(new_data)</span>
+<span id="cb428-2"><a href="interpretabilidad-de-modelos.html#cb428-2" aria-hidden="true" tabindex="-1"></a>explanation <span class="op">=</span> explainer_caret.explain_instance(</span>
+<span id="cb428-3"><a href="interpretabilidad-de-modelos.html#cb428-3" aria-hidden="true" tabindex="-1"></a>    data_row<span class="op">=</span>new_data_lime[<span class="dv">0</span>],</span>
+<span id="cb428-4"><a href="interpretabilidad-de-modelos.html#cb428-4" aria-hidden="true" tabindex="-1"></a>    predict_fn<span class="op">=</span>predict_model_random_forest,</span>
+<span id="cb428-5"><a href="interpretabilidad-de-modelos.html#cb428-5" aria-hidden="true" tabindex="-1"></a>    num_features<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb428-6"><a href="interpretabilidad-de-modelos.html#cb428-6" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>(lime_positive_label,),</span>
+<span id="cb428-7"><a href="interpretabilidad-de-modelos.html#cb428-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb428-8"><a href="interpretabilidad-de-modelos.html#cb428-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb428-9"><a href="interpretabilidad-de-modelos.html#cb428-9" aria-hidden="true" tabindex="-1"></a>explanation.as_list(label<span class="op">=</span>lime_positive_label)</span></code></pre></div>
+<pre><code>## [(&#39;Contract_Month-to-month &lt;= 0.00&#39;, -0.10189913024724921), (&#39;0.00 &lt; InternetService_Fiber optic &lt;= 1.00&#39;, 0.080741615219421), (&#39;tenure_band_0-1 year &lt;= 0.00&#39;, -0.072189325747758), (&#39;Contract_Two year &gt; 0.00&#39;, -0.06586758502885592), (&#39;TotalCharges &gt; 3738.71&#39;, -0.059105520730395315), (&#39;InternetService_No &lt;= 0.00&#39;, 0.054829875128637955), (&#39;MonthlyCharges &gt; 89.85&#39;, 0.05174495784104864), (&#39;tenure_band_5-6 years &gt; 0.00&#39;, -0.03234184187519679), (&#39;0.00 &lt; PaymentMethod_Electronic check &lt;= 1.00&#39;, 0.028522983517882235), (&#39;SeniorCitizen &lt;= 0.00&#39;, -0.026462526682518535)]</code></pre>
+<p>Para obtener una representación más intuitiva, podemos usar <code>plot_features()</code>
+proporcionado para obtener una descripción visual de las explicaciones.</p>
+<div class="sourceCode" id="cb430"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb430-1"><a href="interpretabilidad-de-modelos.html#cb430-1" aria-hidden="true" tabindex="-1"></a>explanation.as_pyplot_figure(label<span class="op">=</span>lime_positive_label)</span></code></pre></div>
+<pre><code>## &lt;Figure size 1400x1000 with 1 Axes&gt;</code></pre>
+<div class="sourceCode" id="cb432"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb432-1"><a href="interpretabilidad-de-modelos.html#cb432-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
+<p><strong>Otro ejemplo</strong></p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb433-1"><a href="interpretabilidad-de-modelos.html#cb433-1" aria-hidden="true" tabindex="-1"></a>new_data2 <span class="op">=</span> X_telco_train.iloc[[<span class="dv">1</span>, <span class="dv">3</span>]]</span>
+<span id="cb433-2"><a href="interpretabilidad-de-modelos.html#cb433-2" aria-hidden="true" tabindex="-1"></a>new_data2.T</span></code></pre></div>
+<pre><code>##                               4246                 6778
+## customerID              5153-LXKDT           5893-KCLGT
+## gender                        Male               Female
+## SeniorCitizen                    0                    0
+## Partner                        Yes                   No
+## Dependents                     Yes                  Yes
+## tenure                          68                   72
+## PhoneService                   Yes                  Yes
+## MultipleLines                  Yes                   No
+## InternetService        Fiber optic                   No
+## OnlineSecurity                 Yes  No internet service
+## OnlineBackup                   Yes  No internet service
+## DeviceProtection               Yes  No internet service
+## TechSupport                     No  No internet service
+## StreamingTV                    Yes  No internet service
+## StreamingMovies                Yes  No internet service
+## Contract                  Two year             Two year
+## PaperlessBilling               Yes                  Yes
+## PaymentMethod     Electronic check         Mailed check
+## MonthlyCharges               110.2                19.75
+## TotalCharges                7467.5               1567.0</code></pre>
+<div class="sourceCode" id="cb435"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb435-1"><a href="interpretabilidad-de-modelos.html#cb435-1" aria-hidden="true" tabindex="-1"></a>explanations2 <span class="op">=</span> [</span>
+<span id="cb435-2"><a href="interpretabilidad-de-modelos.html#cb435-2" aria-hidden="true" tabindex="-1"></a>    explainer_caret.explain_instance(</span>
+<span id="cb435-3"><a href="interpretabilidad-de-modelos.html#cb435-3" aria-hidden="true" tabindex="-1"></a>        data_row<span class="op">=</span>row,</span>
+<span id="cb435-4"><a href="interpretabilidad-de-modelos.html#cb435-4" aria-hidden="true" tabindex="-1"></a>        predict_fn<span class="op">=</span>predict_model_random_forest,</span>
+<span id="cb435-5"><a href="interpretabilidad-de-modelos.html#cb435-5" aria-hidden="true" tabindex="-1"></a>        num_features<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb435-6"><a href="interpretabilidad-de-modelos.html#cb435-6" aria-hidden="true" tabindex="-1"></a>        labels<span class="op">=</span>(lime_positive_label,),</span>
+<span id="cb435-7"><a href="interpretabilidad-de-modelos.html#cb435-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb435-8"><a href="interpretabilidad-de-modelos.html#cb435-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> telco_transformer.transform(new_data2)</span>
+<span id="cb435-9"><a href="interpretabilidad-de-modelos.html#cb435-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb435-10"><a href="interpretabilidad-de-modelos.html#cb435-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-11"><a href="interpretabilidad-de-modelos.html#cb435-11" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb435-12"><a href="interpretabilidad-de-modelos.html#cb435-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, exp <span class="kw">in</span> <span class="bu">zip</span>(axes, explanations2):</span>
+<span id="cb435-13"><a href="interpretabilidad-de-modelos.html#cb435-13" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> pd.DataFrame(exp.as_list(label<span class="op">=</span>lime_positive_label), columns<span class="op">=</span>[<span class="st">&quot;feature&quot;</span>, <span class="st">&quot;weight&quot;</span>])</span>
+<span id="cb435-14"><a href="interpretabilidad-de-modelos.html#cb435-14" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> np.where(values[<span class="st">&quot;weight&quot;</span>] <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;tab:blue&quot;</span>, <span class="st">&quot;tab:red&quot;</span>)</span>
+<span id="cb435-15"><a href="interpretabilidad-de-modelos.html#cb435-15" aria-hidden="true" tabindex="-1"></a>    ax.barh(values[<span class="st">&quot;feature&quot;</span>], values[<span class="st">&quot;weight&quot;</span>], color<span class="op">=</span>colors)</span>
+<span id="cb435-16"><a href="interpretabilidad-de-modelos.html#cb435-16" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## &lt;BarContainer object of 10 artists&gt;
+## &lt;matplotlib.lines.Line2D object at 0x301ed15d0&gt;
+## &lt;BarContainer object of 10 artists&gt;
+## &lt;matplotlib.lines.Line2D object at 0x305a93b50&gt;</code></pre>
+<div class="sourceCode" id="cb437"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb437-1"><a href="interpretabilidad-de-modelos.html#cb437-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-213-3.png" width="1152" /></p>
+</div>
+</div>
+<div id="shap" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> SHAP<a href="interpretabilidad-de-modelos.html#shap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El ecosistema de <code>scikit-learn</code> se puede complementar con librerías independientes del modelo como <em>lime</em>, <em>shap</em> y <code>sklearn.inspection</code>:</p>
+<ul>
+<li><em>SHAP</em>: Contiene funciones que usamos cuando queremos atribuir contribuciones locales a las variables de un modelo. Puede trabajar con muchos algoritmos, y tiene optimizaciones especiales para árboles.</li>
+</ul>
+<p>Construyamos explicaciones independientes del modelo de regresión de <em>XGBoost</em> para descubrir por qué hacen las predicciones que hacen. Podemos usar el paquete <code>shap</code>, que es el equivalente más común en Python para este tipo de atribuciones locales.</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb438-1"><a href="interpretabilidad-de-modelos.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBRegressor</span>
+<span id="cb438-2"><a href="interpretabilidad-de-modelos.html#cb438-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb438-3"><a href="interpretabilidad-de-modelos.html#cb438-3" aria-hidden="true" tabindex="-1"></a>xgboost_reg_model <span class="op">=</span> XGBRegressor(</span>
+<span id="cb438-4"><a href="interpretabilidad-de-modelos.html#cb438-4" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb438-5"><a href="interpretabilidad-de-modelos.html#cb438-5" aria-hidden="true" tabindex="-1"></a>    max_depth<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb438-6"><a href="interpretabilidad-de-modelos.html#cb438-6" aria-hidden="true" tabindex="-1"></a>    min_child_weight<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb438-7"><a href="interpretabilidad-de-modelos.html#cb438-7" aria-hidden="true" tabindex="-1"></a>    learning_rate<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb438-8"><a href="interpretabilidad-de-modelos.html#cb438-8" aria-hidden="true" tabindex="-1"></a>    subsample<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb438-9"><a href="interpretabilidad-de-modelos.html#cb438-9" aria-hidden="true" tabindex="-1"></a>    colsample_bytree<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb438-10"><a href="interpretabilidad-de-modelos.html#cb438-10" aria-hidden="true" tabindex="-1"></a>    objective<span class="op">=</span><span class="st">&quot;reg:squarederror&quot;</span>,</span>
+<span id="cb438-11"><a href="interpretabilidad-de-modelos.html#cb438-11" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1801</span>,</span>
+<span id="cb438-12"><a href="interpretabilidad-de-modelos.html#cb438-12" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb438-13"><a href="interpretabilidad-de-modelos.html#cb438-13" aria-hidden="true" tabindex="-1"></a>    tree_method<span class="op">=</span><span class="st">&quot;hist&quot;</span>,</span>
+<span id="cb438-14"><a href="interpretabilidad-de-modelos.html#cb438-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb438-15"><a href="interpretabilidad-de-modelos.html#cb438-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb438-16"><a href="interpretabilidad-de-modelos.html#cb438-16" aria-hidden="true" tabindex="-1"></a>final_xgboost_model <span class="op">=</span> make_ames_pipeline(</span>
+<span id="cb438-17"><a href="interpretabilidad-de-modelos.html#cb438-17" aria-hidden="true" tabindex="-1"></a>    xgboost_reg_model,</span>
+<span id="cb438-18"><a href="interpretabilidad-de-modelos.html#cb438-18" aria-hidden="true" tabindex="-1"></a>    scale_numeric<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb438-19"><a href="interpretabilidad-de-modelos.html#cb438-19" aria-hidden="true" tabindex="-1"></a>    large<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb438-20"><a href="interpretabilidad-de-modelos.html#cb438-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb438-21"><a href="interpretabilidad-de-modelos.html#cb438-21" aria-hidden="true" tabindex="-1"></a>final_xgboost_model.fit(X_ames_train, y_ames_train)</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17bad9c90&gt;),
+##                                                  (&#39;...
+##                               feature_types=None, gamma=None, grow_policy=None,
+##                               importance_type=None,
+##                               interaction_constraints=None, learning_rate=0.05,
+##                               max_bin=None, max_cat_threshold=None,
+##                               max_cat_to_onehot=None, max_delta_step=None,
+##                               max_depth=4, max_leaves=None, min_child_weight=5,
+##                               missing=nan, monotone_constraints=None,
+##                               multi_strategy=None, n_estimators=400, n_jobs=-1,
+##                               num_parallel_tree=None, random_state=1801, ...))])</code></pre>
+<div class="sourceCode" id="cb440"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb440-1"><a href="interpretabilidad-de-modelos.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shap</span>
+<span id="cb440-2"><a href="interpretabilidad-de-modelos.html#cb440-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb440-3"><a href="interpretabilidad-de-modelos.html#cb440-3" aria-hidden="true" tabindex="-1"></a>xgb_transformer <span class="op">=</span> final_xgboost_model[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb440-4"><a href="interpretabilidad-de-modelos.html#cb440-4" aria-hidden="true" tabindex="-1"></a>xgb_model <span class="op">=</span> final_xgboost_model.named_steps[<span class="st">&quot;model&quot;</span>]</span>
+<span id="cb440-5"><a href="interpretabilidad-de-modelos.html#cb440-5" aria-hidden="true" tabindex="-1"></a>xgb_feature_names <span class="op">=</span> final_xgboost_model.named_steps[<span class="st">&quot;preprocess&quot;</span>].get_feature_names_out()</span>
+<span id="cb440-6"><a href="interpretabilidad-de-modelos.html#cb440-6" aria-hidden="true" tabindex="-1"></a>X_ames_transformed <span class="op">=</span> xgb_transformer.transform(X_ames_train)</span>
+<span id="cb440-7"><a href="interpretabilidad-de-modelos.html#cb440-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb440-8"><a href="interpretabilidad-de-modelos.html#cb440-8" aria-hidden="true" tabindex="-1"></a>background <span class="op">=</span> shap.sample(X_ames_transformed, <span class="dv">200</span>, random_state<span class="op">=</span><span class="dv">1801</span>)</span>
+<span id="cb440-9"><a href="interpretabilidad-de-modelos.html#cb440-9" aria-hidden="true" tabindex="-1"></a>explainer_xgb <span class="op">=</span> shap.Explainer(</span>
+<span id="cb440-10"><a href="interpretabilidad-de-modelos.html#cb440-10" aria-hidden="true" tabindex="-1"></a>    xgb_model,</span>
+<span id="cb440-11"><a href="interpretabilidad-de-modelos.html#cb440-11" aria-hidden="true" tabindex="-1"></a>    background,</span>
+<span id="cb440-12"><a href="interpretabilidad-de-modelos.html#cb440-12" aria-hidden="true" tabindex="-1"></a>    feature_names<span class="op">=</span>xgb_feature_names,</span>
+<span id="cb440-13"><a href="interpretabilidad-de-modelos.html#cb440-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Las explicaciones del modelo local proporcionan información sobre una predicción para una sola observación. Por ejemplo, consideremos una casa dúplex antigua en el vecindario de North Ames.</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb441-1"><a href="interpretabilidad-de-modelos.html#cb441-1" aria-hidden="true" tabindex="-1"></a>duplex <span class="op">=</span> X_ames_train.iloc[[<span class="dv">536</span>]]</span>
+<span id="cb441-2"><a href="interpretabilidad-de-modelos.html#cb441-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb441-3"><a href="interpretabilidad-de-modelos.html#cb441-3" aria-hidden="true" tabindex="-1"></a>duplex.info()</span></code></pre></div>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## Index: 1 entries, 1152 to 1152
+## Data columns (total 80 columns):
+##  #   Column          Non-Null Count  Dtype   
+## ---  ------          --------------  -----   
+##  0   Id              1 non-null      int64   
+##  1   MSSubClass      1 non-null      int64   
+##  2   MS_Zoning       1 non-null      category
+##  3   Lot_Frontage    1 non-null      float64 
+##  4   Lot_Area        1 non-null      int64   
+##  5   Street          1 non-null      category
+##  6   Alley           0 non-null      category
+##  7   Lot_Shape       1 non-null      category
+##  8   Land_Contour    1 non-null      category
+##  9   Utilities       1 non-null      category
+##  10  LotConfig       1 non-null      category
+##  11  Land_Slope      1 non-null      category
+##  12  Neighborhood    1 non-null      category
+##  13  Condition_1     1 non-null      category
+##  14  Condition2      1 non-null      category
+##  15  Bldg_Type       1 non-null      category
+##  16  HouseStyle      1 non-null      category
+##  17  OverallQual     1 non-null      int64   
+##  18  OverallCond     1 non-null      int64   
+##  19  Year_Built      1 non-null      int64   
+##  20  Year_Remod_Add  1 non-null      int64   
+##  21  RoofStyle       1 non-null      category
+##  22  RoofMatl        1 non-null      category
+##  23  Exterior1st     1 non-null      category
+##  24  Exterior2nd     1 non-null      category
+##  25  Mas_Vnr_Type    1 non-null      category
+##  26  Mas_Vnr_Area    1 non-null      float64 
+##  27  ExterQual       1 non-null      category
+##  28  Exter_Cond      1 non-null      category
+##  29  Foundation      1 non-null      category
+##  30  BsmtQual        1 non-null      category
+##  31  Bsmt_Cond       1 non-null      category
+##  32  Bsmt_Exposure   1 non-null      category
+##  33  BsmtFin_Type_1  1 non-null      category
+##  34  BsmtFin_SF_1    1 non-null      int64   
+##  35  BsmtFin_Type_2  1 non-null      category
+##  36  BsmtFinSF2      1 non-null      int64   
+##  37  BsmtUnfSF       1 non-null      int64   
+##  38  Total_Bsmt_SF   1 non-null      int64   
+##  39  Heating         1 non-null      category
+##  40  Heating_QC      1 non-null      category
+##  41  CentralAir      1 non-null      category
+##  42  Electrical      1 non-null      category
+##  43  1stFlrSF        1 non-null      int64   
+##  44  2ndFlrSF        1 non-null      int64   
+##  45  LowQualFinSF    1 non-null      int64   
+##  46  Gr_Liv_Area     1 non-null      int64   
+##  47  Bsmt_Full_Bath  1 non-null      int64   
+##  48  Bsmt_Half_Bath  1 non-null      int64   
+##  49  Full_Bath       1 non-null      int64   
+##  50  Half_Bath       1 non-null      int64   
+##  51  Bedroom_AbvGr   1 non-null      int64   
+##  52  Kitchen_AbvGr   1 non-null      int64   
+##  53  KitchenQual     1 non-null      category
+##  54  TotRms_AbvGrd   1 non-null      int64   
+##  55  Functional      1 non-null      category
+##  56  Fireplaces      1 non-null      int64   
+##  57  FireplaceQu     1 non-null      category
+##  58  Garage_Type     1 non-null      category
+##  59  GarageYrBlt     1 non-null      float64 
+##  60  Garage_Finish   1 non-null      category
+##  61  GarageCars      1 non-null      int64   
+##  62  GarageArea      1 non-null      int64   
+##  63  GarageQual      1 non-null      category
+##  64  Garage_Cond     1 non-null      category
+##  65  PavedDrive      1 non-null      category
+##  66  WoodDeckSF      1 non-null      int64   
+##  67  Open_Porch_SF   1 non-null      int64   
+##  68  Enclosed_Porch  1 non-null      int64   
+##  69  3SsnPorch       1 non-null      int64   
+##  70  ScreenPorch     1 non-null      int64   
+##  71  Pool_Area       1 non-null      int64   
+##  72  Pool_QC         0 non-null      category
+##  73  Fence           0 non-null      category
+##  74  Misc_Feature    0 non-null      category
+##  75  MiscVal         1 non-null      int64   
+##  76  MoSold          1 non-null      int64   
+##  77  Year_Sold       1 non-null      int64   
+##  78  Sale_Type       1 non-null      category
+##  79  SaleCondition   1 non-null      category
+## dtypes: category(43), float64(3), int64(34)
+## memory usage: 10.9 KB</code></pre>
+<div class="sourceCode" id="cb443"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb443-1"><a href="interpretabilidad-de-modelos.html#cb443-1" aria-hidden="true" tabindex="-1"></a>duplex.T.head(<span class="dv">20</span>)</span></code></pre></div>
+<pre><code>##                  1152
+## Id               1153
+## MSSubClass         20
+## MS_Zoning          RL
+## Lot_Frontage     90.0
+## Lot_Area        14115
+## Street           Pave
+## Alley             NaN
+## Lot_Shape         IR1
+## Land_Contour      Lvl
+## Utilities      AllPub
+## LotConfig      Inside
+## Land_Slope        Gtl
+## Neighborhood  Crawfor
+## Condition_1      Norm
+## Condition2       Norm
+## Bldg_Type        1Fam
+## HouseStyle     1Story
+## OverallQual         6
+## OverallCond         7
+## Year_Built       1956</code></pre>
+<p>Existen múltiples enfoques para comprender por qué un modelo predice un precio determinado para esta casa dúplex.</p>
+<p>Una se denomina explicación de “desglose” y calcula cómo las contribuciones atribuidas a características individuales cambian la predicción del modelo medio para una observación en particular, como nuestro dúplex.</p>
+<p>Para el modelo de <em>XGBoost</em>, las variables con mayor valor absoluto de SHAP son las que más contribuyen a alejar la predicción de la predicción base.</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb445-1"><a href="interpretabilidad-de-modelos.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb445-2"><a href="interpretabilidad-de-modelos.html#cb445-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb445-3"><a href="interpretabilidad-de-modelos.html#cb445-3" aria-hidden="true" tabindex="-1"></a>joblib.dump(explainer_xgb, <span class="st">&quot;models/explainer_xgb.joblib&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb446-1"><a href="interpretabilidad-de-modelos.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shap_contribution_table(shap_values, max_features<span class="op">=</span><span class="dv">20</span>):</span>
+<span id="cb446-2"><a href="interpretabilidad-de-modelos.html#cb446-2" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> shap_values.values[<span class="dv">0</span>]</span>
+<span id="cb446-3"><a href="interpretabilidad-de-modelos.html#cb446-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb446-4"><a href="interpretabilidad-de-modelos.html#cb446-4" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb446-5"><a href="interpretabilidad-de-modelos.html#cb446-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;variable&quot;</span>: shap_values.feature_names,</span>
+<span id="cb446-6"><a href="interpretabilidad-de-modelos.html#cb446-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;contribution&quot;</span>: values,</span>
+<span id="cb446-7"><a href="interpretabilidad-de-modelos.html#cb446-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;abs_contribution&quot;</span>: np.<span class="bu">abs</span>(values),</span>
+<span id="cb446-8"><a href="interpretabilidad-de-modelos.html#cb446-8" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb446-9"><a href="interpretabilidad-de-modelos.html#cb446-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb446-10"><a href="interpretabilidad-de-modelos.html#cb446-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data.sort_values(<span class="st">&quot;abs_contribution&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>).head(max_features)</span>
+<span id="cb446-11"><a href="interpretabilidad-de-modelos.html#cb446-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-12"><a href="interpretabilidad-de-modelos.html#cb446-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-13"><a href="interpretabilidad-de-modelos.html#cb446-13" aria-hidden="true" tabindex="-1"></a>shap_duplex <span class="op">=</span> explainer_xgb(xgb_transformer.transform(duplex))</span>
+<span id="cb446-14"><a href="interpretabilidad-de-modelos.html#cb446-14" aria-hidden="true" tabindex="-1"></a>xgb_breakdown <span class="op">=</span> shap_contribution_table(shap_duplex)</span>
+<span id="cb446-15"><a href="interpretabilidad-de-modelos.html#cb446-15" aria-hidden="true" tabindex="-1"></a>xgb_breakdown</span></code></pre></div>
+<pre><code>##                   variable  contribution  abs_contribution
+## 69    Neighborhood_Crawfor  16504.928304      16504.928304
+## 31               Age_House   9414.426097       9414.426097
+## 4              OverallQual  -8890.284810       8890.284810
+## 224         KitchenQual_Ex   5897.139815       5897.139815
+## 3                 Lot_Area   5766.926216       5766.926216
+## 5              OverallCond   5473.041962       5473.041962
+## 32                 TotalSF   5318.898530       5318.898530
+## 10               BsmtUnfSF   2998.513987       2998.513987
+## 33               AvgRoomSF   2947.684860       2947.684860
+## 18              Fireplaces   2726.303194       2726.303194
+## 6               Year_Built  -2391.031783       2391.031783
+## 20              GarageCars   2010.056772       2010.056772
+## 11                1stFlrSF   1880.035235       1880.035235
+## 287  SaleCondition_Abnorml  -1688.187951       1688.187951
+## 165           ExterQual_TA  -1674.992611       1674.992611
+## 14               Full_Bath  -1624.351201       1624.351201
+## 12                2ndFlrSF  -1411.244947       1411.244947
+## 191     BsmtFin_Type_1_ALQ   1392.563244       1392.563244
+## 30     Bedroom_AbvGr_ratio  -1362.389690       1362.389690
+## 23           Open_Porch_SF  -1163.838802       1163.838802</code></pre>
+<div class="infobox note">
+<p><strong>¡¡ <a href="https://ema.drwhy.ai/">TEORÍA</a> !!</strong></p>
+<p>La idea detrás de <em>Shapley Additive Explanations (Lundberg y Lee 2017)</em>, es que las contribuciones promedio de las características se calculan bajo diferentes combinaciones o “coaliciones” de ordenamientos de características.</p>
+</div>
+<p>Calculemos las atribuciones <em>SHAP</em> para nuestra <em>dúplex</em>, usando <code>B = 20</code> ordenaciones aleatorias.</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb448-1"><a href="interpretabilidad-de-modelos.html#cb448-1" aria-hidden="true" tabindex="-1"></a>shap_duplex <span class="op">=</span> explainer_xgb(xgb_transformer.transform(duplex))</span></code></pre></div>
+<p>Los diagramas de caja de la figura siguiente muestran la distribución de las contribuciones en todos los ordenamientos que probamos, y las barras muestran la atribución promedio para cada variable.</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb449-1"><a href="interpretabilidad-de-modelos.html#cb449-1" aria-hidden="true" tabindex="-1"></a>shap_duplex2 <span class="op">=</span> shap_contribution_table(shap_duplex)</span>
+<span id="cb449-2"><a href="interpretabilidad-de-modelos.html#cb449-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-3"><a href="interpretabilidad-de-modelos.html#cb449-3" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(shap_duplex2[<span class="st">&quot;contribution&quot;</span>] <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;tab:blue&quot;</span>, <span class="st">&quot;tab:red&quot;</span>)</span>
+<span id="cb449-4"><a href="interpretabilidad-de-modelos.html#cb449-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> shap_duplex2.sort_values(<span class="st">&quot;abs_contribution&quot;</span>).plot(</span>
+<span id="cb449-5"><a href="interpretabilidad-de-modelos.html#cb449-5" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">&quot;barh&quot;</span>,</span>
+<span id="cb449-6"><a href="interpretabilidad-de-modelos.html#cb449-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb449-7"><a href="interpretabilidad-de-modelos.html#cb449-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">&quot;contribution&quot;</span>,</span>
+<span id="cb449-8"><a href="interpretabilidad-de-modelos.html#cb449-8" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>colors,</span>
+<span id="cb449-9"><a href="interpretabilidad-de-modelos.html#cb449-9" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb449-10"><a href="interpretabilidad-de-modelos.html#cb449-10" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>),</span>
+<span id="cb449-11"><a href="interpretabilidad-de-modelos.html#cb449-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb449-12"><a href="interpretabilidad-de-modelos.html#cb449-12" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## &lt;matplotlib.lines.Line2D object at 0x17fc055d0&gt;</code></pre>
+<div class="sourceCode" id="cb451"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb451-1"><a href="interpretabilidad-de-modelos.html#cb451-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="va">None</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;&#39;)</code></pre>
+<div class="sourceCode" id="cb453"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb453-1"><a href="interpretabilidad-de-modelos.html#cb453-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Contribución SHAP&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Contribución SHAP&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-220-5.png" width="768" /></p>
+<p>¿Qué pasa con una observación diferente en nuestro conjunto de datos? Veamos una casa unifamiliar más grande y nueva en el vecindario de Gilbert.</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb455-1"><a href="interpretabilidad-de-modelos.html#cb455-1" aria-hidden="true" tabindex="-1"></a>big_house <span class="op">=</span> X_ames_train.iloc[[<span class="dv">70</span>]]</span>
+<span id="cb455-2"><a href="interpretabilidad-de-modelos.html#cb455-2" aria-hidden="true" tabindex="-1"></a>big_house.info()</span></code></pre></div>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## Index: 1 entries, 260 to 260
+## Data columns (total 80 columns):
+##  #   Column          Non-Null Count  Dtype   
+## ---  ------          --------------  -----   
+##  0   Id              1 non-null      int64   
+##  1   MSSubClass      1 non-null      int64   
+##  2   MS_Zoning       1 non-null      category
+##  3   Lot_Frontage    1 non-null      float64 
+##  4   Lot_Area        1 non-null      int64   
+##  5   Street          1 non-null      category
+##  6   Alley           0 non-null      category
+##  7   Lot_Shape       1 non-null      category
+##  8   Land_Contour    1 non-null      category
+##  9   Utilities       1 non-null      category
+##  10  LotConfig       1 non-null      category
+##  11  Land_Slope      1 non-null      category
+##  12  Neighborhood    1 non-null      category
+##  13  Condition_1     1 non-null      category
+##  14  Condition2      1 non-null      category
+##  15  Bldg_Type       1 non-null      category
+##  16  HouseStyle      1 non-null      category
+##  17  OverallQual     1 non-null      int64   
+##  18  OverallCond     1 non-null      int64   
+##  19  Year_Built      1 non-null      int64   
+##  20  Year_Remod_Add  1 non-null      int64   
+##  21  RoofStyle       1 non-null      category
+##  22  RoofMatl        1 non-null      category
+##  23  Exterior1st     1 non-null      category
+##  24  Exterior2nd     1 non-null      category
+##  25  Mas_Vnr_Type    1 non-null      category
+##  26  Mas_Vnr_Area    1 non-null      float64 
+##  27  ExterQual       1 non-null      category
+##  28  Exter_Cond      1 non-null      category
+##  29  Foundation      1 non-null      category
+##  30  BsmtQual        1 non-null      category
+##  31  Bsmt_Cond       1 non-null      category
+##  32  Bsmt_Exposure   1 non-null      category
+##  33  BsmtFin_Type_1  1 non-null      category
+##  34  BsmtFin_SF_1    1 non-null      int64   
+##  35  BsmtFin_Type_2  1 non-null      category
+##  36  BsmtFinSF2      1 non-null      int64   
+##  37  BsmtUnfSF       1 non-null      int64   
+##  38  Total_Bsmt_SF   1 non-null      int64   
+##  39  Heating         1 non-null      category
+##  40  Heating_QC      1 non-null      category
+##  41  CentralAir      1 non-null      category
+##  42  Electrical      1 non-null      category
+##  43  1stFlrSF        1 non-null      int64   
+##  44  2ndFlrSF        1 non-null      int64   
+##  45  LowQualFinSF    1 non-null      int64   
+##  46  Gr_Liv_Area     1 non-null      int64   
+##  47  Bsmt_Full_Bath  1 non-null      int64   
+##  48  Bsmt_Half_Bath  1 non-null      int64   
+##  49  Full_Bath       1 non-null      int64   
+##  50  Half_Bath       1 non-null      int64   
+##  51  Bedroom_AbvGr   1 non-null      int64   
+##  52  Kitchen_AbvGr   1 non-null      int64   
+##  53  KitchenQual     1 non-null      category
+##  54  TotRms_AbvGrd   1 non-null      int64   
+##  55  Functional      1 non-null      category
+##  56  Fireplaces      1 non-null      int64   
+##  57  FireplaceQu     1 non-null      category
+##  58  Garage_Type     1 non-null      category
+##  59  GarageYrBlt     1 non-null      float64 
+##  60  Garage_Finish   1 non-null      category
+##  61  GarageCars      1 non-null      int64   
+##  62  GarageArea      1 non-null      int64   
+##  63  GarageQual      1 non-null      category
+##  64  Garage_Cond     1 non-null      category
+##  65  PavedDrive      1 non-null      category
+##  66  WoodDeckSF      1 non-null      int64   
+##  67  Open_Porch_SF   1 non-null      int64   
+##  68  Enclosed_Porch  1 non-null      int64   
+##  69  3SsnPorch       1 non-null      int64   
+##  70  ScreenPorch     1 non-null      int64   
+##  71  Pool_Area       1 non-null      int64   
+##  72  Pool_QC         0 non-null      category
+##  73  Fence           1 non-null      category
+##  74  Misc_Feature    0 non-null      category
+##  75  MiscVal         1 non-null      int64   
+##  76  MoSold          1 non-null      int64   
+##  77  Year_Sold       1 non-null      int64   
+##  78  Sale_Type       1 non-null      category
+##  79  SaleCondition   1 non-null      category
+## dtypes: category(43), float64(3), int64(34)
+## memory usage: 10.9 KB</code></pre>
+<div class="sourceCode" id="cb457"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb457-1"><a href="interpretabilidad-de-modelos.html#cb457-1" aria-hidden="true" tabindex="-1"></a>big_house.T.head(<span class="dv">20</span>)</span></code></pre></div>
+<pre><code>##                  260
+## Id               261
+## MSSubClass        80
+## MS_Zoning         RL
+## Lot_Frontage   120.0
+## Lot_Area       19296
+## Street          Pave
+## Alley            NaN
+## Lot_Shape        Reg
+## Land_Contour     Lvl
+## Utilities     AllPub
+## LotConfig     Corner
+## Land_Slope       Gtl
+## Neighborhood   NAmes
+## Condition_1   Artery
+## Condition2      Norm
+## Bldg_Type       1Fam
+## HouseStyle      SLvl
+## OverallQual        6
+## OverallCond        5
+## Year_Built      1962</code></pre>
+<p>Calculamos las atribuciones promedio <em>SHAP</em> de la misma manera.</p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb459-1"><a href="interpretabilidad-de-modelos.html#cb459-1" aria-hidden="true" tabindex="-1"></a>shap_house <span class="op">=</span> explainer_xgb(xgb_transformer.transform(big_house))</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb460-1"><a href="interpretabilidad-de-modelos.html#cb460-1" aria-hidden="true" tabindex="-1"></a>shap_house <span class="op">=</span> explainer_xgb(xgb_transformer.transform(big_house))</span>
+<span id="cb460-2"><a href="interpretabilidad-de-modelos.html#cb460-2" aria-hidden="true" tabindex="-1"></a>shap_house2 <span class="op">=</span> shap_contribution_table(shap_house)</span>
+<span id="cb460-3"><a href="interpretabilidad-de-modelos.html#cb460-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb460-4"><a href="interpretabilidad-de-modelos.html#cb460-4" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(shap_house2[<span class="st">&quot;contribution&quot;</span>] <span class="op">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;tab:blue&quot;</span>, <span class="st">&quot;tab:red&quot;</span>)</span>
+<span id="cb460-5"><a href="interpretabilidad-de-modelos.html#cb460-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> shap_house2.sort_values(<span class="st">&quot;abs_contribution&quot;</span>).plot(</span>
+<span id="cb460-6"><a href="interpretabilidad-de-modelos.html#cb460-6" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">&quot;barh&quot;</span>,</span>
+<span id="cb460-7"><a href="interpretabilidad-de-modelos.html#cb460-7" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb460-8"><a href="interpretabilidad-de-modelos.html#cb460-8" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">&quot;contribution&quot;</span>,</span>
+<span id="cb460-9"><a href="interpretabilidad-de-modelos.html#cb460-9" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>colors,</span>
+<span id="cb460-10"><a href="interpretabilidad-de-modelos.html#cb460-10" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb460-11"><a href="interpretabilidad-de-modelos.html#cb460-11" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>),</span>
+<span id="cb460-12"><a href="interpretabilidad-de-modelos.html#cb460-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb460-13"><a href="interpretabilidad-de-modelos.html#cb460-13" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## &lt;matplotlib.lines.Line2D object at 0x305aeb710&gt;</code></pre>
+<div class="sourceCode" id="cb462"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb462-1"><a href="interpretabilidad-de-modelos.html#cb462-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="va">None</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;&#39;)</code></pre>
+<div class="sourceCode" id="cb464"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb464-1"><a href="interpretabilidad-de-modelos.html#cb464-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Contribución SHAP&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Contribución SHAP&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-223-7.png" width="768" /></p>
+<p>A diferencia del dúplex, el área habitable, año de construcción y área del segundo piso de esta casa contribuyen a que su precio sea más alto.</p>
+<p>Los paquetes como <em>SHAP</em> y <em>lime</em> se pueden integrar en un análisis de <code>scikit-learn</code> para proporcionar este tipo de explicativos de modelos.</p>
+<p>Las explicaciones del modelo son solo una parte de la comprensión de si su modelo es apropiado y efectivo, junto con las estimaciones del rendimiento del modelo.</p>
+<div id="otros-métodos" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Otros métodos<a href="interpretabilidad-de-modelos.html#otros-métodos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><em>Partial Dependence Plot (PDP)</em>. Efecto marginal de una o dos variables en la predicción.</p></li>
+<li><p><em>Accumulated Local Effects (ALE)</em>. Cómo las variables influyen en promedio a la predicción.</p></li>
+</ul>
+</div>
+<div id="consejos" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Consejos<a href="interpretabilidad-de-modelos.html#consejos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Trata cada modelo que desarrollas como una afectación de vida o muerte a un humano directamente.</p></li>
+<li><p>Identifica si estas agregando sesgo, inequidad, injusticia con interpretabilidad.</p></li>
+<li><p>Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad en tu proceso de desarrollo.</p></li>
+<li><p>Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad para el usuario final.</p></li>
+</ul>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sesgo-e-inequidad.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="a-b---testing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

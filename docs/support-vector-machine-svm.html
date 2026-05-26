@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 4 Support Vector Machine (SVM) | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 4 Support Vector Machine (SVM) | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 4 Support Vector Machine (SVM) | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="feature-engineering.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i><b>1.1</b> Objetivo</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i><b>1.2</b> Instructores</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ciencia-de-datos-en-r"><i class="fa fa-check"></i><b>1.3</b> Ciencia de Datos en R</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i><b>1.4</b> Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i><b>1.4.1</b> Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i><b>1.5</b> Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i><b>1.6</b> Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>2</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>2.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="2.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>2.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>2.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="2.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>2.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>2.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="2.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>2.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>2.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="2.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>2.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>2.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>2.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="2.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>2.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>3</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>3.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>3.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>3.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="3.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-r"><i class="fa fa-check"></i><b>3.2.2</b> Implementación en R</a></li>
+<li class="chapter" data-level="3.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>3.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="3.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>3.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>3.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>3.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="3.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-r-1"><i class="fa fa-check"></i><b>3.3.2</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicio"><i class="fa fa-check"></i><b>3.4</b> Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html"><i class="fa fa-check"></i><b>4</b> Support Vector Machine (SVM)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>4.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="4.2" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#support-vector-classifiers"><i class="fa fa-check"></i><b>4.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="4.3" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#support-vector-machine"><i class="fa fa-check"></i><b>4.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="4.4" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>4.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="4.5" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>4.5</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="4.6" data-path="support-vector-machine-svm.html"><a href="support-vector-machine-svm.html#ajuste-del-modelo-con-r"><i class="fa fa-check"></i><b>4.6</b> Ajuste del modelo con R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="support-vector-machine-svm" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Support Vector Machine (SVM)<a href="support-vector-machine-svm.html#support-vector-machine-svm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Support vector machine, llamado SVM, es un algoritmo de aprendizaje supervisado que se puede utilizar para problemas de clasificación y regresión. Se utiliza para conjuntos de datos más pequeños, ya que <strong>tarda demasiado en procesarse.</strong></p>
+<p>El principal objetivo de esta técnica es encontrar el <strong>Hiperplano de Separación Óptima</strong>, también conocido como <em>Boundary Decision</em>, el cual será el margen de clasificación más grande que podamos ajustar para separar a las clases involucradas, limitando las veces que una observación viola dicho margen.</p>
+<p><img src="img/02-svm/01_inseparable_classes.png" width="800pt" height="400pt" style="display: block; margin: auto;" /></p>
+<p>Para entender este algoritmo es necesario entender 3 conceptos principales:</p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li><p>Maximum margin classifiers</p></li>
+<li><p>Support vector classifiers</p></li>
+<li><p>Support vector machines</p></li>
+</ol>
+</blockquote>
+<p>Estudiemos cada uno de estos principios.</p>
+<div id="maximum-margin-classifier" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Maximum Margin Classifier<a href="support-vector-machine-svm.html#maximum-margin-classifier" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A menudo se generalizan con máquinas de vectores de soporte, pero SVM tiene muchos más parámetros en comparación. El <em>clasificador de margen máximo</em> considera un hiperplano con ancho de separación máxima para clasificar los datos. Sin embargo, se pueden dibujar infinitos hiperplanos en un conjunto de datos por lo que es importante <strong>elegir el hiperplano ideal para la clasificación.</strong></p>
+<p>En un espacio <em>n-dimensional</em>, un hiperplano es un subespacio de la dimensión n-1. Es decir, si los datos tienen un espacio bidimensional, entonces el hiperplano puede ser una línea recta que divide el espacio de datos en dos mitades y pasa por la siguiente ecuacion:</p>
+<p><span class="math display">\[\beta_0 + \beta_1X_1 + \beta_2X_2=0\]</span></p>
+<p>Las observaciones que caen en el hiperplano sigue la ecuación anterior. Las observaciones que caen en la región por encima o por debajo del hiperplano sigue las siguientes ecuaciones:</p>
+<p><span class="math display">\[\beta_0 + \beta_1X_1 + \beta_2X_2&gt;0\]</span></p>
+<p><span class="math display">\[\beta_0 + \beta_1X_1 + \beta_2X_2&lt;0\]</span></p>
+<p>El clasificador de margen máximo <strong>a menudo falla en la situación de casos no separables</strong> en los que no puede asignar un hiperplano diferente para clasificar datos no separables. Para tales casos, un clasificador de vectores de soporte viene al rescate.</p>
+<p><img src="img/02-svm/02_maximum_margin_classifier.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
+<p>Del diagrama anterior, podemos suponer infinitos hiperplanos (izquierda). El clasificador de margen máximo viene con un solo hiperplano que divide los datos como en la gráfica de la derecha. <strong>Los datos que tocan los hiperplanos positivo y negativo se denominan vectores de soporte</strong>.</p>
+</div>
+<div id="support-vector-classifiers" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Support Vector Classifiers<a href="support-vector-machine-svm.html#support-vector-classifiers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Los vectores de soporte son las observaciones que están más cerca del hiperplano e influyen en la posición y orientación del hiperplano</strong>. Este tipo de clasificador puede considerarse como una versión extendida del clasificador de margen máximo. Cuando tratamos con datos de la vida real, encontramos que la mayoría de las observaciones están en clases superpuestas. Es por eso que se implementan clasificadores de vectores de soporte.</p>
+<p>Usando estos vectores de soporte, <strong>maximizamos el margen del clasificador</strong>. Eliminar los vectores de soporte cambiará la posición del hiperplano. Estos son los puntos que nos ayudan a construir nuestro <em>SVM</em>. Consideremos un <strong>parámetro de ajuste C</strong>. Entendamos con el siguiente diagrama.</p>
+<p><img src="img/02-svm/03_support_vector_classifier.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
+<p>Podemos ver en el gráfico de la izquierda que los valores más altos de <em>C</em> generaron más errores que se consideran una <strong>violación o infracción</strong>. El diagrama de la derecha muestra un valor más bajo de <em>C</em> y no brinda suficientes posibilidades de infracción al reducir el ancho del margen.</p>
+<div class="infobox note">
+<p>Puede considerarse al parámetro <em>C</em> como el monto de regularización, tal que:</p>
+<ul>
+<li><p>Si <strong>C es bajo</strong>, el margen será más amplio y tendremos un mayor número de violaciones al margen, pero el modelo generalizará mejor</p></li>
+<li><p>Si <strong>C es alto</strong>, nuestro margen será menos amplio y tendrá menos violaciones. Sin embargo, no generalizará bien.</p></li>
+</ul>
+</div>
+<p>Este modelo es sensible a cambios en la escala de datos de entrada, por lo que será <strong>importante estandarizar las variables antes de usar este modelo</strong>.</p>
+</div>
+<div id="support-vector-machine" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Support Vector Machine<a href="support-vector-machine-svm.html#support-vector-machine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El enfoque de la máquina de vectores de soporte se considera durante una decisión no lineal y los datos no son separables por un clasificador de vectores de soporte, independientemente de la función de costo.</p>
+<p>Cuando es casi imposible separar clases de manera no lineal, aplicamos el truco llamado <strong>truco del kernel</strong> el cual ayuda a manejar la separación de los datos.</p>
+<p><img src="img/02-svm/04_polinomial_kernel_plot.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
+<p>En el gráfico anterior, los datos que eran inseparables en una dimensión se separaron una vez que se transformaron a un espacio de dos dimensiones después de aplicar una <strong>transformación mediante kernel polinomial de segundo grado</strong>. Ahora veamos cómo manejar los datos bidimensionales linealmente inseparables.</p>
+<p><img src="img/02-svm/05_kernel_polinomial_plot2.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
+<p>En datos bidimensionales, el núcleo polinomial de segundo grado se aplica utilizando un plano lineal después de transformarlo a dimensiones superiores.</p>
+</div>
+<div id="el-truco-del-kernel" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> El truco del Kernel<a href="support-vector-machine-svm.html#el-truco-del-kernel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Las funciones Kernel son métodos con los que se utilizan clasificadores lineales como <em>SVM</em> para clasificar puntos de datos separables no linealmente. Esto se hace representando los puntos de datos en un espacio de mayor dimensión que su original. Por ejemplo, los datos 1D se pueden representar como datos 2D en el espacio, los datos 2D se pueden representar como datos 3D, etcétera.</p>
+<p>El truco del kernel ofrece una <strong>forma de calcular las relaciones entre los puntos de datos</strong> utilizando funciones del kernel y representar los datos de una manera más eficiente con menos cómputo. Los modelos que utilizan esta técnica se denominan <strong>“modelos kernelizados”</strong>.</p>
+<p><img src="img/02-svm/06_kernels.png" width="700pt" height="500pt" style="display: block; margin: auto;" /></p>
+<p>Hay varias funciones que utiliza SVM para realizar esta tarea. Algunos de los más comunes son:</p>
+<ol style="list-style-type: decimal">
+<li><strong>El núcleo lineal:</strong> Se utiliza para datos lineales. Esto simplemente representa los puntos de datos usando una relación lineal.</li>
+</ol>
+<p><span class="math display">\[K(x, y)=(x^T \cdot y)\]</span>
+<span class="math display">\[f(x)=w^T \cdot x + b\]</span>
+Esta formulación se presenta como solución al problema de optimización sobre w:</p>
+<p><span class="math display">\[min_{w\in R^d} \frac{1}{2}\parallel w \parallel ^2+ C\sum_{i}^{N}{max(0, 1-y_i f(x_i))}\]</span>
+<span class="math display">\[s.a. \quad y_i f(x_i) \geq 1 - max(0, 1-y_i f(x_i))\]</span>
+En donde <span class="math inline">\(1-y_i f(x_i)\)</span> es la distancia de <span class="math inline">\(x_i\)</span> al correspondiente margen de la clase si <span class="math inline">\(x_i\)</span> se encuentra en el lado equivocado del margen y cero en caso contrario. De esta forma, los puntos que se encuentran lejos del margen del lado equivocado obtendrán una mayor penalización. Dar click en la siguiente <a href="https://towardsdatascience.com/support-vector-machines-soft-margin-formulation-and-kernel-trick-4c9729dc8efe">liga</a> para mayor entendimiento del problema de optimización.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Función de núcleo polinomial:</strong> Transforma los puntos de datos mediante el <strong>uso del producto escalar</strong> y la transformación de los datos en una “dimensión <em>n</em>,” <em>n</em> podría ser cualquier valor de 2, 3, etcétera, es decir, la transformación será un producto al cuadrado o superior. Por lo tanto, representar datos en un espacio de mayor dimensión utilizando los nuevos puntos transformados.</li>
+</ol>
+<p><span class="math display">\[K(x, y)=(c+ x^T \cdot y)^p\]</span></p>
+<p>Cuando se emplea <span class="math inline">\(p=1\)</span> y <span class="math inline">\(c=0\)</span>, el resultado es el mismo que el de un kernel lineal. Si <span class="math inline">\(p&gt;1\)</span>, se generan límites de decisión no lineales, aumentando la no linealidad a medida que aumenta <em>p</em>. No suele ser recomendable emplear valores de <em>p</em> mayores 5 por problemas de <strong>overfitting</strong>.</p>
+<p><img src="img/02-svm/3-15-1-poli.png" width="400pt" height="400pt" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>La función de base radial (RBF):</strong> Esta función se comporta como un “modelo de vecino más cercano ponderado.” Transforma los datos representándolos en dimensiones infinitas,</li>
+</ol>
+<p>La función Radial puede ser de Gauss o de Laplace. Esto depende de un hiperparámetro conocido como gamma <span class="math inline">\(\gamma\)</span>. Cuanto menor sea el valor del hiperparámetro, menor será el sesgo y mayor la varianza. Mientras que un valor más alto de hiperparámetro da un sesgo más alto y menor varianza. Este es el núcleo más utilizado.</p>
+<p><span class="math display">\[K(x, y)=exp(-\gamma \parallel x - y\parallel^2)=exp(-\frac{\parallel x-y \parallel ^2}{2\sigma²})\]</span>
+<span class="math display">\[f(x)=w^T \cdot \phi(x) + b\]</span>
+Se realiza un mapeo de x a <span class="math inline">\(\phi(x)\)</span> en donde los datos son separables</p>
+<p><img src="img/02-svm/svm_radial.png" width="400pt" height="400pt" style="display: block; margin: auto;" /></p>
+<p>Es recomendable probar el kernel <strong>RBF</strong>. Este kernel tiene dos ventajas: que solo tiene dos hiperparámetros que optimizar (<span class="math inline">\(\gamma\)</span> y la penalización <span class="math inline">\(C\)</span> común a todos los SVM) y que su flexibilidad puede ir desde un clasificador lineal a uno muy complejo.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>La función sigmoide:</strong> También conocida como función tangente hiperbólica (Tanh), encuentra más aplicación en redes neuronales como función de activación. Esta función mapea los valores de entrada al intervalo [-1, 1].</li>
+</ol>
+<p><span class="math display">\[K(x, y)= tanh(\kappa x\cdot y-\delta)\]</span></p>
+<p><strong>¿Por qué se llama un “truco del kernel?”</strong></p>
+<p><em>SVM</em> vuelve a representar los puntos de datos no lineales utilizando cualquiera de las funciones del kernel de una manera que parece que los datos se han transformado, luego encuentra el hiperplano de separación óptimo, sin embargo, en realidad, <strong>los puntos de datos siguen siendo los mismos</strong>, en realidad no se han transformado. Es por eso que se llama un ‘truco del kernel.’</p>
+</div>
+<div id="ventajas-y-desventajas" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Ventajas y desventajas<a href="support-vector-machine-svm.html#ventajas-y-desventajas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ventajas</strong></p>
+<ul>
+<li><p>Es un modelo que ajusta bien con pocos datos</p></li>
+<li><p>Son flexibles en datos no estructurados, estructurados y semiestructurados.</p></li>
+<li><p>La función Kernel alivia las complejidades en casi cualquier tipo de datos.</p></li>
+<li><p>Se observa menos sobreajuste en comparación con otros modelos.</p></li>
+</ul>
+<p><strong>Desventajas</strong></p>
+<ul>
+<li><p>El tiempo de entrenamiento es mayor cuando se calculan grandes conjuntos de datos.</p></li>
+<li><p>Los hiperparámetros suelen ser un desafío al interpretar su impacto.</p></li>
+<li><p>La interpretación general es difícil (black box).</p></li>
+</ul>
+</div>
+<div id="ajuste-del-modelo-con-r" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Ajuste del modelo con R<a href="support-vector-machine-svm.html#ajuste-del-modelo-con-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Usaremos las recetas antes implementadas para ajustar tanto el modelo de regresión como el de clasificación. Exploraremos un conjunto de hiperparámetros para elegir el mejor modelo.</p>
+<p>Recordemos los pasos a seguir al ajustar un modelo</p>
+<ol style="list-style-type: decimal">
+<li>Separación inicial de datos ( test, train <KFCV> )</li>
+<li>Pre-procesamiento e ingeniería de variables</li>
+<li>Selección de tipo de modelo con hiperparámetros iniciales</li>
+<li>Inicialización de workflow o pipeline</li>
+<li>Creación de grid search</li>
+<li><strong>Entrenamiento de modelos con hiperparámetros definidos</strong> (salvar los modelos entrenados)</li>
+<li>Análisis de métricas de error e hiperparámetros (Vuelve al paso 3 si es necesario)</li>
+<li>Selección de modelo a usar</li>
+<li>Ajuste de modelo final con todos los datos</li>
+<li>Validar poder predictivo con datos de prueba.</li>
+</ol>
+<p>A continuación, revisaremos paso por paso este procedimiento usando SVM como modelo:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="support-vector-machine-svm.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb36-2"><a href="support-vector-machine-svm.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="support-vector-machine-svm.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ames)</span>
+<span id="cb36-4"><a href="support-vector-machine-svm.html#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="support-vector-machine-svm.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4595</span>)</span>
+<span id="cb36-6"><a href="support-vector-machine-svm.html#cb36-6" aria-hidden="true" tabindex="-1"></a>ames_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb36-7"><a href="support-vector-machine-svm.html#cb36-7" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(ames_split)</span>
+<span id="cb36-8"><a href="support-vector-machine-svm.html#cb36-8" aria-hidden="true" tabindex="-1"></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(ames_split)</span>
+<span id="cb36-9"><a href="support-vector-machine-svm.html#cb36-9" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train)</span></code></pre></div>
+<p>Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="support-vector-machine-svm.html#cb37-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> . , <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="support-vector-machine-svm.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Alley) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="support-vector-machine-svm.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">Year_Remod =</span> Year_Remod_Add) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href="support-vector-machine-svm.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">ThirdSsn_Porch =</span> Three_season_porch) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-5"><a href="support-vector-machine-svm.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Bedroom_AbvGr, <span class="at">denom =</span> <span class="fu">denom_vars</span>(Gr_Liv_Area)) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-6"><a href="support-vector-machine-svm.html#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb37-7"><a href="support-vector-machine-svm.html#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod,</span>
+<span id="cb37-8"><a href="support-vector-machine-svm.html#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalSF   =</span> Gr_Liv_Area <span class="sc">+</span> Total_Bsmt_SF,</span>
+<span id="cb37-9"><a href="support-vector-machine-svm.html#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">AvgRoomSF   =</span> Gr_Liv_Area <span class="sc">/</span> TotRms_AbvGrd,</span>
+<span id="cb37-10"><a href="support-vector-machine-svm.html#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pool =</span> <span class="fu">if_else</span>(Pool_Area <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb37-11"><a href="support-vector-machine-svm.html#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-12"><a href="support-vector-machine-svm.html#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-13"><a href="support-vector-machine-svm.html#cb37-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>(), <span class="sc">-</span><span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb37-14"><a href="support-vector-machine-svm.html#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-15"><a href="support-vector-machine-svm.html#cb37-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Second_Flr_SF<span class="sc">:</span>First_Flr_SF) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-16"><a href="support-vector-machine-svm.html#cb37-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-17"><a href="support-vector-machine-svm.html#cb37-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(</span>
+<span id="cb37-18"><a href="support-vector-machine-svm.html#cb37-18" aria-hidden="true" tabindex="-1"></a>    First_Flr_SF, Second_Flr_SF, Year_Remod,</span>
+<span id="cb37-19"><a href="support-vector-machine-svm.html#cb37-19" aria-hidden="true" tabindex="-1"></a>    Bsmt_Full_Bath, Bsmt_Half_Bath, </span>
+<span id="cb37-20"><a href="support-vector-machine-svm.html#cb37-20" aria-hidden="true" tabindex="-1"></a>    Kitchen_AbvGr, BsmtFin_Type_1_Unf, </span>
+<span id="cb37-21"><a href="support-vector-machine-svm.html#cb37-21" aria-hidden="true" tabindex="-1"></a>    Total_Bsmt_SF, Kitchen_AbvGr, Pool_Area, </span>
+<span id="cb37-22"><a href="support-vector-machine-svm.html#cb37-22" aria-hidden="true" tabindex="-1"></a>    Gr_Liv_Area, Sale_Type_Oth, Sale_Type_VWD</span>
+<span id="cb37-23"><a href="support-vector-machine-svm.html#cb37-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-24"><a href="support-vector-machine-svm.html#cb37-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>()</span>
+<span id="cb37-25"><a href="support-vector-machine-svm.html#cb37-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-26"><a href="support-vector-machine-svm.html#cb37-26" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
+<pre><code>## Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         73
+## 
+## Training data contained 2197 data points and no missing data.
+## 
+## Operations:
+## 
+## Unknown factor level assignment for Alley [trained]
+## Variable renaming for Year_Remod [trained]
+## Variable renaming for ThirdSsn_Porch [trained]
+## Ratios from Bedroom_AbvGr, Gr_Liv_Area [trained]
+## Variable mutation for ~Year_Sold - Year_Remod, ~Gr_Liv_Area + To... [trained]
+## Re-order factor level to ref_level for Exter_Cond [trained]
+## Centering and scaling for Lot_Frontage, Lot_Area, Year_Built, Year_Remod,... [trained]
+## Dummy variables from MS_SubClass, MS_Zoning, Street, Alley, Lot_Shape, Land_Co... [trained]
+## Interactions with Second_Flr_SF:First_Flr_SF [trained]
+## Interactions with (Bsmt_Cond_Fair + Bsmt_Cond_Good + Bsmt_Cond_No_Ba... [trained]
+## Variables removed First_Flr_SF, Second_Flr_SF, Year_Remod, Bsmt_Full_Bath... [trained]</code></pre>
+<p>Recordemos que la función <strong>recipe()</strong> solo son los pasos a seguir, necesitamos usar la función <strong>prep()</strong> que nos devuelve una receta actualizada con las estimaciones y la función <strong>juice()</strong> que nos devuelve la matriz de diseño.</p>
+<p>Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés. Existen diversas funciones dentro de <em>tidymodels</em> para implementar estos modelos, entra las cuales se encuentran:</p>
+<ul>
+<li>Base lineal: svm_lineal()</li>
+<li>Base polinomial: svm_poly()</li>
+<li>Base radial: svm_rbf()</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="support-vector-machine-svm.html#cb39-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm_rbf</span>(</span>
+<span id="cb39-2"><a href="support-vector-machine-svm.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb39-3"><a href="support-vector-machine-svm.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cost =</span> <span class="fu">tune</span>(),</span>
+<span id="cb39-4"><a href="support-vector-machine-svm.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rbf_sigma =</span> <span class="fu">tune</span>(),</span>
+<span id="cb39-5"><a href="support-vector-machine-svm.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-6"><a href="support-vector-machine-svm.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set_engine</span>(<span class="st">&quot;kernlab&quot;</span>)</span>
+<span id="cb39-7"><a href="support-vector-machine-svm.html#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="support-vector-machine-svm.html#cb39-8" aria-hidden="true" tabindex="-1"></a>svm_model</span></code></pre></div>
+<pre><code>## Radial Basis Function Support Vector Machine Specification (regression)
+## 
+## Main Arguments:
+##   cost = tune()
+##   rbf_sigma = tune()
+##   margin = tune()
+## 
+## Computational engine: kernlab</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="support-vector-machine-svm.html#cb41-1" aria-hidden="true" tabindex="-1"></a>svm_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="support-vector-machine-svm.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(receta_casas) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="support-vector-machine-svm.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(svm_model)</span>
+<span id="cb41-4"><a href="support-vector-machine-svm.html#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="support-vector-machine-svm.html#cb41-5" aria-hidden="true" tabindex="-1"></a>svm_workflow</span></code></pre></div>
+<pre><code>## ══ Workflow ════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: svm_rbf()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 11 Recipe Steps
+## 
+## • step_unknown()
+## • step_rename()
+## • step_rename()
+## • step_ratio()
+## • step_mutate()
+## • step_relevel()
+## • step_normalize()
+## • step_dummy()
+## • step_interact()
+## • step_interact()
+## • ...
+## • and 1 more step.
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Radial Basis Function Support Vector Machine Specification (regression)
+## 
+## Main Arguments:
+##   cost = tune()
+##   rbf_sigma = tune()
+##   margin = tune()
+## 
+## Computational engine: kernlab</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="support-vector-machine-svm.html#cb43-1" aria-hidden="true" tabindex="-1"></a>svm_parameters_set <span class="ot">&lt;-</span> <span class="fu">parameters</span>(svm_workflow) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="support-vector-machine-svm.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb43-3"><a href="support-vector-machine-svm.html#cb43-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">rbf_sigma =</span> <span class="fu">rbf_sigma</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>)), </span>
+<span id="cb43-4"><a href="support-vector-machine-svm.html#cb43-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">cost =</span> <span class="fu">cost</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">15</span>))</span>
+<span id="cb43-5"><a href="support-vector-machine-svm.html#cb43-5" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb43-6"><a href="support-vector-machine-svm.html#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="support-vector-machine-svm.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb43-8"><a href="support-vector-machine-svm.html#cb43-8" aria-hidden="true" tabindex="-1"></a>svm_grid <span class="ot">&lt;-</span> svm_parameters_set <span class="sc">%&gt;%</span> </span>
+<span id="cb43-9"><a href="support-vector-machine-svm.html#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid_max_entropy</span>(<span class="at">size =</span> <span class="dv">80</span>)</span>
+<span id="cb43-10"><a href="support-vector-machine-svm.html#cb43-10" aria-hidden="true" tabindex="-1"></a>svm_grid</span></code></pre></div>
+<pre><code>## # A tibble: 80 × 3
+##        cost rbf_sigma margin
+##       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+##  1   357.      0.0839 0.110 
+##  2 10956.      5.22   0.180 
+##  3  5733.     96.0    0.0128
+##  4 26216.      7.45   0.197 
+##  5     3.59    0.0661 0.121 
+##  6    56.6     0.0153 0.114 
+##  7  6478.      1.95   0.0277
+##  8     6.66    0.0391 0.0818
+##  9    58.6     0.0842 0.114 
+## 10    14.3     0.0633 0.0522
+## # … with 70 more rows</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="support-vector-machine-svm.html#cb45-1" aria-hidden="true" tabindex="-1"></a>ctrl_grid <span class="ot">&lt;-</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> T, <span class="at">verbose =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="support-vector-machine-svm.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb46-2"><a href="support-vector-machine-svm.html#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="support-vector-machine-svm.html#cb46-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb46-4"><a href="support-vector-machine-svm.html#cb46-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb46-5"><a href="support-vector-machine-svm.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb46-6"><a href="support-vector-machine-svm.html#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="support-vector-machine-svm.html#cb46-7" aria-hidden="true" tabindex="-1"></a>svm1 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb46-8"><a href="support-vector-machine-svm.html#cb46-8" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb46-9"><a href="support-vector-machine-svm.html#cb46-9" aria-hidden="true" tabindex="-1"></a>  svm_workflow,</span>
+<span id="cb46-10"><a href="support-vector-machine-svm.html#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb46-11"><a href="support-vector-machine-svm.html#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> svm_grid,</span>
+<span id="cb46-12"><a href="support-vector-machine-svm.html#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse, mae, mape),</span>
+<span id="cb46-13"><a href="support-vector-machine-svm.html#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> ctrl_grid</span>
+<span id="cb46-14"><a href="support-vector-machine-svm.html#cb46-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-15"><a href="support-vector-machine-svm.html#cb46-15" aria-hidden="true" tabindex="-1"></a>svm2 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>(); svm2 <span class="sc">-</span> svm1</span>
+<span id="cb46-16"><a href="support-vector-machine-svm.html#cb46-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-17"><a href="support-vector-machine-svm.html#cb46-17" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb46-18"><a href="support-vector-machine-svm.html#cb46-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-19"><a href="support-vector-machine-svm.html#cb46-19" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/svm_model_reg.rds&quot;</span>)</span></code></pre></div>
+<p>Podemos obtener las métricas de cada <em>fold</em> con el siguiente código:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="support-vector-machine-svm.html#cb47-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/svm_model_reg.rds&quot;</span>)</span>
+<span id="cb47-2"><a href="support-vector-machine-svm.html#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="support-vector-machine-svm.html#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unnest</span>(svm_tune_result, .metrics)</span></code></pre></div>
+<pre><code>## # A tibble: 2,400 × 11
+##    splits             id      cost rbf_sigma margin .metric .estimator .estimate
+##    &lt;list&gt;             &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+##  1 &lt;split [1977/220]&gt; Fold…   357.    0.0839 0.110  rmse    standard     43741. 
+##  2 &lt;split [1977/220]&gt; Fold…   357.    0.0839 0.110  mae     standard     28240. 
+##  3 &lt;split [1977/220]&gt; Fold…   357.    0.0839 0.110  mape    standard        18.6
+##  4 &lt;split [1977/220]&gt; Fold… 10956.    5.22   0.180  rmse    standard     90721. 
+##  5 &lt;split [1977/220]&gt; Fold… 10956.    5.22   0.180  mae     standard     66139. 
+##  6 &lt;split [1977/220]&gt; Fold… 10956.    5.22   0.180  mape    standard        42.4
+##  7 &lt;split [1977/220]&gt; Fold…  5733.   96.0    0.0128 rmse    standard     91135. 
+##  8 &lt;split [1977/220]&gt; Fold…  5733.   96.0    0.0128 mae     standard     65465. 
+##  9 &lt;split [1977/220]&gt; Fold…  5733.   96.0    0.0128 mape    standard        41.4
+## 10 &lt;split [1977/220]&gt; Fold… 26216.    7.45   0.197  rmse    standard     90721. 
+## # … with 2,390 more rows, and 3 more variables: .config &lt;chr&gt;, .notes &lt;list&gt;,
+## #   .predictions &lt;list&gt;</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="support-vector-machine-svm.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(svm_tune_result)</span></code></pre></div>
+<pre><code>## # A tibble: 240 × 9
+##      cost rbf_sigma margin .metric .estimator    mean     n  std_err .config    
+##     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;      
+##  1   357.    0.0839 0.110  mae     standard   27201.     10  613.    Preprocess…
+##  2   357.    0.0839 0.110  mape    standard      16.7    10    0.560 Preprocess…
+##  3   357.    0.0839 0.110  rmse    standard   41958.     10 1942.    Preprocess…
+##  4 10956.    5.22   0.180  mae     standard   58568.     10 1278.    Preprocess…
+##  5 10956.    5.22   0.180  mape    standard      38.6    10    0.964 Preprocess…
+##  6 10956.    5.22   0.180  rmse    standard   79247.     10 2398.    Preprocess…
+##  7  5733.   96.0    0.0128 mae     standard   57838.     10 1329.    Preprocess…
+##  8  5733.   96.0    0.0128 mape    standard      37.5    10    0.949 Preprocess…
+##  9  5733.   96.0    0.0128 rmse    standard   79280.     10 2491.    Preprocess…
+## 10 26216.    7.45   0.197  mae     standard   58735.     10 1274.    Preprocess…
+## # … with 230 more rows</code></pre>
+<p>En la siguiente gráfica observamos el error cuadrático medio de las distintas métricas:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="support-vector-machine-svm.html#cb51-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="support-vector-machine-svm.html#cb52-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="sc">%&gt;%</span> <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;mape&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 9
+##      cost rbf_sigma  margin .metric .estimator  mean     n std_err .config      
+##     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;        
+##  1   2.70   0.0183  0.0912  mape    standard    13.7    10   0.540 Preprocessor…
+##  2  54.0    0.00388 0.199   mape    standard    14.1    10   0.589 Preprocessor…
+##  3   4.13   0.00735 0.151   mape    standard    14.1    10   0.546 Preprocessor…
+##  4   1.37   0.0101  0.0757  mape    standard    14.2    10   0.558 Preprocessor…
+##  5 321.     0.00370 0.168   mape    standard    14.3    10   0.527 Preprocessor…
+##  6  20.1    0.0169  0.172   mape    standard    14.4    10   0.555 Preprocessor…
+##  7   1.49   0.0613  0.00576 mape    standard    14.4    10   0.519 Preprocessor…
+##  8  62.0    0.0114  0.138   mape    standard    14.5    10   0.546 Preprocessor…
+##  9   6.66   0.0391  0.0818  mape    standard    14.7    10   0.541 Preprocessor…
+## 10  56.6    0.0153  0.114   mape    standard    14.9    10   0.524 Preprocessor…</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="support-vector-machine-svm.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección del mejor modelo según la métrica MAPE</span></span>
+<span id="cb54-2"><a href="support-vector-machine-svm.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="support-vector-machine-svm.html#cb54-3" aria-hidden="true" tabindex="-1"></a>svm_regression_best_model <span class="ot">&lt;-</span> <span class="fu">select_best</span>(svm_tune_result, <span class="at">metric =</span> <span class="st">&quot;mape&quot;</span>)</span>
+<span id="cb54-4"><a href="support-vector-machine-svm.html#cb54-4" aria-hidden="true" tabindex="-1"></a>svm_regression_best_model</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 4
+##    cost rbf_sigma margin .config              
+##   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                
+## 1  2.70    0.0183 0.0912 Preprocessor1_Model36</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="support-vector-machine-svm.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección del modelo más regularizado a menos de una desviación estandar, según la métrica MAPE</span></span>
+<span id="cb56-2"><a href="support-vector-machine-svm.html#cb56-2" aria-hidden="true" tabindex="-1"></a>svm_regression_best_1se_model <span class="ot">&lt;-</span> <span class="fu">select_by_one_std_err</span>(svm_tune_result, <span class="at">metric =</span> <span class="st">&quot;mape&quot;</span>, <span class="st">&quot;mape&quot;</span>)</span>
+<span id="cb56-3"><a href="support-vector-machine-svm.html#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="support-vector-machine-svm.html#cb56-4" aria-hidden="true" tabindex="-1"></a>svm_regression_best_1se_model</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 11
+##    cost rbf_sigma margin .metric .estimator  mean     n std_err .config    .best
+##   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+## 1  54.0   0.00388  0.199 mape    standard    14.1    10   0.589 Preproces…  13.7
+## # … with 1 more variable: .bound &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="support-vector-machine-svm.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo final </span></span>
+<span id="cb58-2"><a href="support-vector-machine-svm.html#cb58-2" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model <span class="ot">&lt;-</span> svm_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="support-vector-machine-svm.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(svm_regression_best_1se_model) <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="support-vector-machine-svm.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span>
+<span id="cb58-5"><a href="support-vector-machine-svm.html#cb58-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-6"><a href="support-vector-machine-svm.html#cb58-6" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model</span></code></pre></div>
+<pre><code>## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: svm_rbf()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 11 Recipe Steps
+## 
+## • step_unknown()
+## • step_rename()
+## • step_rename()
+## • step_ratio()
+## • step_mutate()
+## • step_relevel()
+## • step_normalize()
+## • step_dummy()
+## • step_interact()
+## • step_interact()
+## • ...
+## • and 1 more step.
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Support Vector Machine object of class &quot;ksvm&quot; 
+## 
+## SV type: eps-svr  (regression) 
+##  parameter : epsilon = 0.19897761377506  cost C = 53.9826136550232 
+## 
+## Gaussian Radial Basis kernel function. 
+##  Hyperparameter : sigma =  0.00388368261313309 
+## 
+## Number of Support Vectors : 1089 
+## 
+## Objective Function Value : -12604.14 
+## Training error : 0.123019</code></pre>
+<p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones. Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="support-vector-machine-svm.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicciones</span></span>
+<span id="cb60-2"><a href="support-vector-machine-svm.html#cb60-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">predict</span>(svm_regression_final_model, ames_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="support-vector-machine-svm.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(<span class="at">truth =</span> ames_test<span class="sc">$</span>Sale_Price) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-4"><a href="support-vector-machine-svm.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">pred_svm_reg =</span> .pred, <span class="at">Sale_Price =</span> truth)</span>
+<span id="cb60-5"><a href="support-vector-machine-svm.html#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="support-vector-machine-svm.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(results)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   pred_svm_reg Sale_Price
+##          &lt;dbl&gt;      &lt;int&gt;
+## 1      148825.     105000
+## 2      180289.     185000
+## 3      181983.     180400
+## 4      120958.     141000
+## 5      217661.     210000
+## 6      200620.     216000</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="support-vector-machine-svm.html#cb62-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> yardstick<span class="sc">::</span><span class="fu">metrics</span>(Sale_Price, pred_svm_reg)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard   35471.   
+## 2 rsq     standard       0.806
+## 3 mae     standard   23608.</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="support-vector-machine-svm.html#cb64-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb64-2"><a href="support-vector-machine-svm.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pred_svm_reg, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb64-3"><a href="support-vector-machine-svm.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb64-4"><a href="support-vector-machine-svm.html#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb64-5"><a href="support-vector-machine-svm.html#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Prediction&quot;</span>) <span class="sc">+</span></span>
+<span id="cb64-6"><a href="support-vector-machine-svm.html#cb64-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Observation&quot;</span>) <span class="sc">+</span></span>
+<span id="cb64-7"><a href="support-vector-machine-svm.html#cb64-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="feature-engineering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

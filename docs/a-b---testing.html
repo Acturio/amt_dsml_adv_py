@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 8 A / B - testing | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 8 A / B - testing | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 8 A / B - testing | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="interpretabilidad-de-modelos.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-python"><i class="fa fa-check"></i>Ciencia de Datos en Python</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>3</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>3.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="3.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>3.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="3.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>3.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="3.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>3.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="3.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>3.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="3.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>3.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="3.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>3.7</b> Ajuste del modelo con Python</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>3.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="3.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>3.7.2</b> Implementación de SVM en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>3.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>4.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>4.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>4.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>4.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>4.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-2"><i class="fa fa-check"></i><b>4.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>4.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>4.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>4.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="4.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>4.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="4.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>4.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>5</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>5.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="5.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>5.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="5.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>5.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="5.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>5.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="5.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>5.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>5.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>5.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>5.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="5.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>5.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="5.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>5.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>5.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>5.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="5.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>5.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="5.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>5.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>6</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>6.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="6.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>6.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>6.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="6.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>6.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="6.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>6.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="6.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>6.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="6.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>6.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="6.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>6.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="6.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>6.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="6.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>6.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="6.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>6.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>7</b> Interpretabilidad de modelos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>7.1</b> LIME</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>7.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="7.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>7.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="7.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>7.1.3</b> Implementación con <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>7.2</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>7.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="7.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>7.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>8</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>8.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="8.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>8.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="8.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>8.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>8.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="8.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>8.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="8.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>8.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="8.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>8.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="8.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>8.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="8.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>8.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="8.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>8.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>8.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>8.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="8.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>8.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>8.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>8.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="8.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>8.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="a-b---testing" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Capítulo 8</span> A / B - testing<a href="a-b---testing.html#a-b---testing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Los modelos de machine learning en la gran mayoría de las ocasiones tienen un propósito comercial. Como científicos de datos, es nuestra responsabilidad ayudar al negocio a tomar mejores decisiones que beneficien a la empresa en donde se ha desarrollado el modelo predictivo. Particularmente, una de las aplicaciones de mayor impacto en los últimos años es la <strong>reducción del CHURN</strong></p>
+<p>El churn rate o tasa de cancelación, es el <strong>porcentaje de clientes o suscriptores que dejan de utilizar los servicios que ofrece una empresa.</strong></p>
+<p><img src="img/09-ab-testing/churn.png" width="600pt" height="250" style="display: block; margin: auto;" /></p>
+<p>Es bastante conocido en el mundo del marketing que es mucho más caro adquirir nuevos clientes que retener a aquellos con los que ya cuenta la empresa. Es por esta razón que adicional a los esfuerzos de captar nuevos clientes se realizan esfuerzos por retener a los clientes con alta probabilidad de abandonar la empresa.</p>
+<p>A partir de los modelos de machine learning que han sido estudiados en el curso para detectar la posible inclusión a una categoría (cancelación de clientes) es que se realizará en este capítulo el estudio de técnicas para cuantificar el impacto de los modelos predictivos y de las estrategias de retención.</p>
+<p>Existen múltiples estrategias que surgen en las áreas de marketing para retener a los clientes. Hay una inversión muy grande de dinero que busca encontrar las mejores ideas que contribuyan a la retención. Sin embargo, <strong>poner todas estas ideas y estrategias a trabajar puede ser bastante costoso y riesgoso.</strong></p>
+<ul>
+<li><p>¿Qué pasa si la empresa gasta grandes cantidades de dinero en campañas publicitarias y estas no ayudan a alcanzar la meta?</p></li>
+<li><p>¿Qué sucede si se le invierte mucho tiempo en refinar la estrategia y esta nunca atrae a los clientes esperados?</p></li>
+</ul>
+<p>Este capítulo está destinado a discutir métodos de evaluación de esas ideas, de modo que antes de comprometernos completamente con una campaña e implementarla con todos los clientes, podamos hacer pequeñas pruebas con significancia estadística para determinar cuál de ellas tiene el mejor impacto sobre los objetivos planteados.</p>
+<div id="elementos-en-riesgo" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Elementos en riesgo<a href="a-b---testing.html#elementos-en-riesgo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El primer paso es detectar a los posibles canceladores de servicios para la empresa. Esta tarea ha sido ampliamente estudiada en el curso mediante múltiples modelos predictivos, entre los que se encuentran:</p>
+<ul>
+<li>Regresión bernoulli (logística)</li>
+<li>Regresión Ridge</li>
+<li>Regresión Lasso</li>
+<li>KNN</li>
+<li>Árbol de decisión</li>
+<li>Bagging</li>
+<li>Bosque aleatorio</li>
+<li>Support Vector Machine</li>
+<li>Boosting</li>
+<li>Stacking</li>
+</ul>
+<p>Recordemos que anteriormente ya se ha realizado la partición de los datos y se cuenta con varias configuraciones de cada modelo.</p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb466-1"><a href="a-b---testing.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb466-2"><a href="a-b---testing.html#cb466-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb466-3"><a href="a-b---testing.html#cb466-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb466-4"><a href="a-b---testing.html#cb466-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> loguniform</span>
+<span id="cb466-5"><a href="a-b---testing.html#cb466-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV, train_test_split</span>
+<span id="cb466-6"><a href="a-b---testing.html#cb466-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb466-7"><a href="a-b---testing.html#cb466-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-8"><a href="a-b---testing.html#cb466-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> (</span>
+<span id="cb466-9"><a href="a-b---testing.html#cb466-9" aria-hidden="true" tabindex="-1"></a>    best_cv_results,</span>
+<span id="cb466-10"><a href="a-b---testing.html#cb466-10" aria-hidden="true" tabindex="-1"></a>    classification_metrics,</span>
+<span id="cb466-11"><a href="a-b---testing.html#cb466-11" aria-hidden="true" tabindex="-1"></a>    load_telco,</span>
+<span id="cb466-12"><a href="a-b---testing.html#cb466-12" aria-hidden="true" tabindex="-1"></a>    make_telco_pipeline,</span>
+<span id="cb466-13"><a href="a-b---testing.html#cb466-13" aria-hidden="true" tabindex="-1"></a>    pr_curve_table,</span>
+<span id="cb466-14"><a href="a-b---testing.html#cb466-14" aria-hidden="true" tabindex="-1"></a>    roc_curve_table,</span>
+<span id="cb466-15"><a href="a-b---testing.html#cb466-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb466-16"><a href="a-b---testing.html#cb466-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-17"><a href="a-b---testing.html#cb466-17" aria-hidden="true" tabindex="-1"></a>telco <span class="op">=</span> load_telco(<span class="st">&quot;data/Churn.csv&quot;</span>)</span>
+<span id="cb466-18"><a href="a-b---testing.html#cb466-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-19"><a href="a-b---testing.html#cb466-19" aria-hidden="true" tabindex="-1"></a>telco_train, telco_test <span class="op">=</span> train_test_split(</span>
+<span id="cb466-20"><a href="a-b---testing.html#cb466-20" aria-hidden="true" tabindex="-1"></a>    telco,</span>
+<span id="cb466-21"><a href="a-b---testing.html#cb466-21" aria-hidden="true" tabindex="-1"></a>    train_size<span class="op">=</span><span class="fl">0.70</span>,</span>
+<span id="cb466-22"><a href="a-b---testing.html#cb466-22" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb466-23"><a href="a-b---testing.html#cb466-23" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>telco[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb466-24"><a href="a-b---testing.html#cb466-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb466-25"><a href="a-b---testing.html#cb466-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-26"><a href="a-b---testing.html#cb466-26" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> telco_train.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb466-27"><a href="a-b---testing.html#cb466-27" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> telco_train[<span class="st">&quot;Churn&quot;</span>]</span></code></pre></div>
+<pre><code>## RandomizedSearchCV(cv=5,
+##                    estimator=Pipeline(steps=[(&#39;features&#39;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                                                            kw_args={&#39;keep_target&#39;: False})),
+##                                              (&#39;preprocess&#39;,
+##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                                                 SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                                                (&#39;scaler&#39;,
+##                                                                                                 StandardScaler())]),
+##                                                                                &lt;sklearn.compose._column_transfo...
+##                                                                                &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f077750&gt;)],
+##                                                                 verbose_feature_names_out=False)),
+##                                              (&#39;model&#39;,
+##                                               SVC(probability=True,
+##                                                   random_state=1352))]),
+##                    n_iter=20, n_jobs=-1,
+##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17ff4b9d0&gt;,
+##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17f1ab3d0&gt;},
+##                    random_state=123, scoring=&#39;roc_auc&#39;)</code></pre>
+<p>A partir de los resultados de los modelos, se realizó una priorización para determinar cuál de ellos eran los más valiosos en términos de predicción.</p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb468-1"><a href="a-b---testing.html#cb468-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_class_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__C  param_model__gamma  mean_test_score  std_test_score
+## 17        1.894484            0.001774         0.839182        0.009551
+## 6         2.068792            0.000173         0.838651        0.007212
+## 13        1.217211            0.000819         0.838630        0.007262
+## 8         0.352757            0.000503         0.838612        0.007229
+## 15        0.188936            0.005430         0.838353        0.007430
+## 1         0.479241            0.016042         0.836946        0.009727
+## 4         2.772016            0.003702         0.836709        0.009375
+## 0        12.285916            0.001395         0.835248        0.009740
+## 16        1.961500            0.009435         0.833894        0.009663
+## 12       14.700434            0.001958         0.833654        0.009598</code></pre>
+<p>Y mediante una elección de métrica y método, se seleccionó al más valioso para re-entrenarse usando todos los datos disponibles de entrenamiento.</p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb470-1"><a href="a-b---testing.html#cb470-1" aria-hidden="true" tabindex="-1"></a>svm_classification_best_model <span class="op">=</span> svm_tune_class_result.best_params_</span>
+<span id="cb470-2"><a href="a-b---testing.html#cb470-2" aria-hidden="true" tabindex="-1"></a>svm_classification_final_model <span class="op">=</span> svm_tune_class_result.best_estimator_</span>
+<span id="cb470-3"><a href="a-b---testing.html#cb470-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb470-4"><a href="a-b---testing.html#cb470-4" aria-hidden="true" tabindex="-1"></a>svm_classification_best_model</span></code></pre></div>
+<pre><code>## {&#39;model__C&#39;: 1.8944836908329918, &#39;model__gamma&#39;: 0.001774372883716282}</code></pre>
+<p>Mediante este modelo final, se realizaron las predicciones de cancelación de servicios a clientes de telecomunicaciones. Para estos clientes se cuenta con la respuesta correcta debido a que se trata de los datos de testing.</p>
+<div class="sourceCode" id="cb472"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb472-1"><a href="a-b---testing.html#cb472-1" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> telco_test.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb472-2"><a href="a-b---testing.html#cb472-2" aria-hidden="true" tabindex="-1"></a>class_prob <span class="op">=</span> svm_classification_final_model.predict_proba(X_test)</span>
+<span id="cb472-3"><a href="a-b---testing.html#cb472-3" aria-hidden="true" tabindex="-1"></a>class_order <span class="op">=</span> svm_classification_final_model.named_steps[<span class="st">&quot;model&quot;</span>].classes_</span>
+<span id="cb472-4"><a href="a-b---testing.html#cb472-4" aria-hidden="true" tabindex="-1"></a>prob_lookup <span class="op">=</span> {label: class_prob[:, i] <span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(class_order)}</span>
+<span id="cb472-5"><a href="a-b---testing.html#cb472-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb472-6"><a href="a-b---testing.html#cb472-6" aria-hidden="true" tabindex="-1"></a>class_results <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb472-7"><a href="a-b---testing.html#cb472-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb472-8"><a href="a-b---testing.html#cb472-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;customerID&quot;</span>: telco_test[<span class="st">&quot;customerID&quot;</span>].to_numpy(),</span>
+<span id="cb472-9"><a href="a-b---testing.html#cb472-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;.pred_No&quot;</span>: prob_lookup[<span class="st">&quot;No&quot;</span>],</span>
+<span id="cb472-10"><a href="a-b---testing.html#cb472-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;.pred_Yes&quot;</span>: prob_lookup[<span class="st">&quot;Yes&quot;</span>],</span>
+<span id="cb472-11"><a href="a-b---testing.html#cb472-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Churn&quot;</span>: telco_test[<span class="st">&quot;Churn&quot;</span>].to_numpy(),</span>
+<span id="cb472-12"><a href="a-b---testing.html#cb472-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb472-13"><a href="a-b---testing.html#cb472-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb472-14"><a href="a-b---testing.html#cb472-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb472-15"><a href="a-b---testing.html#cb472-15" aria-hidden="true" tabindex="-1"></a>class_results.head(<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    customerID  .pred_No  .pred_Yes Churn
+## 0  6286-ZHAOK  0.858389   0.141611    No
+## 1  4918-FYJNT  0.829910   0.170090    No
+## 2  2520-SGTTA  0.927253   0.072747    No
+## 3  9921-ZVRHG  0.357032   0.642968   Yes
+## 4  0023-XUOPT  0.452321   0.547679   Yes
+## 5  9546-CQJSU  0.139782   0.860218   Yes
+## 6  6161-ERDGD  0.973481   0.026519    No
+## 7  1053-MXTTK  0.948861   0.051139    No
+## 8  3003-CMDUU  0.536690   0.463310    No
+## 9  6693-DJWTY  0.966188   0.033812    No</code></pre>
+<p>Hasta este punto, únicamente se han calculado probabilidades y no se han tomado decisiones sobre la determinación de elementos a quienes se realizará alguna intervención de retención.</p>
+<div class="sourceCode" id="cb474"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb474-1"><a href="a-b---testing.html#cb474-1" aria-hidden="true" tabindex="-1"></a>metric_values <span class="op">=</span> classification_metrics(class_results[<span class="st">&quot;Churn&quot;</span>], class_results[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
+<span id="cb474-2"><a href="a-b---testing.html#cb474-2" aria-hidden="true" tabindex="-1"></a>roc_auc_value <span class="op">=</span> metric_values.loc[metric_values[<span class="st">&quot;metric&quot;</span>].eq(<span class="st">&quot;roc_auc&quot;</span>), <span class="st">&quot;estimate&quot;</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb474-3"><a href="a-b---testing.html#cb474-3" aria-hidden="true" tabindex="-1"></a>pr_auc_value <span class="op">=</span> metric_values.loc[metric_values[<span class="st">&quot;metric&quot;</span>].eq(<span class="st">&quot;pr_auc&quot;</span>), <span class="st">&quot;estimate&quot;</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb474-4"><a href="a-b---testing.html#cb474-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb474-5"><a href="a-b---testing.html#cb474-5" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="op">=</span> roc_curve_table(class_results[<span class="st">&quot;Churn&quot;</span>], class_results[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
+<span id="cb474-6"><a href="a-b---testing.html#cb474-6" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="op">=</span> pr_curve_table(class_results[<span class="st">&quot;Churn&quot;</span>], class_results[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
+<span id="cb474-7"><a href="a-b---testing.html#cb474-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb474-8"><a href="a-b---testing.html#cb474-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb474-9"><a href="a-b---testing.html#cb474-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17f1f55d0&gt;]</code></pre>
+<div class="sourceCode" id="cb476"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb476-1"><a href="a-b---testing.html#cb476-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x305a93390&gt;]</code></pre>
+<div class="sourceCode" id="cb478"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb478-1"><a href="a-b---testing.html#cb478-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="ss">f&quot;ROC Curve (</span><span class="sc">{</span>roc_auc_value<span class="sc">:.2f}</span><span class="ss">)&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;ROC Curve (0.83)&#39;)</code></pre>
+<div class="sourceCode" id="cb480"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb480-1"><a href="a-b---testing.html#cb480-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">&quot;1 - specificity&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;1 - specificity&#39;)</code></pre>
+<div class="sourceCode" id="cb482"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb482-1"><a href="a-b---testing.html#cb482-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">&quot;sensitivity&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;sensitivity&#39;)</code></pre>
+<div class="sourceCode" id="cb484"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb484-1"><a href="a-b---testing.html#cb484-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_aspect(<span class="st">&quot;equal&quot;</span>, adjustable<span class="op">=</span><span class="st">&quot;box&quot;</span>)</span>
+<span id="cb484-2"><a href="a-b---testing.html#cb484-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb484-3"><a href="a-b---testing.html#cb484-3" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17fd65190&gt;]</code></pre>
+<div class="sourceCode" id="cb486"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb486-1"><a href="a-b---testing.html#cb486-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="ss">f&quot;Precision vs Recall (</span><span class="sc">{</span>pr_auc_value<span class="sc">:.2f}</span><span class="ss">)&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Precision vs Recall (0.62)&#39;)</code></pre>
+<div class="sourceCode" id="cb488"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb488-1"><a href="a-b---testing.html#cb488-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">&quot;recall&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;recall&#39;)</code></pre>
+<div class="sourceCode" id="cb490"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb490-1"><a href="a-b---testing.html#cb490-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">&quot;precision&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;precision&#39;)</code></pre>
+<div class="sourceCode" id="cb492"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb492-1"><a href="a-b---testing.html#cb492-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_aspect(<span class="st">&quot;equal&quot;</span>, adjustable<span class="op">=</span><span class="st">&quot;box&quot;</span>)</span>
+<span id="cb492-2"><a href="a-b---testing.html#cb492-2" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-231-1.png" width="960" /></p>
+</div>
+<div id="costo-de-retención" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Costo de retención<a href="a-b---testing.html#costo-de-retención" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Supongamos que existe un presupuesto designado a retener a los clientes de una compañía de telecomunicaciones que son áltamente probables de cancelar su servicio en los siguientes 3 meses. El presupuesto asignado es de $50,000.00 dólares y el equipo el marketing aún no se decide qué ofrecer:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>1 mes gratis de servicio</p></li>
+<li><p>1 celular gratis con valor de $100 dólares (para la empresa)</p></li>
+</ol>
+<p><strong>¿Cuántos clientes podrían ser intervenidos con cada uno de los posibles métodos?</strong></p>
+<p>Considere los siguientes escenarios:</p>
+<ol style="list-style-type: decimal">
+<li><p>Todas las retenciones son mediante meses gratis de servicio.</p></li>
+<li><p>Todas las retenciones son mediante el celular gratis.</p></li>
+</ol>
+<p><strong>Costo de promoción de servicio</strong></p>
+<p>El primer escenario considera que se obsequie un mes gratis de servicio al renovar un año completo. Para cada cliente se tiene en los datos el pago mensual que realizan, por lo que es posible priorizar de alguna manera a los clientes con mayor necesidad de retención</p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb493-1"><a href="a-b---testing.html#cb493-1" aria-hidden="true" tabindex="-1"></a>promo_1 <span class="op">=</span> (</span>
+<span id="cb493-2"><a href="a-b---testing.html#cb493-2" aria-hidden="true" tabindex="-1"></a>    class_results.assign(</span>
+<span id="cb493-3"><a href="a-b---testing.html#cb493-3" aria-hidden="true" tabindex="-1"></a>        MonthlyCharges<span class="op">=</span>telco_test[<span class="st">&quot;MonthlyCharges&quot;</span>].to_numpy(),</span>
+<span id="cb493-4"><a href="a-b---testing.html#cb493-4" aria-hidden="true" tabindex="-1"></a>        Expected_Loss<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;.pred_Yes&quot;</span>] <span class="op">*</span> x[<span class="st">&quot;MonthlyCharges&quot;</span>],</span>
+<span id="cb493-5"><a href="a-b---testing.html#cb493-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb493-6"><a href="a-b---testing.html#cb493-6" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Expected_Loss&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb493-7"><a href="a-b---testing.html#cb493-7" aria-hidden="true" tabindex="-1"></a>    .assign(Budget<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;MonthlyCharges&quot;</span>].cumsum())</span>
+<span id="cb493-8"><a href="a-b---testing.html#cb493-8" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">&quot;Budget &lt;= 50000&quot;</span>)</span>
+<span id="cb493-9"><a href="a-b---testing.html#cb493-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb493-10"><a href="a-b---testing.html#cb493-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb493-11"><a href="a-b---testing.html#cb493-11" aria-hidden="true" tabindex="-1"></a>promo_1.drop(columns<span class="op">=</span>[<span class="st">&quot;Churn&quot;</span>, <span class="st">&quot;.pred_No&quot;</span>])</span></code></pre></div>
+<pre><code>##       customerID  .pred_Yes  MonthlyCharges  Expected_Loss    Budget
+## 801   3292-PBZEJ   0.835825          111.40      93.110955    111.40
+## 1269  4587-VVTOX   0.846053          105.30      89.089406    216.70
+## 15    2027-FECZV   0.829720          106.70      88.531120    323.40
+## 805   7450-NWRTR   0.886773           99.45      88.189581    422.85
+## 1386  6861-XWTWQ   0.887930           99.25      88.127045    522.10
+## ...          ...        ...             ...            ...       ...
+## 48    3976-BWUCK   0.279124           94.10      26.265522  49568.95
+## 751   2208-UGTGR   0.264926           98.60      26.121692  49667.55
+## 723   2347-WKKAE   0.276124           94.40      26.066107  49761.95
+## 1708  0410-IPFTY   0.309791           83.85      25.975974  49845.80
+## 1549  6583-SZVGP   0.240084          108.10      25.953100  49953.90
+## 
+## [579 rows x 5 columns]</code></pre>
+<p>Sin acabarse el presupuesto de $50,000 dólares, el número de clientes a quienes es posible ofrecer la promoción es de 587/2113, lo que representa cerca del 28% de los clientes.</p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb495-1"><a href="a-b---testing.html#cb495-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
+<span id="cb495-2"><a href="a-b---testing.html#cb495-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb495-3"><a href="a-b---testing.html#cb495-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;min_prob&quot;</span>: [promo_1[<span class="st">&quot;.pred_Yes&quot;</span>].<span class="bu">min</span>()],</span>
+<span id="cb495-4"><a href="a-b---testing.html#cb495-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;mean_monthly_charge&quot;</span>: [promo_1[<span class="st">&quot;MonthlyCharges&quot;</span>].mean()],</span>
+<span id="cb495-5"><a href="a-b---testing.html#cb495-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;sum_monthly_charge&quot;</span>: [promo_1[<span class="st">&quot;MonthlyCharges&quot;</span>].<span class="bu">sum</span>()],</span>
+<span id="cb495-6"><a href="a-b---testing.html#cb495-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;sum_yearly_charge&quot;</span>: [promo_1[<span class="st">&quot;MonthlyCharges&quot;</span>].<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">11</span>],</span>
+<span id="cb495-7"><a href="a-b---testing.html#cb495-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb495-8"><a href="a-b---testing.html#cb495-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##    min_prob  mean_monthly_charge  sum_monthly_charge  sum_yearly_charge
+## 0  0.234652            86.276166             49953.9           549492.9</code></pre>
+<p>Al calcular el valor mínimo de probabilidad de cancelar el servicio, se observa que <strong>el umbral se encuentra cercano a 0.20</strong>, por lo que este es un buen candidato a usar en futuros meses si se usa este método y se cuenta con tal presupuesto.</p>
+<p>El gasto mensual promedio de los clientes es de $85 dólares. El costo total para la empresa es de $49,959.75 y el beneficio de invertir esta cantidad es de $549,557 dólares en un año. Este beneficio es el máximo a obtener si todos los clientes aceptaran renovar su suscripción. Será necesario realizar un experimento para comparar el beneficio neto cuando se implementa esta táctiva de marketing u alguna otra estrategia.</p>
+<p><strong>Costo de promoción de producto</strong></p>
+<p>El segundo método es más sencillo de calcular, pues supone un costo constante para cualquier cliente. Al regalar un producto en donde la empresa paga $100 dólares por celular, se logra ofrecer <span class="math inline">\(50000/100 = 500\)</span> productos.</p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb497-1"><a href="a-b---testing.html#cb497-1" aria-hidden="true" tabindex="-1"></a>promo_2 <span class="op">=</span> (</span>
+<span id="cb497-2"><a href="a-b---testing.html#cb497-2" aria-hidden="true" tabindex="-1"></a>    class_results.assign(</span>
+<span id="cb497-3"><a href="a-b---testing.html#cb497-3" aria-hidden="true" tabindex="-1"></a>        MonthlyCharges<span class="op">=</span>telco_test[<span class="st">&quot;MonthlyCharges&quot;</span>].to_numpy(),</span>
+<span id="cb497-4"><a href="a-b---testing.html#cb497-4" aria-hidden="true" tabindex="-1"></a>        Profit<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb497-5"><a href="a-b---testing.html#cb497-5" aria-hidden="true" tabindex="-1"></a>        Expected_Loss<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;.pred_Yes&quot;</span>] <span class="op">*</span> x[<span class="st">&quot;MonthlyCharges&quot;</span>],</span>
+<span id="cb497-6"><a href="a-b---testing.html#cb497-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb497-7"><a href="a-b---testing.html#cb497-7" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Expected_Loss&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb497-8"><a href="a-b---testing.html#cb497-8" aria-hidden="true" tabindex="-1"></a>    .assign(Budget<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;Profit&quot;</span>].cumsum())</span>
+<span id="cb497-9"><a href="a-b---testing.html#cb497-9" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">&quot;Budget &lt;= 50000&quot;</span>)</span>
+<span id="cb497-10"><a href="a-b---testing.html#cb497-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb497-11"><a href="a-b---testing.html#cb497-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb497-12"><a href="a-b---testing.html#cb497-12" aria-hidden="true" tabindex="-1"></a>promo_2.drop(columns<span class="op">=</span>[<span class="st">&quot;Churn&quot;</span>, <span class="st">&quot;.pred_No&quot;</span>])</span></code></pre></div>
+<pre><code>##       customerID  .pred_Yes  MonthlyCharges  Profit  Expected_Loss  Budget
+## 801   3292-PBZEJ   0.835825          111.40     100      93.110955     100
+## 1269  4587-VVTOX   0.846053          105.30     100      89.089406     200
+## 15    2027-FECZV   0.829720          106.70     100      88.531120     300
+## 805   7450-NWRTR   0.886773           99.45     100      88.189581     400
+## 1386  6861-XWTWQ   0.887930           99.25     100      88.127045     500
+## ...          ...        ...             ...     ...            ...     ...
+## 156   0929-PECLO   0.358683           89.60     100      32.137991   49600
+## 1115  7318-EIVKO   0.540438           59.25     100      32.020925   49700
+## 200   7739-LAXOG   0.351154           91.05     100      31.972605   49800
+## 1669  5813-UECBU   0.381281           83.85     100      31.970428   49900
+## 1899  5712-AHQNN   0.344404           91.65     100      31.564629   50000
+## 
+## [500 rows x 6 columns]</code></pre>
+<div class="sourceCode" id="cb499"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb499-1"><a href="a-b---testing.html#cb499-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
+<span id="cb499-2"><a href="a-b---testing.html#cb499-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb499-3"><a href="a-b---testing.html#cb499-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;min_prob&quot;</span>: [promo_2[<span class="st">&quot;.pred_Yes&quot;</span>].<span class="bu">min</span>()],</span>
+<span id="cb499-4"><a href="a-b---testing.html#cb499-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;mean_monthly_charge&quot;</span>: [promo_2[<span class="st">&quot;MonthlyCharges&quot;</span>].mean()],</span>
+<span id="cb499-5"><a href="a-b---testing.html#cb499-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;sum_monthly_charge&quot;</span>: [promo_2[<span class="st">&quot;MonthlyCharges&quot;</span>].<span class="bu">sum</span>()],</span>
+<span id="cb499-6"><a href="a-b---testing.html#cb499-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;sum_yearly_charge&quot;</span>: [promo_2[<span class="st">&quot;MonthlyCharges&quot;</span>].<span class="bu">sum</span>() <span class="op">*</span> <span class="dv">11</span>],</span>
+<span id="cb499-7"><a href="a-b---testing.html#cb499-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb499-8"><a href="a-b---testing.html#cb499-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##    min_prob  mean_monthly_charge  sum_monthly_charge  sum_yearly_charge
+## 0  0.301666              86.0964             43048.2           473530.2</code></pre>
+<p>A diferencia del primer método, el umbral de probabilidad con esta segunda campaña es cercano a 0.30, lo que implica mayor precisión a costa de menor cobertura. Adicionalmente, el beneficio total de renovación de contrato es menor que el beneficio alcanzado por el primer método en el escenario utópico en que todos los clientes renuevan.</p>
+<p>Estos cálculos sirven exclusivamente para acotar los escenarios, pues no es de esperarse que realmente todos los clientes renueven sus contratos. En las siguientes secciones se procede a realizar experimentos para evaluar cuál de las campañas tiene una mayor tasa de retención de clientes.</p>
+<div class="sourceCode" id="cb501"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb501-1"><a href="a-b---testing.html#cb501-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">13582</span>)</span>
+<span id="cb501-2"><a href="a-b---testing.html#cb501-2" aria-hidden="true" tabindex="-1"></a>results_promo_1 <span class="op">=</span> promo_1.assign(</span>
+<span id="cb501-3"><a href="a-b---testing.html#cb501-3" aria-hidden="true" tabindex="-1"></a>    cancell<span class="op">=</span>np.where(rng.binomial(<span class="dv">1</span>, <span class="fl">0.40</span>, size<span class="op">=</span><span class="bu">len</span>(promo_1)) <span class="op">==</span> <span class="dv">1</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</span>
+<span id="cb501-4"><a href="a-b---testing.html#cb501-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb501-5"><a href="a-b---testing.html#cb501-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb501-6"><a href="a-b---testing.html#cb501-6" aria-hidden="true" tabindex="-1"></a>results_promo_1</span></code></pre></div>
+<pre><code>##       customerID  .pred_No  .pred_Yes  ... Expected_Loss    Budget  cancell
+## 801   3292-PBZEJ  0.164175   0.835825  ...     93.110955    111.40       No
+## 1269  4587-VVTOX  0.153947   0.846053  ...     89.089406    216.70       No
+## 15    2027-FECZV  0.170280   0.829720  ...     88.531120    323.40      Yes
+## 805   7450-NWRTR  0.113227   0.886773  ...     88.189581    422.85       No
+## 1386  6861-XWTWQ  0.112070   0.887930  ...     88.127045    522.10       No
+## ...          ...       ...        ...  ...           ...       ...      ...
+## 48    3976-BWUCK  0.720876   0.279124  ...     26.265522  49568.95      Yes
+## 751   2208-UGTGR  0.735074   0.264926  ...     26.121692  49667.55       No
+## 723   2347-WKKAE  0.723876   0.276124  ...     26.066107  49761.95      Yes
+## 1708  0410-IPFTY  0.690209   0.309791  ...     25.975974  49845.80      Yes
+## 1549  6583-SZVGP  0.759916   0.240084  ...     25.953100  49953.90      Yes
+## 
+## [579 rows x 8 columns]</code></pre>
+<p>Primero, analicemos el siguiente resultado, el cual corresponde a la efectividad del método de retención por descuento de mensualidad gratis.</p>
+<div class="sourceCode" id="cb503"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb503-1"><a href="a-b---testing.html#cb503-1" aria-hidden="true" tabindex="-1"></a>summary_promo_1 <span class="op">=</span> (</span>
+<span id="cb503-2"><a href="a-b---testing.html#cb503-2" aria-hidden="true" tabindex="-1"></a>    results_promo_1.groupby(<span class="st">&quot;cancell&quot;</span>)</span>
+<span id="cb503-3"><a href="a-b---testing.html#cb503-3" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb503-4"><a href="a-b---testing.html#cb503-4" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;size&quot;</span>),</span>
+<span id="cb503-5"><a href="a-b---testing.html#cb503-5" aria-hidden="true" tabindex="-1"></a>        mean_monthly_charge<span class="op">=</span>(<span class="st">&quot;MonthlyCharges&quot;</span>, <span class="st">&quot;mean&quot;</span>),</span>
+<span id="cb503-6"><a href="a-b---testing.html#cb503-6" aria-hidden="true" tabindex="-1"></a>        sum_monthly_charge<span class="op">=</span>(<span class="st">&quot;MonthlyCharges&quot;</span>, <span class="st">&quot;sum&quot;</span>),</span>
+<span id="cb503-7"><a href="a-b---testing.html#cb503-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb503-8"><a href="a-b---testing.html#cb503-8" aria-hidden="true" tabindex="-1"></a>    .assign(</span>
+<span id="cb503-9"><a href="a-b---testing.html#cb503-9" aria-hidden="true" tabindex="-1"></a>        sum_yearly_charge<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;sum_monthly_charge&quot;</span>] <span class="op">*</span> <span class="dv">11</span>,</span>
+<span id="cb503-10"><a href="a-b---testing.html#cb503-10" aria-hidden="true" tabindex="-1"></a>        prop<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">&quot;n&quot;</span>] <span class="op">/</span> x[<span class="st">&quot;n&quot;</span>].<span class="bu">sum</span>()).<span class="bu">round</span>(<span class="dv">2</span>),</span>
+<span id="cb503-11"><a href="a-b---testing.html#cb503-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb503-12"><a href="a-b---testing.html#cb503-12" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb503-13"><a href="a-b---testing.html#cb503-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb503-14"><a href="a-b---testing.html#cb503-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb503-15"><a href="a-b---testing.html#cb503-15" aria-hidden="true" tabindex="-1"></a>summary_promo_1.loc[:, [<span class="st">&quot;cancell&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="st">&quot;prop&quot;</span>, <span class="st">&quot;mean_monthly_charge&quot;</span>, <span class="st">&quot;sum_monthly_charge&quot;</span>, <span class="st">&quot;sum_yearly_charge&quot;</span>]]</span></code></pre></div>
+<pre><code>##   cancell    n  ...  sum_monthly_charge  sum_yearly_charge
+## 0      No  357  ...             30824.7           339071.7
+## 1     Yes  222  ...             19129.2           210421.2
+## 
+## [2 rows x 6 columns]</code></pre>
+<p>El contrafactual se refiere a una versión alternativa en la que la alteración (en este caso, método de retención) en la serie de sucesos conduce a un resultado distinto del que realmente ocurrió. En la siguiente tabla, aparecen los resultados del contrafactual (etiqueta original de Churn).</p>
+<div class="sourceCode" id="cb505"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb505-1"><a href="a-b---testing.html#cb505-1" aria-hidden="true" tabindex="-1"></a>counterfactual_promo_1 <span class="op">=</span> (</span>
+<span id="cb505-2"><a href="a-b---testing.html#cb505-2" aria-hidden="true" tabindex="-1"></a>    promo_1.groupby(<span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb505-3"><a href="a-b---testing.html#cb505-3" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb505-4"><a href="a-b---testing.html#cb505-4" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;size&quot;</span>),</span>
+<span id="cb505-5"><a href="a-b---testing.html#cb505-5" aria-hidden="true" tabindex="-1"></a>        mean_monthly_charge<span class="op">=</span>(<span class="st">&quot;MonthlyCharges&quot;</span>, <span class="st">&quot;mean&quot;</span>),</span>
+<span id="cb505-6"><a href="a-b---testing.html#cb505-6" aria-hidden="true" tabindex="-1"></a>        sum_monthly_charge<span class="op">=</span>(<span class="st">&quot;MonthlyCharges&quot;</span>, <span class="st">&quot;sum&quot;</span>),</span>
+<span id="cb505-7"><a href="a-b---testing.html#cb505-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb505-8"><a href="a-b---testing.html#cb505-8" aria-hidden="true" tabindex="-1"></a>    .assign(</span>
+<span id="cb505-9"><a href="a-b---testing.html#cb505-9" aria-hidden="true" tabindex="-1"></a>        sum_yearly_charge<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;sum_monthly_charge&quot;</span>] <span class="op">*</span> <span class="dv">11</span>,</span>
+<span id="cb505-10"><a href="a-b---testing.html#cb505-10" aria-hidden="true" tabindex="-1"></a>        prop<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">&quot;n&quot;</span>] <span class="op">/</span> x[<span class="st">&quot;n&quot;</span>].<span class="bu">sum</span>()).<span class="bu">round</span>(<span class="dv">2</span>),</span>
+<span id="cb505-11"><a href="a-b---testing.html#cb505-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb505-12"><a href="a-b---testing.html#cb505-12" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb505-13"><a href="a-b---testing.html#cb505-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb505-14"><a href="a-b---testing.html#cb505-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb505-15"><a href="a-b---testing.html#cb505-15" aria-hidden="true" tabindex="-1"></a>counterfactual_promo_1.loc[:, [<span class="st">&quot;Churn&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="st">&quot;prop&quot;</span>, <span class="st">&quot;mean_monthly_charge&quot;</span>, <span class="st">&quot;sum_monthly_charge&quot;</span>, <span class="st">&quot;sum_yearly_charge&quot;</span>]]</span></code></pre></div>
+<pre><code>##   Churn    n  prop  mean_monthly_charge  sum_monthly_charge  sum_yearly_charge
+## 0    No  262  0.45            86.747901            22727.95          250007.45
+## 1   Yes  317  0.55            85.886278            27225.95          299485.45</code></pre>
+<p>Hay que observar que se obtiene una mejora en la tasa de cancelación (Churn) cuando se aplica el método de retención basado en descuento de mensualidad.</p>
+<p><span class="math display">\[\text{diferencia} =  \$328,163 - \$246,546 = \$81,617\]</span></p>
+<p><strong>Esta diferencia es el verdadero beneficio de haber implementado e invertido en ciencia de datos y machine learning</strong>.</p>
+<p>Por supuesto, este resultado deberá ser mayor al esfuerzo de inversión de todo el proyecto. Quizá en la primera iteración se realiza una inversión mayor, no obstante, a lo largo del tiempo deberá ser rentable para el negocio.</p>
+<p>Por supuesto, este resultado es teórico, pues es imposible conocer el contrafactual de la forma en que fue presentado anteriormente debido a que una vez que se implementa un método, se vuelve imposible conocer el resultado de haber hecho otra cosa. Este mismo problema se enfrenta en una gran cantidad de estudios médicos, sociales, de diseño de imagen corporativa, etc, por lo que las mismas técnicas estadísticas serán presentadas para dar solución a esta estimación.</p>
+<div class="infobox note">
+<p><strong>WHAT IF…</strong></p>
+<ul>
+<li><p>¿Qué pasaría si la tasa de <em>churn</em> fuese mayor a la obtenida al no implementar ninguna campaña?</p></li>
+<li><p>¿Cómo sabemos que estamos maximizando las ganancias a través de la elección de la mejor campaña de retención?</p></li>
+</ul>
+</div>
+</div>
+<div id="diseño-experimental" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Diseño experimental<a href="a-b---testing.html#diseño-experimental" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sería formidable lograr conocer cuál es el mejor método de retención antes de aplicar el ejercicio de retención a todos los clientes. Esto definitivamente ayudaría a maximizar ganancias y evitar tener pérdidas con alguna mala decisión.</p>
+<p>A través de la experimentación es posible estimar los resultados de diferentes escenarios. Para lograrlo, se requiere de la <strong>creación de muestras representativas de la población</strong> que simulen con cierto error tolerable el resultado de cada campaña de retención. Para realizar esta práctica es importante introducirnos al tema de: <strong>muestreo</strong>.</p>
+<div id="qué-es-y-para-qué-sirve-muestreo" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> ¿Qué es y para qué sirve muestreo?<a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El muestreo es el proceso de seleccionar un conjunto de individuos de una población con el fin de estudiarlos y poder caracterizar el total de la población. Nos ayuda a obtener información fiable de la población a partir de una muestra de la que extrae inferencias estadísticas con un margen de error medido en términos de probabilidades. En otras palabras, en una investigación por muestreo podremos estudiar el comportamiento y las opiniones de toda una población analizando únicamente una parte de esta, teniendo en cuenta que siempre existirá un margen de error a la hora de realizar dichos cálculos.</p>
+<p><img src="img/09-ab-testing/1-1-1-muestreo.jpg" width="450pt" height="450pt" style="display: block; margin: auto;" /></p>
+<p><strong>Ventajas</strong></p>
+<ul>
+<li><p><strong>Reducción de costos:</strong> Los costos de un estudio serán menores si los datos de interés se pueden obtener a partir de una muestra de la población. Por ejemplo, cuando se realizan estudios de prevalencia de un evento de interés, es más económico medir una muestra representativa de 1500 sujetos de una población, que el total de individuos que la componen.</p></li>
+<li><p><strong>Eficiencia:</strong> Al trabajar con un número reducido de sujetos de estudio, representativos de la población; el tiempo necesario para conducir el estudio y obtener resultados y conclusiones será notoriamente menor.</p></li>
+</ul>
+<p>Una muestra puede ser obtenida de diferentes maneras:</p>
+<ul>
+<li>No probabilística.
+<ul>
+<li>Por cuotas</li>
+<li>Conveniencia</li>
+<li>Bola de nieve</li>
+<li>Discrecional</li>
+</ul></li>
+<li>Probabilística
+<ul>
+<li>Aleatorio Simple</li>
+<li>Sistemático</li>
+<li>Estratificado</li>
+<li>Conglomerados</li>
+<li>Polietápico</li>
+<li>Etc.</li>
+</ul></li>
+</ul>
+<p>El temario de muestreo es largo, por lo que nuestro enfoque se centrará en el muestreo probabilístico aletorio simple y el estratificado.</p>
+<p>El muestreo probabilístico se define como aquél en que todos los individuos de la población tienen una probabilidad de entrar a formar parte de la muestra. Los diseños en que interviene el azar producen muestras representativas la mayoría de las veces.</p>
+</div>
+<div id="muestreo-aleatorio-simple" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Muestreo aleatorio simple<a href="a-b---testing.html#muestreo-aleatorio-simple" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Se caracteriza porque <strong>cada elemento de la población tiene la misma probabilidad de ser escogido para formar parte de la muestra</strong> y todas las posibles muestras tienen la misma probabilidad de ser elegidas. Una vez censado el marco de la población, se asigna un número a cada individuo o elemento y se elige aleatoriamente.</p>
+<p>Para seleccionar una muestra de este tipo se requiere tener en forma de lista todos los elementos que integran la población investigada y utilizar tablas de números aleatorios.</p>
+<p>Ejemplo: A un grupo de 100 personas se les numera de uno a cien y se depositan en una urna 100 canicas a su vez numeradas de uno a cien. Para obtener una muestra aleatoria simple de 20 elementos, tendríamos que sacar 20 canicas numeradas de la urna que nos seleccionarán en forma completamente aleatoria a los 20 elementos escogidos para que opinen sobre un nuevo producto.</p>
+<p><img src="img/09-ab-testing/1-1-4-tipos-de-muestreo-probabilistico-mas.png" width="250pt" height="250pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="muestreo-estratificado" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Muestreo estratificado<a href="a-b---testing.html#muestreo-estratificado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En este tipo de muestreo <strong>la población de estudio se divide en subgrupos o estratos</strong>, escogiendo posteriormente una muestra al azar de cada estrato. Esta división suele realizarse según una característica que pueda influir sobre los resultados del estudio.</p>
+<p>Si la estratificación se realiza respecto una característica se denomina <em>muestreo estratificado simple</em>, y si se realiza respecto a dos o más características sedenomina <em>muestreo estratificado compuesto</em>.</p>
+<p>Ejemplo: Si existen 5 millones de hipertensos en una población y hay un <span class="math inline">\(35\%\)</span> de pacientes que fuman, podemos estratificar de manera que en nuestra muestra queden representados al igual que en el total de la población, la misma proporción de hipertensos fumadores (<span class="math inline">\(35\%\)</span>) y de no fumadores (<span class="math inline">\(65\%\)</span>).</p>
+<p><img src="img/09-ab-testing/1-1-4-tipos-de-muestreo-probabilistico-estratificado.jpg" width="350pt" height="350pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="marco-de-muestreo" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> Marco de muestreo<a href="a-b---testing.html#marco-de-muestreo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El primer paso consiste en crear un <strong>marco de muestreo</strong>, el cual es el <strong>listado de los posibles elementos a ser seleccionados en la muestra.</strong> Tiene la característica de que todos los elementos deben pertenecer a la población objetivo. Este marco de muestreo podría llegar a tener los siguientes 3 errores:</p>
+<ul>
+<li><p><strong>Duplicidad:</strong> Existen elementos repetidos</p></li>
+<li><p><strong>Sobre-representatividad:</strong> Existen elementos en el marco que no pertenecen a la población objetivo</p></li>
+<li><p><strong>Sub-representatividad:</strong> Existen elementos pertenecientes a la población objetivo que no se encuentran representados en el marco</p></li>
+</ul>
+<p>Ante estos problemas, es necesario realizar una limpieza de los datos disponibles para obtener un conjunto lo más adecuado para extraer estos problemas.</p>
+</div>
+<div id="tamaño-de-muestra" class="section level3 hasAnchor" number="8.3.5">
+<h3><span class="header-section-number">8.3.5</span> Tamaño de muestra<a href="a-b---testing.html#tamaño-de-muestra" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Es imprescindible en una buena estimación conocer el tamaño de muestra adecuado que permitirá controlar o cuantificar el error de muestreo.</p>
+<p>Se presenta a continuación la fórmula estadística que permite conocer el tamaño de muestra necesario para lograr con 95% de confianza (<span class="math inline">\(\alpha\)</span>) un error de muestreo (e). Esta fórmula corresponde se calcula a partir de un diseño de muestreo aleatorio simple, donde la variable de respuesta es dicotómica (sí o no):</p>
+<p><span class="math display">\[m=\frac{p(1-p)Z_{1-\alpha/2}^2}{e²};\]</span></p>
+<p><span class="math display">\[n=\frac{m}{1+\frac{m}{N}} \frac{deff}{(1-TNR)}\]</span></p>
+<p><strong>Donde:</strong></p>
+<p>N = Es el tamaño de población.</p>
+<p>n = Tamaño de muestra.</p>
+<p>p = Proporción esperada (50% por default).</p>
+<p><span class="math inline">\(Z_{1-\alpha/2}\)</span> = Percentil <span class="math inline">\(\alpha/2\)</span> de la distribución Normal estándar.</p>
+<p>e = Error de muestreo máximo a tolerar.</p>
+<p>TNR = Tasa de no respuesta</p>
+<p>deff = Efecto de diseño (aumento en la varianza por usar un diseño distinto al aleatorio simple)</p>
+<p>Esta fórmula puede demostrarse a partir del siguiente planteamiento:</p>
+<p><span class="math display">\[P[|\theta-\hat{\theta}| &lt; error] = Z_{1-\alpha/2}\]</span></p>
+<p>Para mayor teoría de muestreo, consultar el libro: <a href="https://link.springer.com/book/9780387406206">Model Assisted Survey Sampling</a></p>
+<div class="infobox pin">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<p>En la medida en que se desea disminuir el error de muestreo, es necesario incrementar de manera exponencial el tamaño de muestra.</p>
+</div>
+<p>Se presenta a continuación la función creada con <em>Python</em> para conocer el tamaño de muestra de una población. Es necesario indicar los parámetros e hipótesis bajo los cuales se realizará dicho cálculo. Posteriormente, se presenta una gráfica que permite conocer el tamaño de muestra de acuerdo con el error de muestreo a tolerar (suponiendo fijos otros parámetros).</p>
+<div id="implementación-en-python-4" class="section level4 hasAnchor" number="8.3.5.1">
+<h4><span class="header-section-number">8.3.5.1</span> Implementación en Python<a href="a-b---testing.html#implementación-en-python-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb507"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb507-1"><a href="a-b---testing.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> sample_size_proportion</span>
+<span id="cb507-2"><a href="a-b---testing.html#cb507-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb507-3"><a href="a-b---testing.html#cb507-3" aria-hidden="true" tabindex="-1"></a>n_muestra <span class="op">=</span> sample_size_proportion</span></code></pre></div>
+<p><strong>Ejemplo</strong></p>
+<p>Suponiendo un tamaño poblacional de 4.5 millones de personas, y con 95% de confianza un error máximo a tolerar de 3.5%, el tamaño de muestra necesario para estimar una proporción es:</p>
+<div class="sourceCode" id="cb508"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb508-1"><a href="a-b---testing.html#cb508-1" aria-hidden="true" tabindex="-1"></a>n_muestra(e<span class="op">=</span><span class="fl">0.035</span>, p<span class="op">=</span><span class="fl">0.5</span>, alpha<span class="op">=</span><span class="fl">0.95</span>, N<span class="op">=</span><span class="dv">4_500_000</span>, deff<span class="op">=</span><span class="dv">1</span>, tnr<span class="op">=</span><span class="fl">0.20</span>)</span></code></pre></div>
+<pre><code>## 980</code></pre>
+<p>En este ejemplo, por practicidad se redondea el tamaño de la muestra a 1,00 unidades. Veamos otro ejemplo:</p>
+<div class="sourceCode" id="cb510"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb510-1"><a href="a-b---testing.html#cb510-1" aria-hidden="true" tabindex="-1"></a>n_muestra(e<span class="op">=</span><span class="fl">0.04</span>, p<span class="op">=</span><span class="fl">0.5</span>, alpha<span class="op">=</span><span class="fl">0.95</span>, N<span class="op">=</span><span class="dv">900</span>, deff<span class="op">=</span><span class="dv">1</span>, tnr<span class="op">=</span><span class="fl">0.20</span>)</span></code></pre></div>
+<pre><code>## 451</code></pre>
+<p>En este segundo caso, se redonde a 450 casos. Veamos ahora una gráfica que permita anañizar la relación existente entre el tamaño de muestra y el error de muestreo.</p>
+<div class="sourceCode" id="cb512"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb512-1"><a href="a-b---testing.html#cb512-1" aria-hidden="true" tabindex="-1"></a>tam_muestra <span class="op">=</span> pd.DataFrame({<span class="st">&quot;error&quot;</span>: np.arange(<span class="fl">0.02</span>, <span class="fl">0.101</span>, <span class="fl">0.001</span>)})</span>
+<span id="cb512-2"><a href="a-b---testing.html#cb512-2" aria-hidden="true" tabindex="-1"></a>tam_muestra[<span class="st">&quot;n&quot;</span>] <span class="op">=</span> tam_muestra[<span class="st">&quot;error&quot;</span>].<span class="bu">apply</span>(</span>
+<span id="cb512-3"><a href="a-b---testing.html#cb512-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> error: n_muestra(e<span class="op">=</span>error, p<span class="op">=</span><span class="fl">0.5</span>, alpha<span class="op">=</span><span class="fl">0.95</span>, N<span class="op">=</span><span class="dv">100_000</span>, deff<span class="op">=</span><span class="fl">1.7</span>, tnr<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb512-4"><a href="a-b---testing.html#cb512-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb512-5"><a href="a-b---testing.html#cb512-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb512-6"><a href="a-b---testing.html#cb512-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> tam_muestra.plot(x<span class="op">=</span><span class="st">&quot;error&quot;</span>, y<span class="op">=</span><span class="st">&quot;n&quot;</span>, marker<span class="op">=</span><span class="st">&quot;o&quot;</span>, legend<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb512-7"><a href="a-b---testing.html#cb512-7" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Relación entre error de muestreo y tamaño de muestra&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Relación entre error de muestreo y tamaño de muestra&#39;)</code></pre>
+<div class="sourceCode" id="cb514"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb514-1"><a href="a-b---testing.html#cb514-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Error de muestreo&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Error de muestreo&#39;)</code></pre>
+<div class="sourceCode" id="cb516"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb516-1"><a href="a-b---testing.html#cb516-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&quot;Tamaño de muestra&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;Tamaño de muestra&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-245-1.png" width="672" /></p>
+<p>Ahora analizaremos la relación existente entre el tamaño de muestra y el tamaño poblacional cuando fijamos el error de muestreo en 3.5%.</p>
+<div class="sourceCode" id="cb518"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb518-1"><a href="a-b---testing.html#cb518-1" aria-hidden="true" tabindex="-1"></a>tam_muestra <span class="op">=</span> pd.DataFrame({<span class="st">&quot;N&quot;</span>: np.arange(<span class="dv">1</span>, <span class="dv">100_001</span>, <span class="dv">1000</span>)})</span>
+<span id="cb518-2"><a href="a-b---testing.html#cb518-2" aria-hidden="true" tabindex="-1"></a>tam_muestra[<span class="st">&quot;n&quot;</span>] <span class="op">=</span> tam_muestra[<span class="st">&quot;N&quot;</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> N: n_muestra(e<span class="op">=</span><span class="fl">0.035</span>, N<span class="op">=</span><span class="bu">int</span>(N)))</span>
+<span id="cb518-3"><a href="a-b---testing.html#cb518-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb518-4"><a href="a-b---testing.html#cb518-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> tam_muestra.plot(x<span class="op">=</span><span class="st">&quot;N&quot;</span>, y<span class="op">=</span><span class="st">&quot;n&quot;</span>, marker<span class="op">=</span><span class="st">&quot;o&quot;</span>, legend<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb518-5"><a href="a-b---testing.html#cb518-5" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>, <span class="dv">1500</span>)</span></code></pre></div>
+<pre><code>## (0.0, 1500.0)</code></pre>
+<div class="sourceCode" id="cb520"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb520-1"><a href="a-b---testing.html#cb520-1" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="dv">0</span>, <span class="dv">1501</span>, <span class="dv">100</span>))</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.axis.YTick object at 0x17eb40c50&gt;, &lt;matplotlib.axis.YTick object at 0x313d83750&gt;, &lt;matplotlib.axis.YTick object at 0x313db1590&gt;, &lt;matplotlib.axis.YTick object at 0x313e0de90&gt;, &lt;matplotlib.axis.YTick object at 0x313e0fd10&gt;, &lt;matplotlib.axis.YTick object at 0x313e19c50&gt;, &lt;matplotlib.axis.YTick object at 0x313e1a850&gt;, &lt;matplotlib.axis.YTick object at 0x313d60950&gt;, &lt;matplotlib.axis.YTick object at 0x313d627d0&gt;, &lt;matplotlib.axis.YTick object at 0x313d5c910&gt;, &lt;matplotlib.axis.YTick object at 0x313d5e8d0&gt;, &lt;matplotlib.axis.YTick object at 0x313e1ae10&gt;, &lt;matplotlib.axis.YTick object at 0x313e24ed0&gt;, &lt;matplotlib.axis.YTick object at 0x313e26e50&gt;, &lt;matplotlib.axis.YTick object at 0x313e2cf90&gt;, &lt;matplotlib.axis.YTick object at 0x313e2ef10&gt;]</code></pre>
+<div class="sourceCode" id="cb522"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb522-1"><a href="a-b---testing.html#cb522-1" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Relación entre tamaño de población y tamaño de muestra&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Relación entre tamaño de población y tamaño de muestra&#39;)</code></pre>
+<div class="sourceCode" id="cb524"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb524-1"><a href="a-b---testing.html#cb524-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Tamaño de población&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Tamaño de población&#39;)</code></pre>
+<div class="sourceCode" id="cb526"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb526-1"><a href="a-b---testing.html#cb526-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&quot;Tamaño de muestra&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;Tamaño de muestra&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-246-3.png" width="672" /></p>
+<p>Se puede apreciar que a mayor tamaño de población es necesario una muestra más grande, sin embargo, no es un comportamiento lineal. Debido a que una de las condiciones de muestreo es que la selección es aleatoria, existe un punto de saturación de información, en donde no se necesita aumentar más el tamaño de muestra (aunque el tamaño de la población siga creciendo)</p>
+<div class="infobox important">
+<p><strong>¡¡ RECORDAR !!</strong></p>
+<p>Para lograr estimaciones representativas de ALTA calidad sobre la población, es indispensable realizar un buen diseño de muestreo, de lo contrario los resultados pueden estar sesgados.</p>
+</div>
+<div class="infobox note">
+<p><strong>EJERCICIO</strong></p>
+<p>Realizar el cálculo del tamaño de muestra necesario para los siguientes escenarios:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Muestra representativa de alumnos de esta clase</p></li>
+<li><p>Muestra de clientes probables a cancelar su servicio de telecomunicaciones con los datos vistos en clase (Test)</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="distribución-muestral" class="section level3 hasAnchor" number="8.3.6">
+<h3><span class="header-section-number">8.3.6</span> Distribución muestral<a href="a-b---testing.html#distribución-muestral" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una vez que el tamaño de muestra ha sido calculado, es común que se proceda a distribuirla de una manera estratégica que permita recolectar de manera óptima la información necesaria. Existe distintos tipos de distribución (afijación), las cuales dependen de que existan estratos (grupos) de la población sobre los cuales se desea distribuir la muestra. Entre las más comunes, se encuentran:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Afijación simple:</strong> En este tipo de afijación, la muestra se distribuye de manera igualitaria entre los distintos grupos. La fórmula es la siguiente:</li>
+</ol>
+<p><span class="math display">\[n_h=\frac{n}{L}\]</span>
+<strong>Donde:</strong></p>
+<p><span class="math inline">\(n_h=\)</span> Es el tamaño de muestra en el h-ésimo estrato</p>
+<p><span class="math inline">\(n=\)</span> Es el tamaño de muestra total</p>
+<p><span class="math inline">\(L=\)</span> Es el número de estratos</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Afijación proporcional:</strong> Posiblemente es el tipo de afijación más usado. Esta estrategia se usa para distribuir la muestra de manera proporcional a una característica. Por regla general, se distribuye de acuerdo con la distribución poblacional (viviendas o personas) en zonas geográficas. La fórmula es la siguiente:</li>
+</ol>
+<p><span class="math display">\[n_h = \frac{P_h}{P} \cdot n\]</span></p>
+<p><strong>Donde:</strong></p>
+<ul>
+<li><p><span class="math inline">\(n_h=\)</span> Es el tamaño de muestra ajustado en el h-ésimo estrato</p></li>
+<li><p><span class="math inline">\(n=\)</span> Es el tamaño de muestra global</p></li>
+<li><p><span class="math inline">\(P_h=\)</span> Es la población en el h-ésimo estrato</p></li>
+<li><p><span class="math inline">\(P=\)</span> Es la población total</p></li>
+</ul>
+<div id="implementación-en-python-5" class="section level4 hasAnchor" number="8.3.6.1">
+<h4><span class="header-section-number">8.3.6.1</span> Implementación en Python<a href="a-b---testing.html#implementación-en-python-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Suponga por un momento que contamos con una característica particular de interés en la que podemos clasificar a la población de clientes, puede ser el sexo, la edad, ingresos o alguna otra clasificación de interés (producto de contratación).</p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb528-1"><a href="a-b---testing.html#cb528-1" aria-hidden="true" tabindex="-1"></a>marco <span class="op">=</span> (</span>
+<span id="cb528-2"><a href="a-b---testing.html#cb528-2" aria-hidden="true" tabindex="-1"></a>    telco_test.loc[:, [<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;Contract&quot;</span>]]</span>
+<span id="cb528-3"><a href="a-b---testing.html#cb528-3" aria-hidden="true" tabindex="-1"></a>    .merge(class_results.loc[:, [<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;.pred_Yes&quot;</span>]], on<span class="op">=</span><span class="st">&quot;customerID&quot;</span>)</span>
+<span id="cb528-4"><a href="a-b---testing.html#cb528-4" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">&quot;`.pred_Yes` &gt;= 0.20&quot;</span>)</span>
+<span id="cb528-5"><a href="a-b---testing.html#cb528-5" aria-hidden="true" tabindex="-1"></a>    .copy()</span>
+<span id="cb528-6"><a href="a-b---testing.html#cb528-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb528-7"><a href="a-b---testing.html#cb528-7" aria-hidden="true" tabindex="-1"></a>marco[<span class="st">&quot;cod_gender&quot;</span>] <span class="op">=</span> pd.factorize(marco[<span class="st">&quot;gender&quot;</span>])[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb528-8"><a href="a-b---testing.html#cb528-8" aria-hidden="true" tabindex="-1"></a>marco[<span class="st">&quot;cod_contract&quot;</span>] <span class="op">=</span> pd.factorize(marco[<span class="st">&quot;Contract&quot;</span>])[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb528-9"><a href="a-b---testing.html#cb528-9" aria-hidden="true" tabindex="-1"></a>marco[<span class="st">&quot;estrato&quot;</span>] <span class="op">=</span> marco[<span class="st">&quot;cod_gender&quot;</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">&quot;-&quot;</span> <span class="op">+</span> marco[<span class="st">&quot;cod_contract&quot;</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb528-10"><a href="a-b---testing.html#cb528-10" aria-hidden="true" tabindex="-1"></a>marco <span class="op">=</span> marco.sort_values(<span class="st">&quot;estrato&quot;</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb528-11"><a href="a-b---testing.html#cb528-11" aria-hidden="true" tabindex="-1"></a>marco[<span class="st">&quot;ID_unit&quot;</span>] <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="bu">len</span>(marco) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb528-12"><a href="a-b---testing.html#cb528-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-13"><a href="a-b---testing.html#cb528-13" aria-hidden="true" tabindex="-1"></a>pob_estrato <span class="op">=</span> (</span>
+<span id="cb528-14"><a href="a-b---testing.html#cb528-14" aria-hidden="true" tabindex="-1"></a>    marco.groupby([<span class="st">&quot;gender&quot;</span>, <span class="st">&quot;Contract&quot;</span>, <span class="st">&quot;estrato&quot;</span>], as_index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb528-15"><a href="a-b---testing.html#cb528-15" aria-hidden="true" tabindex="-1"></a>    .agg(n<span class="op">=</span>(<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;size&quot;</span>), mean_prob<span class="op">=</span>(<span class="st">&quot;.pred_Yes&quot;</span>, <span class="st">&quot;mean&quot;</span>))</span>
+<span id="cb528-16"><a href="a-b---testing.html#cb528-16" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;mean_prob&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb528-17"><a href="a-b---testing.html#cb528-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb528-18"><a href="a-b---testing.html#cb528-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-19"><a href="a-b---testing.html#cb528-19" aria-hidden="true" tabindex="-1"></a>pob_estrato</span></code></pre></div>
+<pre><code>##    gender        Contract estrato    n  mean_prob
+## 0  Female  Month-to-month     1-1  435   0.508792
+## 3    Male  Month-to-month     2-1  415   0.495818
+## 1  Female        One year     1-2   39   0.295870
+## 4    Male        One year     2-2   25   0.283668
+## 2  Female        Two year     1-3    5   0.247696
+## 5    Male        Two year     2-3    4   0.230959</code></pre>
+<p>Suponiendo que el tamaño de muestra seleccionado es de 450 individuos y se desea hacer una afijación proporcional, el tamaño de muestra en cada estrato queda asignado de la siguiente forma:</p>
+<div class="sourceCode" id="cb530"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb530-1"><a href="a-b---testing.html#cb530-1" aria-hidden="true" tabindex="-1"></a>distribucion <span class="op">=</span> (</span>
+<span id="cb530-2"><a href="a-b---testing.html#cb530-2" aria-hidden="true" tabindex="-1"></a>    pob_estrato.assign(</span>
+<span id="cb530-3"><a href="a-b---testing.html#cb530-3" aria-hidden="true" tabindex="-1"></a>        prop<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;n&quot;</span>] <span class="op">/</span> x[<span class="st">&quot;n&quot;</span>].<span class="bu">sum</span>(),</span>
+<span id="cb530-4"><a href="a-b---testing.html#cb530-4" aria-hidden="true" tabindex="-1"></a>        n_h<span class="op">=</span><span class="kw">lambda</span> x: np.<span class="bu">round</span>(x[<span class="st">&quot;prop&quot;</span>] <span class="op">*</span> <span class="dv">450</span>).astype(<span class="bu">int</span>),</span>
+<span id="cb530-5"><a href="a-b---testing.html#cb530-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb530-6"><a href="a-b---testing.html#cb530-6" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;estrato&quot;</span>)</span>
+<span id="cb530-7"><a href="a-b---testing.html#cb530-7" aria-hidden="true" tabindex="-1"></a>    .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb530-8"><a href="a-b---testing.html#cb530-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb530-9"><a href="a-b---testing.html#cb530-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb530-10"><a href="a-b---testing.html#cb530-10" aria-hidden="true" tabindex="-1"></a>distribucion</span></code></pre></div>
+<pre><code>##    gender        Contract estrato    n  mean_prob      prop  n_h
+## 0  Female  Month-to-month     1-1  435   0.508792  0.471289  212
+## 1  Female        One year     1-2   39   0.295870  0.042254   19
+## 2  Female        Two year     1-3    5   0.247696  0.005417    2
+## 3    Male  Month-to-month     2-1  415   0.495818  0.449621  202
+## 4    Male        One year     2-2   25   0.283668  0.027086   12
+## 5    Male        Two year     2-3    4   0.230959  0.004334    2</code></pre>
+<p><strong>De esta forma, el tamaño final de la muestra será la suma de la columna <code>n_h</code>, repartida en cada estrato como se muestra anteriormente.</strong></p>
+</div>
+</div>
+<div id="probabilidades-y-factores" class="section level3 hasAnchor" number="8.3.7">
+<h3><span class="header-section-number">8.3.7</span> Probabilidades y Factores<a href="a-b---testing.html#probabilidades-y-factores" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Dependiendo del diseño de muestreo implementado, a cada unidad se le deberá asignar una probabilidad de ser incluída en la muestra. Entre las más comunes se encuentran:</p>
+<p><strong>Probabilidades</strong></p>
+<ul>
+<li>Muestreo Aleatorio Simple sin reemplazo: Ocurre cuando <strong>NO</strong> se realiza reemplazo de la muestra y un elemento es seleccionado una sola vez.</li>
+</ul>
+<p><span class="math display">\[\pi_k=\frac{n}{N}\]</span></p>
+<p>En el caso del muestreo estratificado, el muestreo se realiza de manera aleatoria simple dentro de cada estrato, por lo que la probabilidad interna a un estrato debe ser la misma.</p>
+<p><strong>Factor de expansión</strong></p>
+<p>El factor de expansión se refiere al número de individuos fuera de la muestra que son representados por cada uno de los individuos incluídos dentro de la muestra, Este factor es calculado para cada elemento muestral. Matemáticamente, este cálculo se realiza a través del inverso de probabilidad de selección:</p>
+<p><span class="math display">\[F_k=\frac{1}{\pi_k}\]</span></p>
+<p>En <em>Python</em> realizaremos automáticamente el cálculo de la probabilidad de inclusión y posteriormente invertiremos esta probabilidad para extraer el factor de expansión.</p>
+</div>
+</div>
+<div id="extracción-de-muestra" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Extracción de muestra<a href="a-b---testing.html#extracción-de-muestra" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez definido el diseño de muestreo y tamaño de muestra, procedemos a extraer nuestra muestra de acuerdo con el diseño determinado. En esta sección probaremos 2 formas de extraer la muestra final.</p>
+<div id="muestreo-aleatorio-simple-sin-remplazo" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> Muestreo Aleatorio Simple sin remplazo<a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El muestreo aleatorio simple sin reemplazo es uno de los más simples de implementar. En Python podemos resolverlo con pandas o con una función auxiliar para mantener explícita la probabilidad de inclusión.</p>
+<div class="sourceCode" id="cb532"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb532-1"><a href="a-b---testing.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> stratified_srswor</span>
+<span id="cb532-2"><a href="a-b---testing.html#cb532-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb532-3"><a href="a-b---testing.html#cb532-3" aria-hidden="true" tabindex="-1"></a>muestra_ponde_1 <span class="op">=</span> stratified_srswor(</span>
+<span id="cb532-4"><a href="a-b---testing.html#cb532-4" aria-hidden="true" tabindex="-1"></a>    frame<span class="op">=</span>marco,</span>
+<span id="cb532-5"><a href="a-b---testing.html#cb532-5" aria-hidden="true" tabindex="-1"></a>    strata<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb532-6"><a href="a-b---testing.html#cb532-6" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span><span class="dv">450</span>,</span>
+<span id="cb532-7"><a href="a-b---testing.html#cb532-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">310308261</span>,</span>
+<span id="cb532-8"><a href="a-b---testing.html#cb532-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb532-9"><a href="a-b---testing.html#cb532-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb532-10"><a href="a-b---testing.html#cb532-10" aria-hidden="true" tabindex="-1"></a>muestra_ponde_1.info()</span></code></pre></div>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## Index: 450 entries, 101 to 210
+## Data columns (total 10 columns):
+##  #   Column        Non-Null Count  Dtype  
+## ---  ------        --------------  -----  
+##  0   customerID    450 non-null    object 
+##  1   gender        450 non-null    object 
+##  2   Contract      450 non-null    object 
+##  3   .pred_Yes     450 non-null    float64
+##  4   cod_gender    450 non-null    int64  
+##  5   cod_contract  450 non-null    int64  
+##  6   estrato       450 non-null    object 
+##  7   ID_unit       450 non-null    int64  
+##  8   Prob          450 non-null    float64
+##  9   factor        450 non-null    float64
+## dtypes: float64(3), int64(3), object(4)
+## memory usage: 38.7+ KB</code></pre>
+<div class="sourceCode" id="cb534"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb534-1"><a href="a-b---testing.html#cb534-1" aria-hidden="true" tabindex="-1"></a>muestra_ponde_1.head()</span></code></pre></div>
+<pre><code>##      customerID  gender        Contract  ...  ID_unit      Prob    factor
+## 101  8648-PFRMP  Female  Month-to-month  ...      102  0.487541  2.051111
+## 742  4238-HFHSN    Male  Month-to-month  ...      743  0.487541  2.051111
+## 460  7067-KSAZT  Female        One year  ...      461  0.487541  2.051111
+## 570  4603-JANFB    Male  Month-to-month  ...      571  0.487541  2.051111
+## 834  4822-YCXMX    Male  Month-to-month  ...      835  0.487541  2.051111
+## 
+## [5 rows x 10 columns]</code></pre>
+</div>
+<div id="muestreo-estratificado-1" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> Muestreo estratificado<a href="a-b---testing.html#muestreo-estratificado-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Este tipo de muestreo implica la creación previa de estratos y sus respectivas distribución por algunos de los métodos antes estudiados. Es importante mencionar que las funciones usadas para este tipo de muestreo implican que las unidades muestrales se encuentran ordenadas por estrato de modo que todos los elementos pertenecientes a un mismo estrato se encuentran juntos.</p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb536-1"><a href="a-b---testing.html#cb536-1" aria-hidden="true" tabindex="-1"></a>alloc <span class="op">=</span> distribucion.set_index(<span class="st">&quot;estrato&quot;</span>)[<span class="st">&quot;n_h&quot;</span>].to_dict()</span>
+<span id="cb536-2"><a href="a-b---testing.html#cb536-2" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_1 <span class="op">=</span> stratified_srswor(</span>
+<span id="cb536-3"><a href="a-b---testing.html#cb536-3" aria-hidden="true" tabindex="-1"></a>    frame<span class="op">=</span>marco,</span>
+<span id="cb536-4"><a href="a-b---testing.html#cb536-4" aria-hidden="true" tabindex="-1"></a>    strata<span class="op">=</span><span class="st">&quot;estrato&quot;</span>,</span>
+<span id="cb536-5"><a href="a-b---testing.html#cb536-5" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>alloc,</span>
+<span id="cb536-6"><a href="a-b---testing.html#cb536-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">13258</span>,</span>
+<span id="cb536-7"><a href="a-b---testing.html#cb536-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb537-1"><a href="a-b---testing.html#cb537-1" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_1.info()</span></code></pre></div>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## RangeIndex: 449 entries, 0 to 448
+## Data columns (total 10 columns):
+##  #   Column        Non-Null Count  Dtype  
+## ---  ------        --------------  -----  
+##  0   customerID    449 non-null    object 
+##  1   gender        449 non-null    object 
+##  2   Contract      449 non-null    object 
+##  3   .pred_Yes     449 non-null    float64
+##  4   cod_gender    449 non-null    int64  
+##  5   cod_contract  449 non-null    int64  
+##  6   estrato       449 non-null    object 
+##  7   ID_unit       449 non-null    int64  
+##  8   Prob          449 non-null    float64
+##  9   factor        449 non-null    float64
+## dtypes: float64(3), int64(3), object(4)
+## memory usage: 35.2+ KB</code></pre>
+<div class="sourceCode" id="cb539"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb539-1"><a href="a-b---testing.html#cb539-1" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_1.head()</span></code></pre></div>
+<pre><code>##    customerID  gender        Contract  ...  ID_unit      Prob    factor
+## 0  5233-AOZUF  Female  Month-to-month  ...      299  0.487356  2.051887
+## 1  7754-IXRMC  Female  Month-to-month  ...      282  0.487356  2.051887
+## 2  3898-GUYTS  Female  Month-to-month  ...      326  0.487356  2.051887
+## 3  6712-OAWRH  Female  Month-to-month  ...      376  0.487356  2.051887
+## 4  0027-KWYKW  Female  Month-to-month  ...      272  0.487356  2.051887
+## 
+## [5 rows x 10 columns]</code></pre>
+<p><strong>Finalmente…</strong> para extraer estos resultados en un archivo manipulable por nosotros u otras personas, hacemos uso de la función <code>to_csv()</code>, la cual nos permitirá almacenar nuestra muestra en formato de excel con extensión <code>.csv</code>:</p>
+<div class="sourceCode" id="cb541"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb541-1"><a href="a-b---testing.html#cb541-1" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_1.to_csv(<span class="st">&quot;data/muestra_estratificada_1.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<p>Para diseñar la muestra de otro método de marketing para incentivar la re-contratación de servicios se realiza otra extracción independiente de datos</p>
+<div class="sourceCode" id="cb542"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb542-1"><a href="a-b---testing.html#cb542-1" aria-hidden="true" tabindex="-1"></a>marco_2 <span class="op">=</span> marco.loc[<span class="op">~</span>marco[<span class="st">&quot;ID_unit&quot;</span>].isin(muestra_estratificada_1[<span class="st">&quot;ID_unit&quot;</span>])]</span>
+<span id="cb542-2"><a href="a-b---testing.html#cb542-2" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_2 <span class="op">=</span> stratified_srswor(</span>
+<span id="cb542-3"><a href="a-b---testing.html#cb542-3" aria-hidden="true" tabindex="-1"></a>    frame<span class="op">=</span>marco_2,</span>
+<span id="cb542-4"><a href="a-b---testing.html#cb542-4" aria-hidden="true" tabindex="-1"></a>    strata<span class="op">=</span><span class="st">&quot;estrato&quot;</span>,</span>
+<span id="cb542-5"><a href="a-b---testing.html#cb542-5" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>alloc,</span>
+<span id="cb542-6"><a href="a-b---testing.html#cb542-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">579315</span>,</span>
+<span id="cb542-7"><a href="a-b---testing.html#cb542-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb543-1"><a href="a-b---testing.html#cb543-1" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_2.info()</span></code></pre></div>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## RangeIndex: 449 entries, 0 to 448
+## Data columns (total 10 columns):
+##  #   Column        Non-Null Count  Dtype  
+## ---  ------        --------------  -----  
+##  0   customerID    449 non-null    object 
+##  1   gender        449 non-null    object 
+##  2   Contract      449 non-null    object 
+##  3   .pred_Yes     449 non-null    float64
+##  4   cod_gender    449 non-null    int64  
+##  5   cod_contract  449 non-null    int64  
+##  6   estrato       449 non-null    object 
+##  7   ID_unit       449 non-null    int64  
+##  8   Prob          449 non-null    float64
+##  9   factor        449 non-null    float64
+## dtypes: float64(3), int64(3), object(4)
+## memory usage: 35.2+ KB</code></pre>
+<div class="sourceCode" id="cb545"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb545-1"><a href="a-b---testing.html#cb545-1" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_2.head()</span></code></pre></div>
+<pre><code>##    customerID  gender        Contract  ...  ID_unit      Prob    factor
+## 0  3196-NVXLZ  Female  Month-to-month  ...      184  0.950673  1.051887
+## 1  2568-OIADY  Female  Month-to-month  ...       25  0.950673  1.051887
+## 2  4911-BANWH  Female  Month-to-month  ...      147  0.950673  1.051887
+## 3  3677-IYRBF  Female  Month-to-month  ...      176  0.950673  1.051887
+## 4  4282-YMKNA  Female  Month-to-month  ...      216  0.950673  1.051887
+## 
+## [5 rows x 10 columns]</code></pre>
+<div class="sourceCode" id="cb547"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb547-1"><a href="a-b---testing.html#cb547-1" aria-hidden="true" tabindex="-1"></a>muestra_estratificada_2.to_csv(<span class="st">&quot;data/muestra_estratificada_2.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<p>Estos dos conjuntos muestrales son compartidos con el área de marketing para que a cada uno de ellos les ofrezcan de manera independiente una promoción de retención. <strong>Posteriormente, podremos realizar pruebas de hipótesis para muestras independientes</strong> o implementar alguna otra metodología estadística.</p>
+</div>
+</div>
+<div id="estimación-muestral" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Estimación muestral<a href="a-b---testing.html#estimación-muestral" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Es posible que al realizar la captura de forma manual, existan diversos errores, entre los cuales destacan:</p>
+<ul>
+<li><p>Errores de dedo</p></li>
+<li><p>Faltas de ortografía</p></li>
+<li><p>Ilegibilidad de respuestas</p></li>
+<li><p>Inconsistencias en las respuestas</p></li>
+</ul>
+<p>Es posible disminuir estos errores cuando el levantamiento se realiza a través de un sistema en donde el capturista eliga la opción de respuesta y no se preste a errores.</p>
+<div id="implementación-de-diseño-muestral" class="section level3 hasAnchor" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> Implementación de diseño muestral<a href="a-b---testing.html#implementación-de-diseño-muestral" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Habiendo recibido los resultados, es importante crear el diseño de muestreo en <em>Python</em> que permite iniciar el análisis de resultados de acuerdo con la ponderación que cada unidad de muestreo obtuvo en el diseño muestral.</p>
+<div class="sourceCode" id="cb548"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb548-1"><a href="a-b---testing.html#cb548-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">202206</span>)</span>
+<span id="cb548-2"><a href="a-b---testing.html#cb548-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb548-3"><a href="a-b---testing.html#cb548-3" aria-hidden="true" tabindex="-1"></a>resultados_promocion_1 <span class="op">=</span> muestra_estratificada_1.assign(</span>
+<span id="cb548-4"><a href="a-b---testing.html#cb548-4" aria-hidden="true" tabindex="-1"></a>    Churn<span class="op">=</span>rng.choice([<span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>], size<span class="op">=</span><span class="bu">len</span>(muestra_estratificada_1), p<span class="op">=</span>[<span class="fl">0.35</span>, <span class="fl">0.65</span>]),</span>
+<span id="cb548-5"><a href="a-b---testing.html#cb548-5" aria-hidden="true" tabindex="-1"></a>    promotion<span class="op">=</span><span class="st">&quot;discount&quot;</span>,</span>
+<span id="cb548-6"><a href="a-b---testing.html#cb548-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb548-7"><a href="a-b---testing.html#cb548-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb548-8"><a href="a-b---testing.html#cb548-8" aria-hidden="true" tabindex="-1"></a>resultados_promocion_2 <span class="op">=</span> muestra_estratificada_2.assign(</span>
+<span id="cb548-9"><a href="a-b---testing.html#cb548-9" aria-hidden="true" tabindex="-1"></a>    Churn<span class="op">=</span>rng.choice([<span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>], size<span class="op">=</span><span class="bu">len</span>(muestra_estratificada_2), p<span class="op">=</span>[<span class="fl">0.15</span>, <span class="fl">0.85</span>]),</span>
+<span id="cb548-10"><a href="a-b---testing.html#cb548-10" aria-hidden="true" tabindex="-1"></a>    promotion<span class="op">=</span><span class="st">&quot;cell phone&quot;</span>,</span>
+<span id="cb548-11"><a href="a-b---testing.html#cb548-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb548-12"><a href="a-b---testing.html#cb548-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb548-13"><a href="a-b---testing.html#cb548-13" aria-hidden="true" tabindex="-1"></a>resultados_promocion <span class="op">=</span> pd.concat(</span>
+<span id="cb548-14"><a href="a-b---testing.html#cb548-14" aria-hidden="true" tabindex="-1"></a>    [resultados_promocion_1, resultados_promocion_2],</span>
+<span id="cb548-15"><a href="a-b---testing.html#cb548-15" aria-hidden="true" tabindex="-1"></a>    ignore_index<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb548-16"><a href="a-b---testing.html#cb548-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Lo primero, es indicar el diseño muestral usado. En Python podemos mantener el diseño como un <code>DataFrame</code> ponderado y aplicar estimadores tipo Horvitz-Thompson con el factor de expansión:</p>
+<div class="sourceCode" id="cb549"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb549-1"><a href="a-b---testing.html#cb549-1" aria-hidden="true" tabindex="-1"></a>design <span class="op">=</span> resultados_promocion.copy()</span>
+<span id="cb549-2"><a href="a-b---testing.html#cb549-2" aria-hidden="true" tabindex="-1"></a>design.loc[:, [<span class="st">&quot;customerID&quot;</span>, <span class="st">&quot;estrato&quot;</span>, <span class="st">&quot;factor&quot;</span>, <span class="st">&quot;promotion&quot;</span>, <span class="st">&quot;Churn&quot;</span>]].head()</span></code></pre></div>
+<pre><code>##    customerID estrato    factor promotion Churn
+## 0  5233-AOZUF     1-1  2.051887  discount   Yes
+## 1  7754-IXRMC     1-1  2.051887  discount    No
+## 2  3898-GUYTS     1-1  2.051887  discount    No
+## 3  6712-OAWRH     1-1  2.051887  discount    No
+## 4  0027-KWYKW     1-1  2.051887  discount    No</code></pre>
+</div>
+<div id="estimación-de-resultados" class="section level3 hasAnchor" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Estimación de resultados<a href="a-b---testing.html#estimación-de-resultados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El diseño de muestreo ha sido creado. Por lo que a partir de este momento comenzaremos a hacer estimaciones estadísticas. Es importante mencionar que la técnica de estimación de resultados corresponde al estimador <a href="https://www150.statcan.gc.ca/n1/pub/12-001-x/2013001/article/11831/section2-eng.htm">Horvitz-Thompson</a>, el cual se calcula de la siguiente forma:</p>
+<p><span class="math display">\[\hat{Y}=\sum_{i=1}^{n}{\frac{X_i}{\pi_i}}=\sum_{i=1}^{n}{X_i \cdot F_i}\]</span>
+<strong>Donde:</strong></p>
+<p><span class="math inline">\(\hat{Y}=\)</span> Es la estimación de la variable de interés</p>
+<p><span class="math inline">\(X_i=\)</span> Es la variable de interés observada en la muestra</p>
+<p><span class="math inline">\(\pi_i=\)</span> Es la probabilidad de selección del i-ésimo individuo en la muestra</p>
+<p><span class="math inline">\(F_i=\)</span> Es el factor de expansión del i-ésimo individuo. Fué calculado como <span class="math inline">\(\frac{1}{\pi_i}\)</span></p>
+<p>En el caso de proporciones o estimadores de razón, el cálculo se realiza a través de:</p>
+<p><span class="math display">\[\hat{P} = \frac{\hat{Y}}{\hat{N}}; \quad \quad \hat{R} = \frac{\hat{Y}}{\hat{X}}\]</span></p>
+<p>Ahora sí, procedemos a realizar estas estimaciones en <em>Python</em> para conocer los resultados de interés. La variable <strong>Churn</strong> contiene la pregunta de interés: <em>¿El cliente canceló su servicio?</em> El resultado se muestra a continuación:</p>
+<div class="sourceCode" id="cb551"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb551-1"><a href="a-b---testing.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> weighted_proportions</span>
+<span id="cb551-2"><a href="a-b---testing.html#cb551-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb551-3"><a href="a-b---testing.html#cb551-3" aria-hidden="true" tabindex="-1"></a>weighted_proportions(design, value<span class="op">=</span><span class="st">&quot;Churn&quot;</span>, weight<span class="op">=</span><span class="st">&quot;factor&quot;</span>)</span></code></pre></div>
+<pre><code>##   Churn      prop  prop_low  prop_upp   prop_cv
+## 0    No  0.695247  0.669490  0.721004  0.018902
+## 1   Yes  0.304753  0.286397  0.323108  0.030731</code></pre>
+<p>Podemos observar que en los resultados obtenemos la proporción puntual y su intervalo de confianza al 95%. Obtenemos también la varianza estimada de nuestra estimación y el <strong>coeficiente de variación</strong>. Esta última métrica nos permite saber la precisión y confiabilidad de la estimación. En la literatura suelde decirse que de acuerdo al nivel obtenido en este valor, podemos determinar la calidad de estimación:</p>
+<ol style="list-style-type: decimal">
+<li><p>CV &lt; 0.05 <span class="math inline">\(---&gt;\)</span> Excelente</p></li>
+<li><p>CV &lt; 0.10 <span class="math inline">\(---&gt;\)</span> Muy bueno</p></li>
+<li><p>CV &lt; 0.15 <span class="math inline">\(---&gt;\)</span> Bueno</p></li>
+<li><p>CV &lt; 0.25 <span class="math inline">\(---&gt;\)</span> Regular</p></li>
+<li><p>CV &gt; 0.25 <span class="math inline">\(---&gt;\)</span> Malo</p></li>
+</ol>
+<p>La clasificación usada anteriormente es una guía. Deberá entenderse únicamente como una sugerencia y no como una regla absoluta. Este criterio suele variar de investigador a investigador.</p>
+<div id="estimación-cruzada" class="section level4 hasAnchor" number="8.5.2.1">
+<h4><span class="header-section-number">8.5.2.1</span> Estimación cruzada<a href="a-b---testing.html#estimación-cruzada" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Es muy común querer analizar los resultados de manera cruzada con alguna variable de interés. A continuación, se presentará el ejemplo de cómo estimar resultados de la tasa de cancelación de acuerdo con el método promocional ofertado.</p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb553-1"><a href="a-b---testing.html#cb553-1" aria-hidden="true" tabindex="-1"></a>estimation_1 <span class="op">=</span> weighted_proportions(</span>
+<span id="cb553-2"><a href="a-b---testing.html#cb553-2" aria-hidden="true" tabindex="-1"></a>    design,</span>
+<span id="cb553-3"><a href="a-b---testing.html#cb553-3" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span><span class="st">&quot;Churn&quot;</span>,</span>
+<span id="cb553-4"><a href="a-b---testing.html#cb553-4" aria-hidden="true" tabindex="-1"></a>    weight<span class="op">=</span><span class="st">&quot;factor&quot;</span>,</span>
+<span id="cb553-5"><a href="a-b---testing.html#cb553-5" aria-hidden="true" tabindex="-1"></a>    group<span class="op">=</span><span class="st">&quot;promotion&quot;</span>,</span>
+<span id="cb553-6"><a href="a-b---testing.html#cb553-6" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>({<span class="st">&quot;prop&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;prop_low&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;prop_upp&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;prop_cv&quot;</span>: <span class="dv">3</span>})</span>
+<span id="cb553-7"><a href="a-b---testing.html#cb553-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb553-8"><a href="a-b---testing.html#cb553-8" aria-hidden="true" tabindex="-1"></a>estimation_1</span></code></pre></div>
+<pre><code>##     promotion Churn   prop  prop_low  prop_upp  prop_cv
+## 0  cell phone    No  0.860     0.830     0.890    0.018
+## 1  cell phone   Yes  0.140     0.128     0.152    0.044
+## 2    discount    No  0.611     0.575     0.646    0.029
+## 3    discount   Yes  0.389     0.361     0.417    0.037</code></pre>
+<div class="sourceCode" id="cb555"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb555-1"><a href="a-b---testing.html#cb555-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="op">=</span> estimation_1[<span class="st">&quot;promotion&quot;</span>].unique()</span>
+<span id="cb555-2"><a href="a-b---testing.html#cb555-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(promotions), figsize<span class="op">=</span>(<span class="dv">5</span> <span class="op">*</span> <span class="bu">len</span>(promotions), <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb555-3"><a href="a-b---testing.html#cb555-3" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> np.atleast_1d(axes)</span>
+<span id="cb555-4"><a href="a-b---testing.html#cb555-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb555-5"><a href="a-b---testing.html#cb555-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, promotion <span class="kw">in</span> <span class="bu">zip</span>(axes, promotions):</span>
+<span id="cb555-6"><a href="a-b---testing.html#cb555-6" aria-hidden="true" tabindex="-1"></a>    data_plot <span class="op">=</span> estimation_1.query(<span class="st">&quot;promotion == @promotion&quot;</span>)</span>
+<span id="cb555-7"><a href="a-b---testing.html#cb555-7" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> data_plot[<span class="st">&quot;Churn&quot;</span>].<span class="bu">map</span>({<span class="st">&quot;No&quot;</span>: <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;Yes&quot;</span>: <span class="st">&quot;red&quot;</span>})</span>
+<span id="cb555-8"><a href="a-b---testing.html#cb555-8" aria-hidden="true" tabindex="-1"></a>    ax.bar(data_plot[<span class="st">&quot;Churn&quot;</span>], data_plot[<span class="st">&quot;prop&quot;</span>], color<span class="op">=</span>colors)</span>
+<span id="cb555-9"><a href="a-b---testing.html#cb555-9" aria-hidden="true" tabindex="-1"></a>    ax.errorbar(</span>
+<span id="cb555-10"><a href="a-b---testing.html#cb555-10" aria-hidden="true" tabindex="-1"></a>        data_plot[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb555-11"><a href="a-b---testing.html#cb555-11" aria-hidden="true" tabindex="-1"></a>        data_plot[<span class="st">&quot;prop&quot;</span>],</span>
+<span id="cb555-12"><a href="a-b---testing.html#cb555-12" aria-hidden="true" tabindex="-1"></a>        yerr<span class="op">=</span>[data_plot[<span class="st">&quot;prop&quot;</span>] <span class="op">-</span> data_plot[<span class="st">&quot;prop_low&quot;</span>], data_plot[<span class="st">&quot;prop_upp&quot;</span>] <span class="op">-</span> data_plot[<span class="st">&quot;prop&quot;</span>]],</span>
+<span id="cb555-13"><a href="a-b---testing.html#cb555-13" aria-hidden="true" tabindex="-1"></a>        fmt<span class="op">=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb555-14"><a href="a-b---testing.html#cb555-14" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb555-15"><a href="a-b---testing.html#cb555-15" aria-hidden="true" tabindex="-1"></a>        capsize<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb555-16"><a href="a-b---testing.html#cb555-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb555-17"><a href="a-b---testing.html#cb555-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, row <span class="kw">in</span> data_plot.iterrows():</span>
+<span id="cb555-18"><a href="a-b---testing.html#cb555-18" aria-hidden="true" tabindex="-1"></a>        ax.text(row[<span class="st">&quot;Churn&quot;</span>], <span class="fl">0.05</span>, <span class="ss">f&quot;</span><span class="sc">{</span>row[<span class="st">&#39;prop&#39;</span>]<span class="sc">:.0%}</span><span class="ss">&quot;</span>, ha<span class="op">=</span><span class="st">&quot;center&quot;</span>)</span>
+<span id="cb555-19"><a href="a-b---testing.html#cb555-19" aria-hidden="true" tabindex="-1"></a>    ax.set_title(promotion)</span>
+<span id="cb555-20"><a href="a-b---testing.html#cb555-20" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">&quot;Percentage&quot;</span>)</span></code></pre></div>
+<pre><code>## &lt;BarContainer object of 2 artists&gt;
+## &lt;ErrorbarContainer object of 3 artists&gt;
+## Text(No, 0.05, &#39;86%&#39;)
+## Text(Yes, 0.05, &#39;14%&#39;)
+## Text(0.5, 1.0, &#39;cell phone&#39;)
+## Text(0, 0.5, &#39;Percentage&#39;)
+## &lt;BarContainer object of 2 artists&gt;
+## &lt;ErrorbarContainer object of 3 artists&gt;
+## Text(No, 0.05, &#39;61%&#39;)
+## Text(Yes, 0.05, &#39;39%&#39;)
+## Text(0.5, 1.0, &#39;discount&#39;)
+## Text(0, 0.5, &#39;Percentage&#39;)</code></pre>
+<div class="sourceCode" id="cb557"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb557-1"><a href="a-b---testing.html#cb557-1" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">&quot;Churn rate by groups&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0.98, &#39;Churn rate by groups&#39;)</code></pre>
+<div class="sourceCode" id="cb559"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb559-1"><a href="a-b---testing.html#cb559-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-260-5.png" width="960" /></p>
+<p>En caso de que se dessen analizar los resultados mediante una combinación de variables, solo es necesario agregarlas a la agrupación. A continuación, se muestra un ejemplo de agregación por resultado y sexo:</p>
+<div class="sourceCode" id="cb560"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb560-1"><a href="a-b---testing.html#cb560-1" aria-hidden="true" tabindex="-1"></a>estimation_2 <span class="op">=</span> weighted_proportions(</span>
+<span id="cb560-2"><a href="a-b---testing.html#cb560-2" aria-hidden="true" tabindex="-1"></a>    design,</span>
+<span id="cb560-3"><a href="a-b---testing.html#cb560-3" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span><span class="st">&quot;Churn&quot;</span>,</span>
+<span id="cb560-4"><a href="a-b---testing.html#cb560-4" aria-hidden="true" tabindex="-1"></a>    weight<span class="op">=</span><span class="st">&quot;factor&quot;</span>,</span>
+<span id="cb560-5"><a href="a-b---testing.html#cb560-5" aria-hidden="true" tabindex="-1"></a>    group<span class="op">=</span>[<span class="st">&quot;promotion&quot;</span>, <span class="st">&quot;gender&quot;</span>],</span>
+<span id="cb560-6"><a href="a-b---testing.html#cb560-6" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>({<span class="st">&quot;prop&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;prop_low&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;prop_upp&quot;</span>: <span class="dv">3</span>, <span class="st">&quot;prop_cv&quot;</span>: <span class="dv">3</span>})</span>
+<span id="cb560-7"><a href="a-b---testing.html#cb560-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb560-8"><a href="a-b---testing.html#cb560-8" aria-hidden="true" tabindex="-1"></a>totals_2 <span class="op">=</span> (</span>
+<span id="cb560-9"><a href="a-b---testing.html#cb560-9" aria-hidden="true" tabindex="-1"></a>    design.groupby([<span class="st">&quot;promotion&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;Churn&quot;</span>])[<span class="st">&quot;factor&quot;</span>]</span>
+<span id="cb560-10"><a href="a-b---testing.html#cb560-10" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">sum</span>()</span>
+<span id="cb560-11"><a href="a-b---testing.html#cb560-11" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>()</span>
+<span id="cb560-12"><a href="a-b---testing.html#cb560-12" aria-hidden="true" tabindex="-1"></a>    .rename(<span class="st">&quot;total&quot;</span>)</span>
+<span id="cb560-13"><a href="a-b---testing.html#cb560-13" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb560-14"><a href="a-b---testing.html#cb560-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb560-15"><a href="a-b---testing.html#cb560-15" aria-hidden="true" tabindex="-1"></a>estimation_2 <span class="op">=</span> estimation_2.merge(totals_2, on<span class="op">=</span>[<span class="st">&quot;promotion&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;Churn&quot;</span>])</span>
+<span id="cb560-16"><a href="a-b---testing.html#cb560-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb560-17"><a href="a-b---testing.html#cb560-17" aria-hidden="true" tabindex="-1"></a>estimation_2</span></code></pre></div>
+<pre><code>##     promotion  gender Churn   prop  prop_low  prop_upp  prop_cv  total
+## 0  cell phone  Female    No  0.876     0.836     0.916    0.023  215.0
+## 1  cell phone  Female   Yes  0.124     0.109     0.139    0.061   31.0
+## 2  cell phone    Male    No  0.843     0.798     0.887    0.027  192.0
+## 3  cell phone    Male   Yes  0.157     0.138     0.177    0.062   36.0
+## 4    discount  Female    No  0.636     0.587     0.685    0.040  305.0
+## 5    discount  Female   Yes  0.364     0.327     0.401    0.052  174.0
+## 6    discount    Male    No  0.583     0.533     0.634    0.044  259.0
+## 7    discount    Male   Yes  0.417     0.374     0.459    0.052  185.0</code></pre>
+<div class="sourceCode" id="cb562"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb562-1"><a href="a-b---testing.html#cb562-1" aria-hidden="true" tabindex="-1"></a>facets <span class="op">=</span> estimation_2.loc[:, [<span class="st">&quot;promotion&quot;</span>, <span class="st">&quot;gender&quot;</span>]].drop_duplicates()</span>
+<span id="cb562-2"><a href="a-b---testing.html#cb562-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(facets), <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(facets)), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb562-3"><a href="a-b---testing.html#cb562-3" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> np.atleast_1d(axes)</span>
+<span id="cb562-4"><a href="a-b---testing.html#cb562-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb562-5"><a href="a-b---testing.html#cb562-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (_, facet) <span class="kw">in</span> <span class="bu">zip</span>(axes, facets.iterrows()):</span>
+<span id="cb562-6"><a href="a-b---testing.html#cb562-6" aria-hidden="true" tabindex="-1"></a>    data_plot <span class="op">=</span> estimation_2.query(<span class="st">&quot;promotion == @facet.promotion and gender == @facet.gender&quot;</span>)</span>
+<span id="cb562-7"><a href="a-b---testing.html#cb562-7" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> data_plot[<span class="st">&quot;Churn&quot;</span>].<span class="bu">map</span>({<span class="st">&quot;No&quot;</span>: <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;Yes&quot;</span>: <span class="st">&quot;red&quot;</span>})</span>
+<span id="cb562-8"><a href="a-b---testing.html#cb562-8" aria-hidden="true" tabindex="-1"></a>    ax.bar(data_plot[<span class="st">&quot;Churn&quot;</span>], data_plot[<span class="st">&quot;prop&quot;</span>], color<span class="op">=</span>colors)</span>
+<span id="cb562-9"><a href="a-b---testing.html#cb562-9" aria-hidden="true" tabindex="-1"></a>    ax.errorbar(</span>
+<span id="cb562-10"><a href="a-b---testing.html#cb562-10" aria-hidden="true" tabindex="-1"></a>        data_plot[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb562-11"><a href="a-b---testing.html#cb562-11" aria-hidden="true" tabindex="-1"></a>        data_plot[<span class="st">&quot;prop&quot;</span>],</span>
+<span id="cb562-12"><a href="a-b---testing.html#cb562-12" aria-hidden="true" tabindex="-1"></a>        yerr<span class="op">=</span>[data_plot[<span class="st">&quot;prop&quot;</span>] <span class="op">-</span> data_plot[<span class="st">&quot;prop_low&quot;</span>], data_plot[<span class="st">&quot;prop_upp&quot;</span>] <span class="op">-</span> data_plot[<span class="st">&quot;prop&quot;</span>]],</span>
+<span id="cb562-13"><a href="a-b---testing.html#cb562-13" aria-hidden="true" tabindex="-1"></a>        fmt<span class="op">=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb562-14"><a href="a-b---testing.html#cb562-14" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb562-15"><a href="a-b---testing.html#cb562-15" aria-hidden="true" tabindex="-1"></a>        capsize<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb562-16"><a href="a-b---testing.html#cb562-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb562-17"><a href="a-b---testing.html#cb562-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, row <span class="kw">in</span> data_plot.iterrows():</span>
+<span id="cb562-18"><a href="a-b---testing.html#cb562-18" aria-hidden="true" tabindex="-1"></a>        ax.text(row[<span class="st">&quot;Churn&quot;</span>], <span class="fl">0.15</span>, <span class="ss">f&quot;</span><span class="sc">{</span>row[<span class="st">&#39;prop&#39;</span>]<span class="sc">:.0%}</span><span class="ss">&quot;</span>, ha<span class="op">=</span><span class="st">&quot;center&quot;</span>)</span>
+<span id="cb562-19"><a href="a-b---testing.html#cb562-19" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f&quot;</span><span class="sc">{</span>facet<span class="sc">.</span>promotion<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>facet<span class="sc">.</span>gender<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb562-20"><a href="a-b---testing.html#cb562-20" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">&quot;Percentage&quot;</span>)</span></code></pre></div>
+<pre><code>## &lt;BarContainer object of 2 artists&gt;
+## &lt;ErrorbarContainer object of 3 artists&gt;
+## Text(No, 0.15, &#39;88%&#39;)
+## Text(Yes, 0.15, &#39;12%&#39;)
+## Text(0.5, 1.0, &#39;cell phone | Female&#39;)
+## Text(0, 0.5, &#39;Percentage&#39;)
+## &lt;BarContainer object of 2 artists&gt;
+## &lt;ErrorbarContainer object of 3 artists&gt;
+## Text(No, 0.15, &#39;84%&#39;)
+## Text(Yes, 0.15, &#39;16%&#39;)
+## Text(0.5, 1.0, &#39;cell phone | Male&#39;)
+## Text(0, 0.5, &#39;Percentage&#39;)
+## &lt;BarContainer object of 2 artists&gt;
+## &lt;ErrorbarContainer object of 3 artists&gt;
+## Text(No, 0.15, &#39;64%&#39;)
+## Text(Yes, 0.15, &#39;36%&#39;)
+## Text(0.5, 1.0, &#39;discount | Female&#39;)
+## Text(0, 0.5, &#39;Percentage&#39;)
+## &lt;BarContainer object of 2 artists&gt;
+## &lt;ErrorbarContainer object of 3 artists&gt;
+## Text(No, 0.15, &#39;58%&#39;)
+## Text(Yes, 0.15, &#39;42%&#39;)
+## Text(0.5, 1.0, &#39;discount | Male&#39;)
+## Text(0, 0.5, &#39;Percentage&#39;)</code></pre>
+<div class="sourceCode" id="cb564"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb564-1"><a href="a-b---testing.html#cb564-1" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">&quot;Churn rate by groups and gender&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0.98, &#39;Churn rate by groups and gender&#39;)</code></pre>
+<div class="sourceCode" id="cb566"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb566-1"><a href="a-b---testing.html#cb566-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-262-7.png" width="576" />
+Aparentemente con el método por descuento la polarización en la tasa de cancelación es más grande para hombres que para mujeres, no obstante, debieran realizarse pruebas de hipótesis de tomar una decisión en cuanto a la proposición mencionada.</p>
+<div class="sourceCode" id="cb567"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb567-1"><a href="a-b---testing.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb567-2"><a href="a-b---testing.html#cb567-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb567-3"><a href="a-b---testing.html#cb567-3" aria-hidden="true" tabindex="-1"></a>glm_data <span class="op">=</span> resultados_promocion.copy()</span>
+<span id="cb567-4"><a href="a-b---testing.html#cb567-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> glm_data[<span class="st">&quot;Churn&quot;</span>].eq(<span class="st">&quot;Yes&quot;</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb567-5"><a href="a-b---testing.html#cb567-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(</span>
+<span id="cb567-6"><a href="a-b---testing.html#cb567-6" aria-hidden="true" tabindex="-1"></a>    glm_data.loc[:, [<span class="st">&quot;promotion&quot;</span>, <span class="st">&quot;.pred_Yes&quot;</span>, <span class="st">&quot;gender&quot;</span>]],</span>
+<span id="cb567-7"><a href="a-b---testing.html#cb567-7" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">&quot;promotion&quot;</span>, <span class="st">&quot;gender&quot;</span>],</span>
+<span id="cb567-8"><a href="a-b---testing.html#cb567-8" aria-hidden="true" tabindex="-1"></a>    drop_first<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb567-9"><a href="a-b---testing.html#cb567-9" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span><span class="bu">float</span>,</span>
+<span id="cb567-10"><a href="a-b---testing.html#cb567-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb567-11"><a href="a-b---testing.html#cb567-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb567-12"><a href="a-b---testing.html#cb567-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb567-13"><a href="a-b---testing.html#cb567-13" aria-hidden="true" tabindex="-1"></a>glm_design <span class="op">=</span> sm.GLM(</span>
+<span id="cb567-14"><a href="a-b---testing.html#cb567-14" aria-hidden="true" tabindex="-1"></a>    y,</span>
+<span id="cb567-15"><a href="a-b---testing.html#cb567-15" aria-hidden="true" tabindex="-1"></a>    X,</span>
+<span id="cb567-16"><a href="a-b---testing.html#cb567-16" aria-hidden="true" tabindex="-1"></a>    family<span class="op">=</span>sm.families.Binomial(),</span>
+<span id="cb567-17"><a href="a-b---testing.html#cb567-17" aria-hidden="true" tabindex="-1"></a>    freq_weights<span class="op">=</span>glm_data[<span class="st">&quot;factor&quot;</span>],</span>
+<span id="cb567-18"><a href="a-b---testing.html#cb567-18" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb567-19"><a href="a-b---testing.html#cb567-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb567-20"><a href="a-b---testing.html#cb567-20" aria-hidden="true" tabindex="-1"></a>glm_design.summary()</span></code></pre></div>
+<pre><code>## &lt;class &#39;statsmodels.iolib.summary.Summary&#39;&gt;
+## &quot;&quot;&quot;
+##                  Generalized Linear Model Regression Results                  
+## ==============================================================================
+## Dep. Variable:                  Churn   No. Observations:                  898
+## Model:                            GLM   Df Residuals:                  1393.00
+## Model Family:                Binomial   Df Model:                            3
+## Link Function:                  Logit   Scale:                          1.0000
+## Method:                          IRLS   Log-Likelihood:                -807.10
+## Date:                Tue, 26 May 2026   Deviance:                       1614.2
+## Time:                        09:41:33   Pearson chi2:                 1.40e+03
+## No. Iterations:                     4   Pseudo R-squ. (CS):             0.1090
+## Covariance Type:            nonrobust                                         
+## ======================================================================================
+##                          coef    std err          z      P&gt;|z|      [0.025      0.975]
+## --------------------------------------------------------------------------------------
+## const                 -1.9622      0.200     -9.823      0.000      -2.354      -1.571
+## .pred_Yes              0.0638      0.279      0.228      0.819      -0.484       0.611
+## promotion_discount     1.3681      0.149      9.197      0.000       1.077       1.660
+## gender_Male            0.2320      0.120      1.926      0.054      -0.004       0.468
+## ======================================================================================
+## &quot;&quot;&quot;</code></pre>
+<p>Los resultados de este modelo buscan implementar un ajuste que explique la decisión de cancelar o no su servicio a través del tipo de promoción aplicado y las características de interés como sexo o alguna otra variable de interés.</p>
+<div class="infobox note">
+<p><strong>¡¡ EJERCICIO !!</strong></p>
+<p>Calcula la diferencia en el beneficio económico para la empresa entre las distintas promociones aplicadas y concluye resultados</p>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="interpretabilidad-de-modelos.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

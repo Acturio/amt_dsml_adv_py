@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Workflowsets | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Workflowsets | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Workflowsets | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bagging-boosting.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-r"><i class="fa fa-check"></i>Ciencia de Datos en R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-r"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en R</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-r-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>3</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>3.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="3.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>3.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="3.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>3.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="3.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>3.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="3.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>3.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="3.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>3.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="3.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-r"><i class="fa fa-check"></i><b>3.7</b> Ajuste del modelo con R</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-r"><i class="fa fa-check"></i><b>3.7.1</b> Implementación de SVR en R</a></li>
+<li class="chapter" data-level="3.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-r"><i class="fa fa-check"></i><b>3.7.2</b> Implementación de SVM en R</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>3.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>4.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>4.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>4.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>4.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>4.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-r-2"><i class="fa fa-check"></i><b>4.3.3</b> Implementación en <em>R</em></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>4.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>4.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>4.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="4.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-r-3"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en R</a></li>
+<li class="chapter" data-level="4.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>4.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="4.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>4.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="workflowsets.html"><a href="workflowsets.html"><i class="fa fa-check"></i><b>5</b> Workflowsets</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="workflowsets.html"><a href="workflowsets.html#múltiples-recetas"><i class="fa fa-check"></i><b>5.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="5.2" data-path="workflowsets.html"><a href="workflowsets.html#múltiples-modelos"><i class="fa fa-check"></i><b>5.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="5.3" data-path="workflowsets.html"><a href="workflowsets.html#creación-de-workflowset"><i class="fa fa-check"></i><b>5.3</b> Creación de workflowset</a></li>
+<li class="chapter" data-level="5.4" data-path="workflowsets.html"><a href="workflowsets.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>5.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="5.5" data-path="workflowsets.html"><a href="workflowsets.html#extracción-de-modelos"><i class="fa fa-check"></i><b>5.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="workflowsets.html"><a href="workflowsets.html#selección-de-modelo"><i class="fa fa-check"></i><b>5.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="workflowsets.html"><a href="workflowsets.html#métodos-de-carrera"><i class="fa fa-check"></i><b>5.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="workflowsets.html"><a href="workflowsets.html#optimización-anova"><i class="fa fa-check"></i><b>5.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="5.6.2" data-path="workflowsets.html"><a href="workflowsets.html#optimización-logística"><i class="fa fa-check"></i><b>5.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="5.6.3" data-path="workflowsets.html"><a href="workflowsets.html#optimización-bayesiana"><i class="fa fa-check"></i><b>5.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="workflowsets.html"><a href="workflowsets.html#ejercicios-parte-1"><i class="fa fa-check"></i><b>5.7</b> Ejercicios (Parte 1)</a></li>
+<li class="chapter" data-level="5.8" data-path="workflowsets.html"><a href="workflowsets.html#stacking"><i class="fa fa-check"></i><b>5.8</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="workflowsets.html"><a href="workflowsets.html#elección-de-modelos"><i class="fa fa-check"></i><b>5.8.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="5.8.2" data-path="workflowsets.html"><a href="workflowsets.html#ajuste-final"><i class="fa fa-check"></i><b>5.8.2</b> Ajuste final</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="workflowsets" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Capítulo 5</span> Workflowsets<a href="workflowsets.html#workflowsets" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Es común no sepamos ni remotamente cuál es el mejor modelo que podríamos implementar al iniciar un proyecto con datos que nunca antes hemos visto. Es posible que un profesional de datos deba seleccionar muchas combinaciones de modelos y preprocesadores. También es posible tener poco o ningún conocimiento a priori sobre qué método funcionará mejor con un nuevo conjunto de datos.</p>
+<blockquote>
+<p>Una buena estrategia es dedicar un esfuerzo inicial a probar una variedad de enfoques de modelado, determinar qué funciona mejor y luego invertir tiempo adicional ajustando / optimizando un pequeño conjunto de modelos.</p>
+</blockquote>
+<div id="múltiples-recetas" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Múltiples recetas<a href="workflowsets.html#múltiples-recetas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Algunos modelos requieren predictores que se han centrado y escalado, por lo que algunos flujos de trabajo de modelos requerirán recetas con estos pasos de preprocesamiento. Para otros modelos, crear interacciones cuadráticas y bidireccionales. Para estos fines, creamos múltiples recetas:</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="workflowsets.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb186-2"><a href="workflowsets.html#cb186-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-3"><a href="workflowsets.html#cb186-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ames)</span>
+<span id="cb186-4"><a href="workflowsets.html#cb186-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-5"><a href="workflowsets.html#cb186-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4595</span>)</span>
+<span id="cb186-6"><a href="workflowsets.html#cb186-6" aria-hidden="true" tabindex="-1"></a>ames_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ames, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb186-7"><a href="workflowsets.html#cb186-7" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> <span class="fu">training</span>(ames_split)</span>
+<span id="cb186-8"><a href="workflowsets.html#cb186-8" aria-hidden="true" tabindex="-1"></a>ames_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(ames_split)</span>
+<span id="cb186-9"><a href="workflowsets.html#cb186-9" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(ames_train)</span></code></pre></div>
+<ul>
+<li><strong>Receta Original</strong></li>
+</ul>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="workflowsets.html#cb187-1" aria-hidden="true" tabindex="-1"></a>receta_original <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> . , <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb187-2"><a href="workflowsets.html#cb187-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Alley) <span class="sc">%&gt;%</span></span>
+<span id="cb187-3"><a href="workflowsets.html#cb187-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">Year_Remod =</span> Year_Remod_Add) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-4"><a href="workflowsets.html#cb187-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">ThirdSsn_Porch =</span> Three_season_porch) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-5"><a href="workflowsets.html#cb187-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Bedroom_AbvGr, <span class="at">denom =</span> <span class="fu">denom_vars</span>(Gr_Liv_Area)) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-6"><a href="workflowsets.html#cb187-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb187-7"><a href="workflowsets.html#cb187-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod,</span>
+<span id="cb187-8"><a href="workflowsets.html#cb187-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalSF   =</span> Gr_Liv_Area <span class="sc">+</span> Total_Bsmt_SF,</span>
+<span id="cb187-9"><a href="workflowsets.html#cb187-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">AvgRoomSF   =</span> Gr_Liv_Area <span class="sc">/</span> TotRms_AbvGrd,</span>
+<span id="cb187-10"><a href="workflowsets.html#cb187-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pool =</span> <span class="fu">if_else</span>(Pool_Area <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb187-11"><a href="workflowsets.html#cb187-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-12"><a href="workflowsets.html#cb187-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-13"><a href="workflowsets.html#cb187-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>(), <span class="sc">-</span><span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb187-14"><a href="workflowsets.html#cb187-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-15"><a href="workflowsets.html#cb187-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Second_Flr_SF<span class="sc">:</span>First_Flr_SF) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-16"><a href="workflowsets.html#cb187-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-17"><a href="workflowsets.html#cb187-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(</span>
+<span id="cb187-18"><a href="workflowsets.html#cb187-18" aria-hidden="true" tabindex="-1"></a>    First_Flr_SF, Second_Flr_SF, Year_Remod,</span>
+<span id="cb187-19"><a href="workflowsets.html#cb187-19" aria-hidden="true" tabindex="-1"></a>    Bsmt_Full_Bath, Bsmt_Half_Bath, </span>
+<span id="cb187-20"><a href="workflowsets.html#cb187-20" aria-hidden="true" tabindex="-1"></a>    Kitchen_AbvGr, BsmtFin_Type_1_Unf, </span>
+<span id="cb187-21"><a href="workflowsets.html#cb187-21" aria-hidden="true" tabindex="-1"></a>    Total_Bsmt_SF, Kitchen_AbvGr, Pool_Area, </span>
+<span id="cb187-22"><a href="workflowsets.html#cb187-22" aria-hidden="true" tabindex="-1"></a>    Gr_Liv_Area, Sale_Type_Oth, Sale_Type_VWD</span>
+<span id="cb187-23"><a href="workflowsets.html#cb187-23" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb187-24"><a href="workflowsets.html#cb187-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-25"><a href="workflowsets.html#cb187-25" aria-hidden="true" tabindex="-1"></a>receta_original_prep <span class="ot">&lt;-</span> receta_original <span class="sc">%&gt;%</span> <span class="fu">prep</span>()</span></code></pre></div>
+<ul>
+<li><strong>Receta PCA:</strong></li>
+</ul>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="workflowsets.html#cb188-1" aria-hidden="true" tabindex="-1"></a>receta_knn <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> . , <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb188-2"><a href="workflowsets.html#cb188-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Alley) <span class="sc">%&gt;%</span></span>
+<span id="cb188-3"><a href="workflowsets.html#cb188-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Pool_QC) <span class="sc">%&gt;%</span></span>
+<span id="cb188-4"><a href="workflowsets.html#cb188-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Misc_Feature) <span class="sc">%&gt;%</span></span>
+<span id="cb188-5"><a href="workflowsets.html#cb188-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Fence) <span class="sc">%&gt;%</span></span>
+<span id="cb188-6"><a href="workflowsets.html#cb188-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Garage_Finish) <span class="sc">%&gt;%</span></span>
+<span id="cb188-7"><a href="workflowsets.html#cb188-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Garage_Cond) <span class="sc">%&gt;%</span></span>
+<span id="cb188-8"><a href="workflowsets.html#cb188-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Garage_Type) <span class="sc">%&gt;%</span></span>
+<span id="cb188-9"><a href="workflowsets.html#cb188-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Bsmt_Exposure) <span class="sc">%&gt;%</span></span>
+<span id="cb188-10"><a href="workflowsets.html#cb188-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Bsmt_Cond) <span class="sc">%&gt;%</span></span>
+<span id="cb188-11"><a href="workflowsets.html#cb188-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(BsmtFin_Type_1) <span class="sc">%&gt;%</span></span>
+<span id="cb188-12"><a href="workflowsets.html#cb188-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(BsmtFin_Type_2) <span class="sc">%&gt;%</span></span>
+<span id="cb188-13"><a href="workflowsets.html#cb188-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Mas_Vnr_Type) <span class="sc">%&gt;%</span></span>
+<span id="cb188-14"><a href="workflowsets.html#cb188-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Electrical) <span class="sc">%&gt;%</span></span>
+<span id="cb188-15"><a href="workflowsets.html#cb188-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_knn</span>(</span>
+<span id="cb188-16"><a href="workflowsets.html#cb188-16" aria-hidden="true" tabindex="-1"></a>    Mas_Vnr_Area, Lot_Frontage, </span>
+<span id="cb188-17"><a href="workflowsets.html#cb188-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">impute_with=</span> <span class="fu">all_predictors</span>(),</span>
+<span id="cb188-18"><a href="workflowsets.html#cb188-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">neighbors =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb188-19"><a href="workflowsets.html#cb188-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">Year_Remod =</span> Year_Remod_Add) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-20"><a href="workflowsets.html#cb188-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">ThirdSsn_Porch =</span> Three_season_porch) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-21"><a href="workflowsets.html#cb188-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Bedroom_AbvGr, <span class="at">denom =</span> <span class="fu">denom_vars</span>(Gr_Liv_Area)) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-22"><a href="workflowsets.html#cb188-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb188-23"><a href="workflowsets.html#cb188-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod,</span>
+<span id="cb188-24"><a href="workflowsets.html#cb188-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalSF   =</span> Gr_Liv_Area <span class="sc">+</span> Total_Bsmt_SF,</span>
+<span id="cb188-25"><a href="workflowsets.html#cb188-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">AvgRoomSF   =</span> Gr_Liv_Area <span class="sc">/</span> TotRms_AbvGrd,</span>
+<span id="cb188-26"><a href="workflowsets.html#cb188-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pool =</span> <span class="fu">if_else</span>(Pool_Area <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb188-27"><a href="workflowsets.html#cb188-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-28"><a href="workflowsets.html#cb188-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-29"><a href="workflowsets.html#cb188-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>(), <span class="sc">-</span><span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb188-30"><a href="workflowsets.html#cb188-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-31"><a href="workflowsets.html#cb188-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Second_Flr_SF<span class="sc">:</span>First_Flr_SF) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-32"><a href="workflowsets.html#cb188-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) </span>
+<span id="cb188-33"><a href="workflowsets.html#cb188-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-34"><a href="workflowsets.html#cb188-34" aria-hidden="true" tabindex="-1"></a>receta_knn_prep <span class="ot">&lt;-</span> receta_knn <span class="sc">%&gt;%</span> <span class="fu">prep</span>()</span></code></pre></div>
+<ul>
+<li><strong>Receta Grande:</strong></li>
+</ul>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="workflowsets.html#cb189-1" aria-hidden="true" tabindex="-1"></a>receta_grande <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> . , <span class="at">data =</span> ames_train) <span class="sc">%&gt;%</span></span>
+<span id="cb189-2"><a href="workflowsets.html#cb189-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Alley) <span class="sc">%&gt;%</span></span>
+<span id="cb189-3"><a href="workflowsets.html#cb189-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Fence) <span class="sc">%&gt;%</span></span>
+<span id="cb189-4"><a href="workflowsets.html#cb189-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Garage_Type) <span class="sc">%&gt;%</span></span>
+<span id="cb189-5"><a href="workflowsets.html#cb189-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Garage_Finish) <span class="sc">%&gt;%</span></span>
+<span id="cb189-6"><a href="workflowsets.html#cb189-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Garage_Cond) <span class="sc">%&gt;%</span></span>
+<span id="cb189-7"><a href="workflowsets.html#cb189-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Bsmt_Cond) <span class="sc">%&gt;%</span></span>
+<span id="cb189-8"><a href="workflowsets.html#cb189-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Bsmt_Exposure) <span class="sc">%&gt;%</span></span>
+<span id="cb189-9"><a href="workflowsets.html#cb189-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(BsmtFin_Type_1) <span class="sc">%&gt;%</span></span>
+<span id="cb189-10"><a href="workflowsets.html#cb189-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(BsmtFin_Type_2) <span class="sc">%&gt;%</span></span>
+<span id="cb189-11"><a href="workflowsets.html#cb189-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Mas_Vnr_Type) <span class="sc">%&gt;%</span></span>
+<span id="cb189-12"><a href="workflowsets.html#cb189-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Electrical) <span class="sc">%&gt;%</span></span>
+<span id="cb189-13"><a href="workflowsets.html#cb189-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Heating_QC) <span class="sc">%&gt;%</span></span>
+<span id="cb189-14"><a href="workflowsets.html#cb189-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_unknown</span>(Pool_QC) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-15"><a href="workflowsets.html#cb189-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_knn</span>(</span>
+<span id="cb189-16"><a href="workflowsets.html#cb189-16" aria-hidden="true" tabindex="-1"></a>    Mas_Vnr_Area, Lot_Frontage, </span>
+<span id="cb189-17"><a href="workflowsets.html#cb189-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">impute_with=</span> <span class="fu">all_predictors</span>(),</span>
+<span id="cb189-18"><a href="workflowsets.html#cb189-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">neighbors =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb189-19"><a href="workflowsets.html#cb189-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">Year_Remod =</span> Year_Remod_Add) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-20"><a href="workflowsets.html#cb189-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rename</span>(<span class="at">ThirdSsn_Porch =</span> Three_season_porch) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-21"><a href="workflowsets.html#cb189-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Bedroom_AbvGr, <span class="at">denom =</span> <span class="fu">denom_vars</span>(Gr_Liv_Area)) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-22"><a href="workflowsets.html#cb189-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_ratio</span>(Second_Flr_SF, <span class="at">denom =</span> <span class="fu">denom_vars</span>(First_Flr_SF)) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-23"><a href="workflowsets.html#cb189-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(</span>
+<span id="cb189-24"><a href="workflowsets.html#cb189-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalBaths =</span> Full_Bath <span class="sc">+</span> Bsmt_Full_Bath <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> (Half_Bath <span class="sc">+</span> Bsmt_Half_Bath),</span>
+<span id="cb189-25"><a href="workflowsets.html#cb189-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age_House =</span> Year_Sold <span class="sc">-</span> Year_Remod,</span>
+<span id="cb189-26"><a href="workflowsets.html#cb189-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalSF =</span> Gr_Liv_Area <span class="sc">+</span> Total_Bsmt_SF,</span>
+<span id="cb189-27"><a href="workflowsets.html#cb189-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">AvgRoomSF =</span> Gr_Liv_Area <span class="sc">/</span> TotRms_AbvGrd,</span>
+<span id="cb189-28"><a href="workflowsets.html#cb189-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">Porch_SF =</span> Enclosed_Porch <span class="sc">+</span> ThirdSsn_Porch <span class="sc">+</span> Open_Porch_SF,</span>
+<span id="cb189-29"><a href="workflowsets.html#cb189-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">Porch =</span> <span class="fu">factor</span>(Porch_SF <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb189-30"><a href="workflowsets.html#cb189-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pool =</span> <span class="fu">if_else</span>(Pool_Area <span class="sc">&gt;</span> <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb189-31"><a href="workflowsets.html#cb189-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exter_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Exter_Cond, <span class="at">Good =</span> <span class="fu">c</span>(<span class="st">&quot;Typical&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>)),</span>
+<span id="cb189-32"><a href="workflowsets.html#cb189-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">Condition_1 =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(</span>
+<span id="cb189-33"><a href="workflowsets.html#cb189-33" aria-hidden="true" tabindex="-1"></a>      Condition_1, </span>
+<span id="cb189-34"><a href="workflowsets.html#cb189-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">Artery_Feedr =</span> <span class="fu">c</span>(<span class="st">&quot;Feedr&quot;</span>, <span class="st">&quot;Artery&quot;</span>), </span>
+<span id="cb189-35"><a href="workflowsets.html#cb189-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">Railr =</span> <span class="fu">c</span>(<span class="st">&quot;RRAn&quot;</span>, <span class="st">&quot;RRNn&quot;</span>, <span class="st">&quot;RRNe&quot;</span>, <span class="st">&quot;RRAe&quot;</span>),</span>
+<span id="cb189-36"><a href="workflowsets.html#cb189-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">Norm =</span> <span class="st">&quot;Norm&quot;</span>,</span>
+<span id="cb189-37"><a href="workflowsets.html#cb189-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">Pos =</span> <span class="fu">c</span>(<span class="st">&quot;PosN&quot;</span>, <span class="st">&quot;PosA&quot;</span>)), </span>
+<span id="cb189-38"><a href="workflowsets.html#cb189-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">Land_Slope =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Land_Slope, <span class="at">Mod_Sev =</span> <span class="fu">c</span>(<span class="st">&quot;Mod&quot;</span>, <span class="st">&quot;Sev&quot;</span>)),</span>
+<span id="cb189-39"><a href="workflowsets.html#cb189-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">Land_Contour =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Land_Contour, <span class="at">Low_HLS =</span> <span class="fu">c</span>(<span class="st">&quot;Low&quot;</span>,<span class="st">&quot;HLS&quot;</span>), <span class="at">Bnk_Lvl =</span> <span class="fu">c</span>(<span class="st">&quot;Lvl&quot;</span>,<span class="st">&quot;Bnk&quot;</span>)),</span>
+<span id="cb189-40"><a href="workflowsets.html#cb189-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">Lot_Shape =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Lot_Shape, <span class="at">IRREG =</span> <span class="fu">c</span>(<span class="st">&quot;Slightly_Irregular&quot;</span>, <span class="st">&quot;Moderately_Irregular&quot;</span>, <span class="st">&quot;Irregular&quot;</span>)),</span>
+<span id="cb189-41"><a href="workflowsets.html#cb189-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">Bsmt_Cond =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Bsmt_Cond, <span class="at">Exc =</span> <span class="fu">c</span>(<span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>)),</span>
+<span id="cb189-42"><a href="workflowsets.html#cb189-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">BsmtFin_Type_1 =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(BsmtFin_Type_1, <span class="at">Rec_BLQ =</span> <span class="fu">c</span>(<span class="st">&quot;Rec&quot;</span>, <span class="st">&quot;BLQ&quot;</span>)),</span>
+<span id="cb189-43"><a href="workflowsets.html#cb189-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">BsmtFin_Type_2 =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(BsmtFin_Type_2, <span class="at">Rec_BLQ =</span> <span class="fu">c</span>(<span class="st">&quot;Rec&quot;</span>, <span class="st">&quot;BLQ&quot;</span>,<span class="st">&quot;LwQ&quot;</span>)),</span>
+<span id="cb189-44"><a href="workflowsets.html#cb189-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">Neighborhood =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(</span>
+<span id="cb189-45"><a href="workflowsets.html#cb189-45" aria-hidden="true" tabindex="-1"></a>      Neighborhood, </span>
+<span id="cb189-46"><a href="workflowsets.html#cb189-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">NoRidge_GrnHill =</span> <span class="fu">c</span>(<span class="st">&quot;Northridge&quot;</span>, <span class="st">&quot;Green_Hills&quot;</span>),</span>
+<span id="cb189-47"><a href="workflowsets.html#cb189-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">Crawfor_Greens =</span> <span class="fu">c</span>(<span class="st">&quot;Crawford&quot;</span>, <span class="st">&quot;Greens&quot;</span>),</span>
+<span id="cb189-48"><a href="workflowsets.html#cb189-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">Blueste_Mitchel =</span> <span class="fu">c</span>(<span class="st">&quot;Blueste&quot;</span>, <span class="st">&quot;Mitchell&quot;</span>),</span>
+<span id="cb189-49"><a href="workflowsets.html#cb189-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">Blmngtn_CollgCr =</span> <span class="fu">c</span>(<span class="st">&quot;Bloomington_Heights&quot;</span>, <span class="st">&quot;College_Creek&quot;</span>),</span>
+<span id="cb189-50"><a href="workflowsets.html#cb189-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">NPkVill_NAmes =</span> <span class="fu">c</span>(<span class="st">&quot;Northpark_Villa&quot;</span>, <span class="st">&quot;North_Ames&quot;</span>),</span>
+<span id="cb189-51"><a href="workflowsets.html#cb189-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">Veenker_StoneBr =</span> <span class="fu">c</span>(<span class="st">&quot;Veenker&quot;</span>, <span class="st">&quot;Stone_Brook&quot;</span>),</span>
+<span id="cb189-52"><a href="workflowsets.html#cb189-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">BrDale_IDOTRR =</span> <span class="fu">c</span>(<span class="st">&quot;Briardale&quot;</span>, <span class="st">&quot;Iowa_DOT_and_Rail_Road&quot;</span>),</span>
+<span id="cb189-53"><a href="workflowsets.html#cb189-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">SWISU_Sawyer =</span> <span class="fu">c</span>(<span class="st">&quot;South_and_West_of_Iowa_State_University&quot;</span>, <span class="st">&quot;Sawyer&quot;</span>),</span>
+<span id="cb189-54"><a href="workflowsets.html#cb189-54" aria-hidden="true" tabindex="-1"></a>      <span class="at">ClearCr_Somerst =</span> <span class="fu">c</span>(<span class="st">&quot;Clear_Creek&quot;</span>, <span class="st">&quot;Somerset&quot;</span>)),</span>
+<span id="cb189-55"><a href="workflowsets.html#cb189-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">Heating =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(</span>
+<span id="cb189-56"><a href="workflowsets.html#cb189-56" aria-hidden="true" tabindex="-1"></a>      Heating, <span class="at">Grav_Wall =</span> <span class="fu">c</span>(<span class="st">&quot;Grav&quot;</span>, <span class="st">&quot;Wall&quot;</span>),</span>
+<span id="cb189-57"><a href="workflowsets.html#cb189-57" aria-hidden="true" tabindex="-1"></a>      <span class="at">GasA_W =</span> <span class="fu">c</span>(<span class="st">&quot;GasA&quot;</span>, <span class="st">&quot;GasW&quot;</span>, <span class="st">&quot;OthW&quot;</span>)),</span>
+<span id="cb189-58"><a href="workflowsets.html#cb189-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">MS_Zoning =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(</span>
+<span id="cb189-59"><a href="workflowsets.html#cb189-59" aria-hidden="true" tabindex="-1"></a>      MS_Zoning, <span class="at">I_R_M_H =</span> <span class="fu">c</span>(<span class="st">&quot;Residential_Medium_Density&quot;</span>, <span class="st">&quot;I_all&quot;</span>, <span class="st">&quot;Residential_High_Density&quot;</span> )),</span>
+<span id="cb189-60"><a href="workflowsets.html#cb189-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">Bldg_Type =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Bldg_Type, <span class="at">Du_Tu =</span> <span class="fu">c</span>(<span class="st">&quot;Duplex&quot;</span>, <span class="st">&quot;Twnhs&quot;</span>)),</span>
+<span id="cb189-61"><a href="workflowsets.html#cb189-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">Foundation =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(Foundation, <span class="at">Wood_Stone =</span> <span class="fu">c</span>(<span class="st">&quot;Wood&quot;</span>, <span class="st">&quot;Stone&quot;</span>)),</span>
+<span id="cb189-62"><a href="workflowsets.html#cb189-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">Functional =</span> forcats<span class="sc">::</span><span class="fu">fct_collapse</span>(</span>
+<span id="cb189-63"><a href="workflowsets.html#cb189-63" aria-hidden="true" tabindex="-1"></a>      Functional, <span class="at">Min =</span> <span class="fu">c</span>(<span class="st">&quot;Min1&quot;</span>, <span class="st">&quot;Min2&quot;</span>), <span class="at">Maj =</span> <span class="fu">c</span>(<span class="st">&quot;Maj1&quot;</span>, <span class="st">&quot;Maj2&quot;</span>, <span class="st">&quot;Mod&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-64"><a href="workflowsets.html#cb189-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Exter_Cond, <span class="at">ref_level =</span> <span class="st">&quot;Good&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-65"><a href="workflowsets.html#cb189-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_relevel</span>(Condition_1, <span class="at">ref_level =</span> <span class="st">&quot;Norm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb189-66"><a href="workflowsets.html#cb189-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>(), <span class="sc">-</span><span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb189-67"><a href="workflowsets.html#cb189-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-68"><a href="workflowsets.html#cb189-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Second_Flr_SF<span class="sc">:</span>Bedroom_AbvGr) <span class="sc">%&gt;%</span></span>
+<span id="cb189-69"><a href="workflowsets.html#cb189-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> TotalSF<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span></span>
+<span id="cb189-70"><a href="workflowsets.html#cb189-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Age_House<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span></span>
+<span id="cb189-71"><a href="workflowsets.html#cb189-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> Second_Flr_SF<span class="sc">:</span>First_Flr_SF) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-72"><a href="workflowsets.html#cb189-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Bsmt_Cond&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-73"><a href="workflowsets.html#cb189-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;BsmtFin_Type_1&quot;</span>)<span class="sc">:</span>BsmtFin_SF_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-74"><a href="workflowsets.html#cb189-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;BsmtFin_Type_1&quot;</span>)<span class="sc">:</span>Total_Bsmt_SF) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-75"><a href="workflowsets.html#cb189-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Heating_QC&quot;</span>)<span class="sc">:</span>TotRms_AbvGrd) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-76"><a href="workflowsets.html#cb189-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Heating_QC&quot;</span>)<span class="sc">:</span>TotalSF) <span class="sc">%&gt;%</span></span>
+<span id="cb189-77"><a href="workflowsets.html#cb189-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Heating_QC&quot;</span>)<span class="sc">:</span>Second_Flr_SF) <span class="sc">%&gt;%</span></span>
+<span id="cb189-78"><a href="workflowsets.html#cb189-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_interact</span>(<span class="sc">~</span> <span class="fu">matches</span>(<span class="st">&quot;Neighborhood&quot;</span>)<span class="sc">:</span><span class="fu">matches</span>(<span class="st">&quot;Condition_1&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb189-79"><a href="workflowsets.html#cb189-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(</span>
+<span id="cb189-80"><a href="workflowsets.html#cb189-80" aria-hidden="true" tabindex="-1"></a>    First_Flr_SF, Second_Flr_SF, Year_Remod,</span>
+<span id="cb189-81"><a href="workflowsets.html#cb189-81" aria-hidden="true" tabindex="-1"></a>    Bsmt_Full_Bath, Bsmt_Half_Bath, </span>
+<span id="cb189-82"><a href="workflowsets.html#cb189-82" aria-hidden="true" tabindex="-1"></a>    Kitchen_AbvGr, BsmtFin_Type_1_Unf, </span>
+<span id="cb189-83"><a href="workflowsets.html#cb189-83" aria-hidden="true" tabindex="-1"></a>    Total_Bsmt_SF, Kitchen_AbvGr, Pool_Area, </span>
+<span id="cb189-84"><a href="workflowsets.html#cb189-84" aria-hidden="true" tabindex="-1"></a>    Gr_Liv_Area, Porch_SF,</span>
+<span id="cb189-85"><a href="workflowsets.html#cb189-85" aria-hidden="true" tabindex="-1"></a>    Sale_Type_Oth, Sale_Type_VWD</span>
+<span id="cb189-86"><a href="workflowsets.html#cb189-86" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb189-87"><a href="workflowsets.html#cb189-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-88"><a href="workflowsets.html#cb189-88" aria-hidden="true" tabindex="-1"></a>receta_grande_prep <span class="ot">&lt;-</span> receta_grande <span class="sc">%&gt;%</span> <span class="fu">prep</span>()</span></code></pre></div>
+</div>
+<div id="múltiples-modelos" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Múltiples modelos<a href="workflowsets.html#múltiples-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez que tenemos suficientes recetas, podemos experimentar con múltiples modelos para poner a prueba. Usaremos los modelos que hemos aprendido a implementar en todo el curso:</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="workflowsets.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rules)</span>
+<span id="cb190-2"><a href="workflowsets.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(baguette)</span>
+<span id="cb190-3"><a href="workflowsets.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tune)</span>
+<span id="cb190-4"><a href="workflowsets.html#cb190-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-5"><a href="workflowsets.html#cb190-5" aria-hidden="true" tabindex="-1"></a>elasticnet_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(</span>
+<span id="cb190-6"><a href="workflowsets.html#cb190-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb190-7"><a href="workflowsets.html#cb190-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">penalty =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-8"><a href="workflowsets.html#cb190-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mixture =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb190-9"><a href="workflowsets.html#cb190-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glmnet&quot;</span>) </span>
+<span id="cb190-10"><a href="workflowsets.html#cb190-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-11"><a href="workflowsets.html#cb190-11" aria-hidden="true" tabindex="-1"></a>knn_model <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(</span>
+<span id="cb190-12"><a href="workflowsets.html#cb190-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb190-13"><a href="workflowsets.html#cb190-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">neighbors =</span> <span class="fu">tune</span>(<span class="st">&quot;K&quot;</span>),</span>
+<span id="cb190-14"><a href="workflowsets.html#cb190-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">dist_power =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-15"><a href="workflowsets.html#cb190-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight_func =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb190-16"><a href="workflowsets.html#cb190-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;kknn&quot;</span>)</span>
+<span id="cb190-17"><a href="workflowsets.html#cb190-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-18"><a href="workflowsets.html#cb190-18" aria-hidden="true" tabindex="-1"></a>rforest_model <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
+<span id="cb190-19"><a href="workflowsets.html#cb190-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb190-20"><a href="workflowsets.html#cb190-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
+<span id="cb190-21"><a href="workflowsets.html#cb190-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-22"><a href="workflowsets.html#cb190-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb190-23"><a href="workflowsets.html#cb190-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb190-24"><a href="workflowsets.html#cb190-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ranger&quot;</span>,</span>
+<span id="cb190-25"><a href="workflowsets.html#cb190-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">importance =</span> <span class="st">&quot;impurity&quot;</span></span>
+<span id="cb190-26"><a href="workflowsets.html#cb190-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb190-27"><a href="workflowsets.html#cb190-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-28"><a href="workflowsets.html#cb190-28" aria-hidden="true" tabindex="-1"></a>svm_rbf_model <span class="ot">&lt;-</span> <span class="fu">svm_rbf</span>(</span>
+<span id="cb190-29"><a href="workflowsets.html#cb190-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">cost =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-30"><a href="workflowsets.html#cb190-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">rbf_sigma =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-31"><a href="workflowsets.html#cb190-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb190-32"><a href="workflowsets.html#cb190-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;kernlab&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb190-33"><a href="workflowsets.html#cb190-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
+<span id="cb190-34"><a href="workflowsets.html#cb190-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-35"><a href="workflowsets.html#cb190-35" aria-hidden="true" tabindex="-1"></a>xgboost_model <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
+<span id="cb190-36"><a href="workflowsets.html#cb190-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;regression&quot;</span>,</span>
+<span id="cb190-37"><a href="workflowsets.html#cb190-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
+<span id="cb190-38"><a href="workflowsets.html#cb190-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-39"><a href="workflowsets.html#cb190-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-40"><a href="workflowsets.html#cb190-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss_reduction =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-41"><a href="workflowsets.html#cb190-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-42"><a href="workflowsets.html#cb190-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb190-43"><a href="workflowsets.html#cb190-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">learn_rate =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb190-44"><a href="workflowsets.html#cb190-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb190-45"><a href="workflowsets.html#cb190-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;xgboost&quot;</span>,</span>
+<span id="cb190-46"><a href="workflowsets.html#cb190-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">importance =</span> <span class="st">&quot;impurity&quot;</span></span>
+<span id="cb190-47"><a href="workflowsets.html#cb190-47" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><strong>¿Cómo podemos hacer coincidir estos modelos con las recetas desarrolladas, ajustarlos y luego evaluar su rendimiento de manera eficiente? WORKFLOWSETS ofrece una solución.</strong></p>
+</div>
+<div id="creación-de-workflowset" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Creación de workflowset<a href="workflowsets.html#creación-de-workflowset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los conjuntos de flujo de trabajo toman listas nombradas de preprocesadores y especificaciones de modelos y las combinan en un objeto que contiene múltiples flujos de trabajo.</p>
+<p>Como primer ejemplo de conjunto de flujo de trabajo, combinemos las recetas creadas en la sección anterior.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="workflowsets.html#cb191-1" aria-hidden="true" tabindex="-1"></a>workflow_set_models <span class="ot">&lt;-</span> <span class="fu">workflow_set</span>(</span>
+<span id="cb191-2"><a href="workflowsets.html#cb191-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">preproc =</span> <span class="fu">list</span>(</span>
+<span id="cb191-3"><a href="workflowsets.html#cb191-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">receta_original =</span> receta_original_prep, </span>
+<span id="cb191-4"><a href="workflowsets.html#cb191-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">receta_knn =</span> receta_knn_prep,</span>
+<span id="cb191-5"><a href="workflowsets.html#cb191-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">receta_grande =</span> receta_grande_prep</span>
+<span id="cb191-6"><a href="workflowsets.html#cb191-6" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb191-7"><a href="workflowsets.html#cb191-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">models =</span> <span class="fu">list</span>(</span>
+<span id="cb191-8"><a href="workflowsets.html#cb191-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">elasticnet =</span> elasticnet_model,</span>
+<span id="cb191-9"><a href="workflowsets.html#cb191-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">knn =</span> knn_model,</span>
+<span id="cb191-10"><a href="workflowsets.html#cb191-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">rf =</span> rforest_model,</span>
+<span id="cb191-11"><a href="workflowsets.html#cb191-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">svm_rbf =</span> svm_rbf_model,</span>
+<span id="cb191-12"><a href="workflowsets.html#cb191-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">boost =</span> xgboost_model</span>
+<span id="cb191-13"><a href="workflowsets.html#cb191-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb191-14"><a href="workflowsets.html#cb191-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="ajuste-y-evaluación-de-modelos" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Ajuste y evaluación de modelos<a href="workflowsets.html#ajuste-y-evaluación-de-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Casi todos estos flujos de trabajo contienen parámetros de ajuste. Para evaluar su rendimiento, podemos utilizar las funciones estándar de ajuste o remuestreo (por ejemplo, <code>tune_grid()</code>).</p>
+<p>La función <code>workflow_map()</code> aplicará la misma función a todos los flujos de trabajo del conjunto; el valor predeterminado es <code>tune_grid()</code>.</p>
+<p>A continuación se declaran los parámetros para cada modelo y el grid:</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="workflowsets.html#cb192-1" aria-hidden="true" tabindex="-1"></a>elasticnet_params <span class="ot">&lt;-</span> elasticnet_model <span class="sc">%&gt;%</span></span>
+<span id="cb192-2"><a href="workflowsets.html#cb192-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb192-3"><a href="workflowsets.html#cb192-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb192-4"><a href="workflowsets.html#cb192-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="fu">penalty</span>(</span>
+<span id="cb192-5"><a href="workflowsets.html#cb192-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb192-6"><a href="workflowsets.html#cb192-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">trans =</span> <span class="fu">log10_trans</span>()),</span>
+<span id="cb192-7"><a href="workflowsets.html#cb192-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mixture =</span> dials<span class="sc">::</span><span class="fu">mixture</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb192-8"><a href="workflowsets.html#cb192-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb192-9"><a href="workflowsets.html#cb192-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-10"><a href="workflowsets.html#cb192-10" aria-hidden="true" tabindex="-1"></a>knn_params <span class="ot">&lt;-</span> knn_model <span class="sc">%&gt;%</span></span>
+<span id="cb192-11"><a href="workflowsets.html#cb192-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb192-12"><a href="workflowsets.html#cb192-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb192-13"><a href="workflowsets.html#cb192-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">K =</span> dials<span class="sc">::</span><span class="fu">neighbors</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">80</span>)),</span>
+<span id="cb192-14"><a href="workflowsets.html#cb192-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">dist_power =</span> <span class="fu">dist_power</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)),</span>
+<span id="cb192-15"><a href="workflowsets.html#cb192-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">weight_func =</span> <span class="fu">weight_func</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;rectangular&quot;</span>, <span class="st">&quot;inv&quot;</span>, <span class="st">&quot;gaussian&quot;</span>, <span class="st">&quot;cos&quot;</span>))</span>
+<span id="cb192-16"><a href="workflowsets.html#cb192-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb192-17"><a href="workflowsets.html#cb192-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-18"><a href="workflowsets.html#cb192-18" aria-hidden="true" tabindex="-1"></a>rforest_params <span class="ot">&lt;-</span> rforest_model <span class="sc">%&gt;%</span></span>
+<span id="cb192-19"><a href="workflowsets.html#cb192-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb192-20"><a href="workflowsets.html#cb192-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb192-21"><a href="workflowsets.html#cb192-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> <span class="fu">finalize</span>(<span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">80</span>))),</span>
+<span id="cb192-22"><a href="workflowsets.html#cb192-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">15</span>))</span>
+<span id="cb192-23"><a href="workflowsets.html#cb192-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb192-24"><a href="workflowsets.html#cb192-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-25"><a href="workflowsets.html#cb192-25" aria-hidden="true" tabindex="-1"></a>svm_rbf_params <span class="ot">&lt;-</span> svm_rbf_model <span class="sc">%&gt;%</span></span>
+<span id="cb192-26"><a href="workflowsets.html#cb192-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb192-27"><a href="workflowsets.html#cb192-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb192-28"><a href="workflowsets.html#cb192-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">cost =</span> <span class="fu">cost</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>)),</span>
+<span id="cb192-29"><a href="workflowsets.html#cb192-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">rbf_sigma =</span> <span class="fu">rbf_sigma</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)),</span>
+<span id="cb192-30"><a href="workflowsets.html#cb192-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">svm_margin</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb192-31"><a href="workflowsets.html#cb192-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb192-32"><a href="workflowsets.html#cb192-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-33"><a href="workflowsets.html#cb192-33" aria-hidden="true" tabindex="-1"></a>xgboost_params <span class="ot">&lt;-</span> xgboost_model <span class="sc">%&gt;%</span></span>
+<span id="cb192-34"><a href="workflowsets.html#cb192-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parameters</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb192-35"><a href="workflowsets.html#cb192-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(</span>
+<span id="cb192-36"><a href="workflowsets.html#cb192-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_n =</span> <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">15</span>)),</span>
+<span id="cb192-37"><a href="workflowsets.html#cb192-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> <span class="fu">finalize</span>(<span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">80</span>))),</span>
+<span id="cb192-38"><a href="workflowsets.html#cb192-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">tree_depth =</span> <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">50</span>)),</span>
+<span id="cb192-39"><a href="workflowsets.html#cb192-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">loss_reduction =</span> <span class="fu">loss_reduction</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="fl">1.5</span>), <span class="at">trans =</span> <span class="fu">log10_trans</span>()),</span>
+<span id="cb192-40"><a href="workflowsets.html#cb192-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">learn_rate =</span> <span class="fu">learn_rate</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="fl">0.25</span>), <span class="at">trans =</span> <span class="fu">log10_trans</span>()),</span>
+<span id="cb192-41"><a href="workflowsets.html#cb192-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_size =</span> <span class="fu">sample_prop</span>()</span>
+<span id="cb192-42"><a href="workflowsets.html#cb192-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb192-43"><a href="workflowsets.html#cb192-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-44"><a href="workflowsets.html#cb192-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Declaración del grid</span></span>
+<span id="cb192-45"><a href="workflowsets.html#cb192-45" aria-hidden="true" tabindex="-1"></a>workflow_tunning_set_models <span class="ot">&lt;-</span> workflow_set_models <span class="sc">%&gt;%</span></span>
+<span id="cb192-46"><a href="workflowsets.html#cb192-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> elasticnet_params, <span class="at">id =</span> <span class="st">&quot;elasticnet&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb192-47"><a href="workflowsets.html#cb192-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> knn_params, <span class="at">id =</span> <span class="st">&quot;knn&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb192-48"><a href="workflowsets.html#cb192-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> rforest_params, <span class="at">id =</span> <span class="st">&quot;rf&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb192-49"><a href="workflowsets.html#cb192-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> svm_rbf_params, <span class="at">id =</span> <span class="st">&quot;svm_rbf&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb192-50"><a href="workflowsets.html#cb192-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">option_add</span>(<span class="at">param_info =</span> xgboost_params, <span class="at">id =</span> <span class="st">&quot;xgboost&quot;</span>)</span>
+<span id="cb192-51"><a href="workflowsets.html#cb192-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-52"><a href="workflowsets.html#cb192-52" aria-hidden="true" tabindex="-1"></a>workflow_tunning_set_models</span></code></pre></div>
+<pre><code>## # A workflow set/tibble: 15 × 4
+##    wflow_id                   info             option    result    
+##    &lt;chr&gt;                      &lt;list&gt;           &lt;list&gt;    &lt;list&gt;    
+##  1 receta_original_elasticnet &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  2 receta_original_knn        &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  3 receta_original_rf         &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  4 receta_original_svm_rbf    &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  5 receta_original_boost      &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  6 receta_knn_elasticnet      &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  7 receta_knn_knn             &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  8 receta_knn_rf              &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+##  9 receta_knn_svm_rbf         &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 10 receta_knn_boost           &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 11 receta_grande_elasticnet   &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 12 receta_grande_knn          &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 13 receta_grande_rf           &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 14 receta_grande_svm_rbf      &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 15 receta_grande_boost        &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</code></pre>
+<p>Dado que el preprocesador contiene más de una entrada, la función crea todas las combinaciones de preprocesadores y modelos.</p>
+<ul>
+<li><p><strong>info:</strong> Contiene un <em>tibble</em> con algunos identificadores y el objeto de flujo de trabajo.</p></li>
+<li><p><strong>option:</strong> Es un marcador de posición para cualquier argumento que se utilice cuando evaluamos el flujo de trabajo.</p></li>
+<li><p><strong>result:</strong> Es un marcador de posición para la salida de las funciones de ajuste o remuestreo.</p></li>
+</ul>
+<p>Para este ejemplo, la búsqueda del <em>grid</em> se aplica al flujo de trabajo.</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="workflowsets.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb194-2"><a href="workflowsets.html#cb194-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-3"><a href="workflowsets.html#cb194-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb194-4"><a href="workflowsets.html#cb194-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb194-5"><a href="workflowsets.html#cb194-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb194-6"><a href="workflowsets.html#cb194-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-7"><a href="workflowsets.html#cb194-7" aria-hidden="true" tabindex="-1"></a>grid_ctrl <span class="ot">&lt;-</span> <span class="fu">control_grid</span>(</span>
+<span id="cb194-8"><a href="workflowsets.html#cb194-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">save_pred =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb194-9"><a href="workflowsets.html#cb194-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">save_workflow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb194-10"><a href="workflowsets.html#cb194-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel_over =</span> <span class="st">&quot;everything&quot;</span></span>
+<span id="cb194-11"><a href="workflowsets.html#cb194-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb194-12"><a href="workflowsets.html#cb194-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-13"><a href="workflowsets.html#cb194-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">536</span>)</span>
+<span id="cb194-14"><a href="workflowsets.html#cb194-14" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="ot">&lt;-</span> workflow_tunning_set_models <span class="sc">%&gt;%</span></span>
+<span id="cb194-15"><a href="workflowsets.html#cb194-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow_map</span>(</span>
+<span id="cb194-16"><a href="workflowsets.html#cb194-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">fn =</span> <span class="st">&quot;tune_grid&quot;</span>,</span>
+<span id="cb194-17"><a href="workflowsets.html#cb194-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">20220603</span>,</span>
+<span id="cb194-18"><a href="workflowsets.html#cb194-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb194-19"><a href="workflowsets.html#cb194-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">100</span>,</span>
+<span id="cb194-20"><a href="workflowsets.html#cb194-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span>  <span class="fu">metric_set</span>(rmse, mae, mape, rsq),</span>
+<span id="cb194-21"><a href="workflowsets.html#cb194-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> grid_ctrl,</span>
+<span id="cb194-22"><a href="workflowsets.html#cb194-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb194-23"><a href="workflowsets.html#cb194-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb194-24"><a href="workflowsets.html#cb194-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-25"><a href="workflowsets.html#cb194-25" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb194-26"><a href="workflowsets.html#cb194-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-27"><a href="workflowsets.html#cb194-27" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/ensemble_model.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="workflowsets.html#cb195-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/ensemble_model.rds&quot;</span>)</span>
+<span id="cb195-2"><a href="workflowsets.html#cb195-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-3"><a href="workflowsets.html#cb195-3" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb195-4"><a href="workflowsets.html#cb195-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rank_results</span>(<span class="at">select_best =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb195-5"><a href="workflowsets.html#cb195-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.config, n, preprocessor, std_err)) <span class="sc">%&gt;%</span></span>
+<span id="cb195-6"><a href="workflowsets.html#cb195-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> mean) </span></code></pre></div>
+<pre><code>## # A tibble: 15 × 7
+##    wflow_id                   model             rank    mae  mape   rmse   rsq
+##    &lt;chr&gt;                      &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 receta_knn_boost           boost_tree           1 16614.  10.4 25425. 0.900
+##  2 receta_knn_rf              rand_forest          2 17766.  11.1 28489. 0.877
+##  3 receta_knn_svm_rbf         svm_rbf              3 17985.  11.3 29103. 0.865
+##  4 receta_knn_knn             nearest_neighbor     4 19471.  11.6 30465. 0.861
+##  5 receta_original_boost      boost_tree           5 20019.  12.2 30569. 0.856
+##  6 receta_grande_boost        boost_tree           6 20019.  12.2 30569. 0.856
+##  7 receta_original_rf         rand_forest          7 21058.  12.9 33599. 0.828
+##  8 receta_grande_rf           rand_forest          8 21058.  12.9 33599. 0.828
+##  9 receta_grande_knn          nearest_neighbor     9 22561.  13.0 35353. 0.817
+## 10 receta_original_knn        nearest_neighbor    10 22561.  13.0 35353. 0.817
+## 11 receta_grande_svm_rbf      svm_rbf             11 22839.  13.8 35431. 0.807
+## 12 receta_original_svm_rbf    svm_rbf             12 22839.  13.8 35431. 0.807
+## 13 receta_knn_elasticnet      linear_reg          13 24196.  14.7 39880. 0.756
+## 14 receta_grande_elasticnet   linear_reg          14 30129.  18.4 44124. 0.694
+## 15 receta_original_elasticnet linear_reg          15 30129.  18.4 44124. 0.694</code></pre>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="workflowsets.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(</span>
+<span id="cb197-2"><a href="workflowsets.html#cb197-2" aria-hidden="true" tabindex="-1"></a>  tunning_models_result,</span>
+<span id="cb197-3"><a href="workflowsets.html#cb197-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rank_metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb197-4"><a href="workflowsets.html#cb197-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>,   </span>
+<span id="cb197-5"><a href="workflowsets.html#cb197-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">select_best =</span> F) <span class="sc">+</span>   </span>
+<span id="cb197-6"><a href="workflowsets.html#cb197-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb197-7"><a href="workflowsets.html#cb197-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Model Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="workflowsets.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(</span>
+<span id="cb198-2"><a href="workflowsets.html#cb198-2" aria-hidden="true" tabindex="-1"></a>  tunning_models_result,</span>
+<span id="cb198-3"><a href="workflowsets.html#cb198-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rank_metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb198-4"><a href="workflowsets.html#cb198-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>,   </span>
+<span id="cb198-5"><a href="workflowsets.html#cb198-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">select_best =</span> T) <span class="sc">+</span></span>
+<span id="cb198-6"><a href="workflowsets.html#cb198-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean <span class="sc">-</span> <span class="fl">0.10</span> , <span class="at">label =</span> wflow_id), <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb198-7"><a href="workflowsets.html#cb198-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb198-8"><a href="workflowsets.html#cb198-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Model Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
+</div>
+<div id="extracción-de-modelos" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Extracción de modelos<a href="workflowsets.html#extracción-de-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez que hemos realizado una exploración sobre el desempeño de todas las combinaciones de preprocesamientos con modelos, es posible tomar varios caminos hacia adelante. Algunas de las opciones más comunes son:</p>
+<ul>
+<li><p>Realizar múltiples iteraciones de modificaciones a las recetas para extraer lo mejor de cada una.</p></li>
+<li><p>Realizar mejoras a los hiperparámetros.</p></li>
+<li><p>Eliminar modelos y/o recetas que no tuvieron buen desempeño.</p></li>
+<li><p>Crear un modelo a partir de la combinación de los modelos más competentes.</p></li>
+</ul>
+<p>Para empezar, se realiza una exploración del resultado del desempeño de los mejores modelos y los hiperparámetros usado en cada caso.</p>
+<p><strong>Resultados de XGBoost</strong></p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="workflowsets.html#cb199-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb199-2"><a href="workflowsets.html#cb199-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_knn_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb199-3"><a href="workflowsets.html#cb199-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="workflowsets.html#cb200-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb200-2"><a href="workflowsets.html#cb200-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_knn_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb200-3"><a href="workflowsets.html#cb200-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb200-4"><a href="workflowsets.html#cb200-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.estimator, .metric, .config, n))</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 8
+##     mtry min_n tree_depth learn_rate loss_reduction sample_size  mean std_err
+##    &lt;int&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1     2     4          8    0.0318    0.0000000180       0.601 0.900 0.00487
+##  2     8     7          6    0.0661    0.0692             0.723 0.897 0.00537
+##  3     4     7          7    0.0871    5.50               0.892 0.896 0.00493
+##  4    25     4         11    0.0381    7.61               0.425 0.894 0.00596
+##  5     5    11          5    0.0263    0.0198             0.444 0.893 0.00581
+##  6    21     5         13    0.0120    0.00108            0.415 0.891 0.00724
+##  7    12     7         15    0.00611   3.24               0.656 0.891 0.00730
+##  8    29     3          9    0.0375    0.00000107         0.820 0.891 0.00419
+##  9    12    13         14    0.0158   25.3                0.778 0.891 0.00825
+## 10    15    19          7    0.0161   17.5                0.692 0.891 0.00767</code></pre>
+<p><strong>Resultados de Ranfom Forest</strong></p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="workflowsets.html#cb202-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb202-2"><a href="workflowsets.html#cb202-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_knn_rf&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb202-3"><a href="workflowsets.html#cb202-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="workflowsets.html#cb203-1" aria-hidden="true" tabindex="-1"></a>tunning_models_result <span class="sc">%&gt;%</span> </span>
+<span id="cb203-2"><a href="workflowsets.html#cb203-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_knn_rf&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb203-3"><a href="workflowsets.html#cb203-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_best</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">metric =</span> <span class="st">&quot;rmse&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb203-4"><a href="workflowsets.html#cb203-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.estimator, .metric, .config, n))</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 4
+##     mtry min_n   mean std_err
+##    &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1     9     7 28489.   1010.
+##  2    13     5 28491.    883.
+##  3    10     4 28524.    970.
+##  4    18     5 28604.    882.
+##  5    12     8 28613.    947.
+##  6    11     9 28620.    939.
+##  7    13     6 28628.    928.
+##  8     5     7 28689.   1052.
+##  9    16     6 28699.    920.
+## 10    16     8 28737.    912.</code></pre>
+<div id="selección-de-modelo" class="section level3 hasAnchor" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> Selección de modelo<a href="workflowsets.html#selección-de-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Habiendo determinado los hiperparámetros adecuados para la configuración del modelo, procedemos a seleccionar la configuración adecuada para nosotros. Estos pasos son los mismos que corresponden a la selección del modelo con un único workflow.</p>
+<p><strong>Mejor modelo XGBoost</strong></p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="workflowsets.html#cb205-1" aria-hidden="true" tabindex="-1"></a>best_xgb_model <span class="ot">&lt;-</span> tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb205-2"><a href="workflowsets.html#cb205-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_knn_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb205-3"><a href="workflowsets.html#cb205-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>, <span class="st">&quot;rsq&quot;</span>)</span>
+<span id="cb205-4"><a href="workflowsets.html#cb205-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-5"><a href="workflowsets.html#cb205-5" aria-hidden="true" tabindex="-1"></a>best_xgb_model <span class="sc">%&gt;%</span> </span>
+<span id="cb205-6"><a href="workflowsets.html#cb205-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb205-7"><a href="workflowsets.html#cb205-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 2
+##   metric         value                 
+##   &lt;chr&gt;          &lt;chr&gt;                 
+## 1 mtry           2                     
+## 2 min_n          4                     
+## 3 tree_depth     8                     
+## 4 learn_rate     0.0318069757974226    
+## 5 loss_reduction 1.8022375282862e-08   
+## 6 sample_size    0.60145520768594      
+## 7 .config        Preprocessor1_Model058</code></pre>
+<p><strong>Mejor modelo XGBoost a menos de una desviación estandar</strong></p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="workflowsets.html#cb207-1" aria-hidden="true" tabindex="-1"></a>best_regularized_xgb_model_1se <span class="ot">&lt;-</span> tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb207-2"><a href="workflowsets.html#cb207-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_knn_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb207-3"><a href="workflowsets.html#cb207-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>, <span class="st">&quot;rsq&quot;</span>)</span>
+<span id="cb207-4"><a href="workflowsets.html#cb207-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-5"><a href="workflowsets.html#cb207-5" aria-hidden="true" tabindex="-1"></a>best_regularized_xgb_model_1se <span class="sc">%&gt;%</span> </span>
+<span id="cb207-6"><a href="workflowsets.html#cb207-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb207-7"><a href="workflowsets.html#cb207-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 14 × 2
+##    metric         value                 
+##    &lt;chr&gt;          &lt;chr&gt;                 
+##  1 mtry           8                     
+##  2 min_n          7                     
+##  3 tree_depth     6                     
+##  4 learn_rate     0.0660688823690034    
+##  5 loss_reduction 0.0691664318630444    
+##  6 sample_size    0.723484068220947     
+##  7 .metric        rsq                   
+##  8 .estimator     standard              
+##  9 mean           0.896674936544582     
+## 10 n              10                    
+## 11 std_err        0.00536531804472105   
+## 12 .config        Preprocessor1_Model035
+## 13 .best          0.900303988301004     
+## 14 .bound         0.895438860790247</code></pre>
+<p><strong>Mejor modelo XGBoost a menos de un porcentaje fijo</strong></p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="workflowsets.html#cb209-1" aria-hidden="true" tabindex="-1"></a>best_regularized_xgb_model_pct <span class="ot">&lt;-</span> tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb209-2"><a href="workflowsets.html#cb209-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow_set_result</span>(<span class="st">&quot;receta_knn_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb209-3"><a href="workflowsets.html#cb209-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_by_pct_loss</span>(<span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>, <span class="st">&quot;rsq&quot;</span>, <span class="at">limit =</span> <span class="dv">10</span>)</span>
+<span id="cb209-4"><a href="workflowsets.html#cb209-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-5"><a href="workflowsets.html#cb209-5" aria-hidden="true" tabindex="-1"></a>best_regularized_xgb_model_pct <span class="sc">%&gt;%</span> </span>
+<span id="cb209-6"><a href="workflowsets.html#cb209-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb209-7"><a href="workflowsets.html#cb209-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 14 × 2
+##    metric         value                 
+##    &lt;chr&gt;          &lt;chr&gt;                 
+##  1 mtry           13                    
+##  2 min_n          36                    
+##  3 tree_depth     2                     
+##  4 learn_rate     0.00313559984945049   
+##  5 loss_reduction 0.190594567355415     
+##  6 sample_size    0.36900916616735      
+##  7 .metric        rsq                   
+##  8 .estimator     standard              
+##  9 mean           0.824569900806526     
+## 10 n              10                    
+## 11 std_err        0.00788602755362551   
+## 12 .config        Preprocessor1_Model030
+## 13 .best          0.900303988301004     
+## 14 .loss          8.41205731381887</code></pre>
+<p><strong>Ajuste del modelo seleccionado</strong></p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="workflowsets.html#cb211-1" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model <span class="ot">&lt;-</span> tunning_models_result <span class="sc">%&gt;%</span></span>
+<span id="cb211-2"><a href="workflowsets.html#cb211-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_workflow</span>(<span class="st">&quot;receta_knn_boost&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb211-3"><a href="workflowsets.html#cb211-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(best_regularized_xgb_model_1se) <span class="sc">%&gt;%</span></span>
+<span id="cb211-4"><a href="workflowsets.html#cb211-4" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code></pre></div>
+<pre><code>## [16:39:23] WARNING: amalgamation/../src/learner.cc:627: 
+## Parameters: { &quot;importance&quot; } might not be used.
+## 
+##   This could be a false alarm, with some parameters getting used by language bindings but
+##   then being mistakenly passed down to XGBoost core, or some parameter actually being used
+##   but getting flagged wrongly here. Please open an issue if you find any such cases.</code></pre>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="workflowsets.html#cb213-1" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model</span></code></pre></div>
+<pre><code>## ══ Workflow [trained] ══════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: boost_tree()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 23 Recipe Steps
+## 
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • step_unknown()
+## • ...
+## • and 13 more steps.
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## ##### xgb.Booster
+## raw: 2.6 Mb 
+## call:
+##   xgboost::xgb.train(params = list(eta = 0.0660688823690034, max_depth = 6L, 
+##     gamma = 0.0691664318630444, colsample_bytree = 1, colsample_bynode = 0.258064516129032, 
+##     min_child_weight = 7L, subsample = 0.723484068220947, objective = &quot;reg:squarederror&quot;), 
+##     data = x$data, nrounds = 1000, watchlist = x$watchlist, verbose = 0, 
+##     importance = &quot;impurity&quot;, nthread = 1)
+## params (as set within xgb.train):
+##   eta = &quot;0.0660688823690034&quot;, max_depth = &quot;6&quot;, gamma = &quot;0.0691664318630444&quot;, colsample_bytree = &quot;1&quot;, colsample_bynode = &quot;0.258064516129032&quot;, min_child_weight = &quot;7&quot;, subsample = &quot;0.723484068220947&quot;, objective = &quot;reg:squarederror&quot;, importance = &quot;impurity&quot;, nthread = &quot;1&quot;, validate_parameters = &quot;TRUE&quot;
+## xgb.attributes:
+##   niter
+## callbacks:
+##   cb.evaluation.log()
+## # of features: 31 
+## niter: 1000
+## nfeatures : 31 
+## evaluation_log:
+##     iter training_rmse
+##        1    184947.832
+##        2    173406.092
+## ---                   
+##      999      1720.214
+##     1000      1717.597</code></pre>
+<p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos data leakage. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="workflowsets.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb215-2"><a href="workflowsets.html#cb215-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-3"><a href="workflowsets.html#cb215-3" aria-hidden="true" tabindex="-1"></a>final_regularized_xgb_model <span class="sc">%&gt;%</span></span>
+<span id="cb215-4"><a href="workflowsets.html#cb215-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb215-5"><a href="workflowsets.html#cb215-5" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">25</span>) <span class="sc">+</span> </span>
+<span id="cb215-6"><a href="workflowsets.html#cb215-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
+<p>Por último… Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="workflowsets.html#cb216-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_regularized_xgb_model, ames_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb216-2"><a href="workflowsets.html#cb216-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(<span class="at">truth =</span> ames_test<span class="sc">$</span>Sale_Price) <span class="sc">%&gt;%</span> </span>
+<span id="cb216-3"><a href="workflowsets.html#cb216-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">pred_xgb_reg =</span> .pred, <span class="at">Sale_Price =</span> truth)</span>
+<span id="cb216-4"><a href="workflowsets.html#cb216-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-5"><a href="workflowsets.html#cb216-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(results)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   pred_xgb_reg Sale_Price
+##          &lt;dbl&gt;      &lt;int&gt;
+## 1      131972.     105000
+## 2      175629.     185000
+## 3      176203.     180400
+## 4      106614.     141000
+## 5      238267.     210000
+## 6      213937.     216000</code></pre>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="workflowsets.html#cb218-1" aria-hidden="true" tabindex="-1"></a>multi_metric <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse, rsq, mae, mape, ccc)</span>
+<span id="cb218-2"><a href="workflowsets.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">multi_metric</span>(results, <span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> pred_xgb_reg) <span class="sc">%&gt;%</span> </span>
+<span id="cb218-3"><a href="workflowsets.html#cb218-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.estimate =</span> <span class="fu">round</span>(.estimate, <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard    26851.  
+## 2 rsq     standard        0.89
+## 3 mae     standard    17078.  
+## 4 mape    standard       10.5 
+## 5 ccc     standard        0.94</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="workflowsets.html#cb220-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb220-2"><a href="workflowsets.html#cb220-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pred_xgb_reg, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb220-3"><a href="workflowsets.html#cb220-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb220-4"><a href="workflowsets.html#cb220-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb220-5"><a href="workflowsets.html#cb220-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Prediction&quot;</span>) <span class="sc">+</span></span>
+<span id="cb220-6"><a href="workflowsets.html#cb220-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Observation&quot;</span>) <span class="sc">+</span></span>
+<span id="cb220-7"><a href="workflowsets.html#cb220-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparisson&quot;</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-149-1.png" width="672" /></p>
+</div>
+</div>
+<div id="métodos-de-carrera" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Métodos de carrera<a href="workflowsets.html#métodos-de-carrera" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Un problema con la búsqueda del <em>grid</em> es que <strong>todos los modelos deben ajustarse</strong> en todos los remuestreos antes de que se puedan evaluar los parámetros de ajuste.</p>
+<p>En <em>machine learning</em>, el conjunto de técnicas que son llamadas <strong>métodos de carreras</strong>
+evalúa todos los modelos en un subconjunto inicial de remuestreo. En función de sus métricas de rendimiento actuales, algunos conjuntos de parámetros no se consideran en remuestreos posteriores.</p>
+<p>Dado un <strong>workflow</strong>, podemos usar la función <code>workflow_map()</code> para un enfoque de carreras. El paquete <em>finetune</em> contiene funciones para el método de carreras. Calcula un conjunto de métricas de rendimiento (por ejemplo, precisión o RMSE) para un conjunto predefinido de parámetros de ajuste que corresponden a un modelo o receta a través de una o más muestras de los datos.</p>
+<div id="optimización-anova" class="section level3 hasAnchor" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> Optimización ANOVA<a href="workflowsets.html#optimización-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Realiza un modelo de análisis de varianza (ANOVA) para probar la significación estadística de las diferentes configuraciones del modelo. Después de evaluar un número inicial de remuestreos, el proceso elimina las combinaciones de parámetros de ajuste que probablemente no sean los mejores resultados usando medidas repetidas de un modelo ANOVA. La función implementada es <code>tune_race_anova</code></p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="workflowsets.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(finetune)</span>
+<span id="cb221-2"><a href="workflowsets.html#cb221-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-3"><a href="workflowsets.html#cb221-3" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb221-4"><a href="workflowsets.html#cb221-4" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb221-5"><a href="workflowsets.html#cb221-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb221-6"><a href="workflowsets.html#cb221-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-7"><a href="workflowsets.html#cb221-7" aria-hidden="true" tabindex="-1"></a>race_ctrl <span class="ot">&lt;-</span> <span class="fu">control_race</span>(</span>
+<span id="cb221-8"><a href="workflowsets.html#cb221-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">save_pred =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb221-9"><a href="workflowsets.html#cb221-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_over =</span> <span class="st">&quot;everything&quot;</span>,</span>
+<span id="cb221-10"><a href="workflowsets.html#cb221-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">save_workflow =</span> <span class="cn">TRUE</span></span>
+<span id="cb221-11"><a href="workflowsets.html#cb221-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb221-12"><a href="workflowsets.html#cb221-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-13"><a href="workflowsets.html#cb221-13" aria-hidden="true" tabindex="-1"></a>tunning_race_anova_results <span class="ot">&lt;-</span> workflow_tunning_set_models <span class="sc">%&gt;%</span></span>
+<span id="cb221-14"><a href="workflowsets.html#cb221-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow_map</span>(</span>
+<span id="cb221-15"><a href="workflowsets.html#cb221-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tune_race_anova&quot;</span>,</span>
+<span id="cb221-16"><a href="workflowsets.html#cb221-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">1503</span>,</span>
+<span id="cb221-17"><a href="workflowsets.html#cb221-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb221-18"><a href="workflowsets.html#cb221-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">100</span>,</span>
+<span id="cb221-19"><a href="workflowsets.html#cb221-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span>  <span class="fu">metric_set</span>(rmse, mae, mape, rsq),</span>
+<span id="cb221-20"><a href="workflowsets.html#cb221-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> race_ctrl,</span>
+<span id="cb221-21"><a href="workflowsets.html#cb221-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb221-22"><a href="workflowsets.html#cb221-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb221-23"><a href="workflowsets.html#cb221-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-24"><a href="workflowsets.html#cb221-24" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb221-25"><a href="workflowsets.html#cb221-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-26"><a href="workflowsets.html#cb221-26" aria-hidden="true" tabindex="-1"></a>tunning_race_anova_results <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/race_anova_results.rds&quot;</span>)</span></code></pre></div>
+<p>Las mismas funciones útiles están disponibles para que este objeto interrogue los resultados y, de hecho, el método básico <code>autoplot()</code> produce tendencias similares:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="workflowsets.html#cb222-1" aria-hidden="true" tabindex="-1"></a>tunning_race_anova_results <span class="sc">%&gt;%</span></span>
+<span id="cb222-2"><a href="workflowsets.html#cb222-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rank_results</span>(<span class="at">select_best =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb222-3"><a href="workflowsets.html#cb222-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.config, n, preprocessor, std_err)) <span class="sc">%&gt;%</span></span>
+<span id="cb222-4"><a href="workflowsets.html#cb222-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> mean)</span></code></pre></div>
+<pre><code>## # A tibble: 15 × 7
+##    wflow_id                   model             rank    mae  mape   rmse   rsq
+##    &lt;chr&gt;                      &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 receta_knn_boost           boost_tree           1 16275.  10.3 25609. 0.898
+##  2 receta_knn_rf              rand_forest          2 17676.  11.1 28416. 0.877
+##  3 receta_knn_svm_rbf         svm_rbf              3 18390.  11.6 29772. 0.859
+##  4 receta_knn_knn             nearest_neighbor     4 19383.  11.5 30727. 0.859
+##  5 receta_original_boost      boost_tree           5 20342.  12.4 30962. 0.851
+##  6 receta_grande_boost        boost_tree           6 20342.  12.4 30962. 0.851
+##  7 receta_original_rf         rand_forest          7 21016.  12.9 33521. 0.830
+##  8 receta_grande_rf           rand_forest          8 21016.  12.9 33521. 0.830
+##  9 receta_grande_svm_rbf      svm_rbf              9 22677.  13.7 34676. 0.812
+## 10 receta_original_svm_rbf    svm_rbf             10 22677.  13.7 34676. 0.812
+## 11 receta_grande_knn          nearest_neighbor    11 22584.  13.0 35472. 0.815
+## 12 receta_original_knn        nearest_neighbor    12 22584.  13.0 35472. 0.815
+## 13 receta_knn_elasticnet      linear_reg          13 24197.  14.7 39883. 0.756
+## 14 receta_grande_elasticnet   linear_reg          14 30130.  18.4 44123. 0.694
+## 15 receta_original_elasticnet linear_reg          15 30130.  18.4 44123. 0.694</code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="workflowsets.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(</span>
+<span id="cb224-2"><a href="workflowsets.html#cb224-2" aria-hidden="true" tabindex="-1"></a>  tunning_race_anova_results,</span>
+<span id="cb224-3"><a href="workflowsets.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rank_metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb224-4"><a href="workflowsets.html#cb224-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb224-5"><a href="workflowsets.html#cb224-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">select_best =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb224-6"><a href="workflowsets.html#cb224-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean <span class="sc">-</span> <span class="fl">0.10</span> , <span class="at">label =</span> wflow_id), <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb224-7"><a href="workflowsets.html#cb224-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-153-1.png" width="672" /></p>
+</div>
+<div id="optimización-logística" class="section level3 hasAnchor" number="5.6.2">
+<h3><span class="header-section-number">5.6.2</span> Optimización Logística<a href="workflowsets.html#optimización-logística" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Después de evaluar un número inicial de remuestreos, el proceso elimina las combinaciones de parámetros de ajuste que probablemente no sean los mejores resultados usando un modelo estadístico. Para cada combinación por pares de parámetros de ajuste, se calculan las estadísticas de ganancia/pérdida y se usa un modelo de regresión logística para medir la probabilidad de que cada combinación gane en general. Esto se logra mediante la función <code>tune_race_win_loss</code></p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="workflowsets.html#cb225-1" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb225-2"><a href="workflowsets.html#cb225-2" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb225-3"><a href="workflowsets.html#cb225-3" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb225-4"><a href="workflowsets.html#cb225-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-5"><a href="workflowsets.html#cb225-5" aria-hidden="true" tabindex="-1"></a>race_ctrl <span class="ot">&lt;-</span> <span class="fu">control_race</span>(</span>
+<span id="cb225-6"><a href="workflowsets.html#cb225-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">save_pred =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb225-7"><a href="workflowsets.html#cb225-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_over =</span> <span class="st">&quot;everything&quot;</span>,</span>
+<span id="cb225-8"><a href="workflowsets.html#cb225-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">save_workflow =</span> <span class="cn">TRUE</span></span>
+<span id="cb225-9"><a href="workflowsets.html#cb225-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb225-10"><a href="workflowsets.html#cb225-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-11"><a href="workflowsets.html#cb225-11" aria-hidden="true" tabindex="-1"></a>tunning_race_win_loss_results <span class="ot">&lt;-</span> workflow_tunning_set_models <span class="sc">%&gt;%</span></span>
+<span id="cb225-12"><a href="workflowsets.html#cb225-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow_map</span>(</span>
+<span id="cb225-13"><a href="workflowsets.html#cb225-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tune_race_win_loss&quot;</span>,</span>
+<span id="cb225-14"><a href="workflowsets.html#cb225-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">1503</span>,</span>
+<span id="cb225-15"><a href="workflowsets.html#cb225-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb225-16"><a href="workflowsets.html#cb225-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="dv">100</span>,</span>
+<span id="cb225-17"><a href="workflowsets.html#cb225-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span>  <span class="fu">metric_set</span>(rmse, mae, mape, rsq),</span>
+<span id="cb225-18"><a href="workflowsets.html#cb225-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> race_ctrl,</span>
+<span id="cb225-19"><a href="workflowsets.html#cb225-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb225-20"><a href="workflowsets.html#cb225-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb225-21"><a href="workflowsets.html#cb225-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-22"><a href="workflowsets.html#cb225-22" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb225-23"><a href="workflowsets.html#cb225-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-24"><a href="workflowsets.html#cb225-24" aria-hidden="true" tabindex="-1"></a>tunning_race_win_loss_results <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/race_win_loss_results.rds&quot;</span>)</span></code></pre></div>
+<p>Las mismas funciones útiles están disponibles para que este objeto interrogue los resultados y, de hecho, el método básico <code>autoplot()</code> produce tendencias similares:</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="workflowsets.html#cb226-1" aria-hidden="true" tabindex="-1"></a>tunning_race_win_loss_results <span class="sc">%&gt;%</span></span>
+<span id="cb226-2"><a href="workflowsets.html#cb226-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rank_results</span>(<span class="at">select_best =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb226-3"><a href="workflowsets.html#cb226-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.config, n, preprocessor, std_err)) <span class="sc">%&gt;%</span></span>
+<span id="cb226-4"><a href="workflowsets.html#cb226-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> mean)</span></code></pre></div>
+<pre><code>## # A tibble: 15 × 7
+##    wflow_id                   model             rank    mae  mape   rmse   rsq
+##    &lt;chr&gt;                      &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 receta_knn_boost           boost_tree           1 16216.  10.2 25608. 0.898
+##  2 receta_knn_rf              rand_forest          2 17637.  11.1 28341. 0.878
+##  3 receta_knn_svm_rbf         svm_rbf              3 18390.  11.6 29772. 0.859
+##  4 receta_knn_knn             nearest_neighbor     4 19383.  11.5 30727. 0.859
+##  5 receta_original_boost      boost_tree           5 20583.  12.5 31149. 0.850
+##  6 receta_grande_boost        boost_tree           6 20583.  12.5 31149. 0.850
+##  7 receta_original_rf         rand_forest          7 21012.  12.9 33503. 0.830
+##  8 receta_grande_rf           rand_forest          8 21012.  12.9 33503. 0.830
+##  9 receta_grande_svm_rbf      svm_rbf              9 22677.  13.7 34676. 0.812
+## 10 receta_original_svm_rbf    svm_rbf             10 22677.  13.7 34676. 0.812
+## 11 receta_grande_knn          nearest_neighbor    11 22584.  13.0 35472. 0.815
+## 12 receta_original_knn        nearest_neighbor    12 22584.  13.0 35472. 0.815
+## 13 receta_knn_elasticnet      linear_reg          13 24197.  14.7 39883. 0.756
+## 14 receta_grande_elasticnet   linear_reg          14 30130.  18.4 44123. 0.694
+## 15 receta_original_elasticnet linear_reg          15 30130.  18.4 44123. 0.694</code></pre>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="workflowsets.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(</span>
+<span id="cb228-2"><a href="workflowsets.html#cb228-2" aria-hidden="true" tabindex="-1"></a>  tunning_race_win_loss_results,</span>
+<span id="cb228-3"><a href="workflowsets.html#cb228-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rank_metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb228-4"><a href="workflowsets.html#cb228-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb228-5"><a href="workflowsets.html#cb228-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">select_best =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb228-6"><a href="workflowsets.html#cb228-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean <span class="sc">-</span> <span class="fl">0.10</span> , <span class="at">label =</span> wflow_id), <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb228-7"><a href="workflowsets.html#cb228-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
+</div>
+<div id="optimización-bayesiana" class="section level3 hasAnchor" number="5.6.3">
+<h3><span class="header-section-number">5.6.3</span> Optimización Bayesiana<a href="workflowsets.html#optimización-bayesiana" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La función <code>tune_bayes</code> usa modelos para crear nuevas combinaciones de hiperparámetros que sean candidatos de tunning basado en resultados previos.</p>
+<p>El método utiliza métodos MCMC de simulación bayesiana para determinar los hiperparámetros óptimos. A partir de un buen candidato se realiza una exploración aleatoria que permita encontrar nuevos óptimos o sub-óptimos a encontrar. Es posible configurar el número de iteraciones antes regresar al último óptimo o sub-óptimo para continuar la exploración por otro lado.</p>
+<video width="720" height="720" controls>
+<source src="img/bayes_search.mp4" type="video/mp4">
+</video>
+<p>La forma de implementarlo es muy similar a las técnicas anteriores. Esta vez se utiliza la función <code>tune_bayes</code> y <code>control_bayes</code>.</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="workflowsets.html#cb229-1" aria-hidden="true" tabindex="-1"></a>UseCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb229-2"><a href="workflowsets.html#cb229-2" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(UseCores)</span>
+<span id="cb229-3"><a href="workflowsets.html#cb229-3" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cluster)</span>
+<span id="cb229-4"><a href="workflowsets.html#cb229-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-5"><a href="workflowsets.html#cb229-5" aria-hidden="true" tabindex="-1"></a>race_ctrl <span class="ot">&lt;-</span> <span class="fu">control_bayes</span>(</span>
+<span id="cb229-6"><a href="workflowsets.html#cb229-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb229-7"><a href="workflowsets.html#cb229-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">save_pred =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb229-8"><a href="workflowsets.html#cb229-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">parallel_over =</span> <span class="st">&quot;everything&quot;</span>,</span>
+<span id="cb229-9"><a href="workflowsets.html#cb229-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">save_workflow =</span> <span class="cn">TRUE</span></span>
+<span id="cb229-10"><a href="workflowsets.html#cb229-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb229-11"><a href="workflowsets.html#cb229-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-12"><a href="workflowsets.html#cb229-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20220603</span>)</span>
+<span id="cb229-13"><a href="workflowsets.html#cb229-13" aria-hidden="true" tabindex="-1"></a>tunning_race_bayes_results <span class="ot">&lt;-</span> workflow_tunning_set_models <span class="sc">%&gt;%</span></span>
+<span id="cb229-14"><a href="workflowsets.html#cb229-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow_map</span>(</span>
+<span id="cb229-15"><a href="workflowsets.html#cb229-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tune_bayes&quot;</span>,</span>
+<span id="cb229-16"><a href="workflowsets.html#cb229-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">1503</span>,</span>
+<span id="cb229-17"><a href="workflowsets.html#cb229-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> ames_folds,</span>
+<span id="cb229-18"><a href="workflowsets.html#cb229-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">iter =</span> <span class="dv">100</span>,</span>
+<span id="cb229-19"><a href="workflowsets.html#cb229-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span>  <span class="fu">metric_set</span>(rmse, mae, mape, rsq),</span>
+<span id="cb229-20"><a href="workflowsets.html#cb229-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> race_ctrl,</span>
+<span id="cb229-21"><a href="workflowsets.html#cb229-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb229-22"><a href="workflowsets.html#cb229-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb229-23"><a href="workflowsets.html#cb229-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-24"><a href="workflowsets.html#cb229-24" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cluster)</span>
+<span id="cb229-25"><a href="workflowsets.html#cb229-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-26"><a href="workflowsets.html#cb229-26" aria-hidden="true" tabindex="-1"></a>tunning_race_bayes_results <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/race_bayes_results.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="workflowsets.html#cb230-1" aria-hidden="true" tabindex="-1"></a>tunning_race_bayes_results <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/race_bayes_results.rds&quot;</span>)</span></code></pre></div>
+<p>Las mismas funciones útiles están disponibles para que este objeto interrogue los resultados y, de hecho, el método básico <code>autoplot()</code> produce tendencias similares:</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="workflowsets.html#cb231-1" aria-hidden="true" tabindex="-1"></a>tunning_race_bayes_results <span class="sc">%&gt;%</span></span>
+<span id="cb231-2"><a href="workflowsets.html#cb231-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stringr<span class="sc">::</span><span class="fu">str_detect</span>(wflow_id, <span class="at">pattern =</span> <span class="st">&quot;(rf)|(boost)&quot;</span>, <span class="at">negate =</span> T) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb231-3"><a href="workflowsets.html#cb231-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rank_results</span>(<span class="at">select_best =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb231-4"><a href="workflowsets.html#cb231-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.config, n, preprocessor, std_err)) <span class="sc">%&gt;%</span></span>
+<span id="cb231-5"><a href="workflowsets.html#cb231-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> mean)</span></code></pre></div>
+<pre><code>## # A tibble: 9 × 7
+##   wflow_id                   model             rank    mae  mape   rmse   rsq
+##   &lt;chr&gt;                      &lt;chr&gt;            &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 receta_knn_svm_rbf         svm_rbf              1 17912.  11.4 28954. 0.867
+## 2 receta_knn_knn             nearest_neighbor     2 19465.  11.6 30463. 0.861
+## 3 receta_original_svm_rbf    svm_rbf              3 22651.  13.7 34736. 0.811
+## 4 receta_grande_svm_rbf      svm_rbf              4 22651.  13.7 34736. 0.811
+## 5 receta_original_knn        nearest_neighbor     5 22512.  13.0 35283. 0.818
+## 6 receta_grande_knn          nearest_neighbor     6 22512.  13.0 35283. 0.818
+## 7 receta_knn_elasticnet      linear_reg           7 24197.  14.7 39880. 0.756
+## 8 receta_original_elasticnet linear_reg           8 30129.  18.4 44122. 0.694
+## 9 receta_grande_elasticnet   linear_reg           9 30129.  18.4 44122. 0.694</code></pre>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="workflowsets.html#cb233-1" aria-hidden="true" tabindex="-1"></a>tunning_race_bayes_results <span class="sc">%&gt;%</span> </span>
+<span id="cb233-2"><a href="workflowsets.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stringr<span class="sc">::</span><span class="fu">str_detect</span>(wflow_id, <span class="at">pattern =</span> <span class="st">&quot;(rf)|(boost)&quot;</span>, <span class="at">negate =</span> T) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb233-3"><a href="workflowsets.html#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(</span>
+<span id="cb233-4"><a href="workflowsets.html#cb233-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rank_metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb233-5"><a href="workflowsets.html#cb233-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">metric =</span> <span class="st">&quot;rsq&quot;</span>,</span>
+<span id="cb233-6"><a href="workflowsets.html#cb233-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">select_best =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb233-7"><a href="workflowsets.html#cb233-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean <span class="sc">-</span> <span class="fl">0.10</span> , <span class="at">label =</span> wflow_id), <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb233-8"><a href="workflowsets.html#cb233-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-161-1.png" width="672" /></p>
+</div>
+</div>
+<div id="ejercicios-parte-1" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Ejercicios (Parte 1)<a href="workflowsets.html#ejercicios-parte-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para obtener un mejor aprendizaje de este capítulo, cada alumno deberá:</p>
+<ul>
+<li><p>Replicar este proceso eligiendo un número de iteraciones mayor a 500 con cualquiera de las metodologías revisadas en este capítulo.</p></li>
+<li><p>Realizar el proceso análogo con los datos de respuesta categórica y mandar un reporte con sus resultados</p></li>
+</ul>
+</div>
+<div id="stacking" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Stacking<a href="workflowsets.html#stacking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>El ensamblaje de modelos es un proceso en el que se utilizan varios modelos base para predecir un resultado.</strong></p>
+<ul>
+<li><p>La motivación para usar modelos de conjunto es reducir el error de generalización de la predicción.</p></li>
+<li><p>Siempre que los modelos base sean diversos e independientes, el error de predicción disminuye cuando se utiliza el enfoque de conjunto.</p></li>
+<li><p>Aunque el modelo de conjunto tiene varios modelos base dentro del modelo, actúa y funciona como un solo modelo.</p></li>
+</ul>
+<p><img src="img/06-stacking/model_ensamble.png" width="600pt" height="250pt" style="display: block; margin: auto;" /></p>
+<p>Un conjunto de modelos, donde las predicciones de varios modelos individuales se agregan para hacer una predicción, puede producir un modelo final de alto rendimiento.</p>
+<p>Los métodos más populares para crear modelos de conjuntos son:</p>
+<ul>
+<li><em>Bagging</em></li>
+<li><em>Bosques aleatorios</em></li>
+<li><em>Boosting</em></li>
+</ul>
+<p>Cada uno de estos métodos combina las predicciones de múltiples versiones del mismo tipo de modelo. Uno de los primeros métodos para crear conjuntos es el apilamiento de modelos (<em>stacking</em>).</p>
+<p><strong><em>Stacking</em> combina las predicciones de múltiples modelos de cualquier tipo.</strong></p>
+<p>Por ejemplo, una regresión logística, un árbol de clasificación y una máquina de vectores de soporte se pueden incluir en un conjunto de apilamiento, así como diferentes configuraciones de un mismo modelo.</p>
+<p>El proceso de construcción de un conjunto apilado es:</p>
+<ol style="list-style-type: decimal">
+<li><p>Reunir el conjunto de entrenamiento de predicciones (producidas mediante remuestreo).</p></li>
+<li><p>Crear un modelo para combinar estas predicciones.</p></li>
+<li><p>Para cada modelo del conjunto, ajustar el modelo en el conjunto de entrenamiento original.</p></li>
+</ol>
+<div id="elección-de-modelos" class="section level3 hasAnchor" number="5.8.1">
+<h3><span class="header-section-number">5.8.1</span> Elección de modelos<a href="workflowsets.html#elección-de-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para cada observación en el conjunto de entrenamiento, el apilamiento (<em>stacking</em>) requiere una predicción fuera de la muestra de algún tipo.</p>
+<p>Para comenzar a ensamblar con el paquete <em>stacks</em>, se crea una pila de datos vacía usando la función <code>stacks()</code> y luego se agrega el flujo de trabajo para ajustar una amplia variedad de modelos a estos datos.</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="workflowsets.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb234-2"><a href="workflowsets.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stacks)</span>
+<span id="cb234-3"><a href="workflowsets.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_prefer</span>()</span>
+<span id="cb234-4"><a href="workflowsets.html#cb234-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb234-5"><a href="workflowsets.html#cb234-5" aria-hidden="true" tabindex="-1"></a>concrete_stack <span class="ot">&lt;-</span> <span class="fu">stacks</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb234-6"><a href="workflowsets.html#cb234-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_candidates</span>(tunning_models_result)</span></code></pre></div>
+<pre><code>## Warning: Predictions from 100 candidates were identical to those from existing candidates and were removed from the data stack.
+## Predictions from 100 candidates were identical to those from existing candidates and were removed from the data stack.</code></pre>
+<pre><code>## Warning: Predictions from 97 candidates were identical to those from existing
+## candidates and were removed from the data stack.</code></pre>
+<pre><code>## Warning: Predictions from 100 candidates were identical to those from existing candidates and were removed from the data stack.
+## Predictions from 100 candidates were identical to those from existing candidates and were removed from the data stack.</code></pre>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="workflowsets.html#cb238-1" aria-hidden="true" tabindex="-1"></a>concrete_stack</span></code></pre></div>
+<pre><code>## # A data stack with 15 model definitions and 996 candidate members:
+## #   receta_original_elasticnet: 100 model configurations
+## #   receta_original_knn: 100 model configurations
+## #   receta_original_rf: 97 model configurations
+## #   receta_original_svm_rbf: 100 model configurations
+## #   receta_original_boost: 100 model configurations
+## #   receta_knn_elasticnet: 100 model configurations
+## #   receta_knn_knn: 100 model configurations
+## #   receta_knn_rf: 99 model configurations
+## #   receta_knn_svm_rbf: 100 model configurations
+## #   receta_knn_boost: 100 model configurations
+## #   receta_grande_elasticnet: 0 model configurations
+## #   receta_grande_knn: 0 model configurations
+## #   receta_grande_rf: 0 model configurations
+## #   receta_grande_svm_rbf: 0 model configurations
+## #   receta_grande_boost: 0 model configurations
+## # Outcome: Sale_Price (integer)</code></pre>
+<p>La regularización mediante la penalización de lazo tiene varias ventajas:</p>
+<ul>
+<li><p>El uso de la penalización de lazo puede eliminar modelos (y, a veces, tipos de modelos completos) del conjunto.</p></li>
+<li><p>La correlación entre los candidatos del conjunto tiende a ser muy alta y la regularización ayuda a mitigar este problema.</p></li>
+</ul>
+<p>Dado que nuestro resultado es numérico, se utiliza la regresión lineal para el metamodelo.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="workflowsets.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20220612</span>)</span>
+<span id="cb240-2"><a href="workflowsets.html#cb240-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-3"><a href="workflowsets.html#cb240-3" aria-hidden="true" tabindex="-1"></a>assembly <span class="ot">&lt;-</span> concrete_stack <span class="sc">%&gt;%</span> </span>
+<span id="cb240-4"><a href="workflowsets.html#cb240-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">blend_predictions</span>(<span class="at">metric =</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq))</span>
+<span id="cb240-5"><a href="workflowsets.html#cb240-5" aria-hidden="true" tabindex="-1"></a>assembly <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/stack_predictions.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="workflowsets.html#cb241-1" aria-hidden="true" tabindex="-1"></a>assembly <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/stack_predictions.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="workflowsets.html#cb242-1" aria-hidden="true" tabindex="-1"></a>assembly</span></code></pre></div>
+<pre><code>## ── A stacked ensemble model ─────────────────────────────────────
+## 
+## Out of 996 possible candidate members, the ensemble retained 19.
+## Penalty: 0.1.
+## Mixture: 1.
+## 
+## The 10 highest weighted members are:</code></pre>
+<pre><code>## # A tibble: 10 × 3
+##    member                      type             weight
+##    &lt;chr&gt;                       &lt;chr&gt;             &lt;dbl&gt;
+##  1 receta_knn_svm_rbf_1_007    svm_rbf          0.504 
+##  2 receta_knn_boost_1_058      boost_tree       0.316 
+##  3 receta_knn_boost_1_086      boost_tree       0.0962
+##  4 receta_knn_boost_1_041      boost_tree       0.0925
+##  5 receta_knn_boost_1_040      boost_tree       0.0907
+##  6 receta_knn_boost_1_035      boost_tree       0.0843
+##  7 receta_knn_boost_1_025      boost_tree       0.0739
+##  8 receta_original_knn_1_003   nearest_neighbor 0.0600
+##  9 receta_knn_svm_rbf_1_100    svm_rbf          0.0483
+## 10 receta_original_boost_1_002 boost_tree       0.0432</code></pre>
+<pre><code>## 
+## Members have not yet been fitted with `fit_members()`.</code></pre>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="workflowsets.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly, <span class="st">&quot;weights&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb246-2"><a href="workflowsets.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-167-1.png" width="672" /></p>
+<p>Esto evalúa el modelo de meta aprendizaje sobre un grid predefinido de valores de penalización de lazo y utiliza un método de remuestreo interno para determinar el mejor valor.</p>
+<p>El método <code>autoplot()</code> nos ayuda a comprender si el método de penalización predeterminado fue suficiente:</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="workflowsets.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
+<p>El panel de en medio muestra el número promedio de modelos del conjunto retenidos por el modelo de meta aprendizaje.</p>
+<p>Es posible que el rango predeterminado no nos haya servido bien aquí. Para evaluar el modelo de meta aprendizaje con penalizaciones mayores.</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="workflowsets.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20220612</span>)</span>
+<span id="cb248-2"><a href="workflowsets.html#cb248-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb248-3"><a href="workflowsets.html#cb248-3" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb248-4"><a href="workflowsets.html#cb248-4" aria-hidden="true" tabindex="-1"></a>assembly_v2 <span class="ot">&lt;-</span> concrete_stack <span class="sc">%&gt;%</span> </span>
+<span id="cb248-5"><a href="workflowsets.html#cb248-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">blend_predictions</span>(</span>
+<span id="cb248-6"><a href="workflowsets.html#cb248-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">metric =</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq),</span>
+<span id="cb248-7"><a href="workflowsets.html#cb248-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">50</span>)</span>
+<span id="cb248-8"><a href="workflowsets.html#cb248-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb248-9"><a href="workflowsets.html#cb248-9" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb248-10"><a href="workflowsets.html#cb248-10" aria-hidden="true" tabindex="-1"></a>t2<span class="sc">-</span>t1</span>
+<span id="cb248-11"><a href="workflowsets.html#cb248-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb248-12"><a href="workflowsets.html#cb248-12" aria-hidden="true" tabindex="-1"></a>assembly_v2 <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="st">&quot;models/stack_predictions_v2.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="workflowsets.html#cb249-1" aria-hidden="true" tabindex="-1"></a>assembly_v2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/stack_predictions_v2.rds&quot;</span>)</span>
+<span id="cb249-2"><a href="workflowsets.html#cb249-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb249-3"><a href="workflowsets.html#cb249-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly_v2)</span></code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-170-1.png" width="672" /></p>
+<p>El valor de penalización asociado a las curvas fue de 1456.34. La impresión del objeto muestra los detalles del modelo de meta aprendizaje:</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="workflowsets.html#cb251-1" aria-hidden="true" tabindex="-1"></a>assembly_v2</span></code></pre></div>
+<pre><code>## ── A stacked ensemble model ─────────────────────────────────────
+## 
+## Out of 996 possible candidate members, the ensemble retained 16.
+## Penalty: 1456.34847750124.
+## Mixture: 1.
+## 
+## The 10 highest weighted members are:</code></pre>
+<pre><code>## # A tibble: 10 × 3
+##    member                      type             weight
+##    &lt;chr&gt;                       &lt;chr&gt;             &lt;dbl&gt;
+##  1 receta_knn_boost_1_058      boost_tree       0.338 
+##  2 receta_knn_boost_1_086      boost_tree       0.102 
+##  3 receta_knn_boost_1_040      boost_tree       0.0981
+##  4 receta_knn_boost_1_035      boost_tree       0.0938
+##  5 receta_knn_boost_1_041      boost_tree       0.0829
+##  6 receta_knn_boost_1_025      boost_tree       0.0665
+##  7 receta_original_knn_1_003   nearest_neighbor 0.0516
+##  8 receta_original_boost_1_002 boost_tree       0.0427
+##  9 receta_knn_knn_1_004        nearest_neighbor 0.0388
+## 10 receta_knn_boost_1_047      boost_tree       0.0320</code></pre>
+<pre><code>## 
+## Members have not yet been fitted with `fit_members()`.</code></pre>
+<p>El modelo de meta aprendizaje contenía cuatro coeficientes de combinación. El método <code>autoplot()</code> se puede usar nuevamente para mostrar las contribuciones de cada tipo de modelo:</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="workflowsets.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(assembly_v2, <span class="st">&quot;weights&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb255-2"><a href="workflowsets.html#cb255-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
+<p>El modelo de bosques aleatorios tiene la mayor contribución al conjunto. Para este conjunto, el resultado se predice con la ecuación:</p>
+$$
+<span class="math display">\[\begin{aligned}
+\text{Predicción ensamblada} = -3130.71 &amp;+ 0.0516 * \text{receta_original_knn_1_003} \\
+&amp;+ 0.0427 * \text{receta_original_boost_1_002} \\
+&amp;+ 0.0015 * \text{receta_original_boost_1_075} \\
+&amp;+ 0.0274 * \text{receta_knn_knn_1_003} \\
+&amp;+ 0.0020 * \text{receta_knn_knn_1_053} \\
+&amp;+ 0.0387 * \text{receta_knn_knn_1_004} \\
+&amp;+ 0.3380 * \text{receta_knn_boost_1_058} \\
+&amp;+ 0.0192 * \text{receta_knn_boost_1_028} \\
+&amp;+ 0.0980 * \text{receta_knn_boost_1_040} \\
+&amp;+ 0.0264 * \text{receta_knn_boost_1_013} \\
+&amp;+ 0.0938 * \text{receta_knn_boost_1_035} \\
+&amp;+ 0.0319 * \text{receta_knn_boost_1_047} \\
+&amp;+ 0.0664 * \text{receta_knn_boost_1_025} \\
+&amp;+ 0.1015 * \text{receta_knn_boost_1_086} \\
+&amp;+ 0.0006 * \text{receta_knn_boost_1_045} \\
+&amp;+ 0.0829 * \text{receta_knn_boost_1_041} \\ 
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p>Ahora sabemos cómo se pueden combinar sus predicciones en una predicción final para el conjunto. Sin embargo, estos ajustes de modelos individuales aún no se han creado.</p>
+</div>
+<div id="ajuste-final" class="section level3 hasAnchor" number="5.8.2">
+<h3><span class="header-section-number">5.8.2</span> Ajuste final<a href="workflowsets.html#ajuste-final" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para poder usar el modelo de <em>stacking</em>, se requieren los ajustes de todos los modelos candidatos. Estos utilizan todo el conjunto de entrenamiento con los predictores originales.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="workflowsets.html#cb256-1" aria-hidden="true" tabindex="-1"></a>fit_assembly <span class="ot">&lt;-</span> <span class="fu">fit_members</span>(assembly_v2)</span>
+<span id="cb256-2"><a href="workflowsets.html#cb256-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb256-3"><a href="workflowsets.html#cb256-3" aria-hidden="true" tabindex="-1"></a>fit_assembly <span class="sc">%&gt;%</span>  <span class="fu">saveRDS</span>(<span class="st">&quot;models/stack_fit_members.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="workflowsets.html#cb257-1" aria-hidden="true" tabindex="-1"></a>fit_assembly <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;models/stack_fit_members.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="workflowsets.html#cb258-1" aria-hidden="true" tabindex="-1"></a>fit_assembly</span></code></pre></div>
+<pre><code>## ── A stacked ensemble model ─────────────────────────────────────
+## 
+## Out of 996 possible candidate members, the ensemble retained 16.
+## Penalty: 1456.34847750124.
+## Mixture: 1.
+## 
+## The 10 highest weighted members are:</code></pre>
+<pre><code>## # A tibble: 10 × 3
+##    member                      type             weight
+##    &lt;chr&gt;                       &lt;chr&gt;             &lt;dbl&gt;
+##  1 receta_knn_boost_1_058      boost_tree       0.338 
+##  2 receta_knn_boost_1_086      boost_tree       0.102 
+##  3 receta_knn_boost_1_040      boost_tree       0.0981
+##  4 receta_knn_boost_1_035      boost_tree       0.0938
+##  5 receta_knn_boost_1_041      boost_tree       0.0829
+##  6 receta_knn_boost_1_025      boost_tree       0.0665
+##  7 receta_original_knn_1_003   nearest_neighbor 0.0516
+##  8 receta_original_boost_1_002 boost_tree       0.0427
+##  9 receta_knn_knn_1_004        nearest_neighbor 0.0388
+## 10 receta_knn_boost_1_047      boost_tree       0.0320</code></pre>
+<p>Esto actualiza el objeto de apilamiento con los objetos de flujo de trabajo ajustados para cada miembro. En este punto, el modelo de <em>stacking</em> se puede utilizar para la predicción.</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="workflowsets.html#cb261-1" aria-hidden="true" tabindex="-1"></a>regression_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse, mae, mape, rsq, ccc)</span>
+<span id="cb261-2"><a href="workflowsets.html#cb261-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb261-3"><a href="workflowsets.html#cb261-3" aria-hidden="true" tabindex="-1"></a>fit_assembly_pred_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_assembly, ames_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb261-4"><a href="workflowsets.html#cb261-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(ames_test)</span>
+<span id="cb261-5"><a href="workflowsets.html#cb261-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb261-6"><a href="workflowsets.html#cb261-6" aria-hidden="true" tabindex="-1"></a>fit_assembly_pred_test <span class="sc">%&gt;%</span> <span class="fu">regression_metrics</span>(Sale_Price, .pred)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard   25774.   
+## 2 mae     standard   16377.   
+## 3 mape    standard      10.2  
+## 4 rsq     standard       0.898
+## 5 ccc     standard       0.944</code></pre>
+<p><strong>Comparación de métricas:</strong></p>
+<p>Para ver la efectividad del ensamblaje, realizamos una comparación con el mejor modelo entrenado anteriormente (XGBoost)</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="workflowsets.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multi_metric</span>(results, <span class="at">truth =</span> Sale_Price, <span class="at">estimate =</span> pred_xgb_reg) </span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard   26851.   
+## 2 rsq     standard       0.889
+## 3 mae     standard   17078.   
+## 4 mape    standard      10.5  
+## 5 ccc     standard       0.939</code></pre>
+<p>Este capítulo demuestra cómo combinar diferentes modelos en un conjunto para un mejor desempeño predictivo. El proceso de creación del conjunto puede eliminar automáticamente los modelos candidatos para encontrar un pequeño subconjunto que mejore el rendimiento.</p>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+
+<div class="watermark">
+<img src="img/header.png" width="400">
+</div>
+
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bagging-boosting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
