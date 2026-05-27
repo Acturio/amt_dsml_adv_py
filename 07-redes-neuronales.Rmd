@@ -1,0 +1,281 @@
+<div class="watermark"><img src="img/header.png" width="400"></div>
+
+# Introducción a Redes Neuronales
+
+```{python, include=FALSE}
+import os
+
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
+os.environ.setdefault("XDG_CACHE_HOME", "/tmp")
+
+from dsml_environment import ensure_conda_environment
+
+ensure_conda_environment()
+```
+
+## Idea General
+
+Una red neuronal es un modelo que aprende una función a partir de ejemplos. Si tenemos variables de entrada $X$ y una respuesta $Y$, la red busca una transformación que convierta las entradas en una predicción útil:
+
+$$X \rightarrow \hat{Y}$$
+
+La intuición es parecida a otros modelos supervisados: le mostramos muchos ejemplos, medimos qué tan lejos estuvo la predicción y ajustamos sus parámetros para equivocarse menos. La diferencia es que una red neuronal construye varias capas de transformaciones aprendidas.
+
+En este capítulo usaremos una **red neuronal densa** para predecir el precio de viviendas en el conjunto de datos de *Ames*. No veremos redes convolucionales ni secuenciales todavía; esas serán parte de los siguientes pasos.
+
+## Preparación de Datos
+
+Primero cargamos los datos, separamos entrenamiento, validación y prueba, y aplicamos el mismo tipo de preprocesamiento tabular usado en otros capítulos: ingeniería de variables, imputación, escalamiento y variables dummy.
+
+```{python, warning=FALSE, message=FALSE}
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import torch
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from torch import nn
+from torch.utils.data import DataLoader, TensorDataset
+
+from dsml_utils import (
+    load_ames,
+    preprocess_ames_frame,
+    regression_metrics,
+    tabular_preprocessor,
+)
+
+torch.manual_seed(4595)
+np.random.seed(4595)
+
+ames = load_ames()
+ames_train_full, ames_test = train_test_split(ames, train_size=0.75, random_state=4595)
+ames_train, ames_valid = train_test_split(ames_train_full, train_size=0.80, random_state=4595)
+
+X_train_raw = preprocess_ames_frame(ames_train, keep_target=False)
+X_valid_raw = preprocess_ames_frame(ames_valid, keep_target=False)
+X_test_raw = preprocess_ames_frame(ames_test, keep_target=False)
+
+y_train = ames_train["Sale_Price"]
+y_valid = ames_valid["Sale_Price"]
+y_test = ames_test["Sale_Price"]
+
+preprocessor = tabular_preprocessor(scale_numeric=True)
+X_train = preprocessor.fit_transform(X_train_raw).astype("float32")
+X_valid = preprocessor.transform(X_valid_raw).astype("float32")
+X_test = preprocessor.transform(X_test_raw).astype("float32")
+
+target_scaler = StandardScaler()
+y_train_scaled = target_scaler.fit_transform(y_train.to_frame()).astype("float32")
+y_valid_scaled = target_scaler.transform(y_valid.to_frame()).astype("float32")
+
+X_train.shape, X_valid.shape, X_test.shape
+```
+
+Escalamos también la variable objetivo porque las redes neuronales suelen entrenar mejor cuando los valores no están en escalas muy grandes.
+
+## Tensores
+
+PyTorch trabaja con **tensores**. Un tensor es parecido a un arreglo de `numpy`, pero además puede vivir en CPU o GPU y puede guardar la información necesaria para calcular gradientes.
+
+```{python}
+ejemplo_tensor = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
+ejemplo_tensor
+```
+
+Convertimos nuestros datos de `numpy` a tensores:
+
+```{python}
+X_train_tensor = torch.tensor(X_train, dtype=torch.float32)
+y_train_tensor = torch.tensor(y_train_scaled, dtype=torch.float32)
+X_valid_tensor = torch.tensor(X_valid, dtype=torch.float32)
+y_valid_tensor = torch.tensor(y_valid_scaled, dtype=torch.float32)
+X_test_tensor = torch.tensor(X_test, dtype=torch.float32)
+
+X_train_tensor.shape, y_train_tensor.shape
+```
+
+## Datasets y DataLoaders
+
+Un `TensorDataset` guarda pares `(X, y)`. Un `DataLoader` permite tomar pequeños lotes de datos. En vez de actualizar el modelo con todos los datos a la vez, lo entrenamos por **mini-batches**.
+
+```{python}
+train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+
+batch_X, batch_y = next(iter(train_loader))
+batch_X.shape, batch_y.shape
+```
+
+## Neuronas, Capas y Activaciones
+
+Una capa densa combina todas las variables de entrada con pesos aprendidos. En PyTorch se representa con `nn.Linear`.
+
+Una función de activación agrega no linealidad. Sin activaciones, muchas capas lineales se comportarían como una sola regresión lineal grande. Una activación muy común es `ReLU`, que deja pasar valores positivos y manda los negativos a cero.
+
+```{python}
+x_demo = torch.linspace(-3, 3, 7)
+pd.DataFrame(
+    {
+        "entrada": x_demo.numpy(),
+        "relu": torch.relu(x_demo).numpy(),
+    }
+)
+```
+
+## Una Red Neuronal Densa
+
+Una red densa para regresión tabular puede verse así:
+
+1. Una primera capa que recibe todas las variables.
+2. Una activación para aprender relaciones no lineales.
+3. Una segunda capa oculta.
+4. Una salida de tamaño 1, porque queremos predecir un precio.
+
+```{python}
+n_features = X_train_tensor.shape[1]
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+dense_model = nn.Sequential(
+    nn.Linear(n_features, 64),
+    nn.ReLU(),
+    nn.Linear(64, 32),
+    nn.ReLU(),
+    nn.Linear(32, 1),
+).to(device)
+
+dense_model
+```
+
+## Pérdida y Optimizador
+
+La **función de pérdida** mide qué tan mal lo hizo el modelo. Para regresión usaremos error cuadrático medio con `nn.MSELoss`.
+
+El **optimizador** modifica los pesos de la red para reducir esa pérdida. Usaremos `Adam`, una opción práctica y muy común.
+
+```{python}
+loss_fn = nn.MSELoss()
+optimizer = torch.optim.Adam(dense_model.parameters(), lr=0.001)
+loss_fn, optimizer
+```
+
+## Ciclo de Entrenamiento
+
+Entrenar una red neuronal consiste en repetir cuatro pasos:
+
+1. Hacer predicciones.
+2. Calcular la pérdida.
+3. Calcular gradientes con `backward()`.
+4. Actualizar pesos con `optimizer.step()`.
+
+```{python}
+def evaluate_loss(model, X, y):
+    model.eval()
+    with torch.no_grad():
+        predictions = model(X.to(device))
+        loss = loss_fn(predictions, y.to(device))
+    return loss.item()
+
+
+history = []
+epochs = 60
+
+for epoch in range(1, epochs + 1):
+    dense_model.train()
+    batch_losses = []
+
+    for batch_X, batch_y in train_loader:
+        batch_X = batch_X.to(device)
+        batch_y = batch_y.to(device)
+
+        predictions = dense_model(batch_X)
+        loss = loss_fn(predictions, batch_y)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        batch_losses.append(loss.item())
+
+    history.append(
+        {
+            "epoch": epoch,
+            "train_loss": np.mean(batch_losses),
+            "valid_loss": evaluate_loss(dense_model, X_valid_tensor, y_valid_tensor),
+        }
+    )
+
+history_df = pd.DataFrame(history)
+history_df.tail()
+```
+
+Si la pérdida baja en entrenamiento y validación, el modelo está aprendiendo una relación útil. Si baja mucho en entrenamiento pero empeora en validación, probablemente hay sobreajuste.
+
+```{python}
+history_df.plot(x="epoch", y=["train_loss", "valid_loss"], figsize=(7, 4))
+plt.title("Evolución de la pérdida")
+plt.xlabel("Época")
+plt.ylabel("MSE en escala estandarizada")
+plt.tight_layout()
+```
+
+## Evaluación en Prueba
+
+Finalmente usamos el conjunto de prueba. Como el modelo predice precios escalados, regresamos las predicciones a pesos originales con `inverse_transform`.
+
+```{python}
+dense_model.eval()
+with torch.no_grad():
+    test_predictions_scaled = dense_model(X_test_tensor.to(device)).cpu().numpy()
+
+test_predictions = target_scaler.inverse_transform(test_predictions_scaled).ravel()
+
+nn_results = pd.DataFrame(
+    {
+        "Sale_Price": y_test.to_numpy(),
+        "pred_nn": test_predictions,
+    }
+)
+
+regression_metrics(nn_results["Sale_Price"], nn_results["pred_nn"]).assign(
+    estimate=lambda data: data["estimate"].round(2)
+)
+```
+
+```{python}
+plt.figure(figsize=(6, 5))
+plt.scatter(nn_results["pred_nn"], nn_results["Sale_Price"], alpha=0.6)
+lims = [
+    nn_results[["pred_nn", "Sale_Price"]].min().min(),
+    nn_results[["pred_nn", "Sale_Price"]].max().max(),
+]
+plt.plot(lims, lims, color="red")
+plt.xlabel("Predicción")
+plt.ylabel("Observación")
+plt.title("Red neuronal densa")
+plt.tight_layout()
+```
+
+## Qué Aprendimos
+
+Una red neuronal densa es una secuencia de capas completamente conectadas. Cada capa aprende transformaciones de los datos y las activaciones permiten capturar relaciones no lineales.
+
+En PyTorch, el flujo básico es:
+
+* Convertir datos a tensores.
+* Crear un `Dataset` y un `DataLoader`.
+* Definir un modelo con `nn.Module` o `nn.Sequential`.
+* Elegir una pérdida y un optimizador.
+* Entrenar con `forward`, `loss`, `backward` y `step`.
+* Evaluar en datos no vistos.
+
+## Siguientes Pasos
+
+En un curso completo de redes neuronales, después de redes densas se estudiarían otros tipos de arquitecturas:
+
+* **Redes convolucionales:** útiles para imágenes, visión por computadora y datos con estructura espacial.
+* **Redes secuenciales y recurrentes:** útiles para texto, series de tiempo y datos ordenados.
+* **Transformers:** útiles en lenguaje natural, visión moderna y modelos generativos.
+* **Regularización en redes neuronales:** `dropout`, `weight decay`, *early stopping* y normalización por lotes.
+* **Ajuste de hiperparámetros:** número de capas, neuronas, tasa de aprendizaje, tamaño de batch y funciones de activación.
+
+Por ahora, lo más importante es reconocer que una red neuronal densa es simplemente otro modelo supervisado: recibe variables, aprende pesos y produce predicciones. Lo especial está en que puede combinar muchas transformaciones para aprender relaciones flexibles.
