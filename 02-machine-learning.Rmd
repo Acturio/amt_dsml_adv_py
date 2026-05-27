@@ -108,677 +108,6 @@ En el ejemplo anterior puede mostrarse que es a través de la ponderación de lo
 Este mismo procedimiento puede usarse en la receta de la ingeniería de datos para realizar la predicción de una variable de respuesta mediante cualquier otro algoritmo predictivo.
 
 
-
-
-
-## Regularización Elasticnet
-
-En muchas técnicas de aprendizaje automático, **el aprendizaje consiste en encontrar los coeficientes que minimizan una función de costo**. Un modelo estándar de mínimos cuadrados tiende a tener alguna variación, es decir, este modelo no se generalizará bien para un conjunto de datos diferente a sus datos de entrenamiento.
-
-La regularización consiste en **añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobre-ajuste**.
-
-El procedimiento de ajuste implica una función de pérdida, conocida como suma de cuadrados residual o *RSS*. Los coeficientes $\beta$ se eligen de manera que minimicen esta función de pérdida.
-
-$$RSS = \sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2$$
-
-Esto ajustará los coeficientes en función de sus datos de entrenamiento. Si hay ruido en los datos de entrenamiento, los coeficientes estimados no se generalizarán bien a los datos futuros. Aquí es donde entra la regularización y reduce o regulariza estas estimaciones aprendidas hacia cero.
-
-En esta sección se verán las regularizaciones más usadas en machine learning: 
-
-* Ridge (conocida también como L2) 
-* Lasso (también conocida como L1)
-* ElasticNet que combina tanto Lasso como Ridge.
-
-Para cada una de estas regularizaciones ajustaremos modelos lineales con `scikit-learn`. En regresión usaremos el conjunto de viviendas de *Ames*; en clasificación usaremos el conjunto de abandono de clientes de Telco.
-
-```{r, fig.align='center', out.height='250pt', out.width='500pt', echo=F, include=TRUE}
-knitr::include_graphics("img/10-ml-elasticnet/overfitting.png")
-```
-
-
-### Regularización Ridge
-
-
-En este tipo de regularización *RSS* se modifica agregando una cantidad de **contracción a los coeficientes**, los cuales se estiman minimizando esta función. $\lambda$ es el parámetro de ajuste que decide cuánto queremos penalizar la flexibilidad de el modelo. 
-
-$$\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2$$
-
-El aumento de la flexibilidad de un modelo está representado por el aumento de sus coeficientes, si se desea minimizar la función anterior, los coeficientes  deben ser pequeños. 
-
-Así es como la técnica de regresión de *Ridge* evita que los coeficientes aumenten demasiado. Además, reduce la asociación estimada de cada variable con la respuesta excepto la intersección $\beta_0$. Esta intersección es una medida del valor medio de la respuesta cuando $x_{i1} = x_{i2} =\dots= x_{ip} = 0$.
-
-> Cuando $\lambda = 0$, el término de penalización no tiene efecto y las estimaciones  serán iguales a mínimos cuadrados. 
-
-> A medida que $\lambda \rightarrow \infty$, el impacto de la penalización por contracción aumenta, y las estimaciones se acercarán a cero. 
-
-La selección de un buen valor de $\lambda$ es fundamental. Las estimaciones de  coeficientes producidas por este método también se conocen como la **norma L2**.
-
-
-**Nota:** Es necesario estandarizar los predictores o llevarlos a la misma escala antes de aplicar esta regularización. 
-
-
-### Regularización Lasso
-
-Lasso es otra variación, en la que se minimiza la función *RSS*. Utiliza $|\beta_j|$ en lugar de los cuadrados de $\beta$ como penalización. Las estimaciones de coeficientes producidas por este método también se conocen como la **norma L1**.
-
-$$\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p |\beta_j| = RSS + \lambda \sum_{j=1}^p |\beta_j|$$
-
-> Cuando $\lambda = 0$, el término de penalización no tiene efecto y las estimaciones  serán iguales a mínimos cuadrados. 
-
-> A medida que $\lambda \rightarrow \infty$, el impacto de la penalización por contracción aumenta, y las estimaciones se convierten en cero (eliminando variables). 
-
-Este método de regularización permite eliminar coeficientes con alta variación, lo cual **ayuda a la selección de variables**.
-
-## Comparación entre Ridge y Lasso
-
-La regresión *Ridge* se puede considerar como la solución de una ecuación, donde la suma de los cuadrados de los coeficientes es menor o igual que $s$,  donde $s$ es una constante que existe para cada valor del factor de contracción $\lambda$
-
-$$\beta_1^2 + \beta_2^2 \leq s$$
-
-Esto implica que los coeficientes de la regresión *Ridge* tienen el *RSS* (función de pérdida) más pequeño para todos los puntos que se encuentran dentro del círculo dado por la función de restricción  $\beta_1^2 + \beta_2^2 \leq s$. 
-
-Y en la regresión *Lasso* se puede considerar como una ecuación en la que la suma del módulo de coeficientes es menor o igual que $s$. 
-
-$$|\beta_1| + |\beta_2| \leq s$$
-
-Esto implica que los coeficientes de lasso tienen la *RSS* (función de pérdida) más pequeña para todos los puntos que se encuentran dentro del diamante dado por la función de restricción $|\beta_1| + |\beta_2| \leq s$
-
-```{r, fig.align='center', out.height='300pt', out.width='600pt', echo=F, include=TRUE}
-knitr::include_graphics("img/10-ml-elasticnet/ridge-lasso.png")
-```
-
-La imagen de arriba muestra las funciones de restricción (áreas verdes) para *Lasso* (izquierda) y *Ridge* (derecha), junto con contornos para *RSS* (elipse roja).
-
-Para un valor muy grande de $s$, las regiones verdes contendrán el centro de la elipse, lo que hará que las estimaciones de los coeficientes de ambas técnicas de regresión sean iguales a las estimaciones de mínimos cuadrados. Pero este no es el caso en la imagen de arriba. 
-
-En este caso, las estimaciones del coeficiente de regresión de *Lasso* y *Ridge* vienen dadas por el primer punto en el que una elipse contacta con la región de restricción. Dado que la regresión *Ridge* tiene una restricción circular sin puntos agudos, **esta intersección generalmente no ocurrirá en un eje, por lo que las estimaciones del coeficiente de regresión de _Ridge_ serán exclusivamente distintas de cero**.
-
-Sin embargo, la restricción de *Lasso* **tiene esquinas en cada uno de los ejes**, por lo que la elipse a menudo intersectará la región de restricción en un eje. **Cuando esto ocurre, uno de los coeficientes será igual a cero**. En dimensiones más altas, muchas de las estimaciones de coeficientes pueden ser iguales a cero simultáneamente.
-
-**Desventajas**
-
-* Regresión *Ridge*: Reducirá los coeficientes de los predictores menos importantes, muy cerca de cero. Pero nunca los hará exactamente cero. En otras palabras, el modelo final incluirá todos los predictores. 
-
-* Regresión *Lasso*: La penalización *L1* tiene el efecto de forzar algunas de las estimaciones de              coeficientes a ser exactamente iguales a cero cuando el parámetro de ajuste $\lambda$ es suficientemente grande. Por lo tanto, este método realiza una selección de variables.
-
-
-
-
-
-
-
-
-### ElasticNet
-
-*ElasticNet* surgió por primera vez como resultado de la crítica a *Lasso*, cuya selección de variables puede ser demasiado dependiente de los datos y, por lo tanto, inestable. La solución es **combinar las penalizaciones** de la regresión de *Ridge* y *Lasso* para obtener lo mejor de ambas regularizaciones.
-
-*ElasticNet* tiene como objetivo minimizar la siguiente función de pérdida:
-
-$$\frac{\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2}{2n} + 
-\lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)$$
-
-$$= \frac{RSS}{2n}+ \lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)$$
-
-donde $\alpha \in [0,1]$ es el parámetro de mezcla entre la regularización *Ridge* $(\alpha = 0)$ y la regularización *Lasso* $(\alpha = 1)$. En `scikit-learn`, este parámetro se llama `l1_ratio`; la intensidad total de la penalización se controla con `alpha` en regresión y con `C` en regresión logística.
-
-La combinación de ambas penalizaciones suele dar lugar a buenos resultados. Una estrategia frecuentemente utilizada es asignarle casi todo el peso a la penalización *L1* ( $\alpha \approx 1$) para conseguir seleccionar predictores y menos peso a la regularización $L2$ para dar cierta estabilidad en el caso de que algunos predictores estén correlacionados.
-
-```{r, fig.align='center', out.height='400pt', out.width='550pt', echo=F, include=TRUE}
-knitr::include_graphics("img/10-ml-elasticnet/elastic-net.png")
-```
-
-
-### Implementación en Python
-
-#### Regresión
-
-Utilizaremos `Ridge`, `Lasso` y `ElasticNet` de `sklearn.linear_model`. El preprocesamiento se encapsula en un `Pipeline`, de forma que la imputación, escalamiento y codificación de variables se estimen solamente con los datos de entrenamiento.
-
-En `scikit-learn` los parámetros principales son:
-
-* `alpha`: intensidad total de regularización en `Ridge`, `Lasso` y `ElasticNet`. Valores mayores producen coeficientes más pequeños.
-
-* `l1_ratio`: proporción de regularización *L1* en `ElasticNet`. Cuando `l1_ratio = 1`, el comportamiento es equivalente a *Lasso*; cuando `l1_ratio = 0`, es equivalente a *Ridge*. Para los casos puros usaremos directamente `Ridge` y `Lasso`.
-
-
-
-**Paso 1: Separación inicial de datos ( test, train, KFCV )**
-```{python, warning=FALSE, message=FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from IPython.display import display
-from scipy.stats import loguniform, uniform
-from sklearn.linear_model import ElasticNet, Lasso, LogisticRegression, Ridge
-from sklearn.metrics import average_precision_score, make_scorer
-from sklearn.model_selection import KFold, RandomizedSearchCV, StratifiedKFold, train_test_split
-
-from dsml_utils import (
-    best_cv_results,
-    classification_metrics,
-    load_ames,
-    load_telco,
-    make_ames_pipeline,
-    make_telco_pipeline,
-    pr_curve_table,
-    regression_metrics,
-    roc_curve_table,
-)
-
-ames = load_ames()
-ames_train, ames_test = train_test_split(ames, train_size=0.75, random_state=4595)
-X_ames_train = ames_train.drop(columns="Sale_Price")
-y_ames_train = ames_train["Sale_Price"]
-X_ames_test = ames_test.drop(columns="Sale_Price")
-y_ames_test = ames_test["Sale_Price"]
-ames_folds = KFold(n_splits=5, shuffle=True, random_state=4595)
-```
-
-Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.
-
-**Paso 2: Pre-procesamiento e ingeniería de variables**
-
-```{python, warning=FALSE,message=FALSE}
-receta_casas = make_ames_pipeline(ElasticNet(max_iter=20_000), scale_numeric=True)
-receta_casas
-```
-
-Recordemos que un **Pipeline** contiene los pasos a seguir. Usamos **fit()** para estimar transformaciones y modelo, y **transform()** o **predict()** para aplicarlo a nuevos datos.
-
-Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés.
-
-**Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
-
-```{python, warning=FALSE,message=FALSE}
-ridge_regression_model = Ridge()
-lasso_regression_model = Lasso(max_iter=20_000)
-elasticnet_regression_model = ElasticNet(max_iter=20_000)
-elasticnet_regression_model
-```
-
-**Paso 4: Inicialización de workflow o pipeline**
-
-```{python, warning=FALSE,message=FALSE}
-ridge_workflow = make_ames_pipeline(ridge_regression_model, scale_numeric=True)
-lasso_workflow = make_ames_pipeline(lasso_regression_model, scale_numeric=True)
-elasticnet_workflow = make_ames_pipeline(elasticnet_regression_model, scale_numeric=True)
-elasticnet_workflow
-```
-
-Antes de optimizar hiperparámetros, comparemos los tres enfoques con valores fijos de regularización:
-
-```{python, warning=FALSE,message=FALSE}
-regularized_models = {
-    "Ridge": make_ames_pipeline(Ridge(alpha=10), scale_numeric=True),
-    "Lasso": make_ames_pipeline(Lasso(alpha=1_000, max_iter=20_000), scale_numeric=True),
-    "ElasticNet": make_ames_pipeline(ElasticNet(alpha=1_000, l1_ratio=0.5, max_iter=20_000), scale_numeric=True),
-}
-
-comparison_rows = []
-for name, model in regularized_models.items():
-    model.fit(X_ames_train, y_ames_train)
-    predictions = model.predict(X_ames_test)
-    metrics = regression_metrics(y_ames_test, predictions)
-    coefficients = model.named_steps["model"].coef_
-    comparison_rows.append(
-        {
-            "modelo": name,
-            "rmse": metrics.query("metric == 'rmse'")["estimate"].iloc[0],
-            "mae": metrics.query("metric == 'mae'")["estimate"].iloc[0],
-            "rsq": metrics.query("metric == 'rsq'")["estimate"].iloc[0],
-            "coeficientes_no_cero": np.sum(np.abs(coefficients) > 1e-8),
-        }
-    )
-
-pd.DataFrame(comparison_rows).round(3)
-```
-
-**Paso 5: Creación de grid search**
-
-```{python, warning=FALSE,message=FALSE}
-elasticnet_param_distributions = {
-    "model__alpha": loguniform(1e-4, 1e2),
-    "model__l1_ratio": uniform(0.05, 0.95),
-}
-
-regression_scoring = {
-    "rmse": "neg_root_mean_squared_error",
-    "mae": "neg_mean_absolute_error",
-    "mape": "neg_mean_absolute_percentage_error",
-    "rsq": "r2",
-}
-elasticnet_param_distributions
-```
-
-**Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
-
-```{python, warning=FALSE,message=FALSE, eval=FALSE}
-elasticnet_tune_result = RandomizedSearchCV(
-    elasticnet_workflow,
-    param_distributions=elasticnet_param_distributions,
-    n_iter=50,
-    cv=ames_folds,
-    scoring=regression_scoring,
-    refit="rmse",
-    random_state=195628,
-    n_jobs=-1,
-)
-elasticnet_tune_result.fit(X_ames_train, y_ames_train)
-
-import joblib
-joblib.dump(elasticnet_tune_result, "models/elasticnet_model_reg.joblib")
-```
-
-Para que el documento se pueda ejecutar en clase sin esperar un ajuste largo, usamos menos iteraciones en el siguiente bloque:
-
-```{python, warning=FALSE,message=FALSE}
-elasticnet_tune_result = RandomizedSearchCV(
-    elasticnet_workflow,
-    param_distributions=elasticnet_param_distributions,
-    n_iter=20,
-    cv=ames_folds,
-    scoring=regression_scoring,
-    refit="rmse",
-    random_state=195628,
-    n_jobs=-1,
-)
-elasticnet_tune_result.fit(X_ames_train, y_ames_train)
-pd.DataFrame(elasticnet_tune_result.cv_results_).head()
-```
-
-**Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
-
-Podemos obtener las métricas de cada *fold* con el siguiente código:
-
-```{python}
-best_cv_results(elasticnet_tune_result, metric="rmse", n=10)
-```
-
-En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:
-
-```{python}
-elasticnet_cv_results = pd.DataFrame(elasticnet_tune_result.cv_results_)
-elasticnet_cv_results["rmse"] = -elasticnet_cv_results["mean_test_rmse"]
-elasticnet_cv_results["mae"] = -elasticnet_cv_results["mean_test_mae"]
-elasticnet_cv_results["mape"] = -elasticnet_cv_results["mean_test_mape"]
-
-ax = elasticnet_cv_results.plot.scatter(
-    x="param_model__alpha",
-    y="rmse",
-    c="param_model__l1_ratio",
-    colormap="viridis",
-    logx=True,
-    figsize=(7, 4),
-)
-ax.set_title("RMSE por alpha y l1_ratio")
-ax.set_xlabel("alpha")
-ax.set_ylabel("RMSE")
-```
-
-En la siguiente gráfica observamos la $R^2$ asociada a distintos niveles de regularización.
-
-```{python}
-elasticnet_cv_results.plot.scatter(
-    x="param_model__alpha",
-    y="mean_test_rsq",
-    c="param_model__l1_ratio",
-    colormap="viridis",
-    logx=True,
-    figsize=(7, 4),
-)
-plt.title("R cuadrada por alpha y l1_ratio")
-plt.xlabel("alpha")
-plt.ylabel("R cuadrada promedio en CV")
-```
-
-
-**Paso 8: Selección de modelo a usar**
-
-Con el siguiente código obtenemos los mejores 10 modelos respecto al *rmse*.
-
-```{python}
-best_cv_results(elasticnet_tune_result, metric="rmse", n=10)
-```
-
-Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el *rmse*.
-
-```{python}
-best_elasticnet_regression_model = elasticnet_tune_result.best_params_
-best_elasticnet_regression_model
-```
-
-**Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
-
-```{python}
-final_elasticnet_regression_model = elasticnet_tune_result.best_estimator_
-final_elasticnet_regression_model
-```
-
-Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones. 
-
-Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos [data leakage](https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba). Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo. En modelos lineales regularizados podemos inspeccionar los coeficientes después del preprocesamiento.
-
-```{python}
-feature_names = final_elasticnet_regression_model.named_steps["preprocess"].get_feature_names_out()
-coeficientes_elasticnet = (
-    pd.DataFrame(
-        {
-            "Variable": feature_names,
-            "Coeficiente": final_elasticnet_regression_model.named_steps["model"].coef_,
-        }
-    )
-    .assign(Importancia=lambda data: data["Coeficiente"].abs())
-    .sort_values("Importancia", ascending=False)
-)
-display(coeficientes_elasticnet.head(20))
-
-ax = coeficientes_elasticnet.head(20).sort_values("Importancia").plot.barh(
-    x="Variable", y="Importancia", legend=False, figsize=(8, 6)
-)
-ax.set_title("Importancia de las variables")
-```
-
-
-**Paso 10: Validar poder predictivo con datos de prueba**
-
-Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
-
-```{python}
-results = pd.DataFrame(
-    {
-        "Sale_Price": y_ames_test.to_numpy(),
-        "pred_elasticnet_reg": final_elasticnet_regression_model.predict(X_ames_test),
-    }
-)
-results.head()
-```
-
-**Métricas de desempeño**
-
-Ahora para calcular las métricas de desempeño usaremos funciones de `sklearn.metrics` envueltas en una utilidad del repositorio:
-
-```{python}
-regression_metrics(results["Sale_Price"], results["pred_elasticnet_reg"]).assign(
-    estimate=lambda data: data["estimate"].round(2)
-)
-```
-
-```{python}
-plt.figure(figsize=(6, 5))
-plt.scatter(results["pred_elasticnet_reg"], results["Sale_Price"], alpha=0.6)
-lims = [
-    results[["pred_elasticnet_reg", "Sale_Price"]].min().min(),
-    results[["pred_elasticnet_reg", "Sale_Price"]].max().max(),
-]
-plt.plot(lims, lims, color="red")
-plt.xlabel("Predicción")
-plt.ylabel("Observación")
-plt.title("Comparación")
-plt.tight_layout()
-```
-
-
-
-
-#### Clasificación
-
-Para clasificación usaremos regresión logística con penalización `elasticnet`. En `scikit-learn`, la regresión logística usa `C` como inverso de la regularización: valores pequeños de `C` implican una penalización más fuerte.
-
-**Paso 1: Separación inicial de datos (test, train)**
-
-```{python}
-telco = load_telco("data/Churn.csv")
-
-telco_train, telco_test = train_test_split(
-    telco,
-    train_size=0.70,
-    random_state=1234,
-    stratify=telco["Churn"],
-)
-X_telco_train = telco_train.drop(columns="Churn")
-y_telco_train = telco_train["Churn"]
-X_telco_test = telco_test.drop(columns="Churn")
-y_telco_test = telco_test["Churn"]
-telco_folds = StratifiedKFold(n_splits=5, shuffle=True, random_state=1234)
-telco_train.head()
-```
-
-**Paso 2: Pre-procesamiento e ingeniería de variables**
-
-```{python}
-telco_rec = make_telco_pipeline(
-    LogisticRegression(penalty="elasticnet", solver="saga", l1_ratio=0.5, max_iter=5_000),
-    scale_numeric=True,
-)
-telco_rec
-```
-
-**Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
-
-```{python}
-elasticnet_class_model = LogisticRegression(
-    penalty="elasticnet",
-    solver="saga",
-    l1_ratio=0.5,
-    max_iter=5_000,
-    random_state=1234,
-)
-elasticnet_class_model
-```
-
-**Paso 4: Inicialización de workflow o pipeline**
-
-```{python}
-elasticnet_class_workflow = make_telco_pipeline(elasticnet_class_model, scale_numeric=True)
-elasticnet_class_workflow
-```
-
-**Paso 5: Creación de grid search**
-
-```{python}
-elasticnet_class_param_distributions = {
-    "model__C": loguniform(1e-2, 1e2),
-    "model__l1_ratio": uniform(0.05, 0.95),
-}
-
-classification_scoring = {
-    "roc_auc": "roc_auc",
-    "pr_auc": make_scorer(
-        average_precision_score,
-        response_method="predict_proba",
-        pos_label="Yes",
-    ),
-}
-elasticnet_class_param_distributions
-```
-
-
-**Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
-
-```{python, eval=FALSE}
-elasticnet_class_tune_result = RandomizedSearchCV(
-    elasticnet_class_workflow,
-    param_distributions=elasticnet_class_param_distributions,
-    n_iter=50,
-    cv=telco_folds,
-    scoring=classification_scoring,
-    refit="pr_auc",
-    random_state=1234,
-    n_jobs=-1,
-)
-elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)
-
-import joblib
-joblib.dump(elasticnet_class_tune_result, "models/elasticnet_class_model.joblib")
-```
-
-**Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
-
-```{python}
-elasticnet_class_tune_result = RandomizedSearchCV(
-    elasticnet_class_workflow,
-    param_distributions=elasticnet_class_param_distributions,
-    n_iter=20,
-    cv=telco_folds,
-    scoring=classification_scoring,
-    refit="pr_auc",
-    random_state=1234,
-    n_jobs=-1,
-)
-elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)
-best_cv_results(elasticnet_class_tune_result, metric="pr_auc", n=10)
-```
-
-En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:
-
-```{python}
-elasticnet_class_results = pd.DataFrame(elasticnet_class_tune_result.cv_results_)
-elasticnet_class_results.plot.scatter(
-    x="param_model__C",
-    y="mean_test_pr_auc",
-    c="param_model__l1_ratio",
-    colormap="viridis",
-    logx=True,
-    figsize=(7, 4),
-)
-plt.title("PR AUC por C y l1_ratio")
-plt.xlabel("C")
-plt.ylabel("PR AUC promedio en CV")
-```
-
-```{python}
-best_cv_results(elasticnet_class_tune_result, metric="roc_auc", n=10)
-```
-
-```{python}
-best_cv_results(elasticnet_class_tune_result, metric="pr_auc", n=10)
-```
-
-
-**Paso 8: Selección de modelo a usar**
-
-```{python, message=FALSE, warning=FALSE}
-best_elasticnet_class_model = elasticnet_class_tune_result.best_params_
-best_elasticnet_class_model
-```
-
-**Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
-
-```{python, message=FALSE, warning=FALSE}
-final_elasticnet_class_model = elasticnet_class_tune_result.best_estimator_
-final_elasticnet_class_model
-```
-
-Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.
-
-Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En modelos lineales regularizados podemos revisar los coeficientes para identificar qué variables tienen mayor peso en la predicción.
-
-```{python}
-telco_feature_names = final_elasticnet_class_model.named_steps["preprocess"].get_feature_names_out()
-coeficientes_churn = (
-    pd.DataFrame(
-        {
-            "Variable": telco_feature_names,
-            "Coeficiente": final_elasticnet_class_model.named_steps["model"].coef_.ravel(),
-        }
-    )
-    .assign(Importancia=lambda data: data["Coeficiente"].abs())
-    .sort_values("Importancia", ascending=False)
-)
-display(coeficientes_churn.head(20))
-
-ax = coeficientes_churn.head(20).sort_values("Importancia").plot.barh(
-    x="Variable", y="Importancia", legend=False, figsize=(8, 6)
-)
-ax.set_title("Importancia de las variables")
-```
-
-**Paso 10: Validar poder predictivo con datos de prueba**
-
-Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
-
-```{python, message=FALSE, warning=FALSE}
-class_labels = list(final_elasticnet_class_model.named_steps["model"].classes_)
-proba_yes_index = class_labels.index("Yes")
-class_results = pd.DataFrame(
-    {
-        "Churn": y_telco_test.to_numpy(),
-        "pred_Yes": final_elasticnet_class_model.predict_proba(X_telco_test)[:, proba_yes_index],
-    }
-)
-class_results.head()
-```
-
-```{python}
-classification_metrics(class_results["Churn"], class_results["pred_Yes"], positive_label="Yes")
-```
-
-
-A continuación, conoceremos el nivel de sensitividad y especificidad para cada punto de corte:
-
-```{python}
-roc_curve_data = roc_curve_table(
-    class_results["Churn"],
-    class_results["pred_Yes"],
-    positive_label="Yes",
-)
-roc_curve_data.head()
-```
-
-A través de estas métricas es posible crear la curva ROC:
-
-```{python}
-plt.figure(figsize=(5, 5))
-plt.plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue", lw=2)
-plt.plot([0, 1], [0, 1], color="gray", linestyle="--")
-plt.xlabel("1 - especificidad")
-plt.ylabel("sensitividad")
-plt.title("ROC Curve")
-plt.axis("square")
-plt.tight_layout()
-```
-
-De igual manera, podemos calcular la precisión y cobertura para cada punto de corte:
-
-```{python}
-pr_curve_data = pr_curve_table(
-    class_results["Churn"],
-    class_results["pred_Yes"],
-    positive_label="Yes",
-)
-pr_curve_data.head()
-```
-
-Y graficar su respectiva curva:
-
-```{python}
-plt.figure(figsize=(5, 5))
-plt.plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue", lw=2)
-plt.xlabel("cobertura")
-plt.ylabel("precisión")
-plt.title("Precision vs Recall")
-plt.ylim(0, 1)
-plt.axis("square")
-plt.tight_layout()
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Análisis de Componentes Principales
 
 El análisis PCA (por sus siglas en inglés) es una **técnica de reducción de dimensión** útil tanto para el proceso de análisis exploratorio, el inferencial y predictivo. Es una técnica ampliamente usada en muchos estudios, pues permite sintetizar la información relevante y desechar aquello que no aporta tanto. Es particularmente útil en el caso de conjuntos de datos "amplios" en donde las **variables están correlacionadas entre sí** y donde se tienen muchas variables para cada observación.
@@ -1162,6 +491,655 @@ plt.tight_layout()
 2. Tendrán 15 días para probar distintas estrategias que mejoren las predicciones del precio de ventas.
 
 3. Se deberá entregar y explicar el código creado por el equipo. Este código servirá para los ejercicios de optimización de modelos en los siguientes capítulos.
+
+
+
+
+# Regularización Elasticnet
+
+En muchas técnicas de aprendizaje automático, **el aprendizaje consiste en encontrar los coeficientes que minimizan una función de costo**. Un modelo estándar de mínimos cuadrados tiende a tener alguna variación, es decir, este modelo no se generalizará bien para un conjunto de datos diferente a sus datos de entrenamiento.
+
+La regularización consiste en **añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobre-ajuste**.
+
+El procedimiento de ajuste implica una función de pérdida, conocida como suma de cuadrados residual o *RSS*. Los coeficientes $\beta$ se eligen de manera que minimicen esta función de pérdida.
+
+$$RSS = \sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2$$
+
+Esto ajustará los coeficientes en función de sus datos de entrenamiento. Si hay ruido en los datos de entrenamiento, los coeficientes estimados no se generalizarán bien a los datos futuros. Aquí es donde entra la regularización y reduce o regulariza estas estimaciones aprendidas hacia cero.
+
+En esta sección se verán las regularizaciones más usadas en machine learning: 
+
+* Ridge (conocida también como L2) 
+* Lasso (también conocida como L1)
+* ElasticNet que combina tanto Lasso como Ridge.
+
+Para cada una de estas regularizaciones ajustaremos modelos lineales con `scikit-learn`. En regresión usaremos el conjunto de viviendas de *Ames*; en clasificación usaremos el conjunto de abandono de clientes de Telco.
+
+```{r, fig.align='center', out.height='250pt', out.width='500pt', echo=F, include=TRUE}
+knitr::include_graphics("img/10-ml-elasticnet/overfitting.png")
+```
+
+
+## Regularización Ridge
+
+
+En este tipo de regularización *RSS* se modifica agregando una cantidad de **contracción a los coeficientes**, los cuales se estiman minimizando esta función. $\lambda$ es el parámetro de ajuste que decide cuánto queremos penalizar la flexibilidad de el modelo. 
+
+$$\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2$$
+
+El aumento de la flexibilidad de un modelo está representado por el aumento de sus coeficientes, si se desea minimizar la función anterior, los coeficientes  deben ser pequeños. 
+
+Así es como la técnica de regresión de *Ridge* evita que los coeficientes aumenten demasiado. Además, reduce la asociación estimada de cada variable con la respuesta excepto la intersección $\beta_0$. Esta intersección es una medida del valor medio de la respuesta cuando $x_{i1} = x_{i2} =\dots= x_{ip} = 0$.
+
+> Cuando $\lambda = 0$, el término de penalización no tiene efecto y las estimaciones  serán iguales a mínimos cuadrados. 
+
+> A medida que $\lambda \rightarrow \infty$, el impacto de la penalización por contracción aumenta, y las estimaciones se acercarán a cero. 
+
+La selección de un buen valor de $\lambda$ es fundamental. Las estimaciones de  coeficientes producidas por este método también se conocen como la **norma L2**.
+
+
+**Nota:** Es necesario estandarizar los predictores o llevarlos a la misma escala antes de aplicar esta regularización. 
+
+
+## Regularización Lasso
+
+Lasso es otra variación, en la que se minimiza la función *RSS*. Utiliza $|\beta_j|$ en lugar de los cuadrados de $\beta$ como penalización. Las estimaciones de coeficientes producidas por este método también se conocen como la **norma L1**.
+
+$$\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p |\beta_j| = RSS + \lambda \sum_{j=1}^p |\beta_j|$$
+
+> Cuando $\lambda = 0$, el término de penalización no tiene efecto y las estimaciones  serán iguales a mínimos cuadrados. 
+
+> A medida que $\lambda \rightarrow \infty$, el impacto de la penalización por contracción aumenta, y las estimaciones se convierten en cero (eliminando variables). 
+
+Este método de regularización permite eliminar coeficientes con alta variación, lo cual **ayuda a la selección de variables**.
+
+## Comparación entre Ridge y Lasso
+
+La regresión *Ridge* se puede considerar como la solución de una ecuación, donde la suma de los cuadrados de los coeficientes es menor o igual que $s$,  donde $s$ es una constante que existe para cada valor del factor de contracción $\lambda$
+
+$$\beta_1^2 + \beta_2^2 \leq s$$
+
+Esto implica que los coeficientes de la regresión *Ridge* tienen el *RSS* (función de pérdida) más pequeño para todos los puntos que se encuentran dentro del círculo dado por la función de restricción  $\beta_1^2 + \beta_2^2 \leq s$. 
+
+Y en la regresión *Lasso* se puede considerar como una ecuación en la que la suma del módulo de coeficientes es menor o igual que $s$. 
+
+$$|\beta_1| + |\beta_2| \leq s$$
+
+Esto implica que los coeficientes de lasso tienen la *RSS* (función de pérdida) más pequeña para todos los puntos que se encuentran dentro del diamante dado por la función de restricción $|\beta_1| + |\beta_2| \leq s$
+
+```{r, fig.align='center', out.height='300pt', out.width='600pt', echo=F, include=TRUE}
+knitr::include_graphics("img/10-ml-elasticnet/ridge-lasso.png")
+```
+
+La imagen de arriba muestra las funciones de restricción (áreas verdes) para *Lasso* (izquierda) y *Ridge* (derecha), junto con contornos para *RSS* (elipse roja).
+
+Para un valor muy grande de $s$, las regiones verdes contendrán el centro de la elipse, lo que hará que las estimaciones de los coeficientes de ambas técnicas de regresión sean iguales a las estimaciones de mínimos cuadrados. Pero este no es el caso en la imagen de arriba. 
+
+En este caso, las estimaciones del coeficiente de regresión de *Lasso* y *Ridge* vienen dadas por el primer punto en el que una elipse contacta con la región de restricción. Dado que la regresión *Ridge* tiene una restricción circular sin puntos agudos, **esta intersección generalmente no ocurrirá en un eje, por lo que las estimaciones del coeficiente de regresión de _Ridge_ serán exclusivamente distintas de cero**.
+
+Sin embargo, la restricción de *Lasso* **tiene esquinas en cada uno de los ejes**, por lo que la elipse a menudo intersectará la región de restricción en un eje. **Cuando esto ocurre, uno de los coeficientes será igual a cero**. En dimensiones más altas, muchas de las estimaciones de coeficientes pueden ser iguales a cero simultáneamente.
+
+**Desventajas**
+
+* Regresión *Ridge*: Reducirá los coeficientes de los predictores menos importantes, muy cerca de cero. Pero nunca los hará exactamente cero. En otras palabras, el modelo final incluirá todos los predictores. 
+
+* Regresión *Lasso*: La penalización *L1* tiene el efecto de forzar algunas de las estimaciones de              coeficientes a ser exactamente iguales a cero cuando el parámetro de ajuste $\lambda$ es suficientemente grande. Por lo tanto, este método realiza una selección de variables.
+
+
+## ElasticNet
+
+*ElasticNet* surgió por primera vez como resultado de la crítica a *Lasso*, cuya selección de variables puede ser demasiado dependiente de los datos y, por lo tanto, inestable. La solución es **combinar las penalizaciones** de la regresión de *Ridge* y *Lasso* para obtener lo mejor de ambas regularizaciones.
+
+*ElasticNet* tiene como objetivo minimizar la siguiente función de pérdida:
+
+$$\frac{\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2}{2n} + 
+\lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)$$
+
+$$= \frac{RSS}{2n}+ \lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)$$
+
+donde $\alpha \in [0,1]$ es el parámetro de mezcla entre la regularización *Ridge* $(\alpha = 0)$ y la regularización *Lasso* $(\alpha = 1)$. En `scikit-learn`, este parámetro se llama `l1_ratio`; la intensidad total de la penalización se controla con `alpha` en regresión y con `C` en regresión logística.
+
+La combinación de ambas penalizaciones suele dar lugar a buenos resultados. Una estrategia frecuentemente utilizada es asignarle casi todo el peso a la penalización *L1* ( $\alpha \approx 1$) para conseguir seleccionar predictores y menos peso a la regularización $L2$ para dar cierta estabilidad en el caso de que algunos predictores estén correlacionados.
+
+```{r, fig.align='center', out.height='400pt', out.width='550pt', echo=F, include=TRUE}
+knitr::include_graphics("img/10-ml-elasticnet/elastic-net.png")
+```
+
+
+## Implementación en Python
+
+### Regresión
+
+Utilizaremos `Ridge`, `Lasso` y `ElasticNet` de `sklearn.linear_model`. El preprocesamiento se encapsula en un `Pipeline`, de forma que la imputación, escalamiento y codificación de variables se estimen solamente con los datos de entrenamiento.
+
+En `scikit-learn` los parámetros principales son:
+
+* `alpha`: intensidad total de regularización en `Ridge`, `Lasso` y `ElasticNet`. Valores mayores producen coeficientes más pequeños.
+
+* `l1_ratio`: proporción de regularización *L1* en `ElasticNet`. Cuando `l1_ratio = 1`, el comportamiento es equivalente a *Lasso*; cuando `l1_ratio = 0`, es equivalente a *Ridge*. Para los casos puros usaremos directamente `Ridge` y `Lasso`.
+
+
+
+**Paso 1: Separación inicial de datos ( test, train, KFCV )**
+```{python, warning=FALSE, message=FALSE}
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from IPython.display import display
+from scipy.stats import loguniform, uniform
+from sklearn.linear_model import ElasticNet, Lasso, LogisticRegression, Ridge
+from sklearn.metrics import average_precision_score, make_scorer
+from sklearn.model_selection import KFold, RandomizedSearchCV, StratifiedKFold, train_test_split
+
+from dsml_utils import (
+    best_cv_results,
+    classification_metrics,
+    load_ames,
+    load_telco,
+    make_ames_pipeline,
+    make_telco_pipeline,
+    pr_curve_table,
+    regression_metrics,
+    roc_curve_table,
+)
+
+ames = load_ames()
+ames_train, ames_test = train_test_split(ames, train_size=0.75, random_state=4595)
+X_ames_train = ames_train.drop(columns="Sale_Price")
+y_ames_train = ames_train["Sale_Price"]
+X_ames_test = ames_test.drop(columns="Sale_Price")
+y_ames_test = ames_test["Sale_Price"]
+ames_folds = KFold(n_splits=5, shuffle=True, random_state=4595)
+```
+
+Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.
+
+**Paso 2: Pre-procesamiento e ingeniería de variables**
+
+```{python, warning=FALSE,message=FALSE}
+receta_casas = make_ames_pipeline(ElasticNet(max_iter=20_000), scale_numeric=True)
+receta_casas
+```
+
+Recordemos que un **Pipeline** contiene los pasos a seguir. Usamos **fit()** para estimar transformaciones y modelo, y **transform()** o **predict()** para aplicarlo a nuevos datos.
+
+Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés.
+
+**Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
+
+```{python, warning=FALSE,message=FALSE}
+ridge_regression_model = Ridge()
+lasso_regression_model = Lasso(max_iter=20_000)
+elasticnet_regression_model = ElasticNet(max_iter=20_000)
+elasticnet_regression_model
+```
+
+**Paso 4: Inicialización de workflow o pipeline**
+
+```{python, warning=FALSE,message=FALSE}
+ridge_workflow = make_ames_pipeline(ridge_regression_model, scale_numeric=True)
+lasso_workflow = make_ames_pipeline(lasso_regression_model, scale_numeric=True)
+elasticnet_workflow = make_ames_pipeline(elasticnet_regression_model, scale_numeric=True)
+elasticnet_workflow
+```
+
+Antes de optimizar hiperparámetros, comparemos los tres enfoques con valores fijos de regularización:
+
+```{python, warning=FALSE,message=FALSE}
+regularized_models = {
+    "Ridge": make_ames_pipeline(Ridge(alpha=10), scale_numeric=True),
+    "Lasso": make_ames_pipeline(Lasso(alpha=1_000, max_iter=20_000), scale_numeric=True),
+    "ElasticNet": make_ames_pipeline(ElasticNet(alpha=1_000, l1_ratio=0.5, max_iter=20_000), scale_numeric=True),
+}
+
+comparison_rows = []
+for name, model in regularized_models.items():
+    model.fit(X_ames_train, y_ames_train)
+    predictions = model.predict(X_ames_test)
+    metrics = regression_metrics(y_ames_test, predictions)
+    coefficients = model.named_steps["model"].coef_
+    comparison_rows.append(
+        {
+            "modelo": name,
+            "rmse": metrics.query("metric == 'rmse'")["estimate"].iloc[0],
+            "mae": metrics.query("metric == 'mae'")["estimate"].iloc[0],
+            "rsq": metrics.query("metric == 'rsq'")["estimate"].iloc[0],
+            "coeficientes_no_cero": np.sum(np.abs(coefficients) > 1e-8),
+        }
+    )
+
+pd.DataFrame(comparison_rows).round(3)
+```
+
+**Paso 5: Creación de grid search**
+
+```{python, warning=FALSE,message=FALSE}
+elasticnet_param_distributions = {
+    "model__alpha": loguniform(1e-4, 1e2),
+    "model__l1_ratio": uniform(0.05, 0.95),
+}
+
+regression_scoring = {
+    "rmse": "neg_root_mean_squared_error",
+    "mae": "neg_mean_absolute_error",
+    "mape": "neg_mean_absolute_percentage_error",
+    "rsq": "r2",
+}
+elasticnet_param_distributions
+```
+
+**Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
+
+```{python, warning=FALSE,message=FALSE, eval=FALSE}
+elasticnet_tune_result = RandomizedSearchCV(
+    elasticnet_workflow,
+    param_distributions=elasticnet_param_distributions,
+    n_iter=50,
+    cv=ames_folds,
+    scoring=regression_scoring,
+    refit="rmse",
+    random_state=195628,
+    n_jobs=-1,
+)
+elasticnet_tune_result.fit(X_ames_train, y_ames_train)
+
+import joblib
+joblib.dump(elasticnet_tune_result, "models/elasticnet_model_reg.joblib")
+```
+
+Para que el documento se pueda ejecutar en clase sin esperar un ajuste largo, usamos menos iteraciones en el siguiente bloque:
+
+```{python, warning=FALSE,message=FALSE}
+elasticnet_tune_result = RandomizedSearchCV(
+    elasticnet_workflow,
+    param_distributions=elasticnet_param_distributions,
+    n_iter=20,
+    cv=ames_folds,
+    scoring=regression_scoring,
+    refit="rmse",
+    random_state=195628,
+    n_jobs=-1,
+)
+elasticnet_tune_result.fit(X_ames_train, y_ames_train)
+pd.DataFrame(elasticnet_tune_result.cv_results_).head()
+```
+
+**Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
+
+Podemos obtener las métricas de cada *fold* con el siguiente código:
+
+```{python}
+best_cv_results(elasticnet_tune_result, metric="rmse", n=10)
+```
+
+En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:
+
+```{python}
+elasticnet_cv_results = pd.DataFrame(elasticnet_tune_result.cv_results_)
+elasticnet_cv_results["rmse"] = -elasticnet_cv_results["mean_test_rmse"]
+elasticnet_cv_results["mae"] = -elasticnet_cv_results["mean_test_mae"]
+elasticnet_cv_results["mape"] = -elasticnet_cv_results["mean_test_mape"]
+
+ax = elasticnet_cv_results.plot.scatter(
+    x="param_model__alpha",
+    y="rmse",
+    c="param_model__l1_ratio",
+    colormap="viridis",
+    logx=True,
+    figsize=(7, 4),
+)
+ax.set_title("RMSE por alpha y l1_ratio")
+ax.set_xlabel("alpha")
+ax.set_ylabel("RMSE")
+```
+
+En la siguiente gráfica observamos la $R^2$ asociada a distintos niveles de regularización.
+
+```{python}
+elasticnet_cv_results.plot.scatter(
+    x="param_model__alpha",
+    y="mean_test_rsq",
+    c="param_model__l1_ratio",
+    colormap="viridis",
+    logx=True,
+    figsize=(7, 4),
+)
+plt.title("R cuadrada por alpha y l1_ratio")
+plt.xlabel("alpha")
+plt.ylabel("R cuadrada promedio en CV")
+```
+
+
+**Paso 8: Selección de modelo a usar**
+
+Con el siguiente código obtenemos los mejores 10 modelos respecto al *rmse*.
+
+```{python}
+best_cv_results(elasticnet_tune_result, metric="rmse", n=10)
+```
+
+Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el *rmse*.
+
+```{python}
+best_elasticnet_regression_model = elasticnet_tune_result.best_params_
+best_elasticnet_regression_model
+```
+
+**Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
+
+```{python}
+final_elasticnet_regression_model = elasticnet_tune_result.best_estimator_
+final_elasticnet_regression_model
+```
+
+Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones. 
+
+Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos [data leakage](https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba). Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo. En modelos lineales regularizados podemos inspeccionar los coeficientes después del preprocesamiento.
+
+```{python}
+feature_names = final_elasticnet_regression_model.named_steps["preprocess"].get_feature_names_out()
+coeficientes_elasticnet = (
+    pd.DataFrame(
+        {
+            "Variable": feature_names,
+            "Coeficiente": final_elasticnet_regression_model.named_steps["model"].coef_,
+        }
+    )
+    .assign(Importancia=lambda data: data["Coeficiente"].abs())
+    .sort_values("Importancia", ascending=False)
+)
+display(coeficientes_elasticnet.head(20))
+
+ax = coeficientes_elasticnet.head(20).sort_values("Importancia").plot.barh(
+    x="Variable", y="Importancia", legend=False, figsize=(8, 6)
+)
+ax.set_title("Importancia de las variables")
+```
+
+
+**Paso 10: Validar poder predictivo con datos de prueba**
+
+Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
+
+```{python}
+results = pd.DataFrame(
+    {
+        "Sale_Price": y_ames_test.to_numpy(),
+        "pred_elasticnet_reg": final_elasticnet_regression_model.predict(X_ames_test),
+    }
+)
+results.head()
+```
+
+**Métricas de desempeño**
+
+Ahora para calcular las métricas de desempeño usaremos funciones de `sklearn.metrics` envueltas en una utilidad del repositorio:
+
+```{python}
+regression_metrics(results["Sale_Price"], results["pred_elasticnet_reg"]).assign(
+    estimate=lambda data: data["estimate"].round(2)
+)
+```
+
+```{python}
+plt.figure(figsize=(6, 5))
+plt.scatter(results["pred_elasticnet_reg"], results["Sale_Price"], alpha=0.6)
+lims = [
+    results[["pred_elasticnet_reg", "Sale_Price"]].min().min(),
+    results[["pred_elasticnet_reg", "Sale_Price"]].max().max(),
+]
+plt.plot(lims, lims, color="red")
+plt.xlabel("Predicción")
+plt.ylabel("Observación")
+plt.title("Comparación")
+plt.tight_layout()
+```
+
+
+
+
+### Clasificación
+
+Para clasificación usaremos regresión logística con penalización `elasticnet`. En `scikit-learn`, la regresión logística usa `C` como inverso de la regularización: valores pequeños de `C` implican una penalización más fuerte.
+
+**Paso 1: Separación inicial de datos (test, train)**
+
+```{python}
+telco = load_telco("data/Churn.csv")
+
+telco_train, telco_test = train_test_split(
+    telco,
+    train_size=0.70,
+    random_state=1234,
+    stratify=telco["Churn"],
+)
+X_telco_train = telco_train.drop(columns="Churn")
+y_telco_train = telco_train["Churn"]
+X_telco_test = telco_test.drop(columns="Churn")
+y_telco_test = telco_test["Churn"]
+telco_folds = StratifiedKFold(n_splits=5, shuffle=True, random_state=1234)
+telco_train.head()
+```
+
+**Paso 2: Pre-procesamiento e ingeniería de variables**
+
+```{python}
+telco_rec = make_telco_pipeline(
+    LogisticRegression(penalty="elasticnet", solver="saga", l1_ratio=0.5, max_iter=5_000),
+    scale_numeric=True,
+)
+telco_rec
+```
+
+**Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
+
+```{python}
+elasticnet_class_model = LogisticRegression(
+    penalty="elasticnet",
+    solver="saga",
+    l1_ratio=0.5,
+    max_iter=5_000,
+    random_state=1234,
+)
+elasticnet_class_model
+```
+
+**Paso 4: Inicialización de workflow o pipeline**
+
+```{python}
+elasticnet_class_workflow = make_telco_pipeline(elasticnet_class_model, scale_numeric=True)
+elasticnet_class_workflow
+```
+
+**Paso 5: Creación de grid search**
+
+```{python}
+elasticnet_class_param_distributions = {
+    "model__C": loguniform(1e-2, 1e2),
+    "model__l1_ratio": uniform(0.05, 0.95),
+}
+
+classification_scoring = {
+    "roc_auc": "roc_auc",
+    "pr_auc": make_scorer(
+        average_precision_score,
+        response_method="predict_proba",
+        pos_label="Yes",
+    ),
+}
+elasticnet_class_param_distributions
+```
+
+
+**Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
+
+```{python, eval=FALSE}
+elasticnet_class_tune_result = RandomizedSearchCV(
+    elasticnet_class_workflow,
+    param_distributions=elasticnet_class_param_distributions,
+    n_iter=50,
+    cv=telco_folds,
+    scoring=classification_scoring,
+    refit="pr_auc",
+    random_state=1234,
+    n_jobs=-1,
+)
+elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)
+
+import joblib
+joblib.dump(elasticnet_class_tune_result, "models/elasticnet_class_model.joblib")
+```
+
+**Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
+
+```{python}
+elasticnet_class_tune_result = RandomizedSearchCV(
+    elasticnet_class_workflow,
+    param_distributions=elasticnet_class_param_distributions,
+    n_iter=20,
+    cv=telco_folds,
+    scoring=classification_scoring,
+    refit="pr_auc",
+    random_state=1234,
+    n_jobs=-1,
+)
+elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)
+best_cv_results(elasticnet_class_tune_result, metric="pr_auc", n=10)
+```
+
+En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:
+
+```{python}
+elasticnet_class_results = pd.DataFrame(elasticnet_class_tune_result.cv_results_)
+elasticnet_class_results.plot.scatter(
+    x="param_model__C",
+    y="mean_test_pr_auc",
+    c="param_model__l1_ratio",
+    colormap="viridis",
+    logx=True,
+    figsize=(7, 4),
+)
+plt.title("PR AUC por C y l1_ratio")
+plt.xlabel("C")
+plt.ylabel("PR AUC promedio en CV")
+```
+
+```{python}
+best_cv_results(elasticnet_class_tune_result, metric="roc_auc", n=10)
+```
+
+```{python}
+best_cv_results(elasticnet_class_tune_result, metric="pr_auc", n=10)
+```
+
+
+**Paso 8: Selección de modelo a usar**
+
+```{python, message=FALSE, warning=FALSE}
+best_elasticnet_class_model = elasticnet_class_tune_result.best_params_
+best_elasticnet_class_model
+```
+
+**Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
+
+```{python, message=FALSE, warning=FALSE}
+final_elasticnet_class_model = elasticnet_class_tune_result.best_estimator_
+final_elasticnet_class_model
+```
+
+Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.
+
+Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En modelos lineales regularizados podemos revisar los coeficientes para identificar qué variables tienen mayor peso en la predicción.
+
+```{python}
+telco_feature_names = final_elasticnet_class_model.named_steps["preprocess"].get_feature_names_out()
+coeficientes_churn = (
+    pd.DataFrame(
+        {
+            "Variable": telco_feature_names,
+            "Coeficiente": final_elasticnet_class_model.named_steps["model"].coef_.ravel(),
+        }
+    )
+    .assign(Importancia=lambda data: data["Coeficiente"].abs())
+    .sort_values("Importancia", ascending=False)
+)
+display(coeficientes_churn.head(20))
+
+ax = coeficientes_churn.head(20).sort_values("Importancia").plot.barh(
+    x="Variable", y="Importancia", legend=False, figsize=(8, 6)
+)
+ax.set_title("Importancia de las variables")
+```
+
+**Paso 10: Validar poder predictivo con datos de prueba**
+
+Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
+
+```{python, message=FALSE, warning=FALSE}
+class_labels = list(final_elasticnet_class_model.named_steps["model"].classes_)
+proba_yes_index = class_labels.index("Yes")
+class_results = pd.DataFrame(
+    {
+        "Churn": y_telco_test.to_numpy(),
+        "pred_Yes": final_elasticnet_class_model.predict_proba(X_telco_test)[:, proba_yes_index],
+    }
+)
+class_results.head()
+```
+
+```{python}
+classification_metrics(class_results["Churn"], class_results["pred_Yes"], positive_label="Yes")
+```
+
+
+A continuación, conoceremos el nivel de sensitividad y especificidad para cada punto de corte:
+
+```{python}
+roc_curve_data = roc_curve_table(
+    class_results["Churn"],
+    class_results["pred_Yes"],
+    positive_label="Yes",
+)
+roc_curve_data.head()
+```
+
+A través de estas métricas es posible crear la curva ROC:
+
+```{python}
+plt.figure(figsize=(5, 5))
+plt.plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue", lw=2)
+plt.plot([0, 1], [0, 1], color="gray", linestyle="--")
+plt.xlabel("1 - especificidad")
+plt.ylabel("sensitividad")
+plt.title("ROC Curve")
+plt.axis("square")
+plt.tight_layout()
+```
+
+De igual manera, podemos calcular la precisión y cobertura para cada punto de corte:
+
+```{python}
+pr_curve_data = pr_curve_table(
+    class_results["Churn"],
+    class_results["pred_Yes"],
+    positive_label="Yes",
+)
+pr_curve_data.head()
+```
+
+Y graficar su respectiva curva:
+
+```{python}
+plt.figure(figsize=(5, 5))
+plt.plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue", lw=2)
+plt.xlabel("cobertura")
+plt.ylabel("precisión")
+plt.title("Precision vs Recall")
+plt.ylim(0, 1)
+plt.axis("square")
+plt.tight_layout()
+```
+
 
 
 

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 3 Regularización Elasticnet | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 3 Regularización Elasticnet | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 3 Regularización Elasticnet | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="feature-engineering.html"/>
+<link rel="next" href="support-vector-machine-svm-svr.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-python"><i class="fa fa-check"></i>Ciencia de Datos en Python</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>3</b> Regularización Elasticnet</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>3.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="3.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>3.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="3.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>3.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="3.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>3.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="3.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-python-2"><i class="fa fa-check"></i><b>3.5</b> Implementación en Python</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión"><i class="fa fa-check"></i><b>3.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="3.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación"><i class="fa fa-check"></i><b>3.5.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>4</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>4.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="4.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>4.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="4.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>4.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="4.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>4.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="4.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>4.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="4.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>4.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="4.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>4.7</b> Ajuste del modelo con Python</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>4.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="4.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>4.7.2</b> Implementación de SVM en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>5</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>5.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="5.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>5.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>5.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>5.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>5.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>5.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="5.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>5.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>5.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>5.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="5.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>5.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="5.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-4"><i class="fa fa-check"></i><b>5.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="5.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>5.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="5.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>5.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>6</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>6.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>6.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>6.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="6.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>6.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="6.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>6.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>6.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>6.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>6.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="6.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>6.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="6.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>6.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>6.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>6.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="6.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>6.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="6.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>6.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>6.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>7</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>7.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="7.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>7.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>7.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>7.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="7.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>7.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="7.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>7.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="7.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>7.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="7.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>7.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="7.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>7.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="7.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>7.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="7.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>7.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>8</b> Interpretabilidad de modelos</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>8.1</b> LIME</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>8.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="8.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>8.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="8.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>8.1.3</b> Implementación con <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>8.2</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>8.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="8.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>8.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>9</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>9.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="9.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>9.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="9.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>9.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>9.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="9.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>9.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="9.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>9.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="9.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>9.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="9.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>9.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="9.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>9.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="9.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>9.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>9.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>9.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="9.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>9.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>9.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>9.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="9.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>9.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regularización-elasticnet" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Capítulo 3</span> Regularización Elasticnet<a href="regularización-elasticnet.html#regularización-elasticnet" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>En muchas técnicas de aprendizaje automático, <strong>el aprendizaje consiste en encontrar los coeficientes que minimizan una función de costo</strong>. Un modelo estándar de mínimos cuadrados tiende a tener alguna variación, es decir, este modelo no se generalizará bien para un conjunto de datos diferente a sus datos de entrenamiento.</p>
+<p>La regularización consiste en <strong>añadir una penalización a la función de costo. Esta penalización produce modelos más simples que generalizan mejor y evita el riesgo de sobre-ajuste</strong>.</p>
+<p>El procedimiento de ajuste implica una función de pérdida, conocida como suma de cuadrados residual o <em>RSS</em>. Los coeficientes <span class="math inline">\(\beta\)</span> se eligen de manera que minimicen esta función de pérdida.</p>
+<p><span class="math display">\[RSS = \sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2\]</span></p>
+<p>Esto ajustará los coeficientes en función de sus datos de entrenamiento. Si hay ruido en los datos de entrenamiento, los coeficientes estimados no se generalizarán bien a los datos futuros. Aquí es donde entra la regularización y reduce o regulariza estas estimaciones aprendidas hacia cero.</p>
+<p>En esta sección se verán las regularizaciones más usadas en machine learning:</p>
+<ul>
+<li>Ridge (conocida también como L2)</li>
+<li>Lasso (también conocida como L1)</li>
+<li>ElasticNet que combina tanto Lasso como Ridge.</li>
+</ul>
+<p>Para cada una de estas regularizaciones ajustaremos modelos lineales con <code>scikit-learn</code>. En regresión usaremos el conjunto de viviendas de <em>Ames</em>; en clasificación usaremos el conjunto de abandono de clientes de Telco.</p>
+<p><img src="img/10-ml-elasticnet/overfitting.png" width="500pt" height="250pt" style="display: block; margin: auto;" /></p>
+<div id="regularización-ridge" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Regularización Ridge<a href="regularización-elasticnet.html#regularización-ridge" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En este tipo de regularización <em>RSS</em> se modifica agregando una cantidad de <strong>contracción a los coeficientes</strong>, los cuales se estiman minimizando esta función. <span class="math inline">\(\lambda\)</span> es el parámetro de ajuste que decide cuánto queremos penalizar la flexibilidad de el modelo.</p>
+<p><span class="math display">\[\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p \beta_j^2 = RSS + \lambda \sum_{j=1}^p \beta_j^2\]</span></p>
+<p>El aumento de la flexibilidad de un modelo está representado por el aumento de sus coeficientes, si se desea minimizar la función anterior, los coeficientes deben ser pequeños.</p>
+<p>Así es como la técnica de regresión de <em>Ridge</em> evita que los coeficientes aumenten demasiado. Además, reduce la asociación estimada de cada variable con la respuesta excepto la intersección <span class="math inline">\(\beta_0\)</span>. Esta intersección es una medida del valor medio de la respuesta cuando <span class="math inline">\(x_{i1} = x_{i2} =\dots= x_{ip} = 0\)</span>.</p>
+<blockquote>
+<p>Cuando <span class="math inline">\(\lambda = 0\)</span>, el término de penalización no tiene efecto y las estimaciones serán iguales a mínimos cuadrados.</p>
+</blockquote>
+<blockquote>
+<p>A medida que <span class="math inline">\(\lambda \rightarrow \infty\)</span>, el impacto de la penalización por contracción aumenta, y las estimaciones se acercarán a cero.</p>
+</blockquote>
+<p>La selección de un buen valor de <span class="math inline">\(\lambda\)</span> es fundamental. Las estimaciones de coeficientes producidas por este método también se conocen como la <strong>norma L2</strong>.</p>
+<p><strong>Nota:</strong> Es necesario estandarizar los predictores o llevarlos a la misma escala antes de aplicar esta regularización.</p>
+</div>
+<div id="regularización-lasso" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Regularización Lasso<a href="regularización-elasticnet.html#regularización-lasso" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Lasso es otra variación, en la que se minimiza la función <em>RSS</em>. Utiliza <span class="math inline">\(|\beta_j|\)</span> en lugar de los cuadrados de <span class="math inline">\(\beta\)</span> como penalización. Las estimaciones de coeficientes producidas por este método también se conocen como la <strong>norma L1</strong>.</p>
+<p><span class="math display">\[\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2 + \lambda \sum_{j=1}^p |\beta_j| = RSS + \lambda \sum_{j=1}^p |\beta_j|\]</span></p>
+<blockquote>
+<p>Cuando <span class="math inline">\(\lambda = 0\)</span>, el término de penalización no tiene efecto y las estimaciones serán iguales a mínimos cuadrados.</p>
+</blockquote>
+<blockquote>
+<p>A medida que <span class="math inline">\(\lambda \rightarrow \infty\)</span>, el impacto de la penalización por contracción aumenta, y las estimaciones se convierten en cero (eliminando variables).</p>
+</blockquote>
+<p>Este método de regularización permite eliminar coeficientes con alta variación, lo cual <strong>ayuda a la selección de variables</strong>.</p>
+</div>
+<div id="comparación-entre-ridge-y-lasso" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Comparación entre Ridge y Lasso<a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La regresión <em>Ridge</em> se puede considerar como la solución de una ecuación, donde la suma de los cuadrados de los coeficientes es menor o igual que <span class="math inline">\(s\)</span>, donde <span class="math inline">\(s\)</span> es una constante que existe para cada valor del factor de contracción <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math display">\[\beta_1^2 + \beta_2^2 \leq s\]</span></p>
+<p>Esto implica que los coeficientes de la regresión <em>Ridge</em> tienen el <em>RSS</em> (función de pérdida) más pequeño para todos los puntos que se encuentran dentro del círculo dado por la función de restricción <span class="math inline">\(\beta_1^2 + \beta_2^2 \leq s\)</span>.</p>
+<p>Y en la regresión <em>Lasso</em> se puede considerar como una ecuación en la que la suma del módulo de coeficientes es menor o igual que <span class="math inline">\(s\)</span>.</p>
+<p><span class="math display">\[|\beta_1| + |\beta_2| \leq s\]</span></p>
+<p>Esto implica que los coeficientes de lasso tienen la <em>RSS</em> (función de pérdida) más pequeña para todos los puntos que se encuentran dentro del diamante dado por la función de restricción <span class="math inline">\(|\beta_1| + |\beta_2| \leq s\)</span></p>
+<p><img src="img/10-ml-elasticnet/ridge-lasso.png" width="600pt" height="300pt" style="display: block; margin: auto;" /></p>
+<p>La imagen de arriba muestra las funciones de restricción (áreas verdes) para <em>Lasso</em> (izquierda) y <em>Ridge</em> (derecha), junto con contornos para <em>RSS</em> (elipse roja).</p>
+<p>Para un valor muy grande de <span class="math inline">\(s\)</span>, las regiones verdes contendrán el centro de la elipse, lo que hará que las estimaciones de los coeficientes de ambas técnicas de regresión sean iguales a las estimaciones de mínimos cuadrados. Pero este no es el caso en la imagen de arriba.</p>
+<p>En este caso, las estimaciones del coeficiente de regresión de <em>Lasso</em> y <em>Ridge</em> vienen dadas por el primer punto en el que una elipse contacta con la región de restricción. Dado que la regresión <em>Ridge</em> tiene una restricción circular sin puntos agudos, <strong>esta intersección generalmente no ocurrirá en un eje, por lo que las estimaciones del coeficiente de regresión de <em>Ridge</em> serán exclusivamente distintas de cero</strong>.</p>
+<p>Sin embargo, la restricción de <em>Lasso</em> <strong>tiene esquinas en cada uno de los ejes</strong>, por lo que la elipse a menudo intersectará la región de restricción en un eje. <strong>Cuando esto ocurre, uno de los coeficientes será igual a cero</strong>. En dimensiones más altas, muchas de las estimaciones de coeficientes pueden ser iguales a cero simultáneamente.</p>
+<p><strong>Desventajas</strong></p>
+<ul>
+<li><p>Regresión <em>Ridge</em>: Reducirá los coeficientes de los predictores menos importantes, muy cerca de cero. Pero nunca los hará exactamente cero. En otras palabras, el modelo final incluirá todos los predictores.</p></li>
+<li><p>Regresión <em>Lasso</em>: La penalización <em>L1</em> tiene el efecto de forzar algunas de las estimaciones de coeficientes a ser exactamente iguales a cero cuando el parámetro de ajuste <span class="math inline">\(\lambda\)</span> es suficientemente grande. Por lo tanto, este método realiza una selección de variables.</p></li>
+</ul>
+</div>
+<div id="elasticnet" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> ElasticNet<a href="regularización-elasticnet.html#elasticnet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><em>ElasticNet</em> surgió por primera vez como resultado de la crítica a <em>Lasso</em>, cuya selección de variables puede ser demasiado dependiente de los datos y, por lo tanto, inestable. La solución es <strong>combinar las penalizaciones</strong> de la regresión de <em>Ridge</em> y <em>Lasso</em> para obtener lo mejor de ambas regularizaciones.</p>
+<p><em>ElasticNet</em> tiene como objetivo minimizar la siguiente función de pérdida:</p>
+<p><span class="math display">\[\frac{\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2}{2n} +
+\lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)\]</span></p>
+<p><span class="math display">\[= \frac{RSS}{2n}+ \lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)\]</span></p>
+<p>donde <span class="math inline">\(\alpha \in [0,1]\)</span> es el parámetro de mezcla entre la regularización <em>Ridge</em> <span class="math inline">\((\alpha = 0)\)</span> y la regularización <em>Lasso</em> <span class="math inline">\((\alpha = 1)\)</span>. En <code>scikit-learn</code>, este parámetro se llama <code>l1_ratio</code>; la intensidad total de la penalización se controla con <code>alpha</code> en regresión y con <code>C</code> en regresión logística.</p>
+<p>La combinación de ambas penalizaciones suele dar lugar a buenos resultados. Una estrategia frecuentemente utilizada es asignarle casi todo el peso a la penalización <em>L1</em> ( <span class="math inline">\(\alpha \approx 1\)</span>) para conseguir seleccionar predictores y menos peso a la regularización <span class="math inline">\(L2\)</span> para dar cierta estabilidad en el caso de que algunos predictores estén correlacionados.</p>
+<p><img src="img/10-ml-elasticnet/elastic-net.png" width="550pt" height="400pt" style="display: block; margin: auto;" /></p>
+</div>
+<div id="implementación-en-python-2" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Implementación en Python<a href="regularización-elasticnet.html#implementación-en-python-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="regresión" class="section level3 hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Regresión<a href="regularización-elasticnet.html#regresión" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Utilizaremos <code>Ridge</code>, <code>Lasso</code> y <code>ElasticNet</code> de <code>sklearn.linear_model</code>. El preprocesamiento se encapsula en un <code>Pipeline</code>, de forma que la imputación, escalamiento y codificación de variables se estimen solamente con los datos de entrenamiento.</p>
+<p>En <code>scikit-learn</code> los parámetros principales son:</p>
+<ul>
+<li><p><code>alpha</code>: intensidad total de regularización en <code>Ridge</code>, <code>Lasso</code> y <code>ElasticNet</code>. Valores mayores producen coeficientes más pequeños.</p></li>
+<li><p><code>l1_ratio</code>: proporción de regularización <em>L1</em> en <code>ElasticNet</code>. Cuando <code>l1_ratio = 1</code>, el comportamiento es equivalente a <em>Lasso</em>; cuando <code>l1_ratio = 0</code>, es equivalente a <em>Ridge</em>. Para los casos puros usaremos directamente <code>Ridge</code> y <code>Lasso</code>.</p></li>
+</ul>
+<p><strong>Paso 1: Separación inicial de datos ( test, train, KFCV )</strong></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="regularización-elasticnet.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb87-2"><a href="regularización-elasticnet.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb87-3"><a href="regularización-elasticnet.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb87-4"><a href="regularización-elasticnet.html#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb87-5"><a href="regularización-elasticnet.html#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> loguniform, uniform</span>
+<span id="cb87-6"><a href="regularización-elasticnet.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> ElasticNet, Lasso, LogisticRegression, Ridge</span>
+<span id="cb87-7"><a href="regularización-elasticnet.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> average_precision_score, make_scorer</span>
+<span id="cb87-8"><a href="regularización-elasticnet.html#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, RandomizedSearchCV, StratifiedKFold, train_test_split</span>
+<span id="cb87-9"><a href="regularización-elasticnet.html#cb87-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-10"><a href="regularización-elasticnet.html#cb87-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> (</span>
+<span id="cb87-11"><a href="regularización-elasticnet.html#cb87-11" aria-hidden="true" tabindex="-1"></a>    best_cv_results,</span>
+<span id="cb87-12"><a href="regularización-elasticnet.html#cb87-12" aria-hidden="true" tabindex="-1"></a>    classification_metrics,</span>
+<span id="cb87-13"><a href="regularización-elasticnet.html#cb87-13" aria-hidden="true" tabindex="-1"></a>    load_ames,</span>
+<span id="cb87-14"><a href="regularización-elasticnet.html#cb87-14" aria-hidden="true" tabindex="-1"></a>    load_telco,</span>
+<span id="cb87-15"><a href="regularización-elasticnet.html#cb87-15" aria-hidden="true" tabindex="-1"></a>    make_ames_pipeline,</span>
+<span id="cb87-16"><a href="regularización-elasticnet.html#cb87-16" aria-hidden="true" tabindex="-1"></a>    make_telco_pipeline,</span>
+<span id="cb87-17"><a href="regularización-elasticnet.html#cb87-17" aria-hidden="true" tabindex="-1"></a>    pr_curve_table,</span>
+<span id="cb87-18"><a href="regularización-elasticnet.html#cb87-18" aria-hidden="true" tabindex="-1"></a>    regression_metrics,</span>
+<span id="cb87-19"><a href="regularización-elasticnet.html#cb87-19" aria-hidden="true" tabindex="-1"></a>    roc_curve_table,</span>
+<span id="cb87-20"><a href="regularización-elasticnet.html#cb87-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-21"><a href="regularización-elasticnet.html#cb87-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-22"><a href="regularización-elasticnet.html#cb87-22" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> load_ames()</span>
+<span id="cb87-23"><a href="regularización-elasticnet.html#cb87-23" aria-hidden="true" tabindex="-1"></a>ames_train, ames_test <span class="op">=</span> train_test_split(ames, train_size<span class="op">=</span><span class="fl">0.75</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span>
+<span id="cb87-24"><a href="regularización-elasticnet.html#cb87-24" aria-hidden="true" tabindex="-1"></a>X_ames_train <span class="op">=</span> ames_train.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
+<span id="cb87-25"><a href="regularización-elasticnet.html#cb87-25" aria-hidden="true" tabindex="-1"></a>y_ames_train <span class="op">=</span> ames_train[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb87-26"><a href="regularización-elasticnet.html#cb87-26" aria-hidden="true" tabindex="-1"></a>X_ames_test <span class="op">=</span> ames_test.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
+<span id="cb87-27"><a href="regularización-elasticnet.html#cb87-27" aria-hidden="true" tabindex="-1"></a>y_ames_test <span class="op">=</span> ames_test[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb87-28"><a href="regularización-elasticnet.html#cb87-28" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span></code></pre></div>
+<p>Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.</p>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="regularización-elasticnet.html#cb88-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="op">=</span> make_ames_pipeline(ElasticNet(max_iter<span class="op">=</span><span class="dv">20_000</span>), scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb88-2"><a href="regularización-elasticnet.html#cb88-2" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x307e9d790&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30842f610&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;, ElasticNet(max_iter=20000))])</code></pre>
+<p>Recordemos que un <strong>Pipeline</strong> contiene los pasos a seguir. Usamos <strong>fit()</strong> para estimar transformaciones y modelo, y <strong>transform()</strong> o <strong>predict()</strong> para aplicarlo a nuevos datos.</p>
+<p>Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés.</p>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="regularización-elasticnet.html#cb90-1" aria-hidden="true" tabindex="-1"></a>ridge_regression_model <span class="op">=</span> Ridge()</span>
+<span id="cb90-2"><a href="regularización-elasticnet.html#cb90-2" aria-hidden="true" tabindex="-1"></a>lasso_regression_model <span class="op">=</span> Lasso(max_iter<span class="op">=</span><span class="dv">20_000</span>)</span>
+<span id="cb90-3"><a href="regularización-elasticnet.html#cb90-3" aria-hidden="true" tabindex="-1"></a>elasticnet_regression_model <span class="op">=</span> ElasticNet(max_iter<span class="op">=</span><span class="dv">20_000</span>)</span>
+<span id="cb90-4"><a href="regularización-elasticnet.html#cb90-4" aria-hidden="true" tabindex="-1"></a>elasticnet_regression_model</span></code></pre></div>
+<pre><code>## ElasticNet(max_iter=20000)</code></pre>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="regularización-elasticnet.html#cb92-1" aria-hidden="true" tabindex="-1"></a>ridge_workflow <span class="op">=</span> make_ames_pipeline(ridge_regression_model, scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb92-2"><a href="regularización-elasticnet.html#cb92-2" aria-hidden="true" tabindex="-1"></a>lasso_workflow <span class="op">=</span> make_ames_pipeline(lasso_regression_model, scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb92-3"><a href="regularización-elasticnet.html#cb92-3" aria-hidden="true" tabindex="-1"></a>elasticnet_workflow <span class="op">=</span> make_ames_pipeline(elasticnet_regression_model, scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb92-4"><a href="regularización-elasticnet.html#cb92-4" aria-hidden="true" tabindex="-1"></a>elasticnet_workflow</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30848e510&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30848f650&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;, ElasticNet(max_iter=20000))])</code></pre>
+<p>Antes de optimizar hiperparámetros, comparemos los tres enfoques con valores fijos de regularización:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="regularización-elasticnet.html#cb94-1" aria-hidden="true" tabindex="-1"></a>regularized_models <span class="op">=</span> {</span>
+<span id="cb94-2"><a href="regularización-elasticnet.html#cb94-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ridge&quot;</span>: make_ames_pipeline(Ridge(alpha<span class="op">=</span><span class="dv">10</span>), scale_numeric<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb94-3"><a href="regularización-elasticnet.html#cb94-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Lasso&quot;</span>: make_ames_pipeline(Lasso(alpha<span class="op">=</span><span class="dv">1_000</span>, max_iter<span class="op">=</span><span class="dv">20_000</span>), scale_numeric<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb94-4"><a href="regularización-elasticnet.html#cb94-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ElasticNet&quot;</span>: make_ames_pipeline(ElasticNet(alpha<span class="op">=</span><span class="dv">1_000</span>, l1_ratio<span class="op">=</span><span class="fl">0.5</span>, max_iter<span class="op">=</span><span class="dv">20_000</span>), scale_numeric<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb94-5"><a href="regularización-elasticnet.html#cb94-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb94-6"><a href="regularización-elasticnet.html#cb94-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-7"><a href="regularización-elasticnet.html#cb94-7" aria-hidden="true" tabindex="-1"></a>comparison_rows <span class="op">=</span> []</span>
+<span id="cb94-8"><a href="regularización-elasticnet.html#cb94-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, model <span class="kw">in</span> regularized_models.items():</span>
+<span id="cb94-9"><a href="regularización-elasticnet.html#cb94-9" aria-hidden="true" tabindex="-1"></a>    model.fit(X_ames_train, y_ames_train)</span>
+<span id="cb94-10"><a href="regularización-elasticnet.html#cb94-10" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> model.predict(X_ames_test)</span>
+<span id="cb94-11"><a href="regularización-elasticnet.html#cb94-11" aria-hidden="true" tabindex="-1"></a>    metrics <span class="op">=</span> regression_metrics(y_ames_test, predictions)</span>
+<span id="cb94-12"><a href="regularización-elasticnet.html#cb94-12" aria-hidden="true" tabindex="-1"></a>    coefficients <span class="op">=</span> model.named_steps[<span class="st">&quot;model&quot;</span>].coef_</span>
+<span id="cb94-13"><a href="regularización-elasticnet.html#cb94-13" aria-hidden="true" tabindex="-1"></a>    comparison_rows.append(</span>
+<span id="cb94-14"><a href="regularización-elasticnet.html#cb94-14" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb94-15"><a href="regularización-elasticnet.html#cb94-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;modelo&quot;</span>: name,</span>
+<span id="cb94-16"><a href="regularización-elasticnet.html#cb94-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;rmse&quot;</span>: metrics.query(<span class="st">&quot;metric == &#39;rmse&#39;&quot;</span>)[<span class="st">&quot;estimate&quot;</span>].iloc[<span class="dv">0</span>],</span>
+<span id="cb94-17"><a href="regularización-elasticnet.html#cb94-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;mae&quot;</span>: metrics.query(<span class="st">&quot;metric == &#39;mae&#39;&quot;</span>)[<span class="st">&quot;estimate&quot;</span>].iloc[<span class="dv">0</span>],</span>
+<span id="cb94-18"><a href="regularización-elasticnet.html#cb94-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;rsq&quot;</span>: metrics.query(<span class="st">&quot;metric == &#39;rsq&#39;&quot;</span>)[<span class="st">&quot;estimate&quot;</span>].iloc[<span class="dv">0</span>],</span>
+<span id="cb94-19"><a href="regularización-elasticnet.html#cb94-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;coeficientes_no_cero&quot;</span>: np.<span class="bu">sum</span>(np.<span class="bu">abs</span>(coefficients) <span class="op">&gt;</span> <span class="fl">1e-8</span>),</span>
+<span id="cb94-20"><a href="regularización-elasticnet.html#cb94-20" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb94-21"><a href="regularización-elasticnet.html#cb94-21" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x308469a10&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30846bc10&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;, Ridge(alpha=10))])
+## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x308461790&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3084609d0&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;, Lasso(alpha=1000, max_iter=20000))])
+## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x308460dd0&gt;),
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3084611d0&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;, ElasticNet(alpha=1000, max_iter=20000))])</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="regularización-elasticnet.html#cb96-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(comparison_rows).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##        modelo       rmse        mae    rsq  coeficientes_no_cero
+## 0       Ridge  41191.958  17517.684  0.715                   293
+## 1       Lasso  42958.389  19613.680  0.690                    35
+## 2  ElasticNet  76172.812  56427.263  0.026                   197</code></pre>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="regularización-elasticnet.html#cb98-1" aria-hidden="true" tabindex="-1"></a>elasticnet_param_distributions <span class="op">=</span> {</span>
+<span id="cb98-2"><a href="regularización-elasticnet.html#cb98-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__alpha&quot;</span>: loguniform(<span class="fl">1e-4</span>, <span class="fl">1e2</span>),</span>
+<span id="cb98-3"><a href="regularización-elasticnet.html#cb98-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__l1_ratio&quot;</span>: uniform(<span class="fl">0.05</span>, <span class="fl">0.95</span>),</span>
+<span id="cb98-4"><a href="regularización-elasticnet.html#cb98-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb98-5"><a href="regularización-elasticnet.html#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-6"><a href="regularización-elasticnet.html#cb98-6" aria-hidden="true" tabindex="-1"></a>regression_scoring <span class="op">=</span> {</span>
+<span id="cb98-7"><a href="regularización-elasticnet.html#cb98-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;rmse&quot;</span>: <span class="st">&quot;neg_root_mean_squared_error&quot;</span>,</span>
+<span id="cb98-8"><a href="regularización-elasticnet.html#cb98-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mae&quot;</span>: <span class="st">&quot;neg_mean_absolute_error&quot;</span>,</span>
+<span id="cb98-9"><a href="regularización-elasticnet.html#cb98-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mape&quot;</span>: <span class="st">&quot;neg_mean_absolute_percentage_error&quot;</span>,</span>
+<span id="cb98-10"><a href="regularización-elasticnet.html#cb98-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;rsq&quot;</span>: <span class="st">&quot;r2&quot;</span>,</span>
+<span id="cb98-11"><a href="regularización-elasticnet.html#cb98-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb98-12"><a href="regularización-elasticnet.html#cb98-12" aria-hidden="true" tabindex="-1"></a>elasticnet_param_distributions</span></code></pre></div>
+<pre><code>## {&#39;model__alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x307e5ec90&gt;, &#39;model__l1_ratio&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3060ff050&gt;}</code></pre>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb100-1"><a href="regularización-elasticnet.html#cb100-1" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb100-2"><a href="regularización-elasticnet.html#cb100-2" aria-hidden="true" tabindex="-1"></a>    elasticnet_workflow,</span>
+<span id="cb100-3"><a href="regularización-elasticnet.html#cb100-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>elasticnet_param_distributions,</span>
+<span id="cb100-4"><a href="regularización-elasticnet.html#cb100-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb100-5"><a href="regularización-elasticnet.html#cb100-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
+<span id="cb100-6"><a href="regularización-elasticnet.html#cb100-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span>regression_scoring,</span>
+<span id="cb100-7"><a href="regularización-elasticnet.html#cb100-7" aria-hidden="true" tabindex="-1"></a>    refit<span class="op">=</span><span class="st">&quot;rmse&quot;</span>,</span>
+<span id="cb100-8"><a href="regularización-elasticnet.html#cb100-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">195628</span>,</span>
+<span id="cb100-9"><a href="regularización-elasticnet.html#cb100-9" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb100-10"><a href="regularización-elasticnet.html#cb100-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb100-11"><a href="regularización-elasticnet.html#cb100-11" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result.fit(X_ames_train, y_ames_train)</span>
+<span id="cb100-12"><a href="regularización-elasticnet.html#cb100-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-13"><a href="regularización-elasticnet.html#cb100-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb100-14"><a href="regularización-elasticnet.html#cb100-14" aria-hidden="true" tabindex="-1"></a>joblib.dump(elasticnet_tune_result, <span class="st">&quot;models/elasticnet_model_reg.joblib&quot;</span>)</span></code></pre></div>
+<p>Para que el documento se pueda ejecutar en clase sin esperar un ajuste largo, usamos menos iteraciones en el siguiente bloque:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="regularización-elasticnet.html#cb101-1" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb101-2"><a href="regularización-elasticnet.html#cb101-2" aria-hidden="true" tabindex="-1"></a>    elasticnet_workflow,</span>
+<span id="cb101-3"><a href="regularización-elasticnet.html#cb101-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>elasticnet_param_distributions,</span>
+<span id="cb101-4"><a href="regularización-elasticnet.html#cb101-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb101-5"><a href="regularización-elasticnet.html#cb101-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
+<span id="cb101-6"><a href="regularización-elasticnet.html#cb101-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span>regression_scoring,</span>
+<span id="cb101-7"><a href="regularización-elasticnet.html#cb101-7" aria-hidden="true" tabindex="-1"></a>    refit<span class="op">=</span><span class="st">&quot;rmse&quot;</span>,</span>
+<span id="cb101-8"><a href="regularización-elasticnet.html#cb101-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">195628</span>,</span>
+<span id="cb101-9"><a href="regularización-elasticnet.html#cb101-9" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb101-10"><a href="regularización-elasticnet.html#cb101-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb101-11"><a href="regularización-elasticnet.html#cb101-11" aria-hidden="true" tabindex="-1"></a>elasticnet_tune_result.fit(X_ames_train, y_ames_train)</span></code></pre></div>
+<pre><code>## RandomizedSearchCV(cv=KFold(n_splits=5, random_state=4595, shuffle=True),
+##                    estimator=Pipeline(steps=[(&#39;features&#39;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
+##                                                                            kw_args={&#39;keep_target&#39;: False,
+##                                                                                     &#39;large&#39;: False})),
+##                                              (&#39;preprocess&#39;,
+##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                                                 SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                                                (&#39;...
+##                    param_distributions={&#39;model__alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x307e5ec90&gt;,
+##                                         &#39;model__l1_ratio&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3060ff050&gt;},
+##                    random_state=195628, refit=&#39;rmse&#39;,
+##                    scoring={&#39;mae&#39;: &#39;neg_mean_absolute_error&#39;,
+##                             &#39;mape&#39;: &#39;neg_mean_absolute_percentage_error&#39;,
+##                             &#39;rmse&#39;: &#39;neg_root_mean_squared_error&#39;,
+##                             &#39;rsq&#39;: &#39;r2&#39;})</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="regularización-elasticnet.html#cb103-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(elasticnet_tune_result.cv_results_).head()</span></code></pre></div>
+<pre><code>##    mean_fit_time  std_fit_time  ...  std_test_rsq  rank_test_rsq
+## 0       0.073837      0.010245  ...      0.024684             19
+## 1       0.476676      0.281973  ...      0.081147              3
+## 2       0.381284      0.194994  ...      0.018698             20
+## 3       0.292222      0.108338  ...      0.053200              8
+## 4       1.070777      0.060774  ...      0.086498              6
+## 
+## [5 rows x 39 columns]</code></pre>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<p>Podemos obtener las métricas de cada <em>fold</em> con el siguiente código:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="regularización-elasticnet.html#cb105-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(elasticnet_tune_result, metric<span class="op">=</span><span class="st">&quot;rmse&quot;</span>, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__alpha  param_model__l1_ratio  ...  mean_test_rsq  std_test_rsq
+## 19            0.104019               0.694320  ...       0.847080      0.076950
+## 1             0.030692               0.413663  ...       0.845955      0.081147
+## 17            0.222962               0.646433  ...       0.846339      0.068282
+## 7             0.008095               0.337886  ...       0.840324      0.086065
+## 4             0.004518               0.110866  ...       0.838489      0.086498
+## 8             0.003790               0.497217  ...       0.832923      0.086817
+## 11            0.919325               0.726009  ...       0.838989      0.055218
+## 9             0.351388               0.202736  ...       0.837816      0.054005
+## 3             0.387740               0.224550  ...       0.836970      0.053200
+## 12            0.340086               0.108797  ...       0.836872      0.053109
+## 
+## [10 rows x 10 columns]</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="regularización-elasticnet.html#cb107-1" aria-hidden="true" tabindex="-1"></a>elasticnet_cv_results <span class="op">=</span> pd.DataFrame(elasticnet_tune_result.cv_results_)</span>
+<span id="cb107-2"><a href="regularización-elasticnet.html#cb107-2" aria-hidden="true" tabindex="-1"></a>elasticnet_cv_results[<span class="st">&quot;rmse&quot;</span>] <span class="op">=</span> <span class="op">-</span>elasticnet_cv_results[<span class="st">&quot;mean_test_rmse&quot;</span>]</span>
+<span id="cb107-3"><a href="regularización-elasticnet.html#cb107-3" aria-hidden="true" tabindex="-1"></a>elasticnet_cv_results[<span class="st">&quot;mae&quot;</span>] <span class="op">=</span> <span class="op">-</span>elasticnet_cv_results[<span class="st">&quot;mean_test_mae&quot;</span>]</span>
+<span id="cb107-4"><a href="regularización-elasticnet.html#cb107-4" aria-hidden="true" tabindex="-1"></a>elasticnet_cv_results[<span class="st">&quot;mape&quot;</span>] <span class="op">=</span> <span class="op">-</span>elasticnet_cv_results[<span class="st">&quot;mean_test_mape&quot;</span>]</span>
+<span id="cb107-5"><a href="regularización-elasticnet.html#cb107-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-6"><a href="regularización-elasticnet.html#cb107-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> elasticnet_cv_results.plot.scatter(</span>
+<span id="cb107-7"><a href="regularización-elasticnet.html#cb107-7" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;param_model__alpha&quot;</span>,</span>
+<span id="cb107-8"><a href="regularización-elasticnet.html#cb107-8" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">&quot;rmse&quot;</span>,</span>
+<span id="cb107-9"><a href="regularización-elasticnet.html#cb107-9" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span><span class="st">&quot;param_model__l1_ratio&quot;</span>,</span>
+<span id="cb107-10"><a href="regularización-elasticnet.html#cb107-10" aria-hidden="true" tabindex="-1"></a>    colormap<span class="op">=</span><span class="st">&quot;viridis&quot;</span>,</span>
+<span id="cb107-11"><a href="regularización-elasticnet.html#cb107-11" aria-hidden="true" tabindex="-1"></a>    logx<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb107-12"><a href="regularización-elasticnet.html#cb107-12" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>),</span>
+<span id="cb107-13"><a href="regularización-elasticnet.html#cb107-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb107-14"><a href="regularización-elasticnet.html#cb107-14" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;RMSE por alpha y l1_ratio&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;RMSE por alpha y l1_ratio&#39;)</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb109-1"><a href="regularización-elasticnet.html#cb109-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;alpha&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;alpha&#39;)</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb111-1"><a href="regularización-elasticnet.html#cb111-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&quot;RMSE&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;RMSE&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>En la siguiente gráfica observamos la <span class="math inline">\(R^2\)</span> asociada a distintos niveles de regularización.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb113-1"><a href="regularización-elasticnet.html#cb113-1" aria-hidden="true" tabindex="-1"></a>elasticnet_cv_results.plot.scatter(</span>
+<span id="cb113-2"><a href="regularización-elasticnet.html#cb113-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;param_model__alpha&quot;</span>,</span>
+<span id="cb113-3"><a href="regularización-elasticnet.html#cb113-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">&quot;mean_test_rsq&quot;</span>,</span>
+<span id="cb113-4"><a href="regularización-elasticnet.html#cb113-4" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span><span class="st">&quot;param_model__l1_ratio&quot;</span>,</span>
+<span id="cb113-5"><a href="regularización-elasticnet.html#cb113-5" aria-hidden="true" tabindex="-1"></a>    colormap<span class="op">=</span><span class="st">&quot;viridis&quot;</span>,</span>
+<span id="cb113-6"><a href="regularización-elasticnet.html#cb113-6" aria-hidden="true" tabindex="-1"></a>    logx<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb113-7"><a href="regularización-elasticnet.html#cb113-7" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>),</span>
+<span id="cb113-8"><a href="regularización-elasticnet.html#cb113-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## &lt;Axes: xlabel=&#39;param_model__alpha&#39;, ylabel=&#39;mean_test_rsq&#39;&gt;</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb115-1"><a href="regularización-elasticnet.html#cb115-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;R cuadrada por alpha y l1_ratio&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;R cuadrada por alpha y l1_ratio&#39;)</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb117-1"><a href="regularización-elasticnet.html#cb117-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;alpha&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;alpha&#39;)</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb119-1"><a href="regularización-elasticnet.html#cb119-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;R cuadrada promedio en CV&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;R cuadrada promedio en CV&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-52-3.png" width="672" /></p>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<p>Con el siguiente código obtenemos los mejores 10 modelos respecto al <em>rmse</em>.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="regularización-elasticnet.html#cb121-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(elasticnet_tune_result, metric<span class="op">=</span><span class="st">&quot;rmse&quot;</span>, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__alpha  param_model__l1_ratio  ...  mean_test_rsq  std_test_rsq
+## 19            0.104019               0.694320  ...       0.847080      0.076950
+## 1             0.030692               0.413663  ...       0.845955      0.081147
+## 17            0.222962               0.646433  ...       0.846339      0.068282
+## 7             0.008095               0.337886  ...       0.840324      0.086065
+## 4             0.004518               0.110866  ...       0.838489      0.086498
+## 8             0.003790               0.497217  ...       0.832923      0.086817
+## 11            0.919325               0.726009  ...       0.838989      0.055218
+## 9             0.351388               0.202736  ...       0.837816      0.054005
+## 3             0.387740               0.224550  ...       0.836970      0.053200
+## 12            0.340086               0.108797  ...       0.836872      0.053109
+## 
+## [10 rows x 10 columns]</code></pre>
+<p>Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el <em>rmse</em>.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb123-1"><a href="regularización-elasticnet.html#cb123-1" aria-hidden="true" tabindex="-1"></a>best_elasticnet_regression_model <span class="op">=</span> elasticnet_tune_result.best_params_</span>
+<span id="cb123-2"><a href="regularización-elasticnet.html#cb123-2" aria-hidden="true" tabindex="-1"></a>best_elasticnet_regression_model</span></code></pre></div>
+<pre><code>## {&#39;model__alpha&#39;: 0.10401853554143241, &#39;model__l1_ratio&#39;: 0.6943204599531325}</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="regularización-elasticnet.html#cb125-1" aria-hidden="true" tabindex="-1"></a>final_elasticnet_regression_model <span class="op">=</span> elasticnet_tune_result.best_estimator_</span>
+<span id="cb125-2"><a href="regularización-elasticnet.html#cb125-2" aria-hidden="true" tabindex="-1"></a>final_elasticnet_regression_model</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False,
+##                                                        &#39;large&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_sele...
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17af85bd0&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;,
+##                  ElasticNet(alpha=0.10401853554143241,
+##                             l1_ratio=0.6943204599531325, max_iter=20000))])</code></pre>
+<p>Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos <a href="https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba">data leakage</a>. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo. En modelos lineales regularizados podemos inspeccionar los coeficientes después del preprocesamiento.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb127-1"><a href="regularización-elasticnet.html#cb127-1" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> final_elasticnet_regression_model.named_steps[<span class="st">&quot;preprocess&quot;</span>].get_feature_names_out()</span>
+<span id="cb127-2"><a href="regularización-elasticnet.html#cb127-2" aria-hidden="true" tabindex="-1"></a>coeficientes_elasticnet <span class="op">=</span> (</span>
+<span id="cb127-3"><a href="regularización-elasticnet.html#cb127-3" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
+<span id="cb127-4"><a href="regularización-elasticnet.html#cb127-4" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb127-5"><a href="regularización-elasticnet.html#cb127-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: feature_names,</span>
+<span id="cb127-6"><a href="regularización-elasticnet.html#cb127-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Coeficiente&quot;</span>: final_elasticnet_regression_model.named_steps[<span class="st">&quot;model&quot;</span>].coef_,</span>
+<span id="cb127-7"><a href="regularización-elasticnet.html#cb127-7" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb127-8"><a href="regularización-elasticnet.html#cb127-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb127-9"><a href="regularización-elasticnet.html#cb127-9" aria-hidden="true" tabindex="-1"></a>    .assign(Importancia<span class="op">=</span><span class="kw">lambda</span> data: data[<span class="st">&quot;Coeficiente&quot;</span>].<span class="bu">abs</span>())</span>
+<span id="cb127-10"><a href="regularización-elasticnet.html#cb127-10" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importancia&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb127-11"><a href="regularización-elasticnet.html#cb127-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb127-12"><a href="regularización-elasticnet.html#cb127-12" aria-hidden="true" tabindex="-1"></a>display(coeficientes_elasticnet.head(<span class="dv">20</span>))</span></code></pre></div>
+<pre><code>##                  Variable   Coeficiente   Importancia
+## 224        KitchenQual_Ex  14437.983587  14437.983587
+## 32                TotalSF  14225.140470  14225.140470
+## 78   Neighborhood_NoRidge  12854.858425  12854.858425
+## 4             OverallQual  12848.290735  12848.290735
+## 12               2ndFlrSF  11187.565521  11187.565521
+## 177           BsmtQual_Ex  11078.932060  11078.932060
+## 100       Condition2_PosN -10180.265255  10180.265255
+## 85   Neighborhood_StoneBr  10038.481215  10038.481215
+## 69   Neighborhood_Crawfor   9715.457535   9715.457535
+## 79   Neighborhood_NridgHt   9318.691843   9318.691843
+## 162          ExterQual_Ex   9003.326027   9003.326027
+## 187      Bsmt_Exposure_Gd   8856.923729   8856.923729
+## 90       Condition_1_Norm   8753.194504   8753.194504
+## 128      RoofMatl_WdShngl   8726.962340   8726.962340
+## 99        Condition2_Norm   8444.910147   8444.910147
+## 17          TotRms_AbvGrd   8177.439407   8177.439407
+## 11               1stFlrSF   7799.356230   7799.356230
+## 70   Neighborhood_Edwards  -7743.973179   7743.973179
+## 74   Neighborhood_Mitchel  -7572.701520   7572.701520
+## 226        KitchenQual_Gd  -7571.867218   7571.867218</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb129-1"><a href="regularización-elasticnet.html#cb129-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> coeficientes_elasticnet.head(<span class="dv">20</span>).sort_values(<span class="st">&quot;Importancia&quot;</span>).plot.barh(</span>
+<span id="cb129-2"><a href="regularización-elasticnet.html#cb129-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importancia&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span>
+<span id="cb129-3"><a href="regularización-elasticnet.html#cb129-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb129-4"><a href="regularización-elasticnet.html#cb129-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Importancia de las variables&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-56-5.png" width="768" /></p>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb131-1"><a href="regularización-elasticnet.html#cb131-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb131-2"><a href="regularización-elasticnet.html#cb131-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb131-3"><a href="regularización-elasticnet.html#cb131-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Sale_Price&quot;</span>: y_ames_test.to_numpy(),</span>
+<span id="cb131-4"><a href="regularización-elasticnet.html#cb131-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pred_elasticnet_reg&quot;</span>: final_elasticnet_regression_model.predict(X_ames_test),</span>
+<span id="cb131-5"><a href="regularización-elasticnet.html#cb131-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb131-6"><a href="regularización-elasticnet.html#cb131-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb131-7"><a href="regularización-elasticnet.html#cb131-7" aria-hidden="true" tabindex="-1"></a>results.head()</span></code></pre></div>
+<pre><code>##    Sale_Price  pred_elasticnet_reg
+## 0      253000        239422.824464
+## 1      161750        149116.484582
+## 2       89471        125326.437023
+## 3      314813        337602.408500
+## 4      180500        200519.046507</code></pre>
+<p><strong>Métricas de desempeño</strong></p>
+<p>Ahora para calcular las métricas de desempeño usaremos funciones de <code>sklearn.metrics</code> envueltas en una utilidad del repositorio:</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb133-1"><a href="regularización-elasticnet.html#cb133-1" aria-hidden="true" tabindex="-1"></a>regression_metrics(results[<span class="st">&quot;Sale_Price&quot;</span>], results[<span class="st">&quot;pred_elasticnet_reg&quot;</span>]).assign(</span>
+<span id="cb133-2"><a href="regularización-elasticnet.html#cb133-2" aria-hidden="true" tabindex="-1"></a>    estimate<span class="op">=</span><span class="kw">lambda</span> data: data[<span class="st">&quot;estimate&quot;</span>].<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb133-3"><a href="regularización-elasticnet.html#cb133-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##   metric  estimate
+## 0   rmse  41396.85
+## 1    mae  17782.71
+## 2   mape      0.11
+## 3    rsq      0.71
+## 4    ccc      0.86</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb135-1"><a href="regularización-elasticnet.html#cb135-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>## &lt;Figure size 1200x1000 with 0 Axes&gt;</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb137-1"><a href="regularización-elasticnet.html#cb137-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(results[<span class="st">&quot;pred_elasticnet_reg&quot;</span>], results[<span class="st">&quot;Sale_Price&quot;</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span></code></pre></div>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x307e66b90&gt;</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb139-1"><a href="regularización-elasticnet.html#cb139-1" aria-hidden="true" tabindex="-1"></a>lims <span class="op">=</span> [</span>
+<span id="cb139-2"><a href="regularización-elasticnet.html#cb139-2" aria-hidden="true" tabindex="-1"></a>    results[[<span class="st">&quot;pred_elasticnet_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">min</span>().<span class="bu">min</span>(),</span>
+<span id="cb139-3"><a href="regularización-elasticnet.html#cb139-3" aria-hidden="true" tabindex="-1"></a>    results[[<span class="st">&quot;pred_elasticnet_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">max</span>().<span class="bu">max</span>(),</span>
+<span id="cb139-4"><a href="regularización-elasticnet.html#cb139-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb139-5"><a href="regularización-elasticnet.html#cb139-5" aria-hidden="true" tabindex="-1"></a>plt.plot(lims, lims, color<span class="op">=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x303333290&gt;]</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="regularización-elasticnet.html#cb141-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Predicción&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;Predicción&#39;)</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb143-1"><a href="regularización-elasticnet.html#cb143-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Observación&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;Observación&#39;)</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb145-1"><a href="regularización-elasticnet.html#cb145-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Comparación&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Comparación&#39;)</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb147-1"><a href="regularización-elasticnet.html#cb147-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-59-7.png" width="576" /></p>
+</div>
+<div id="clasificación" class="section level3 hasAnchor" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Clasificación<a href="regularización-elasticnet.html#clasificación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para clasificación usaremos regresión logística con penalización <code>elasticnet</code>. En <code>scikit-learn</code>, la regresión logística usa <code>C</code> como inverso de la regularización: valores pequeños de <code>C</code> implican una penalización más fuerte.</p>
+<p><strong>Paso 1: Separación inicial de datos (test, train)</strong></p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb148-1"><a href="regularización-elasticnet.html#cb148-1" aria-hidden="true" tabindex="-1"></a>telco <span class="op">=</span> load_telco(<span class="st">&quot;data/Churn.csv&quot;</span>)</span>
+<span id="cb148-2"><a href="regularización-elasticnet.html#cb148-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb148-3"><a href="regularización-elasticnet.html#cb148-3" aria-hidden="true" tabindex="-1"></a>telco_train, telco_test <span class="op">=</span> train_test_split(</span>
+<span id="cb148-4"><a href="regularización-elasticnet.html#cb148-4" aria-hidden="true" tabindex="-1"></a>    telco,</span>
+<span id="cb148-5"><a href="regularización-elasticnet.html#cb148-5" aria-hidden="true" tabindex="-1"></a>    train_size<span class="op">=</span><span class="fl">0.70</span>,</span>
+<span id="cb148-6"><a href="regularización-elasticnet.html#cb148-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb148-7"><a href="regularización-elasticnet.html#cb148-7" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>telco[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb148-8"><a href="regularización-elasticnet.html#cb148-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb148-9"><a href="regularización-elasticnet.html#cb148-9" aria-hidden="true" tabindex="-1"></a>X_telco_train <span class="op">=</span> telco_train.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb148-10"><a href="regularización-elasticnet.html#cb148-10" aria-hidden="true" tabindex="-1"></a>y_telco_train <span class="op">=</span> telco_train[<span class="st">&quot;Churn&quot;</span>]</span>
+<span id="cb148-11"><a href="regularización-elasticnet.html#cb148-11" aria-hidden="true" tabindex="-1"></a>X_telco_test <span class="op">=</span> telco_test.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb148-12"><a href="regularización-elasticnet.html#cb148-12" aria-hidden="true" tabindex="-1"></a>y_telco_test <span class="op">=</span> telco_test[<span class="st">&quot;Churn&quot;</span>]</span>
+<span id="cb148-13"><a href="regularización-elasticnet.html#cb148-13" aria-hidden="true" tabindex="-1"></a>telco_folds <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1234</span>)</span>
+<span id="cb148-14"><a href="regularización-elasticnet.html#cb148-14" aria-hidden="true" tabindex="-1"></a>telco_train.head()</span></code></pre></div>
+<pre><code>##       customerID  gender  SeniorCitizen  ... MonthlyCharges TotalCharges  Churn
+## 4466  4806-KEXQR    Male              0  ...          79.90       324.30    Yes
+## 4246  5153-LXKDT    Male              0  ...         110.20      7467.50     No
+## 2462  2585-KTFRE    Male              0  ...          70.45        70.45     No
+## 6778  5893-KCLGT  Female              0  ...          19.75      1567.00     No
+## 1992  3365-SAIGS  Female              0  ...          83.55      1329.15     No
+## 
+## [5 rows x 21 columns]</code></pre>
+<p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb150-1"><a href="regularización-elasticnet.html#cb150-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="op">=</span> make_telco_pipeline(</span>
+<span id="cb150-2"><a href="regularización-elasticnet.html#cb150-2" aria-hidden="true" tabindex="-1"></a>    LogisticRegression(penalty<span class="op">=</span><span class="st">&quot;elasticnet&quot;</span>, solver<span class="op">=</span><span class="st">&quot;saga&quot;</span>, l1_ratio<span class="op">=</span><span class="fl">0.5</span>, max_iter<span class="op">=</span><span class="dv">5_000</span>),</span>
+<span id="cb150-3"><a href="regularización-elasticnet.html#cb150-3" aria-hidden="true" tabindex="-1"></a>    scale_numeric<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb150-4"><a href="regularización-elasticnet.html#cb150-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb150-5"><a href="regularización-elasticnet.html#cb150-5" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0...
+##                                                  (&#39;cat&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e0c0050&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;,
+##                  LogisticRegression(l1_ratio=0.5, max_iter=5000,
+##                                     penalty=&#39;elasticnet&#39;, solver=&#39;saga&#39;))])</code></pre>
+<p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb152-1"><a href="regularización-elasticnet.html#cb152-1" aria-hidden="true" tabindex="-1"></a>elasticnet_class_model <span class="op">=</span> LogisticRegression(</span>
+<span id="cb152-2"><a href="regularización-elasticnet.html#cb152-2" aria-hidden="true" tabindex="-1"></a>    penalty<span class="op">=</span><span class="st">&quot;elasticnet&quot;</span>,</span>
+<span id="cb152-3"><a href="regularización-elasticnet.html#cb152-3" aria-hidden="true" tabindex="-1"></a>    solver<span class="op">=</span><span class="st">&quot;saga&quot;</span>,</span>
+<span id="cb152-4"><a href="regularización-elasticnet.html#cb152-4" aria-hidden="true" tabindex="-1"></a>    l1_ratio<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb152-5"><a href="regularización-elasticnet.html#cb152-5" aria-hidden="true" tabindex="-1"></a>    max_iter<span class="op">=</span><span class="dv">5_000</span>,</span>
+<span id="cb152-6"><a href="regularización-elasticnet.html#cb152-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb152-7"><a href="regularización-elasticnet.html#cb152-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb152-8"><a href="regularización-elasticnet.html#cb152-8" aria-hidden="true" tabindex="-1"></a>elasticnet_class_model</span></code></pre></div>
+<pre><code>## LogisticRegression(l1_ratio=0.5, max_iter=5000, penalty=&#39;elasticnet&#39;,
+##                    random_state=1234, solver=&#39;saga&#39;)</code></pre>
+<p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="regularización-elasticnet.html#cb154-1" aria-hidden="true" tabindex="-1"></a>elasticnet_class_workflow <span class="op">=</span> make_telco_pipeline(elasticnet_class_model, scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb154-2"><a href="regularización-elasticnet.html#cb154-2" aria-hidden="true" tabindex="-1"></a>elasticnet_class_workflow</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0...
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3028fa9d0&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;,
+##                  LogisticRegression(l1_ratio=0.5, max_iter=5000,
+##                                     penalty=&#39;elasticnet&#39;, random_state=1234,
+##                                     solver=&#39;saga&#39;))])</code></pre>
+<p><strong>Paso 5: Creación de grid search</strong></p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb156-1"><a href="regularización-elasticnet.html#cb156-1" aria-hidden="true" tabindex="-1"></a>elasticnet_class_param_distributions <span class="op">=</span> {</span>
+<span id="cb156-2"><a href="regularización-elasticnet.html#cb156-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__C&quot;</span>: loguniform(<span class="fl">1e-2</span>, <span class="fl">1e2</span>),</span>
+<span id="cb156-3"><a href="regularización-elasticnet.html#cb156-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__l1_ratio&quot;</span>: uniform(<span class="fl">0.05</span>, <span class="fl">0.95</span>),</span>
+<span id="cb156-4"><a href="regularización-elasticnet.html#cb156-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb156-5"><a href="regularización-elasticnet.html#cb156-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-6"><a href="regularización-elasticnet.html#cb156-6" aria-hidden="true" tabindex="-1"></a>classification_scoring <span class="op">=</span> {</span>
+<span id="cb156-7"><a href="regularización-elasticnet.html#cb156-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;roc_auc&quot;</span>: <span class="st">&quot;roc_auc&quot;</span>,</span>
+<span id="cb156-8"><a href="regularización-elasticnet.html#cb156-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;pr_auc&quot;</span>: make_scorer(</span>
+<span id="cb156-9"><a href="regularización-elasticnet.html#cb156-9" aria-hidden="true" tabindex="-1"></a>        average_precision_score,</span>
+<span id="cb156-10"><a href="regularización-elasticnet.html#cb156-10" aria-hidden="true" tabindex="-1"></a>        response_method<span class="op">=</span><span class="st">&quot;predict_proba&quot;</span>,</span>
+<span id="cb156-11"><a href="regularización-elasticnet.html#cb156-11" aria-hidden="true" tabindex="-1"></a>        pos_label<span class="op">=</span><span class="st">&quot;Yes&quot;</span>,</span>
+<span id="cb156-12"><a href="regularización-elasticnet.html#cb156-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb156-13"><a href="regularización-elasticnet.html#cb156-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb156-14"><a href="regularización-elasticnet.html#cb156-14" aria-hidden="true" tabindex="-1"></a>elasticnet_class_param_distributions</span></code></pre></div>
+<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17e2f3990&gt;, &#39;model__l1_ratio&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3028fb810&gt;}</code></pre>
+<p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb158-1"><a href="regularización-elasticnet.html#cb158-1" aria-hidden="true" tabindex="-1"></a>elasticnet_class_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb158-2"><a href="regularización-elasticnet.html#cb158-2" aria-hidden="true" tabindex="-1"></a>    elasticnet_class_workflow,</span>
+<span id="cb158-3"><a href="regularización-elasticnet.html#cb158-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>elasticnet_class_param_distributions,</span>
+<span id="cb158-4"><a href="regularización-elasticnet.html#cb158-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb158-5"><a href="regularización-elasticnet.html#cb158-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
+<span id="cb158-6"><a href="regularización-elasticnet.html#cb158-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span>classification_scoring,</span>
+<span id="cb158-7"><a href="regularización-elasticnet.html#cb158-7" aria-hidden="true" tabindex="-1"></a>    refit<span class="op">=</span><span class="st">&quot;pr_auc&quot;</span>,</span>
+<span id="cb158-8"><a href="regularización-elasticnet.html#cb158-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb158-9"><a href="regularización-elasticnet.html#cb158-9" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb158-10"><a href="regularización-elasticnet.html#cb158-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb158-11"><a href="regularización-elasticnet.html#cb158-11" aria-hidden="true" tabindex="-1"></a>elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)</span>
+<span id="cb158-12"><a href="regularización-elasticnet.html#cb158-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-13"><a href="regularización-elasticnet.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb158-14"><a href="regularización-elasticnet.html#cb158-14" aria-hidden="true" tabindex="-1"></a>joblib.dump(elasticnet_class_tune_result, <span class="st">&quot;models/elasticnet_class_model.joblib&quot;</span>)</span></code></pre></div>
+<p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb159-1"><a href="regularización-elasticnet.html#cb159-1" aria-hidden="true" tabindex="-1"></a>elasticnet_class_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb159-2"><a href="regularización-elasticnet.html#cb159-2" aria-hidden="true" tabindex="-1"></a>    elasticnet_class_workflow,</span>
+<span id="cb159-3"><a href="regularización-elasticnet.html#cb159-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>elasticnet_class_param_distributions,</span>
+<span id="cb159-4"><a href="regularización-elasticnet.html#cb159-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb159-5"><a href="regularización-elasticnet.html#cb159-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
+<span id="cb159-6"><a href="regularización-elasticnet.html#cb159-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span>classification_scoring,</span>
+<span id="cb159-7"><a href="regularización-elasticnet.html#cb159-7" aria-hidden="true" tabindex="-1"></a>    refit<span class="op">=</span><span class="st">&quot;pr_auc&quot;</span>,</span>
+<span id="cb159-8"><a href="regularización-elasticnet.html#cb159-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb159-9"><a href="regularización-elasticnet.html#cb159-9" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb159-10"><a href="regularización-elasticnet.html#cb159-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb159-11"><a href="regularización-elasticnet.html#cb159-11" aria-hidden="true" tabindex="-1"></a>elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
+<pre><code>## RandomizedSearchCV(cv=StratifiedKFold(n_splits=5, random_state=1234, shuffle=True),
+##                    estimator=Pipeline(steps=[(&#39;features&#39;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
+##                                                                            kw_args={&#39;keep_target&#39;: False})),
+##                                              (&#39;preprocess&#39;,
+##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                                                 SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                                                (&#39;sca...
+##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17e2f3990&gt;,
+##                                         &#39;model__l1_ratio&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3028fb810&gt;},
+##                    random_state=1234, refit=&#39;pr_auc&#39;,
+##                    scoring={&#39;pr_auc&#39;: make_scorer(average_precision_score, response_method=&#39;predict_proba&#39;, pos_label=Yes),
+##                             &#39;roc_auc&#39;: &#39;roc_auc&#39;})</code></pre>
+<div class="sourceCode" id="cb161"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb161-1"><a href="regularización-elasticnet.html#cb161-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(elasticnet_class_tune_result, metric<span class="op">=</span><span class="st">&quot;pr_auc&quot;</span>, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__C  param_model__l1_ratio  ...  mean_test_pr_auc  std_test_pr_auc
+## 14        0.185074               0.589694  ...          0.653696         0.022518
+## 10        0.288100               0.634626  ...          0.653637         0.022340
+## 5         0.269941               0.525945  ...          0.653513         0.022424
+## 7         0.302693               0.583136  ...          0.653432         0.022319
+## 19        0.586899               0.913850  ...          0.653197         0.022646
+## 13        0.387981               0.799294  ...          0.653164         0.022648
+## 3         0.127602               0.811779  ...          0.653015         0.023412
+## 1         0.563522               0.796091  ...          0.653002         0.022672
+## 8         1.028804               0.063080  ...          0.652738         0.022068
+## 9        12.339754               0.888509  ...          0.652443         0.023309
+## 
+## [10 rows x 6 columns]</code></pre>
+<p>En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb163-1"><a href="regularización-elasticnet.html#cb163-1" aria-hidden="true" tabindex="-1"></a>elasticnet_class_results <span class="op">=</span> pd.DataFrame(elasticnet_class_tune_result.cv_results_)</span>
+<span id="cb163-2"><a href="regularización-elasticnet.html#cb163-2" aria-hidden="true" tabindex="-1"></a>elasticnet_class_results.plot.scatter(</span>
+<span id="cb163-3"><a href="regularización-elasticnet.html#cb163-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;param_model__C&quot;</span>,</span>
+<span id="cb163-4"><a href="regularización-elasticnet.html#cb163-4" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">&quot;mean_test_pr_auc&quot;</span>,</span>
+<span id="cb163-5"><a href="regularización-elasticnet.html#cb163-5" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span><span class="st">&quot;param_model__l1_ratio&quot;</span>,</span>
+<span id="cb163-6"><a href="regularización-elasticnet.html#cb163-6" aria-hidden="true" tabindex="-1"></a>    colormap<span class="op">=</span><span class="st">&quot;viridis&quot;</span>,</span>
+<span id="cb163-7"><a href="regularización-elasticnet.html#cb163-7" aria-hidden="true" tabindex="-1"></a>    logx<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb163-8"><a href="regularización-elasticnet.html#cb163-8" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>),</span>
+<span id="cb163-9"><a href="regularización-elasticnet.html#cb163-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## &lt;Axes: xlabel=&#39;param_model__C&#39;, ylabel=&#39;mean_test_pr_auc&#39;&gt;</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb165-1"><a href="regularización-elasticnet.html#cb165-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;PR AUC por C y l1_ratio&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;PR AUC por C y l1_ratio&#39;)</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb167-1"><a href="regularización-elasticnet.html#cb167-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;C&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;C&#39;)</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb169-1"><a href="regularización-elasticnet.html#cb169-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;PR AUC promedio en CV&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;PR AUC promedio en CV&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-67-9.png" width="672" /></p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb171-1"><a href="regularización-elasticnet.html#cb171-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(elasticnet_class_tune_result, metric<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__C  param_model__l1_ratio  ...  mean_test_pr_auc  std_test_pr_auc
+## 3         0.127602               0.811779  ...          0.653015         0.023412
+## 14        0.185074               0.589694  ...          0.653696         0.022518
+## 0         0.058355               0.641003  ...          0.652331         0.024322
+## 18        0.075019               0.928624  ...          0.651836         0.024101
+## 13        0.387981               0.799294  ...          0.653164         0.022648
+## 10        0.288100               0.634626  ...          0.653637         0.022340
+## 5         0.269941               0.525945  ...          0.653513         0.022424
+## 19        0.586899               0.913850  ...          0.653197         0.022646
+## 7         0.302693               0.583136  ...          0.653432         0.022319
+## 1         0.563522               0.796091  ...          0.653002         0.022672
+## 
+## [10 rows x 6 columns]</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb173-1"><a href="regularización-elasticnet.html#cb173-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(elasticnet_class_tune_result, metric<span class="op">=</span><span class="st">&quot;pr_auc&quot;</span>, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     param_model__C  param_model__l1_ratio  ...  mean_test_pr_auc  std_test_pr_auc
+## 14        0.185074               0.589694  ...          0.653696         0.022518
+## 10        0.288100               0.634626  ...          0.653637         0.022340
+## 5         0.269941               0.525945  ...          0.653513         0.022424
+## 7         0.302693               0.583136  ...          0.653432         0.022319
+## 19        0.586899               0.913850  ...          0.653197         0.022646
+## 13        0.387981               0.799294  ...          0.653164         0.022648
+## 3         0.127602               0.811779  ...          0.653015         0.023412
+## 1         0.563522               0.796091  ...          0.653002         0.022672
+## 8         1.028804               0.063080  ...          0.652738         0.022068
+## 9        12.339754               0.888509  ...          0.652443         0.023309
+## 
+## [10 rows x 6 columns]</code></pre>
+<p><strong>Paso 8: Selección de modelo a usar</strong></p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb175-1"><a href="regularización-elasticnet.html#cb175-1" aria-hidden="true" tabindex="-1"></a>best_elasticnet_class_model <span class="op">=</span> elasticnet_class_tune_result.best_params_</span>
+<span id="cb175-2"><a href="regularización-elasticnet.html#cb175-2" aria-hidden="true" tabindex="-1"></a>best_elasticnet_class_model</span></code></pre></div>
+<pre><code>## {&#39;model__C&#39;: 0.18507360675642764, &#39;model__l1_ratio&#39;: 0.5896937199947657}</code></pre>
+<p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb177-1"><a href="regularización-elasticnet.html#cb177-1" aria-hidden="true" tabindex="-1"></a>final_elasticnet_class_model <span class="op">=</span> elasticnet_class_tune_result.best_estimator_</span>
+<span id="cb177-2"><a href="regularización-elasticnet.html#cb177-2" aria-hidden="true" tabindex="-1"></a>final_elasticnet_class_model</span></code></pre></div>
+<pre><code>## Pipeline(steps=[(&#39;features&#39;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
+##                                               kw_args={&#39;keep_target&#39;: False})),
+##                 (&#39;preprocess&#39;,
+##                  ColumnTransformer(transformers=[(&#39;num&#39;,
+##                                                   Pipeline(steps=[(&#39;imputer&#39;,
+##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
+##                                                                   (&#39;scaler&#39;,
+##                                                                    StandardScaler())]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0...
+##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
+##                                                                   (&#39;onehot&#39;,
+##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
+##                                                                                  sparse_output=False))]),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30512b590&gt;)],
+##                                    verbose_feature_names_out=False)),
+##                 (&#39;model&#39;,
+##                  LogisticRegression(C=0.18507360675642764,
+##                                     l1_ratio=0.5896937199947657, max_iter=5000,
+##                                     penalty=&#39;elasticnet&#39;, random_state=1234,
+##                                     solver=&#39;saga&#39;))])</code></pre>
+<p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
+<p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En modelos lineales regularizados podemos revisar los coeficientes para identificar qué variables tienen mayor peso en la predicción.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb179-1"><a href="regularización-elasticnet.html#cb179-1" aria-hidden="true" tabindex="-1"></a>telco_feature_names <span class="op">=</span> final_elasticnet_class_model.named_steps[<span class="st">&quot;preprocess&quot;</span>].get_feature_names_out()</span>
+<span id="cb179-2"><a href="regularización-elasticnet.html#cb179-2" aria-hidden="true" tabindex="-1"></a>coeficientes_churn <span class="op">=</span> (</span>
+<span id="cb179-3"><a href="regularización-elasticnet.html#cb179-3" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
+<span id="cb179-4"><a href="regularización-elasticnet.html#cb179-4" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb179-5"><a href="regularización-elasticnet.html#cb179-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: telco_feature_names,</span>
+<span id="cb179-6"><a href="regularización-elasticnet.html#cb179-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Coeficiente&quot;</span>: final_elasticnet_class_model.named_steps[<span class="st">&quot;model&quot;</span>].coef_.ravel(),</span>
+<span id="cb179-7"><a href="regularización-elasticnet.html#cb179-7" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb179-8"><a href="regularización-elasticnet.html#cb179-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb179-9"><a href="regularización-elasticnet.html#cb179-9" aria-hidden="true" tabindex="-1"></a>    .assign(Importancia<span class="op">=</span><span class="kw">lambda</span> data: data[<span class="st">&quot;Coeficiente&quot;</span>].<span class="bu">abs</span>())</span>
+<span id="cb179-10"><a href="regularización-elasticnet.html#cb179-10" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importancia&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb179-11"><a href="regularización-elasticnet.html#cb179-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb179-12"><a href="regularización-elasticnet.html#cb179-12" aria-hidden="true" tabindex="-1"></a>display(coeficientes_churn.head(<span class="dv">20</span>))</span></code></pre></div>
+<pre><code>##                           Variable  Coeficiente  Importancia
+## 28         Contract_Month-to-month     0.814884     0.814884
+## 30               Contract_Two year    -0.773442     0.773442
+## 37            tenure_band_0-1 year     0.755383     0.755383
+## 14     InternetService_Fiber optic     0.723197     0.723197
+## 15              InternetService_No    -0.501953     0.501953
+## 2                     TotalCharges    -0.403417     0.403417
+## 1                   MonthlyCharges     0.365254     0.365254
+## 35  PaymentMethod_Electronic check     0.280420     0.280420
+## 10                PhoneService_Yes    -0.256409     0.256409
+## 9                  PhoneService_No     0.247064     0.247064
+## 17              OnlineSecurity_Yes    -0.213879     0.213879
+## 16               OnlineSecurity_No     0.204533     0.204533
+## 31             PaperlessBilling_No    -0.184594     0.184594
+## 32            PaperlessBilling_Yes     0.175248     0.175248
+## 23                 TechSupport_Yes    -0.161941     0.161941
+## 22                  TechSupport_No     0.152596     0.152596
+## 0                    SeniorCitizen     0.128103     0.128103
+## 24                  StreamingTV_No    -0.111833     0.111833
+## 25                 StreamingTV_Yes     0.102487     0.102487
+## 26              StreamingMovies_No    -0.099695     0.099695</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb181-1"><a href="regularización-elasticnet.html#cb181-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> coeficientes_churn.head(<span class="dv">20</span>).sort_values(<span class="st">&quot;Importancia&quot;</span>).plot.barh(</span>
+<span id="cb181-2"><a href="regularización-elasticnet.html#cb181-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importancia&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span>
+<span id="cb181-3"><a href="regularización-elasticnet.html#cb181-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb181-4"><a href="regularización-elasticnet.html#cb181-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Importancia de las variables&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Importancia de las variables&#39;)</code></pre>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-72-11.png" width="768" /></p>
+<p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
+<p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb183-1"><a href="regularización-elasticnet.html#cb183-1" aria-hidden="true" tabindex="-1"></a>class_labels <span class="op">=</span> <span class="bu">list</span>(final_elasticnet_class_model.named_steps[<span class="st">&quot;model&quot;</span>].classes_)</span>
+<span id="cb183-2"><a href="regularización-elasticnet.html#cb183-2" aria-hidden="true" tabindex="-1"></a>proba_yes_index <span class="op">=</span> class_labels.index(<span class="st">&quot;Yes&quot;</span>)</span>
+<span id="cb183-3"><a href="regularización-elasticnet.html#cb183-3" aria-hidden="true" tabindex="-1"></a>class_results <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb183-4"><a href="regularización-elasticnet.html#cb183-4" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb183-5"><a href="regularización-elasticnet.html#cb183-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Churn&quot;</span>: y_telco_test.to_numpy(),</span>
+<span id="cb183-6"><a href="regularización-elasticnet.html#cb183-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pred_Yes&quot;</span>: final_elasticnet_class_model.predict_proba(X_telco_test)[:, proba_yes_index],</span>
+<span id="cb183-7"><a href="regularización-elasticnet.html#cb183-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb183-8"><a href="regularización-elasticnet.html#cb183-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb183-9"><a href="regularización-elasticnet.html#cb183-9" aria-hidden="true" tabindex="-1"></a>class_results.head()</span></code></pre></div>
+<pre><code>##   Churn  pred_Yes
+## 0    No  0.112244
+## 1    No  0.256926
+## 2    No  0.026061
+## 3   Yes  0.543400
+## 4   Yes  0.460708</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb185-1"><a href="regularización-elasticnet.html#cb185-1" aria-hidden="true" tabindex="-1"></a>classification_metrics(class_results[<span class="st">&quot;Churn&quot;</span>], class_results[<span class="st">&quot;pred_Yes&quot;</span>], positive_label<span class="op">=</span><span class="st">&quot;Yes&quot;</span>)</span></code></pre></div>
+<pre><code>##     metric  estimate
+## 0  roc_auc  0.832870
+## 1   pr_auc  0.623447</code></pre>
+<p>A continuación, conoceremos el nivel de sensitividad y especificidad para cada punto de corte:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb187-1"><a href="regularización-elasticnet.html#cb187-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="op">=</span> roc_curve_table(</span>
+<span id="cb187-2"><a href="regularización-elasticnet.html#cb187-2" aria-hidden="true" tabindex="-1"></a>    class_results[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb187-3"><a href="regularización-elasticnet.html#cb187-3" aria-hidden="true" tabindex="-1"></a>    class_results[<span class="st">&quot;pred_Yes&quot;</span>],</span>
+<span id="cb187-4"><a href="regularización-elasticnet.html#cb187-4" aria-hidden="true" tabindex="-1"></a>    positive_label<span class="op">=</span><span class="st">&quot;Yes&quot;</span>,</span>
+<span id="cb187-5"><a href="regularización-elasticnet.html#cb187-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb187-6"><a href="regularización-elasticnet.html#cb187-6" aria-hidden="true" tabindex="-1"></a>roc_curve_data.head()</span></code></pre></div>
+<pre><code>##    threshold  specificity  sensitivity
+## 0        inf     1.000000     0.000000
+## 1   0.873089     1.000000     0.001783
+## 2   0.869148     1.000000     0.003565
+## 3   0.862959     0.999356     0.003565
+## 4   0.861174     0.999356     0.005348</code></pre>
+<p>A través de estas métricas es posible crear la curva ROC:</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb189-1"><a href="regularización-elasticnet.html#cb189-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>## &lt;Figure size 1000x1000 with 0 Axes&gt;</code></pre>
+<div class="sourceCode" id="cb191"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb191-1"><a href="regularización-elasticnet.html#cb191-1" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>, lw<span class="op">=</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30e0a3790&gt;]</code></pre>
+<div class="sourceCode" id="cb193"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb193-1"><a href="regularización-elasticnet.html#cb193-1" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;gray&quot;</span>, linestyle<span class="op">=</span><span class="st">&quot;--&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30e50c410&gt;]</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb195-1"><a href="regularización-elasticnet.html#cb195-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;1 - especificidad&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;1 - especificidad&#39;)</code></pre>
+<div class="sourceCode" id="cb197"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb197-1"><a href="regularización-elasticnet.html#cb197-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;sensitividad&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;sensitividad&#39;)</code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb199-1"><a href="regularización-elasticnet.html#cb199-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;ROC Curve&#39;)</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb201-1"><a href="regularización-elasticnet.html#cb201-1" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">&quot;square&quot;</span>)</span></code></pre></div>
+<pre><code>## (-0.05, 1.05, -0.05, 1.05)</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb203-1"><a href="regularización-elasticnet.html#cb203-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-76-13.png" width="480" /></p>
+<p>De igual manera, podemos calcular la precisión y cobertura para cada punto de corte:</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb204-1"><a href="regularización-elasticnet.html#cb204-1" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="op">=</span> pr_curve_table(</span>
+<span id="cb204-2"><a href="regularización-elasticnet.html#cb204-2" aria-hidden="true" tabindex="-1"></a>    class_results[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb204-3"><a href="regularización-elasticnet.html#cb204-3" aria-hidden="true" tabindex="-1"></a>    class_results[<span class="st">&quot;pred_Yes&quot;</span>],</span>
+<span id="cb204-4"><a href="regularización-elasticnet.html#cb204-4" aria-hidden="true" tabindex="-1"></a>    positive_label<span class="op">=</span><span class="st">&quot;Yes&quot;</span>,</span>
+<span id="cb204-5"><a href="regularización-elasticnet.html#cb204-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb204-6"><a href="regularización-elasticnet.html#cb204-6" aria-hidden="true" tabindex="-1"></a>pr_curve_data.head()</span></code></pre></div>
+<pre><code>##    threshold  precision  recall
+## 0   0.009236   0.265499     1.0
+## 1   0.009293   0.265625     1.0
+## 2   0.009606   0.265751     1.0
+## 3   0.009627   0.265877     1.0
+## 4   0.009834   0.266003     1.0</code></pre>
+<p>Y graficar su respectiva curva:</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb206-1"><a href="regularización-elasticnet.html#cb206-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>## &lt;Figure size 1000x1000 with 0 Axes&gt;</code></pre>
+<div class="sourceCode" id="cb208"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb208-1"><a href="regularización-elasticnet.html#cb208-1" aria-hidden="true" tabindex="-1"></a>plt.plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>, lw<span class="op">=</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30e47aa50&gt;]</code></pre>
+<div class="sourceCode" id="cb210"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb210-1"><a href="regularización-elasticnet.html#cb210-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;cobertura&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 0, &#39;cobertura&#39;)</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb212-1"><a href="regularización-elasticnet.html#cb212-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;precisión&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0, 0.5, &#39;precisión&#39;)</code></pre>
+<div class="sourceCode" id="cb214"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb214-1"><a href="regularización-elasticnet.html#cb214-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Precision vs Recall&quot;</span>)</span></code></pre></div>
+<pre><code>## Text(0.5, 1.0, &#39;Precision vs Recall&#39;)</code></pre>
+<div class="sourceCode" id="cb216"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb216-1"><a href="regularización-elasticnet.html#cb216-1" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## (0.0, 1.0)</code></pre>
+<div class="sourceCode" id="cb218"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb218-1"><a href="regularización-elasticnet.html#cb218-1" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">&quot;square&quot;</span>)</span></code></pre></div>
+<pre><code>## (-0.05, 1.05, 0.2285714285714286, 1.3285714285714287)</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb220-1"><a href="regularización-elasticnet.html#cb220-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-78-15.png" width="480" /></p>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="feature-engineering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="support-vector-machine-svm-svr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

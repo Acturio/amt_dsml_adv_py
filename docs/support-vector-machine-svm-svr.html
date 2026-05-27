@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 3 Support Vector Machine (SVM / SVR) | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <title>Capítulo 4 Support Vector Machine (SVM / SVR) | AMAT- Ciencia de Datos y Machine Learning 2</title>
   <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 3 Support Vector Machine (SVM / SVR) | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:title" content="Capítulo 4 Support Vector Machine (SVM / SVR) | AMAT- Ciencia de Datos y Machine Learning 2" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 3 Support Vector Machine (SVM / SVR) | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta name="twitter:title" content="Capítulo 4 Support Vector Machine (SVM / SVR) | AMAT- Ciencia de Datos y Machine Learning 2" />
   
   <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="feature-engineering.html"/>
+<link rel="prev" href="regularización-elasticnet.html"/>
 <link rel="next" href="bagging-boosting.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -187,121 +187,133 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>3</b> Support Vector Machine (SVM / SVR)</a>
+<li class="chapter" data-level="3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>3</b> Regularización Elasticnet</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>3.1</b> Maximum Margin Classifier</a></li>
-<li class="chapter" data-level="3.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>3.2</b> Support Vector Classifiers</a></li>
-<li class="chapter" data-level="3.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>3.3</b> Support Vector Machine</a></li>
-<li class="chapter" data-level="3.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>3.4</b> El truco del Kernel</a></li>
-<li class="chapter" data-level="3.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>3.5</b> Support Vector Regression</a></li>
-<li class="chapter" data-level="3.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>3.6</b> Ventajas y desventajas</a></li>
-<li class="chapter" data-level="3.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>3.7</b> Ajuste del modelo con Python</a>
+<li class="chapter" data-level="3.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>3.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="3.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>3.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="3.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>3.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="3.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>3.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="3.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-python-2"><i class="fa fa-check"></i><b>3.5</b> Implementación en Python</a>
 <ul>
-<li class="chapter" data-level="3.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>3.7.1</b> Implementación de SVR en Python</a></li>
-<li class="chapter" data-level="3.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>3.7.2</b> Implementación de SVM en Python</a></li>
-</ul></li>
-<li class="chapter" data-level="3.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>3.8</b> Ejercicios</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>4</b> Bagging &amp; Boosting</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>4.1</b> Aprendizaje conjunto</a></li>
-<li class="chapter" data-level="4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>4.2</b> Bagging vs. boosting</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>4.2.1</b> Error Out-Of-Bag</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>4.3</b> Algoritmo Bagging</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>4.3.1</b> Ventajas y desventajas de bagging</a></li>
-<li class="chapter" data-level="4.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>4.3.2</b> Aplicaciónes de Bagging</a></li>
-<li class="chapter" data-level="4.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-2"><i class="fa fa-check"></i><b>4.3.3</b> Implementación en <em>Python</em></a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>4.4</b> Algoritmo Boosting</a>
-<ul>
-<li class="chapter" data-level="4.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>4.4.1</b> Predicciones de <em>Boosting</em></a></li>
-<li class="chapter" data-level="4.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>4.4.2</b> Modelos <em>Boosting</em></a></li>
-<li class="chapter" data-level="4.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en Python</a></li>
-<li class="chapter" data-level="4.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>4.4.4</b> XGBoost para regresión</a></li>
-<li class="chapter" data-level="4.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>4.4.5</b> XGBoost para clasificación</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>5</b> Workflowsets &amp; Stacking</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>5.1</b> Múltiples recetas</a></li>
-<li class="chapter" data-level="5.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>5.2</b> Múltiples modelos</a></li>
-<li class="chapter" data-level="5.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>5.3</b> Creación de workflow set en Python</a></li>
-<li class="chapter" data-level="5.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>5.4</b> Ajuste y evaluación de modelos</a></li>
-<li class="chapter" data-level="5.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>5.5</b> Extracción de modelos</a>
-<ul>
-<li class="chapter" data-level="5.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>5.5.1</b> Selección de modelo</a></li>
-</ul></li>
-<li class="chapter" data-level="5.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>5.6</b> Métodos de carrera</a>
-<ul>
-<li class="chapter" data-level="5.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>5.6.1</b> Optimización ANOVA</a></li>
-<li class="chapter" data-level="5.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>5.6.2</b> Optimización Logística</a></li>
-<li class="chapter" data-level="5.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>5.6.3</b> Optimización Bayesiana</a></li>
-</ul></li>
-<li class="chapter" data-level="5.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>5.7</b> Stacking</a>
-<ul>
-<li class="chapter" data-level="5.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>5.7.1</b> Elección de modelos</a></li>
-<li class="chapter" data-level="5.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>5.7.2</b> Ajuste final</a></li>
-<li class="chapter" data-level="5.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>5.7.3</b> Comparación de métricas</a></li>
-</ul></li>
-<li class="chapter" data-level="5.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>6</b> Sesgo e Inequidad</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>6.1</b> Propósito Vs Error</a></li>
-<li class="chapter" data-level="6.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>6.2</b> Métricas</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>6.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
-<li class="chapter" data-level="6.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>6.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
-<li class="chapter" data-level="6.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>6.2.3</b> Equalized odds</a></li>
-<li class="chapter" data-level="6.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>6.2.4</b> Predictive rate parity</a></li>
-<li class="chapter" data-level="6.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>6.2.5</b> Accuracy parity</a></li>
-<li class="chapter" data-level="6.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>6.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
-<li class="chapter" data-level="6.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>6.2.7</b> False Positive Parity</a></li>
-<li class="chapter" data-level="6.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>6.2.8</b> Negative predictive value parity</a></li>
-<li class="chapter" data-level="6.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>6.2.9</b> Specificity parity</a></li>
+<li class="chapter" data-level="3.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión"><i class="fa fa-check"></i><b>3.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="3.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación"><i class="fa fa-check"></i><b>3.5.2</b> Clasificación</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>7</b> Interpretabilidad de modelos</a>
+<li class="chapter" data-level="4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>4</b> Support Vector Machine (SVM / SVR)</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>7.1</b> LIME</a>
+<li class="chapter" data-level="4.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>4.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="4.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>4.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="4.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>4.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="4.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>4.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="4.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>4.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="4.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>4.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="4.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>4.7</b> Ajuste del modelo con Python</a>
 <ul>
-<li class="chapter" data-level="7.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>7.1.1</b> Proceso</a></li>
-<li class="chapter" data-level="7.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>7.1.2</b> Características principales</a></li>
-<li class="chapter" data-level="7.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>7.1.3</b> Implementación con <em>Python</em></a></li>
+<li class="chapter" data-level="4.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>4.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="4.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>4.7.2</b> Implementación de SVM en Python</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>7.2</b> SHAP</a>
+<li class="chapter" data-level="4.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>5</b> Bagging &amp; Boosting</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>7.2.1</b> Otros métodos</a></li>
-<li class="chapter" data-level="7.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>7.2.2</b> Consejos</a></li>
+<li class="chapter" data-level="5.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>5.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="5.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>5.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>5.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>5.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>5.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>5.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="5.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>5.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>5.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>5.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="5.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>5.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="5.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-4"><i class="fa fa-check"></i><b>5.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="5.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>5.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="5.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>5.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>6</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>6.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>6.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>6.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="6.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>6.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="6.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>6.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>6.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>6.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>6.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="6.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>6.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="6.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>6.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>6.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>6.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="6.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>6.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="6.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>6.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>6.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>7</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>7.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="7.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>7.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>7.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>7.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="7.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>7.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="7.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>7.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="7.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>7.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="7.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>7.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="7.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>7.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="7.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>7.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="7.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>7.2.9</b> Specificity parity</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>8</b> A / B - testing</a>
+<li class="chapter" data-level="8" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>8</b> Interpretabilidad de modelos</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>8.1</b> Elementos en riesgo</a></li>
-<li class="chapter" data-level="8.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>8.2</b> Costo de retención</a></li>
-<li class="chapter" data-level="8.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>8.3</b> Diseño experimental</a>
+<li class="chapter" data-level="8.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>8.1</b> LIME</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>8.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
-<li class="chapter" data-level="8.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>8.3.2</b> Muestreo aleatorio simple</a></li>
-<li class="chapter" data-level="8.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>8.3.3</b> Muestreo estratificado</a></li>
-<li class="chapter" data-level="8.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>8.3.4</b> Marco de muestreo</a></li>
-<li class="chapter" data-level="8.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>8.3.5</b> Tamaño de muestra</a></li>
-<li class="chapter" data-level="8.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>8.3.6</b> Distribución muestral</a></li>
-<li class="chapter" data-level="8.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>8.3.7</b> Probabilidades y Factores</a></li>
+<li class="chapter" data-level="8.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>8.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="8.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>8.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="8.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>8.1.3</b> Implementación con <em>Python</em></a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>8.4</b> Extracción de muestra</a>
+<li class="chapter" data-level="8.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>8.2</b> SHAP</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>8.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
-<li class="chapter" data-level="8.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>8.4.2</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="8.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>8.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="8.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>8.2.2</b> Consejos</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>8.5</b> Estimación muestral</a>
+</ul></li>
+<li class="chapter" data-level="9" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>9</b> A / B - testing</a>
 <ul>
-<li class="chapter" data-level="8.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>8.5.1</b> Implementación de diseño muestral</a></li>
-<li class="chapter" data-level="8.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>8.5.2</b> Estimación de resultados</a></li>
+<li class="chapter" data-level="9.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>9.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="9.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>9.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="9.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>9.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>9.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="9.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>9.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="9.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>9.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="9.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>9.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="9.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>9.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="9.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>9.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="9.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>9.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>9.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>9.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="9.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>9.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>9.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>9.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="9.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>9.5.2</b> Estimación de resultados</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -324,8 +336,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="support-vector-machine-svm-svr" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Capítulo 3</span> Support Vector Machine (SVM / SVR)<a href="support-vector-machine-svm-svr.html#support-vector-machine-svm-svr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="support-vector-machine-svm-svr" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Support Vector Machine (SVM / SVR)<a href="support-vector-machine-svm-svr.html#support-vector-machine-svm-svr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Es común encontrar en la literatura el nombre de SVM para referirse tanto al caso de regresión como al de clasificación, no obstante, SVR se refiere particularmente a <em>Suport Vector Regression</em>.</p>
 <p>Support vector machine, llamado SVM, es un algoritmo de aprendizaje supervisado que se puede utilizar para problemas de clasificación y regresión. Se utiliza para conjuntos de datos más pequeños, ya que <strong>tarda demasiado en procesarse.</strong></p>
 <p>El principal objetivo de esta técnica es encontrar el <strong>Hiperplano de Separación Óptima</strong>, también conocido como <em>Boundary Decision</em>, el cual será el margen de clasificación más grande que podamos ajustar para separar a las clases involucradas, limitando las veces que una observación viola dicho margen.</p>
@@ -339,8 +351,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 </blockquote>
 <p>Estudiemos cada uno de estos principios.</p>
-<div id="maximum-margin-classifier" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Maximum Margin Classifier<a href="support-vector-machine-svm-svr.html#maximum-margin-classifier" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="maximum-margin-classifier" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Maximum Margin Classifier<a href="support-vector-machine-svm-svr.html#maximum-margin-classifier" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A menudo se generalizan con máquinas de vectores de soporte, pero SVM tiene muchos más parámetros en comparación. El <em>clasificador de margen máximo</em> considera un hiperplano con ancho de separación máxima para clasificar los datos. Sin embargo, se pueden dibujar infinitos hiperplanos en un conjunto de datos por lo que es importante <strong>elegir el hiperplano ideal para la clasificación.</strong></p>
 <p>En un espacio <em>n-dimensional</em>, un hiperplano es un subespacio de la dimensión n-1. Es decir, si los datos tienen un espacio bidimensional, entonces el hiperplano puede ser una línea recta que divide el espacio de datos en dos mitades y pasa por la siguiente ecuacion:</p>
 <p><span class="math display">\[\beta_0 + \beta_1X_1 + \beta_2X_2=0\]</span></p>
@@ -351,8 +363,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="img/02-svm/02_maximum_margin_classifier.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
 <p>Del diagrama anterior, podemos suponer infinitos hiperplanos (izquierda). El clasificador de margen máximo viene con un solo hiperplano que divide los datos como en la gráfica de la derecha. <strong>Los datos que tocan los hiperplanos positivo y negativo se denominan vectores de soporte</strong>.</p>
 </div>
-<div id="support-vector-classifiers" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Support Vector Classifiers<a href="support-vector-machine-svm-svr.html#support-vector-classifiers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="support-vector-classifiers" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Support Vector Classifiers<a href="support-vector-machine-svm-svr.html#support-vector-classifiers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Los vectores de soporte son las observaciones que están más cerca del hiperplano e influyen en la posición y orientación del hiperplano</strong>. Este tipo de clasificador puede considerarse como una versión extendida del clasificador de margen máximo. Cuando tratamos con datos de la vida real, encontramos que la mayoría de las observaciones están en clases superpuestas. Es por eso que se implementan clasificadores de vectores de soporte.</p>
 <p>Usando estos vectores de soporte, <strong>maximizamos el margen del clasificador</strong>. Eliminar los vectores de soporte cambiará la posición del hiperplano. Estos son los puntos que nos ayudan a construir nuestro <em>SVM</em>. Consideremos un <strong>parámetro de ajuste C</strong>. Entendamos con el siguiente diagrama.</p>
 <p><img src="img/02-svm/03_support_vector_classifier.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
@@ -366,8 +378,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Este modelo es sensible a cambios en la escala de datos de entrada, por lo que será <strong>importante estandarizar las variables antes de usar este modelo</strong>.</p>
 </div>
-<div id="support-vector-machine" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Support Vector Machine<a href="support-vector-machine-svm-svr.html#support-vector-machine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="support-vector-machine" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Support Vector Machine<a href="support-vector-machine-svm-svr.html#support-vector-machine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>El enfoque de la máquina de vectores de soporte se considera durante una decisión no lineal y los datos no son separables por un clasificador de vectores de soporte, independientemente de la función de costo.</p>
 <p>Cuando es casi imposible separar clases de manera no lineal, aplicamos el truco llamado <strong>truco del kernel</strong> el cual ayuda a manejar la separación de los datos.</p>
 <p><img src="img/02-svm/04_polinomial_kernel_plot.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
@@ -375,8 +387,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="img/02-svm/05_kernel_polinomial_plot2.png" width="900pt" height="380pt" style="display: block; margin: auto;" /></p>
 <p>En datos bidimensionales, el núcleo polinomial de segundo grado se aplica utilizando un plano lineal después de transformarlo a dimensiones superiores.</p>
 </div>
-<div id="el-truco-del-kernel" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> El truco del Kernel<a href="support-vector-machine-svm-svr.html#el-truco-del-kernel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="el-truco-del-kernel" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> El truco del Kernel<a href="support-vector-machine-svm-svr.html#el-truco-del-kernel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Las funciones Kernel son métodos con los que se utilizan clasificadores lineales como <em>SVM</em> para clasificar puntos de datos separables no linealmente. Esto se hace representando los puntos de datos en un espacio de mayor dimensión que su original. Por ejemplo, los datos 1D se pueden representar como datos 2D en el espacio, los datos 2D se pueden representar como datos 3D, etcétera.</p>
 <p>El truco del kernel ofrece una <strong>forma de calcular las relaciones entre los puntos de datos</strong> utilizando funciones del kernel y representar los datos de una manera más eficiente con menos cómputo. Los modelos que utilizan esta técnica se denominan <strong>“modelos kernelizados”</strong>.</p>
 <p><img src="img/02-svm/06_kernels.png" width="700pt" height="500pt" style="display: block; margin: auto;" /></p>
@@ -412,8 +424,8 @@ Se realiza un mapeo de x a <span class="math inline">\(\phi(x)\)</span> en donde
 <p><strong>¿Por qué se llama un “truco del kernel”?</strong></p>
 <p><em>SVM</em> vuelve a representar los puntos de datos no lineales utilizando cualquiera de las funciones del kernel de una manera que parece que los datos se han transformado, luego encuentra el hiperplano de separación óptimo, sin embargo, en realidad, <strong>los puntos de datos siguen siendo los mismos</strong>, en realidad no se han transformado. Es por eso que se llama un ‘truco del kernel’.</p>
 </div>
-<div id="support-vector-regression" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> Support Vector Regression<a href="support-vector-machine-svm-svr.html#support-vector-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="support-vector-regression" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Support Vector Regression<a href="support-vector-machine-svm-svr.html#support-vector-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>El problema de la regresión es encontrar una función que aproxime la relación de un dominio de datos de entrada a números reales con base en una muestra de entrenamiento. Veamos cómo funciona SVR en realidad.</p>
 <p><img src="img/02-svm/svr.png" width="400pt" height="400pt" style="display: block; margin: auto;" /></p>
 <p>Consideremos las dos líneas rojas como el límite de decisión y la línea verde como el hiperplano. Nuestro objetivo, cuando avanzamos con SVR, es básicamente <strong>considerar los puntos que están dentro de la línea límite de decisión</strong>. Nuestra línea de mejor ajuste es el hiperplano que tiene un número máximo de puntos.</p>
@@ -431,8 +443,8 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <p>Vamos a tomar solo aquellos puntos que están dentro del límite de decisión y tienen la menor tasa de error, o están dentro del margen de tolerancia. Esto nos da un mejor modelo de ajuste.</p>
 </div>
 </div>
-<div id="ventajas-y-desventajas" class="section level2 hasAnchor" number="3.6">
-<h2><span class="header-section-number">3.6</span> Ventajas y desventajas<a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ventajas-y-desventajas" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Ventajas y desventajas<a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Ventajas</strong></p>
 <ul>
 <li><p>Es un modelo que ajusta bien con pocos datos</p></li>
@@ -447,8 +459,8 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <li><p>La interpretación general es difícil (black box).</p></li>
 </ul>
 </div>
-<div id="ajuste-del-modelo-con-python" class="section level2 hasAnchor" number="3.7">
-<h2><span class="header-section-number">3.7</span> Ajuste del modelo con Python<a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ajuste-del-modelo-con-python" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Ajuste del modelo con Python<a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Usaremos las recetas antes implementadas para ajustar tanto el modelo de regresión como el de clasificación. Exploraremos un conjunto de hiperparámetros para elegir el mejor modelo.</p>
 <p>Recordemos los pasos a seguir al ajustar un modelo</p>
 <ol style="list-style-type: decimal">
@@ -463,40 +475,40 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <li>Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</li>
 <li>Validar poder predictivo con datos de prueba.</li>
 </ol>
-<div id="implementación-de-svr-en-python" class="section level3 hasAnchor" number="3.7.1">
-<h3><span class="header-section-number">3.7.1</span> Implementación de SVR en Python<a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="implementación-de-svr-en-python" class="section level3 hasAnchor" number="4.7.1">
+<h3><span class="header-section-number">4.7.1</span> Implementación de SVR en Python<a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A continuación, revisaremos paso por paso este procedimiento usando SVM como modelo. Los datos corresponden a nuestro ya conocido problema predictivo de precio de casas. Se puede encontrar los datos y documentación en el siguiente <a href="">enlace</a></p>
 <p><strong>Paso 1: Separación inicial de datos ( test, train <KFCV> )</strong></p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="support-vector-machine-svm-svr.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> randint, loguniform, uniform</span>
-<span id="cb87-2"><a href="support-vector-machine-svm-svr.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> permutation_importance</span>
-<span id="cb87-3"><a href="support-vector-machine-svm-svr.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, RandomizedSearchCV, StratifiedKFold, train_test_split</span>
-<span id="cb87-4"><a href="support-vector-machine-svm-svr.html#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC, SVR</span>
-<span id="cb87-5"><a href="support-vector-machine-svm-svr.html#cb87-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-6"><a href="support-vector-machine-svm-svr.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> (</span>
-<span id="cb87-7"><a href="support-vector-machine-svm-svr.html#cb87-7" aria-hidden="true" tabindex="-1"></a>    best_cv_results,</span>
-<span id="cb87-8"><a href="support-vector-machine-svm-svr.html#cb87-8" aria-hidden="true" tabindex="-1"></a>    classification_metrics,</span>
-<span id="cb87-9"><a href="support-vector-machine-svm-svr.html#cb87-9" aria-hidden="true" tabindex="-1"></a>    load_ames,</span>
-<span id="cb87-10"><a href="support-vector-machine-svm-svr.html#cb87-10" aria-hidden="true" tabindex="-1"></a>    load_telco,</span>
-<span id="cb87-11"><a href="support-vector-machine-svm-svr.html#cb87-11" aria-hidden="true" tabindex="-1"></a>    make_ames_pipeline,</span>
-<span id="cb87-12"><a href="support-vector-machine-svm-svr.html#cb87-12" aria-hidden="true" tabindex="-1"></a>    make_telco_pipeline,</span>
-<span id="cb87-13"><a href="support-vector-machine-svm-svr.html#cb87-13" aria-hidden="true" tabindex="-1"></a>    pr_curve_table,</span>
-<span id="cb87-14"><a href="support-vector-machine-svm-svr.html#cb87-14" aria-hidden="true" tabindex="-1"></a>    regression_metrics,</span>
-<span id="cb87-15"><a href="support-vector-machine-svm-svr.html#cb87-15" aria-hidden="true" tabindex="-1"></a>    roc_curve_table,</span>
-<span id="cb87-16"><a href="support-vector-machine-svm-svr.html#cb87-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-17"><a href="support-vector-machine-svm-svr.html#cb87-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-18"><a href="support-vector-machine-svm-svr.html#cb87-18" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> load_ames()</span>
-<span id="cb87-19"><a href="support-vector-machine-svm-svr.html#cb87-19" aria-hidden="true" tabindex="-1"></a>ames_train, ames_test <span class="op">=</span> train_test_split(ames, train_size<span class="op">=</span><span class="fl">0.75</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span>
-<span id="cb87-20"><a href="support-vector-machine-svm-svr.html#cb87-20" aria-hidden="true" tabindex="-1"></a>X_ames_train <span class="op">=</span> ames_train.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
-<span id="cb87-21"><a href="support-vector-machine-svm-svr.html#cb87-21" aria-hidden="true" tabindex="-1"></a>y_ames_train <span class="op">=</span> ames_train[<span class="st">&quot;Sale_Price&quot;</span>]</span>
-<span id="cb87-22"><a href="support-vector-machine-svm-svr.html#cb87-22" aria-hidden="true" tabindex="-1"></a>X_ames_test <span class="op">=</span> ames_test.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
-<span id="cb87-23"><a href="support-vector-machine-svm-svr.html#cb87-23" aria-hidden="true" tabindex="-1"></a>y_ames_test <span class="op">=</span> ames_test[<span class="st">&quot;Sale_Price&quot;</span>]</span>
-<span id="cb87-24"><a href="support-vector-machine-svm-svr.html#cb87-24" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb221-1"><a href="support-vector-machine-svm-svr.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> randint, loguniform, uniform</span>
+<span id="cb221-2"><a href="support-vector-machine-svm-svr.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> permutation_importance</span>
+<span id="cb221-3"><a href="support-vector-machine-svm-svr.html#cb221-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, RandomizedSearchCV, StratifiedKFold, train_test_split</span>
+<span id="cb221-4"><a href="support-vector-machine-svm-svr.html#cb221-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC, SVR</span>
+<span id="cb221-5"><a href="support-vector-machine-svm-svr.html#cb221-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-6"><a href="support-vector-machine-svm-svr.html#cb221-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> (</span>
+<span id="cb221-7"><a href="support-vector-machine-svm-svr.html#cb221-7" aria-hidden="true" tabindex="-1"></a>    best_cv_results,</span>
+<span id="cb221-8"><a href="support-vector-machine-svm-svr.html#cb221-8" aria-hidden="true" tabindex="-1"></a>    classification_metrics,</span>
+<span id="cb221-9"><a href="support-vector-machine-svm-svr.html#cb221-9" aria-hidden="true" tabindex="-1"></a>    load_ames,</span>
+<span id="cb221-10"><a href="support-vector-machine-svm-svr.html#cb221-10" aria-hidden="true" tabindex="-1"></a>    load_telco,</span>
+<span id="cb221-11"><a href="support-vector-machine-svm-svr.html#cb221-11" aria-hidden="true" tabindex="-1"></a>    make_ames_pipeline,</span>
+<span id="cb221-12"><a href="support-vector-machine-svm-svr.html#cb221-12" aria-hidden="true" tabindex="-1"></a>    make_telco_pipeline,</span>
+<span id="cb221-13"><a href="support-vector-machine-svm-svr.html#cb221-13" aria-hidden="true" tabindex="-1"></a>    pr_curve_table,</span>
+<span id="cb221-14"><a href="support-vector-machine-svm-svr.html#cb221-14" aria-hidden="true" tabindex="-1"></a>    regression_metrics,</span>
+<span id="cb221-15"><a href="support-vector-machine-svm-svr.html#cb221-15" aria-hidden="true" tabindex="-1"></a>    roc_curve_table,</span>
+<span id="cb221-16"><a href="support-vector-machine-svm-svr.html#cb221-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb221-17"><a href="support-vector-machine-svm-svr.html#cb221-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-18"><a href="support-vector-machine-svm-svr.html#cb221-18" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> load_ames()</span>
+<span id="cb221-19"><a href="support-vector-machine-svm-svr.html#cb221-19" aria-hidden="true" tabindex="-1"></a>ames_train, ames_test <span class="op">=</span> train_test_split(ames, train_size<span class="op">=</span><span class="fl">0.75</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span>
+<span id="cb221-20"><a href="support-vector-machine-svm-svr.html#cb221-20" aria-hidden="true" tabindex="-1"></a>X_ames_train <span class="op">=</span> ames_train.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
+<span id="cb221-21"><a href="support-vector-machine-svm-svr.html#cb221-21" aria-hidden="true" tabindex="-1"></a>y_ames_train <span class="op">=</span> ames_train[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb221-22"><a href="support-vector-machine-svm-svr.html#cb221-22" aria-hidden="true" tabindex="-1"></a>X_ames_test <span class="op">=</span> ames_test.drop(columns<span class="op">=</span><span class="st">&quot;Sale_Price&quot;</span>)</span>
+<span id="cb221-23"><a href="support-vector-machine-svm-svr.html#cb221-23" aria-hidden="true" tabindex="-1"></a>y_ames_test <span class="op">=</span> ames_test[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb221-24"><a href="support-vector-machine-svm-svr.html#cb221-24" aria-hidden="true" tabindex="-1"></a>ames_folds <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span></code></pre></div>
 <p>Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.</p>
 <p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="support-vector-machine-svm-svr.html#cb88-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="op">=</span> make_ames_pipeline(SVR(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>), scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb88-2"><a href="support-vector-machine-svm-svr.html#cb88-2" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb222-1"><a href="support-vector-machine-svm-svr.html#cb222-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="op">=</span> make_ames_pipeline(SVR(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>), scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb222-2"><a href="support-vector-machine-svm-svr.html#cb222-2" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
@@ -505,14 +517,14 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17a80e7d0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e58e150&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3046dfa50&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e57df10&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVR())])</code></pre>
 <p>Recordemos que un <strong>Pipeline</strong> contiene los pasos a seguir; usamos <strong>fit()</strong> para estimar transformaciones y modelo, y <strong>transform()</strong> o <strong>predict()</strong> para aplicarlo a nuevos datos.</p>
@@ -523,14 +535,14 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <li>Base radial: <code>SVR(kernel="rbf")</code></li>
 </ul>
 <p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="support-vector-machine-svm-svr.html#cb90-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVR(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>)</span>
-<span id="cb90-2"><a href="support-vector-machine-svm-svr.html#cb90-2" aria-hidden="true" tabindex="-1"></a>svm_model</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb224-1"><a href="support-vector-machine-svm-svr.html#cb224-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVR(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>)</span>
+<span id="cb224-2"><a href="support-vector-machine-svm-svr.html#cb224-2" aria-hidden="true" tabindex="-1"></a>svm_model</span></code></pre></div>
 <pre><code>## SVR()</code></pre>
 <p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="support-vector-machine-svm-svr.html#cb92-1" aria-hidden="true" tabindex="-1"></a>svm_workflow <span class="op">=</span> make_ames_pipeline(svm_model, scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb92-2"><a href="support-vector-machine-svm-svr.html#cb92-2" aria-hidden="true" tabindex="-1"></a>svm_workflow</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb226-1"><a href="support-vector-machine-svm-svr.html#cb226-1" aria-hidden="true" tabindex="-1"></a>svm_workflow <span class="op">=</span> make_ames_pipeline(svm_model, scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb226-2"><a href="support-vector-machine-svm-svr.html#cb226-2" aria-hidden="true" tabindex="-1"></a>svm_workflow</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
@@ -539,52 +551,52 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3046e0d90&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e584110&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304642b50&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e586f90&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVR())])</code></pre>
 <p><strong>Paso 5: Creación de grid search</strong></p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="support-vector-machine-svm-svr.html#cb94-1" aria-hidden="true" tabindex="-1"></a>svm_param_distributions <span class="op">=</span> {</span>
-<span id="cb94-2"><a href="support-vector-machine-svm-svr.html#cb94-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__C&quot;</span>: loguniform(<span class="fl">1e-1</span>, <span class="fl">1e2</span>),</span>
-<span id="cb94-3"><a href="support-vector-machine-svm-svr.html#cb94-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__gamma&quot;</span>: loguniform(<span class="fl">1e-4</span>, <span class="fl">1e0</span>),</span>
-<span id="cb94-4"><a href="support-vector-machine-svm-svr.html#cb94-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__epsilon&quot;</span>: uniform(<span class="fl">0.01</span>, <span class="fl">0.50</span>),</span>
-<span id="cb94-5"><a href="support-vector-machine-svm-svr.html#cb94-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb94-6"><a href="support-vector-machine-svm-svr.html#cb94-6" aria-hidden="true" tabindex="-1"></a>svm_param_distributions</span></code></pre></div>
-<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17ab52a90&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3044e4b10&gt;, &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3045b8e10&gt;}</code></pre>
+<div class="sourceCode" id="cb228"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb228-1"><a href="support-vector-machine-svm-svr.html#cb228-1" aria-hidden="true" tabindex="-1"></a>svm_param_distributions <span class="op">=</span> {</span>
+<span id="cb228-2"><a href="support-vector-machine-svm-svr.html#cb228-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__C&quot;</span>: loguniform(<span class="fl">1e-1</span>, <span class="fl">1e2</span>),</span>
+<span id="cb228-3"><a href="support-vector-machine-svm-svr.html#cb228-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__gamma&quot;</span>: loguniform(<span class="fl">1e-4</span>, <span class="fl">1e0</span>),</span>
+<span id="cb228-4"><a href="support-vector-machine-svm-svr.html#cb228-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__epsilon&quot;</span>: uniform(<span class="fl">0.01</span>, <span class="fl">0.50</span>),</span>
+<span id="cb228-5"><a href="support-vector-machine-svm-svr.html#cb228-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb228-6"><a href="support-vector-machine-svm-svr.html#cb228-6" aria-hidden="true" tabindex="-1"></a>svm_param_distributions</span></code></pre></div>
+<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e3e7f90&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e511e90&gt;, &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e53d5d0&gt;}</code></pre>
 <p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="support-vector-machine-svm-svr.html#cb96-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
-<span id="cb96-2"><a href="support-vector-machine-svm-svr.html#cb96-2" aria-hidden="true" tabindex="-1"></a>    svm_workflow,</span>
-<span id="cb96-3"><a href="support-vector-machine-svm-svr.html#cb96-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_param_distributions,</span>
-<span id="cb96-4"><a href="support-vector-machine-svm-svr.html#cb96-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb96-5"><a href="support-vector-machine-svm-svr.html#cb96-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
-<span id="cb96-6"><a href="support-vector-machine-svm-svr.html#cb96-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_mean_absolute_percentage_error&quot;</span>,</span>
-<span id="cb96-7"><a href="support-vector-machine-svm-svr.html#cb96-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb96-8"><a href="support-vector-machine-svm-svr.html#cb96-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
-<span id="cb96-9"><a href="support-vector-machine-svm-svr.html#cb96-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb96-10"><a href="support-vector-machine-svm-svr.html#cb96-10" aria-hidden="true" tabindex="-1"></a>svm_tune_result.fit(X_ames_train, y_ames_train)</span>
-<span id="cb96-11"><a href="support-vector-machine-svm-svr.html#cb96-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-12"><a href="support-vector-machine-svm-svr.html#cb96-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
-<span id="cb96-13"><a href="support-vector-machine-svm-svr.html#cb96-13" aria-hidden="true" tabindex="-1"></a>joblib.dump(svm_tune_result, <span class="st">&quot;models/svm_model_reg.joblib&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb230-1"><a href="support-vector-machine-svm-svr.html#cb230-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb230-2"><a href="support-vector-machine-svm-svr.html#cb230-2" aria-hidden="true" tabindex="-1"></a>    svm_workflow,</span>
+<span id="cb230-3"><a href="support-vector-machine-svm-svr.html#cb230-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_param_distributions,</span>
+<span id="cb230-4"><a href="support-vector-machine-svm-svr.html#cb230-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb230-5"><a href="support-vector-machine-svm-svr.html#cb230-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
+<span id="cb230-6"><a href="support-vector-machine-svm-svr.html#cb230-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_mean_absolute_percentage_error&quot;</span>,</span>
+<span id="cb230-7"><a href="support-vector-machine-svm-svr.html#cb230-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb230-8"><a href="support-vector-machine-svm-svr.html#cb230-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb230-9"><a href="support-vector-machine-svm-svr.html#cb230-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb230-10"><a href="support-vector-machine-svm-svr.html#cb230-10" aria-hidden="true" tabindex="-1"></a>svm_tune_result.fit(X_ames_train, y_ames_train)</span>
+<span id="cb230-11"><a href="support-vector-machine-svm-svr.html#cb230-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb230-12"><a href="support-vector-machine-svm-svr.html#cb230-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb230-13"><a href="support-vector-machine-svm-svr.html#cb230-13" aria-hidden="true" tabindex="-1"></a>joblib.dump(svm_tune_result, <span class="st">&quot;models/svm_model_reg.joblib&quot;</span>)</span></code></pre></div>
 <p>Podemos obtener las métricas de cada <em>fold</em> con el siguiente código:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="support-vector-machine-svm-svr.html#cb97-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
-<span id="cb97-2"><a href="support-vector-machine-svm-svr.html#cb97-2" aria-hidden="true" tabindex="-1"></a>    svm_workflow,</span>
-<span id="cb97-3"><a href="support-vector-machine-svm-svr.html#cb97-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_param_distributions,</span>
-<span id="cb97-4"><a href="support-vector-machine-svm-svr.html#cb97-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb97-5"><a href="support-vector-machine-svm-svr.html#cb97-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
-<span id="cb97-6"><a href="support-vector-machine-svm-svr.html#cb97-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_mean_absolute_percentage_error&quot;</span>,</span>
-<span id="cb97-7"><a href="support-vector-machine-svm-svr.html#cb97-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb97-8"><a href="support-vector-machine-svm-svr.html#cb97-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
-<span id="cb97-9"><a href="support-vector-machine-svm-svr.html#cb97-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb97-10"><a href="support-vector-machine-svm-svr.html#cb97-10" aria-hidden="true" tabindex="-1"></a>svm_tune_result.fit(X_ames_train, y_ames_train)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb231-1"><a href="support-vector-machine-svm-svr.html#cb231-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb231-2"><a href="support-vector-machine-svm-svr.html#cb231-2" aria-hidden="true" tabindex="-1"></a>    svm_workflow,</span>
+<span id="cb231-3"><a href="support-vector-machine-svm-svr.html#cb231-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_param_distributions,</span>
+<span id="cb231-4"><a href="support-vector-machine-svm-svr.html#cb231-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb231-5"><a href="support-vector-machine-svm-svr.html#cb231-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>ames_folds,</span>
+<span id="cb231-6"><a href="support-vector-machine-svm-svr.html#cb231-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_mean_absolute_percentage_error&quot;</span>,</span>
+<span id="cb231-7"><a href="support-vector-machine-svm-svr.html#cb231-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb231-8"><a href="support-vector-machine-svm-svr.html#cb231-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb231-9"><a href="support-vector-machine-svm-svr.html#cb231-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb231-10"><a href="support-vector-machine-svm-svr.html#cb231-10" aria-hidden="true" tabindex="-1"></a>svm_tune_result.fit(X_ames_train, y_ames_train)</span></code></pre></div>
 <pre><code>## RandomizedSearchCV(cv=KFold(n_splits=5, random_state=4595, shuffle=True),
 ##                    estimator=Pipeline(steps=[(&#39;features&#39;,
-##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
 ##                                                                            kw_args={&#39;keep_target&#39;: False,
 ##                                                                                     &#39;large&#39;: False})),
 ##                                              (&#39;preprocess&#39;,
@@ -592,22 +604,22 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                                                 SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                                                (&#39;...
-##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17ab52a90&gt;,
-##                                         &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3045b8e10&gt;,
-##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3044e4b10&gt;},
+##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e3e7f90&gt;,
+##                                         &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e53d5d0&gt;,
+##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e511e90&gt;},
 ##                    random_state=123,
 ##                    scoring=&#39;neg_mean_absolute_percentage_error&#39;)</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="support-vector-machine-svm-svr.html#cb99-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(svm_tune_result.cv_results_).head()</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb233-1"><a href="support-vector-machine-svm-svr.html#cb233-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(svm_tune_result.cv_results_).head()</span></code></pre></div>
 <pre><code>##    mean_fit_time  std_fit_time  ...  std_test_score  rank_test_score
-## 0       0.173520      0.027741  ...        0.018045                7
-## 1       0.169891      0.014097  ...        0.017997                6
-## 2       0.160470      0.018684  ...        0.017114                1
-## 3       0.166288      0.021164  ...        0.018112               17
-## 4       0.140776      0.025368  ...        0.018074               10
+## 0       0.319666      0.019491  ...        0.018045                7
+## 1       0.317276      0.033832  ...        0.017997                6
+## 2       0.322220      0.032427  ...        0.017114                1
+## 3       0.363482      0.058727  ...        0.018112               17
+## 4       0.406211      0.050574  ...        0.018074               10
 ## 
 ## [5 rows x 16 columns]</code></pre>
 <p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="support-vector-machine-svm-svr.html#cb101-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb235-1"><a href="support-vector-machine-svm-svr.html#cb235-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     param_model__C  param_model__epsilon  ...  mean_test_score  std_test_score
 ## 2        87.557347              0.352415  ...        -0.303766        0.017114
 ## 17       30.131614              0.311530  ...        -0.317290        0.017341
@@ -622,13 +634,13 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 
 ## [10 rows x 5 columns]</code></pre>
 <p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="support-vector-machine-svm-svr.html#cb103-1" aria-hidden="true" tabindex="-1"></a>svm_results <span class="op">=</span> pd.DataFrame(svm_tune_result.cv_results_)</span>
-<span id="cb103-2"><a href="support-vector-machine-svm-svr.html#cb103-2" aria-hidden="true" tabindex="-1"></a>svm_results.plot.scatter(x<span class="op">=</span><span class="st">&quot;param_model__C&quot;</span>, y<span class="op">=</span><span class="st">&quot;mean_test_score&quot;</span>, logx<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb237-1"><a href="support-vector-machine-svm-svr.html#cb237-1" aria-hidden="true" tabindex="-1"></a>svm_results <span class="op">=</span> pd.DataFrame(svm_tune_result.cv_results_)</span>
+<span id="cb237-2"><a href="support-vector-machine-svm-svr.html#cb237-2" aria-hidden="true" tabindex="-1"></a>svm_results.plot.scatter(x<span class="op">=</span><span class="st">&quot;param_model__C&quot;</span>, y<span class="op">=</span><span class="st">&quot;mean_test_score&quot;</span>, logx<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 <pre><code>## &lt;Axes: xlabel=&#39;param_model__C&#39;, ylabel=&#39;mean_test_score&#39;&gt;</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="support-vector-machine-svm-svr.html#cb105-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Desempeño por C&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb239-1"><a href="support-vector-machine-svm-svr.html#cb239-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Desempeño por C&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Desempeño por C&#39;)</code></pre>
-<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="support-vector-machine-svm-svr.html#cb107-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb241-1"><a href="support-vector-machine-svm-svr.html#cb241-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     param_model__C  param_model__epsilon  ...  mean_test_score  std_test_score
 ## 2        87.557347              0.352415  ...        -0.303766        0.017114
 ## 17       30.131614              0.311530  ...        -0.317290        0.017341
@@ -643,30 +655,30 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 
 ## [10 rows x 5 columns]</code></pre>
 <p><strong>Paso 8: Selección de modelo a usar</strong></p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb109-1"><a href="support-vector-machine-svm-svr.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección del mejor modelo según MAPE.</span></span>
-<span id="cb109-2"><a href="support-vector-machine-svm-svr.html#cb109-2" aria-hidden="true" tabindex="-1"></a>svm_regression_best_model <span class="op">=</span> svm_tune_result.best_params_</span>
-<span id="cb109-3"><a href="support-vector-machine-svm-svr.html#cb109-3" aria-hidden="true" tabindex="-1"></a>svm_regression_best_model</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb243-1"><a href="support-vector-machine-svm-svr.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección del mejor modelo según MAPE.</span></span>
+<span id="cb243-2"><a href="support-vector-machine-svm-svr.html#cb243-2" aria-hidden="true" tabindex="-1"></a>svm_regression_best_model <span class="op">=</span> svm_tune_result.best_params_</span>
+<span id="cb243-3"><a href="support-vector-machine-svm-svr.html#cb243-3" aria-hidden="true" tabindex="-1"></a>svm_regression_best_model</span></code></pre></div>
 <pre><code>## {&#39;model__C&#39;: 87.55734725056492, &#39;model__epsilon&#39;: 0.35241486929243165, &#39;model__gamma&#39;: 0.00838933633479257}</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb111-1"><a href="support-vector-machine-svm-svr.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación práctica al criterio 1-SE: preferir C menor entre modelos cercanos al mejor.</span></span>
-<span id="cb111-2"><a href="support-vector-machine-svm-svr.html#cb111-2" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> svm_tune_result.best_score_</span>
-<span id="cb111-3"><a href="support-vector-machine-svm-svr.html#cb111-3" aria-hidden="true" tabindex="-1"></a>std_score <span class="op">=</span> svm_results.loc[svm_tune_result.best_index_, <span class="st">&quot;std_test_score&quot;</span>]</span>
-<span id="cb111-4"><a href="support-vector-machine-svm-svr.html#cb111-4" aria-hidden="true" tabindex="-1"></a>svm_regression_best_1se_model <span class="op">=</span> (</span>
-<span id="cb111-5"><a href="support-vector-machine-svm-svr.html#cb111-5" aria-hidden="true" tabindex="-1"></a>    svm_results.query(<span class="st">&quot;mean_test_score &gt;= @best_score - @std_score&quot;</span>)</span>
-<span id="cb111-6"><a href="support-vector-machine-svm-svr.html#cb111-6" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;param_model__C&quot;</span>)</span>
-<span id="cb111-7"><a href="support-vector-machine-svm-svr.html#cb111-7" aria-hidden="true" tabindex="-1"></a>    .iloc[<span class="dv">0</span>]</span>
-<span id="cb111-8"><a href="support-vector-machine-svm-svr.html#cb111-8" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(like<span class="op">=</span><span class="st">&quot;param_&quot;</span>)</span>
-<span id="cb111-9"><a href="support-vector-machine-svm-svr.html#cb111-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb111-10"><a href="support-vector-machine-svm-svr.html#cb111-10" aria-hidden="true" tabindex="-1"></a>svm_regression_best_1se_model</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb245-1"><a href="support-vector-machine-svm-svr.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación práctica al criterio 1-SE: preferir C menor entre modelos cercanos al mejor.</span></span>
+<span id="cb245-2"><a href="support-vector-machine-svm-svr.html#cb245-2" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> svm_tune_result.best_score_</span>
+<span id="cb245-3"><a href="support-vector-machine-svm-svr.html#cb245-3" aria-hidden="true" tabindex="-1"></a>std_score <span class="op">=</span> svm_results.loc[svm_tune_result.best_index_, <span class="st">&quot;std_test_score&quot;</span>]</span>
+<span id="cb245-4"><a href="support-vector-machine-svm-svr.html#cb245-4" aria-hidden="true" tabindex="-1"></a>svm_regression_best_1se_model <span class="op">=</span> (</span>
+<span id="cb245-5"><a href="support-vector-machine-svm-svr.html#cb245-5" aria-hidden="true" tabindex="-1"></a>    svm_results.query(<span class="st">&quot;mean_test_score &gt;= @best_score - @std_score&quot;</span>)</span>
+<span id="cb245-6"><a href="support-vector-machine-svm-svr.html#cb245-6" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;param_model__C&quot;</span>)</span>
+<span id="cb245-7"><a href="support-vector-machine-svm-svr.html#cb245-7" aria-hidden="true" tabindex="-1"></a>    .iloc[<span class="dv">0</span>]</span>
+<span id="cb245-8"><a href="support-vector-machine-svm-svr.html#cb245-8" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(like<span class="op">=</span><span class="st">&quot;param_&quot;</span>)</span>
+<span id="cb245-9"><a href="support-vector-machine-svm-svr.html#cb245-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb245-10"><a href="support-vector-machine-svm-svr.html#cb245-10" aria-hidden="true" tabindex="-1"></a>svm_regression_best_1se_model</span></code></pre></div>
 <pre><code>## param_model__C          30.131614
 ## param_model__epsilon      0.31153
 ## param_model__gamma       0.015145
 ## Name: 17, dtype: object</code></pre>
 <p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb113-1"><a href="support-vector-machine-svm-svr.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo final.</span></span>
-<span id="cb113-2"><a href="support-vector-machine-svm-svr.html#cb113-2" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model <span class="op">=</span> svm_tune_result.best_estimator_</span>
-<span id="cb113-3"><a href="support-vector-machine-svm-svr.html#cb113-3" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb247-1"><a href="support-vector-machine-svm-svr.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo final.</span></span>
+<span id="cb247-2"><a href="support-vector-machine-svm-svr.html#cb247-2" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model <span class="op">=</span> svm_tune_result.best_estimator_</span>
+<span id="cb247-3"><a href="support-vector-machine-svm-svr.html#cb247-3" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17af62660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
@@ -682,41 +694,41 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3045a1e90&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e59b350&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;,
 ##                  SVR(C=87.55734725056492, epsilon=0.35241486929243165,
 ##                      gamma=0.00838933633479257))])</code></pre>
 <p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
 <p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos <a href="https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba">data leakage</a>. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb115-1"><a href="support-vector-machine-svm-svr.html#cb115-1" aria-hidden="true" tabindex="-1"></a>ames_importance_result <span class="op">=</span> permutation_importance(</span>
-<span id="cb115-2"><a href="support-vector-machine-svm-svr.html#cb115-2" aria-hidden="true" tabindex="-1"></a>    svm_regression_final_model,</span>
-<span id="cb115-3"><a href="support-vector-machine-svm-svr.html#cb115-3" aria-hidden="true" tabindex="-1"></a>    X_ames_test,</span>
-<span id="cb115-4"><a href="support-vector-machine-svm-svr.html#cb115-4" aria-hidden="true" tabindex="-1"></a>    y_ames_test,</span>
-<span id="cb115-5"><a href="support-vector-machine-svm-svr.html#cb115-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_root_mean_squared_error&quot;</span>,</span>
-<span id="cb115-6"><a href="support-vector-machine-svm-svr.html#cb115-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb115-7"><a href="support-vector-machine-svm-svr.html#cb115-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb115-8"><a href="support-vector-machine-svm-svr.html#cb115-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb116"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb116-1"><a href="support-vector-machine-svm-svr.html#cb116-1" aria-hidden="true" tabindex="-1"></a>ames_importance_result <span class="op">=</span> permutation_importance(</span>
-<span id="cb116-2"><a href="support-vector-machine-svm-svr.html#cb116-2" aria-hidden="true" tabindex="-1"></a>    svm_regression_final_model,</span>
-<span id="cb116-3"><a href="support-vector-machine-svm-svr.html#cb116-3" aria-hidden="true" tabindex="-1"></a>    X_ames_test,</span>
-<span id="cb116-4"><a href="support-vector-machine-svm-svr.html#cb116-4" aria-hidden="true" tabindex="-1"></a>    y_ames_test,</span>
-<span id="cb116-5"><a href="support-vector-machine-svm-svr.html#cb116-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_root_mean_squared_error&quot;</span>,</span>
-<span id="cb116-6"><a href="support-vector-machine-svm-svr.html#cb116-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb116-7"><a href="support-vector-machine-svm-svr.html#cb116-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb116-8"><a href="support-vector-machine-svm-svr.html#cb116-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb116-9"><a href="support-vector-machine-svm-svr.html#cb116-9" aria-hidden="true" tabindex="-1"></a>ames_importance <span class="op">=</span> (</span>
-<span id="cb116-10"><a href="support-vector-machine-svm-svr.html#cb116-10" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
-<span id="cb116-11"><a href="support-vector-machine-svm-svr.html#cb116-11" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb116-12"><a href="support-vector-machine-svm-svr.html#cb116-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: X_ames_test.columns,</span>
-<span id="cb116-13"><a href="support-vector-machine-svm-svr.html#cb116-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Importance&quot;</span>: ames_importance_result.importances_mean,</span>
-<span id="cb116-14"><a href="support-vector-machine-svm-svr.html#cb116-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;StDev&quot;</span>: ames_importance_result.importances_std,</span>
-<span id="cb116-15"><a href="support-vector-machine-svm-svr.html#cb116-15" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb116-16"><a href="support-vector-machine-svm-svr.html#cb116-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb116-17"><a href="support-vector-machine-svm-svr.html#cb116-17" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importance&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb116-18"><a href="support-vector-machine-svm-svr.html#cb116-18" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">20</span>)</span>
-<span id="cb116-19"><a href="support-vector-machine-svm-svr.html#cb116-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb116-20"><a href="support-vector-machine-svm-svr.html#cb116-20" aria-hidden="true" tabindex="-1"></a>display(ames_importance)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb249-1"><a href="support-vector-machine-svm-svr.html#cb249-1" aria-hidden="true" tabindex="-1"></a>ames_importance_result <span class="op">=</span> permutation_importance(</span>
+<span id="cb249-2"><a href="support-vector-machine-svm-svr.html#cb249-2" aria-hidden="true" tabindex="-1"></a>    svm_regression_final_model,</span>
+<span id="cb249-3"><a href="support-vector-machine-svm-svr.html#cb249-3" aria-hidden="true" tabindex="-1"></a>    X_ames_test,</span>
+<span id="cb249-4"><a href="support-vector-machine-svm-svr.html#cb249-4" aria-hidden="true" tabindex="-1"></a>    y_ames_test,</span>
+<span id="cb249-5"><a href="support-vector-machine-svm-svr.html#cb249-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_root_mean_squared_error&quot;</span>,</span>
+<span id="cb249-6"><a href="support-vector-machine-svm-svr.html#cb249-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb249-7"><a href="support-vector-machine-svm-svr.html#cb249-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb249-8"><a href="support-vector-machine-svm-svr.html#cb249-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb250-1"><a href="support-vector-machine-svm-svr.html#cb250-1" aria-hidden="true" tabindex="-1"></a>ames_importance_result <span class="op">=</span> permutation_importance(</span>
+<span id="cb250-2"><a href="support-vector-machine-svm-svr.html#cb250-2" aria-hidden="true" tabindex="-1"></a>    svm_regression_final_model,</span>
+<span id="cb250-3"><a href="support-vector-machine-svm-svr.html#cb250-3" aria-hidden="true" tabindex="-1"></a>    X_ames_test,</span>
+<span id="cb250-4"><a href="support-vector-machine-svm-svr.html#cb250-4" aria-hidden="true" tabindex="-1"></a>    y_ames_test,</span>
+<span id="cb250-5"><a href="support-vector-machine-svm-svr.html#cb250-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;neg_root_mean_squared_error&quot;</span>,</span>
+<span id="cb250-6"><a href="support-vector-machine-svm-svr.html#cb250-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb250-7"><a href="support-vector-machine-svm-svr.html#cb250-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb250-8"><a href="support-vector-machine-svm-svr.html#cb250-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb250-9"><a href="support-vector-machine-svm-svr.html#cb250-9" aria-hidden="true" tabindex="-1"></a>ames_importance <span class="op">=</span> (</span>
+<span id="cb250-10"><a href="support-vector-machine-svm-svr.html#cb250-10" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
+<span id="cb250-11"><a href="support-vector-machine-svm-svr.html#cb250-11" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb250-12"><a href="support-vector-machine-svm-svr.html#cb250-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: X_ames_test.columns,</span>
+<span id="cb250-13"><a href="support-vector-machine-svm-svr.html#cb250-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Importance&quot;</span>: ames_importance_result.importances_mean,</span>
+<span id="cb250-14"><a href="support-vector-machine-svm-svr.html#cb250-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;StDev&quot;</span>: ames_importance_result.importances_std,</span>
+<span id="cb250-15"><a href="support-vector-machine-svm-svr.html#cb250-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb250-16"><a href="support-vector-machine-svm-svr.html#cb250-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb250-17"><a href="support-vector-machine-svm-svr.html#cb250-17" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importance&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb250-18"><a href="support-vector-machine-svm-svr.html#cb250-18" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">20</span>)</span>
+<span id="cb250-19"><a href="support-vector-machine-svm-svr.html#cb250-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb250-20"><a href="support-vector-machine-svm-svr.html#cb250-20" aria-hidden="true" tabindex="-1"></a>display(ames_importance)</span></code></pre></div>
 <pre><code>##           Variable  Importance      StDev
 ## 46     Gr_Liv_Area  712.262862  51.182708
 ## 17     OverallQual  295.620406  16.576544
@@ -738,29 +750,29 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 50       Half_Bath   61.729294  10.115921
 ## 67   Open_Porch_SF   61.421703  11.480114
 ## 60   Garage_Finish   59.824821   3.680770</code></pre>
-<div class="sourceCode" id="cb118"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb118-1"><a href="support-vector-machine-svm-svr.html#cb118-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> ames_importance.sort_values(<span class="st">&quot;Importance&quot;</span>).plot.barh(</span>
-<span id="cb118-2"><a href="support-vector-machine-svm-svr.html#cb118-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importance&quot;</span>, xerr<span class="op">=</span><span class="st">&quot;StDev&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span>
-<span id="cb118-3"><a href="support-vector-machine-svm-svr.html#cb118-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb118-4"><a href="support-vector-machine-svm-svr.html#cb118-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Variable Importance Measure&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb252-1"><a href="support-vector-machine-svm-svr.html#cb252-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> ames_importance.sort_values(<span class="st">&quot;Importance&quot;</span>).plot.barh(</span>
+<span id="cb252-2"><a href="support-vector-machine-svm-svr.html#cb252-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importance&quot;</span>, xerr<span class="op">=</span><span class="st">&quot;StDev&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span>
+<span id="cb252-3"><a href="support-vector-machine-svm-svr.html#cb252-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb252-4"><a href="support-vector-machine-svm-svr.html#cb252-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Variable Importance Measure&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Variable Importance Measure&#39;)</code></pre>
-<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-62-3.png" width="768" /></p>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-102-3.png" width="768" /></p>
 <p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
 <p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb120-1"><a href="support-vector-machine-svm-svr.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicciones</span></span>
-<span id="cb120-2"><a href="support-vector-machine-svm-svr.html#cb120-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb120-3"><a href="support-vector-machine-svm-svr.html#cb120-3" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb120-4"><a href="support-vector-machine-svm-svr.html#cb120-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Sale_Price&quot;</span>: y_ames_test.to_numpy(),</span>
-<span id="cb120-5"><a href="support-vector-machine-svm-svr.html#cb120-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pred_svm_reg&quot;</span>: svm_regression_final_model.predict(X_ames_test),</span>
-<span id="cb120-6"><a href="support-vector-machine-svm-svr.html#cb120-6" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb120-7"><a href="support-vector-machine-svm-svr.html#cb120-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb120-8"><a href="support-vector-machine-svm-svr.html#cb120-8" aria-hidden="true" tabindex="-1"></a>results.head()</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb254-1"><a href="support-vector-machine-svm-svr.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicciones</span></span>
+<span id="cb254-2"><a href="support-vector-machine-svm-svr.html#cb254-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb254-3"><a href="support-vector-machine-svm-svr.html#cb254-3" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb254-4"><a href="support-vector-machine-svm-svr.html#cb254-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Sale_Price&quot;</span>: y_ames_test.to_numpy(),</span>
+<span id="cb254-5"><a href="support-vector-machine-svm-svr.html#cb254-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;pred_svm_reg&quot;</span>: svm_regression_final_model.predict(X_ames_test),</span>
+<span id="cb254-6"><a href="support-vector-machine-svm-svr.html#cb254-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb254-7"><a href="support-vector-machine-svm-svr.html#cb254-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb254-8"><a href="support-vector-machine-svm-svr.html#cb254-8" aria-hidden="true" tabindex="-1"></a>results.head()</span></code></pre></div>
 <pre><code>##    Sale_Price   pred_svm_reg
 ## 0      253000  170316.727352
 ## 1      161750  161631.787982
 ## 2       89471  160399.392142
 ## 3      314813  170380.286992
 ## 4      180500  164530.537701</code></pre>
-<div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb122-1"><a href="support-vector-machine-svm-svr.html#cb122-1" aria-hidden="true" tabindex="-1"></a>regression_metrics(results[<span class="st">&quot;Sale_Price&quot;</span>], results[<span class="st">&quot;pred_svm_reg&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb256-1"><a href="support-vector-machine-svm-svr.html#cb256-1" aria-hidden="true" tabindex="-1"></a>regression_metrics(results[<span class="st">&quot;Sale_Price&quot;</span>], results[<span class="st">&quot;pred_svm_reg&quot;</span>])</span></code></pre></div>
 <pre><code>##   metric      estimate
 ## 0   rmse  75365.636244
 ## 1    mae  50865.367102
@@ -768,34 +780,34 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 3    rsq      0.046849
 ## 4    ccc      0.095768</code></pre>
 <p>Es posible definir nuestro propio conjunto de metricas que deseamos reportar creando este objeto:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb124-1"><a href="support-vector-machine-svm-svr.html#cb124-1" aria-hidden="true" tabindex="-1"></a>regression_metrics(results[<span class="st">&quot;Sale_Price&quot;</span>], results[<span class="st">&quot;pred_svm_reg&quot;</span>]).assign(</span>
-<span id="cb124-2"><a href="support-vector-machine-svm-svr.html#cb124-2" aria-hidden="true" tabindex="-1"></a>    estimate<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;estimate&quot;</span>].<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb124-3"><a href="support-vector-machine-svm-svr.html#cb124-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb258-1"><a href="support-vector-machine-svm-svr.html#cb258-1" aria-hidden="true" tabindex="-1"></a>regression_metrics(results[<span class="st">&quot;Sale_Price&quot;</span>], results[<span class="st">&quot;pred_svm_reg&quot;</span>]).assign(</span>
+<span id="cb258-2"><a href="support-vector-machine-svm-svr.html#cb258-2" aria-hidden="true" tabindex="-1"></a>    estimate<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&quot;estimate&quot;</span>].<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb258-3"><a href="support-vector-machine-svm-svr.html#cb258-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##   metric  estimate
 ## 0   rmse  75365.64
 ## 1    mae  50865.37
 ## 2   mape      0.28
 ## 3    rsq      0.05
 ## 4    ccc      0.10</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb126-1"><a href="support-vector-machine-svm-svr.html#cb126-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(results[<span class="st">&quot;pred_svm_reg&quot;</span>], results[<span class="st">&quot;Sale_Price&quot;</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span></code></pre></div>
-<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x307b5cd50&gt;</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb128-1"><a href="support-vector-machine-svm-svr.html#cb128-1" aria-hidden="true" tabindex="-1"></a>lims <span class="op">=</span> [results[[<span class="st">&quot;pred_svm_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">min</span>().<span class="bu">min</span>(), results[[<span class="st">&quot;pred_svm_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">max</span>().<span class="bu">max</span>()]</span>
-<span id="cb128-2"><a href="support-vector-machine-svm-svr.html#cb128-2" aria-hidden="true" tabindex="-1"></a>plt.plot(lims, lims, color<span class="op">=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x307b97690&gt;]</code></pre>
-<div class="sourceCode" id="cb130"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb130-1"><a href="support-vector-machine-svm-svr.html#cb130-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Prediction&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb260-1"><a href="support-vector-machine-svm-svr.html#cb260-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(results[<span class="st">&quot;pred_svm_reg&quot;</span>], results[<span class="st">&quot;Sale_Price&quot;</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span></code></pre></div>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x30e0b0910&gt;</code></pre>
+<div class="sourceCode" id="cb262"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb262-1"><a href="support-vector-machine-svm-svr.html#cb262-1" aria-hidden="true" tabindex="-1"></a>lims <span class="op">=</span> [results[[<span class="st">&quot;pred_svm_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">min</span>().<span class="bu">min</span>(), results[[<span class="st">&quot;pred_svm_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">max</span>().<span class="bu">max</span>()]</span>
+<span id="cb262-2"><a href="support-vector-machine-svm-svr.html#cb262-2" aria-hidden="true" tabindex="-1"></a>plt.plot(lims, lims, color<span class="op">=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30e33c810&gt;]</code></pre>
+<div class="sourceCode" id="cb264"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb264-1"><a href="support-vector-machine-svm-svr.html#cb264-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Prediction&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 0, &#39;Prediction&#39;)</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb132-1"><a href="support-vector-machine-svm-svr.html#cb132-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Observation&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb266-1"><a href="support-vector-machine-svm-svr.html#cb266-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Observation&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;Observation&#39;)</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb134-1"><a href="support-vector-machine-svm-svr.html#cb134-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Comparison&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb268-1"><a href="support-vector-machine-svm-svr.html#cb268-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Comparison&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Comparison&#39;)</code></pre>
-<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-66-5.png" width="672" /></p>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-106-5.png" width="672" /></p>
 </div>
-<div id="implementación-de-svm-en-python" class="section level3 hasAnchor" number="3.7.2">
-<h3><span class="header-section-number">3.7.2</span> Implementación de SVM en Python<a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="implementación-de-svm-en-python" class="section level3 hasAnchor" number="4.7.2">
+<h3><span class="header-section-number">4.7.2</span> Implementación de SVM en Python<a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Es turno de revisar la implementación de SVM con nuestro bien conocido problema de predicción de cancelación de servicios de telecomunicaciones. Los datos se encuentran disponibles en el siguiente <a href="https://drive.google.com/drive/folders/1mlDGHvUy-81qfvQi_iB7tqMb9yhy3vyh?usp=sharing">enlace</a>:</p>
 <p>Los pasos para implementar en <em>Python</em> este modelo predictivo son los mismos, cambiando únicamente las especificaciones del tipo de modelo, pre-procesamiento e hiper-parámetros.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="support-vector-machine-svm-svr.html#cb136-1" aria-hidden="true" tabindex="-1"></a>telco <span class="op">=</span> load_telco(<span class="st">&quot;data/Churn.csv&quot;</span>)</span>
-<span id="cb136-2"><a href="support-vector-machine-svm-svr.html#cb136-2" aria-hidden="true" tabindex="-1"></a>telco.info()</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb270-1"><a href="support-vector-machine-svm-svr.html#cb270-1" aria-hidden="true" tabindex="-1"></a>telco <span class="op">=</span> load_telco(<span class="st">&quot;data/Churn.csv&quot;</span>)</span>
+<span id="cb270-2"><a href="support-vector-machine-svm-svr.html#cb270-2" aria-hidden="true" tabindex="-1"></a>telco.info()</span></code></pre></div>
 <pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 ## RangeIndex: 7043 entries, 0 to 7042
 ## Data columns (total 21 columns):
@@ -824,7 +836,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##  20  Churn             7043 non-null   object 
 ## dtypes: float64(2), int64(2), object(17)
 ## memory usage: 1.1+ MB</code></pre>
-<div class="sourceCode" id="cb138"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb138-1"><a href="support-vector-machine-svm-svr.html#cb138-1" aria-hidden="true" tabindex="-1"></a>telco.head()</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb272-1"><a href="support-vector-machine-svm-svr.html#cb272-1" aria-hidden="true" tabindex="-1"></a>telco.head()</span></code></pre></div>
 <pre><code>##    customerID  gender  SeniorCitizen  ... MonthlyCharges TotalCharges  Churn
 ## 0  7590-VHVEG  Female              0  ...          29.85        29.85     No
 ## 1  5575-GNVDE    Male              0  ...          56.95      1889.50     No
@@ -834,24 +846,24 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 
 ## [5 rows x 21 columns]</code></pre>
 <p><strong>Paso 1: Separación inicial de datos ( test, train <KFCV> )</strong></p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb140-1"><a href="support-vector-machine-svm-svr.html#cb140-1" aria-hidden="true" tabindex="-1"></a>telco_train, telco_test <span class="op">=</span> train_test_split(</span>
-<span id="cb140-2"><a href="support-vector-machine-svm-svr.html#cb140-2" aria-hidden="true" tabindex="-1"></a>    telco,</span>
-<span id="cb140-3"><a href="support-vector-machine-svm-svr.html#cb140-3" aria-hidden="true" tabindex="-1"></a>    train_size<span class="op">=</span><span class="fl">0.70</span>,</span>
-<span id="cb140-4"><a href="support-vector-machine-svm-svr.html#cb140-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
-<span id="cb140-5"><a href="support-vector-machine-svm-svr.html#cb140-5" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>telco[<span class="st">&quot;Churn&quot;</span>],</span>
-<span id="cb140-6"><a href="support-vector-machine-svm-svr.html#cb140-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb140-7"><a href="support-vector-machine-svm-svr.html#cb140-7" aria-hidden="true" tabindex="-1"></a>X_telco_train <span class="op">=</span> telco_train.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
-<span id="cb140-8"><a href="support-vector-machine-svm-svr.html#cb140-8" aria-hidden="true" tabindex="-1"></a>y_telco_train <span class="op">=</span> telco_train[<span class="st">&quot;Churn&quot;</span>]</span>
-<span id="cb140-9"><a href="support-vector-machine-svm-svr.html#cb140-9" aria-hidden="true" tabindex="-1"></a>X_telco_test <span class="op">=</span> telco_test.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
-<span id="cb140-10"><a href="support-vector-machine-svm-svr.html#cb140-10" aria-hidden="true" tabindex="-1"></a>y_telco_test <span class="op">=</span> telco_test[<span class="st">&quot;Churn&quot;</span>]</span>
-<span id="cb140-11"><a href="support-vector-machine-svm-svr.html#cb140-11" aria-hidden="true" tabindex="-1"></a>telco_folds <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1234</span>)</span>
-<span id="cb140-12"><a href="support-vector-machine-svm-svr.html#cb140-12" aria-hidden="true" tabindex="-1"></a>telco_folds</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb274-1"><a href="support-vector-machine-svm-svr.html#cb274-1" aria-hidden="true" tabindex="-1"></a>telco_train, telco_test <span class="op">=</span> train_test_split(</span>
+<span id="cb274-2"><a href="support-vector-machine-svm-svr.html#cb274-2" aria-hidden="true" tabindex="-1"></a>    telco,</span>
+<span id="cb274-3"><a href="support-vector-machine-svm-svr.html#cb274-3" aria-hidden="true" tabindex="-1"></a>    train_size<span class="op">=</span><span class="fl">0.70</span>,</span>
+<span id="cb274-4"><a href="support-vector-machine-svm-svr.html#cb274-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">1234</span>,</span>
+<span id="cb274-5"><a href="support-vector-machine-svm-svr.html#cb274-5" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>telco[<span class="st">&quot;Churn&quot;</span>],</span>
+<span id="cb274-6"><a href="support-vector-machine-svm-svr.html#cb274-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb274-7"><a href="support-vector-machine-svm-svr.html#cb274-7" aria-hidden="true" tabindex="-1"></a>X_telco_train <span class="op">=</span> telco_train.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb274-8"><a href="support-vector-machine-svm-svr.html#cb274-8" aria-hidden="true" tabindex="-1"></a>y_telco_train <span class="op">=</span> telco_train[<span class="st">&quot;Churn&quot;</span>]</span>
+<span id="cb274-9"><a href="support-vector-machine-svm-svr.html#cb274-9" aria-hidden="true" tabindex="-1"></a>X_telco_test <span class="op">=</span> telco_test.drop(columns<span class="op">=</span><span class="st">&quot;Churn&quot;</span>)</span>
+<span id="cb274-10"><a href="support-vector-machine-svm-svr.html#cb274-10" aria-hidden="true" tabindex="-1"></a>y_telco_test <span class="op">=</span> telco_test[<span class="st">&quot;Churn&quot;</span>]</span>
+<span id="cb274-11"><a href="support-vector-machine-svm-svr.html#cb274-11" aria-hidden="true" tabindex="-1"></a>telco_folds <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1234</span>)</span>
+<span id="cb274-12"><a href="support-vector-machine-svm-svr.html#cb274-12" aria-hidden="true" tabindex="-1"></a>telco_folds</span></code></pre></div>
 <pre><code>## StratifiedKFold(n_splits=5, random_state=1234, shuffle=True)</code></pre>
 <p><strong>Paso 2: Pre-procesamiento e ingeniería de variables</strong></p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb142-1"><a href="support-vector-machine-svm-svr.html#cb142-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="op">=</span> make_telco_pipeline(SVC(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>, probability<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1352</span>))</span>
-<span id="cb142-2"><a href="support-vector-machine-svm-svr.html#cb142-2" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb276-1"><a href="support-vector-machine-svm-svr.html#cb276-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="op">=</span> make_telco_pipeline(SVC(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>, probability<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1352</span>))</span>
+<span id="cb276-2"><a href="support-vector-machine-svm-svr.html#cb276-2" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
@@ -859,25 +871,25 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x307b88fd0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e50e150&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x307b6ba10&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e3ade10&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVC(probability=True, random_state=1352))])</code></pre>
 <p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="support-vector-machine-svm-svr.html#cb144-1" aria-hidden="true" tabindex="-1"></a>svm_class_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>, probability<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1352</span>)</span>
-<span id="cb144-2"><a href="support-vector-machine-svm-svr.html#cb144-2" aria-hidden="true" tabindex="-1"></a>svm_class_model</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb278-1"><a href="support-vector-machine-svm-svr.html#cb278-1" aria-hidden="true" tabindex="-1"></a>svm_class_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>, probability<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1352</span>)</span>
+<span id="cb278-2"><a href="support-vector-machine-svm-svr.html#cb278-2" aria-hidden="true" tabindex="-1"></a>svm_class_model</span></code></pre></div>
 <pre><code>## SVC(probability=True, random_state=1352)</code></pre>
 <p><strong>Paso 4: Inicialización de workflow o pipeline</strong></p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb146-1"><a href="support-vector-machine-svm-svr.html#cb146-1" aria-hidden="true" tabindex="-1"></a>svm_class_workflow <span class="op">=</span> make_telco_pipeline(svm_class_model)</span>
-<span id="cb146-2"><a href="support-vector-machine-svm-svr.html#cb146-2" aria-hidden="true" tabindex="-1"></a>svm_class_workflow</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb280-1"><a href="support-vector-machine-svm-svr.html#cb280-1" aria-hidden="true" tabindex="-1"></a>svm_class_workflow <span class="op">=</span> make_telco_pipeline(svm_class_model)</span>
+<span id="cb280-2"><a href="support-vector-machine-svm-svr.html#cb280-2" aria-hidden="true" tabindex="-1"></a>svm_class_workflow</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
@@ -885,73 +897,73 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x307b88d90&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17e0f3190&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x303fec850&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17e0f38d0&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVC(probability=True, random_state=1352))])</code></pre>
 <p><strong>Paso 5: Creación de grid search</strong></p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb148-1"><a href="support-vector-machine-svm-svr.html#cb148-1" aria-hidden="true" tabindex="-1"></a>svm_class_param_distributions <span class="op">=</span> {</span>
-<span id="cb148-2"><a href="support-vector-machine-svm-svr.html#cb148-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__C&quot;</span>: loguniform(<span class="fl">1e-1</span>, <span class="fl">1e2</span>),</span>
-<span id="cb148-3"><a href="support-vector-machine-svm-svr.html#cb148-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__gamma&quot;</span>: loguniform(<span class="fl">1e-4</span>, <span class="fl">1e0</span>),</span>
-<span id="cb148-4"><a href="support-vector-machine-svm-svr.html#cb148-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb148-5"><a href="support-vector-machine-svm-svr.html#cb148-5" aria-hidden="true" tabindex="-1"></a>svm_class_param_distributions</span></code></pre></div>
-<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30443aa90&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30473c510&gt;}</code></pre>
+<div class="sourceCode" id="cb282"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb282-1"><a href="support-vector-machine-svm-svr.html#cb282-1" aria-hidden="true" tabindex="-1"></a>svm_class_param_distributions <span class="op">=</span> {</span>
+<span id="cb282-2"><a href="support-vector-machine-svm-svr.html#cb282-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__C&quot;</span>: loguniform(<span class="fl">1e-1</span>, <span class="fl">1e2</span>),</span>
+<span id="cb282-3"><a href="support-vector-machine-svm-svr.html#cb282-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__gamma&quot;</span>: loguniform(<span class="fl">1e-4</span>, <span class="fl">1e0</span>),</span>
+<span id="cb282-4"><a href="support-vector-machine-svm-svr.html#cb282-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb282-5"><a href="support-vector-machine-svm-svr.html#cb282-5" aria-hidden="true" tabindex="-1"></a>svm_class_param_distributions</span></code></pre></div>
+<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17dc5ef10&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e335b10&gt;}</code></pre>
 <p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb150-1"><a href="support-vector-machine-svm-svr.html#cb150-1" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result <span class="op">=</span> RandomizedSearchCV(</span>
-<span id="cb150-2"><a href="support-vector-machine-svm-svr.html#cb150-2" aria-hidden="true" tabindex="-1"></a>    svm_class_workflow,</span>
-<span id="cb150-3"><a href="support-vector-machine-svm-svr.html#cb150-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_class_param_distributions,</span>
-<span id="cb150-4"><a href="support-vector-machine-svm-svr.html#cb150-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb150-5"><a href="support-vector-machine-svm-svr.html#cb150-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
-<span id="cb150-6"><a href="support-vector-machine-svm-svr.html#cb150-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
-<span id="cb150-7"><a href="support-vector-machine-svm-svr.html#cb150-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb150-8"><a href="support-vector-machine-svm-svr.html#cb150-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
-<span id="cb150-9"><a href="support-vector-machine-svm-svr.html#cb150-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb150-10"><a href="support-vector-machine-svm-svr.html#cb150-10" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
-<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="support-vector-machine-svm-svr.html#cb151-1" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result <span class="op">=</span> RandomizedSearchCV(</span>
-<span id="cb151-2"><a href="support-vector-machine-svm-svr.html#cb151-2" aria-hidden="true" tabindex="-1"></a>    svm_class_workflow,</span>
-<span id="cb151-3"><a href="support-vector-machine-svm-svr.html#cb151-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_class_param_distributions,</span>
-<span id="cb151-4"><a href="support-vector-machine-svm-svr.html#cb151-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb151-5"><a href="support-vector-machine-svm-svr.html#cb151-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
-<span id="cb151-6"><a href="support-vector-machine-svm-svr.html#cb151-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
-<span id="cb151-7"><a href="support-vector-machine-svm-svr.html#cb151-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb151-8"><a href="support-vector-machine-svm-svr.html#cb151-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
-<span id="cb151-9"><a href="support-vector-machine-svm-svr.html#cb151-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb151-10"><a href="support-vector-machine-svm-svr.html#cb151-10" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb284-1"><a href="support-vector-machine-svm-svr.html#cb284-1" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb284-2"><a href="support-vector-machine-svm-svr.html#cb284-2" aria-hidden="true" tabindex="-1"></a>    svm_class_workflow,</span>
+<span id="cb284-3"><a href="support-vector-machine-svm-svr.html#cb284-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_class_param_distributions,</span>
+<span id="cb284-4"><a href="support-vector-machine-svm-svr.html#cb284-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb284-5"><a href="support-vector-machine-svm-svr.html#cb284-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
+<span id="cb284-6"><a href="support-vector-machine-svm-svr.html#cb284-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
+<span id="cb284-7"><a href="support-vector-machine-svm-svr.html#cb284-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb284-8"><a href="support-vector-machine-svm-svr.html#cb284-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb284-9"><a href="support-vector-machine-svm-svr.html#cb284-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb284-10"><a href="support-vector-machine-svm-svr.html#cb284-10" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb285-1"><a href="support-vector-machine-svm-svr.html#cb285-1" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb285-2"><a href="support-vector-machine-svm-svr.html#cb285-2" aria-hidden="true" tabindex="-1"></a>    svm_class_workflow,</span>
+<span id="cb285-3"><a href="support-vector-machine-svm-svr.html#cb285-3" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>svm_class_param_distributions,</span>
+<span id="cb285-4"><a href="support-vector-machine-svm-svr.html#cb285-4" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb285-5"><a href="support-vector-machine-svm-svr.html#cb285-5" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>telco_folds,</span>
+<span id="cb285-6"><a href="support-vector-machine-svm-svr.html#cb285-6" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
+<span id="cb285-7"><a href="support-vector-machine-svm-svr.html#cb285-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb285-8"><a href="support-vector-machine-svm-svr.html#cb285-8" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb285-9"><a href="support-vector-machine-svm-svr.html#cb285-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb285-10"><a href="support-vector-machine-svm-svr.html#cb285-10" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
 <pre><code>## RandomizedSearchCV(cv=StratifiedKFold(n_splits=5, random_state=1234, shuffle=True),
 ##                    estimator=Pipeline(steps=[(&#39;features&#39;,
-##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
 ##                                                                            kw_args={&#39;keep_target&#39;: False})),
 ##                                              (&#39;preprocess&#39;,
 ##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                                                 SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                                                (&#39;sca...
-##                                                                                &lt;sklearn.compose._column_transformer.make_column_selector object at 0x303fec850&gt;)],
+##                                                                                &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17e0f38d0&gt;)],
 ##                                                                 verbose_feature_names_out=False)),
 ##                                              (&#39;model&#39;,
 ##                                               SVC(probability=True,
 ##                                                   random_state=1352))]),
 ##                    n_iter=20, n_jobs=-1,
-##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30443aa90&gt;,
-##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30473c510&gt;},
+##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17dc5ef10&gt;,
+##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30e335b10&gt;},
 ##                    random_state=123, scoring=&#39;roc_auc&#39;)</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb153-1"><a href="support-vector-machine-svm-svr.html#cb153-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(svm_tune_class_result.cv_results_).head()</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb287-1"><a href="support-vector-machine-svm-svr.html#cb287-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(svm_tune_class_result.cv_results_).head()</span></code></pre></div>
 <pre><code>##    mean_fit_time  std_fit_time  ...  std_test_score  rank_test_score
-## 0       3.695308      0.095781  ...        0.012270                8
-## 1       3.871689      0.218633  ...        0.012424                7
-## 2       4.006130      0.072364  ...        0.010325               11
-## 3       6.179832      0.217121  ...        0.009574               20
-## 4       3.264069      0.134358  ...        0.012803                6
+## 0       6.117989      0.221437  ...        0.012270                8
+## 1       6.081874      0.348655  ...        0.012424                7
+## 2       5.388406      0.182940  ...        0.010325               11
+## 3      10.415522      0.313722  ...        0.009574               20
+## 4       5.712172      0.268355  ...        0.012803                6
 ## 
 ## [5 rows x 15 columns]</code></pre>
 <p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="support-vector-machine-svm-svr.html#cb155-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_class_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb289-1"><a href="support-vector-machine-svm-svr.html#cb289-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_class_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     param_model__C  param_model__gamma  mean_test_score  std_test_score
 ## 17        1.894484            0.001774         0.838524        0.013656
 ## 13        1.217211            0.000819         0.838233        0.013827
@@ -964,12 +976,12 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 12       14.700434            0.001958         0.832890        0.012267
 ## 16        1.961500            0.009435         0.832644        0.011828</code></pre>
 <p>En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb157-1"><a href="support-vector-machine-svm-svr.html#cb157-1" aria-hidden="true" tabindex="-1"></a>svm_class_results <span class="op">=</span> pd.DataFrame(svm_tune_class_result.cv_results_)</span>
-<span id="cb157-2"><a href="support-vector-machine-svm-svr.html#cb157-2" aria-hidden="true" tabindex="-1"></a>svm_class_results.plot.scatter(x<span class="op">=</span><span class="st">&quot;param_model__C&quot;</span>, y<span class="op">=</span><span class="st">&quot;mean_test_score&quot;</span>, logx<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb291-1"><a href="support-vector-machine-svm-svr.html#cb291-1" aria-hidden="true" tabindex="-1"></a>svm_class_results <span class="op">=</span> pd.DataFrame(svm_tune_class_result.cv_results_)</span>
+<span id="cb291-2"><a href="support-vector-machine-svm-svr.html#cb291-2" aria-hidden="true" tabindex="-1"></a>svm_class_results.plot.scatter(x<span class="op">=</span><span class="st">&quot;param_model__C&quot;</span>, y<span class="op">=</span><span class="st">&quot;mean_test_score&quot;</span>, logx<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 <pre><code>## &lt;Axes: xlabel=&#39;param_model__C&#39;, ylabel=&#39;mean_test_score&#39;&gt;</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb159-1"><a href="support-vector-machine-svm-svr.html#cb159-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;ROC AUC por C&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb293-1"><a href="support-vector-machine-svm-svr.html#cb293-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;ROC AUC por C&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;ROC AUC por C&#39;)</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb161-1"><a href="support-vector-machine-svm-svr.html#cb161-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_class_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb295-1"><a href="support-vector-machine-svm-svr.html#cb295-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_class_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     param_model__C  param_model__gamma  mean_test_score  std_test_score
 ## 17        1.894484            0.001774         0.838524        0.013656
 ## 13        1.217211            0.000819         0.838233        0.013827
@@ -981,31 +993,31 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 0        12.285916            0.001395         0.834836        0.012270
 ## 12       14.700434            0.001958         0.832890        0.012267
 ## 16        1.961500            0.009435         0.832644        0.011828</code></pre>
-<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-76-7.png" width="672" /></p>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-116-7.png" width="672" /></p>
 <p><strong>Paso 8: Selección de modelo a usar</strong></p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb163-1"><a href="support-vector-machine-svm-svr.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección del mejor modelo según ROC AUC.</span></span>
-<span id="cb163-2"><a href="support-vector-machine-svm-svr.html#cb163-2" aria-hidden="true" tabindex="-1"></a>svm_classification_best_model <span class="op">=</span> svm_tune_class_result.best_params_</span>
-<span id="cb163-3"><a href="support-vector-machine-svm-svr.html#cb163-3" aria-hidden="true" tabindex="-1"></a>svm_classification_best_model</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb297-1"><a href="support-vector-machine-svm-svr.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección del mejor modelo según ROC AUC.</span></span>
+<span id="cb297-2"><a href="support-vector-machine-svm-svr.html#cb297-2" aria-hidden="true" tabindex="-1"></a>svm_classification_best_model <span class="op">=</span> svm_tune_class_result.best_params_</span>
+<span id="cb297-3"><a href="support-vector-machine-svm-svr.html#cb297-3" aria-hidden="true" tabindex="-1"></a>svm_classification_best_model</span></code></pre></div>
 <pre><code>## {&#39;model__C&#39;: 1.8944836908329918, &#39;model__gamma&#39;: 0.001774372883716282}</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb165-1"><a href="support-vector-machine-svm-svr.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación al criterio 1-SE para clasificación.</span></span>
-<span id="cb165-2"><a href="support-vector-machine-svm-svr.html#cb165-2" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> svm_tune_class_result.best_score_</span>
-<span id="cb165-3"><a href="support-vector-machine-svm-svr.html#cb165-3" aria-hidden="true" tabindex="-1"></a>std_score <span class="op">=</span> svm_class_results.loc[svm_tune_class_result.best_index_, <span class="st">&quot;std_test_score&quot;</span>]</span>
-<span id="cb165-4"><a href="support-vector-machine-svm-svr.html#cb165-4" aria-hidden="true" tabindex="-1"></a>svm_classification_best_1se_model <span class="op">=</span> (</span>
-<span id="cb165-5"><a href="support-vector-machine-svm-svr.html#cb165-5" aria-hidden="true" tabindex="-1"></a>    svm_class_results.query(<span class="st">&quot;mean_test_score &gt;= @best_score - @std_score&quot;</span>)</span>
-<span id="cb165-6"><a href="support-vector-machine-svm-svr.html#cb165-6" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;param_model__C&quot;</span>)</span>
-<span id="cb165-7"><a href="support-vector-machine-svm-svr.html#cb165-7" aria-hidden="true" tabindex="-1"></a>    .iloc[<span class="dv">0</span>]</span>
-<span id="cb165-8"><a href="support-vector-machine-svm-svr.html#cb165-8" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(like<span class="op">=</span><span class="st">&quot;param_&quot;</span>)</span>
-<span id="cb165-9"><a href="support-vector-machine-svm-svr.html#cb165-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb165-10"><a href="support-vector-machine-svm-svr.html#cb165-10" aria-hidden="true" tabindex="-1"></a>svm_classification_best_1se_model</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb299-1"><a href="support-vector-machine-svm-svr.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación al criterio 1-SE para clasificación.</span></span>
+<span id="cb299-2"><a href="support-vector-machine-svm-svr.html#cb299-2" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> svm_tune_class_result.best_score_</span>
+<span id="cb299-3"><a href="support-vector-machine-svm-svr.html#cb299-3" aria-hidden="true" tabindex="-1"></a>std_score <span class="op">=</span> svm_class_results.loc[svm_tune_class_result.best_index_, <span class="st">&quot;std_test_score&quot;</span>]</span>
+<span id="cb299-4"><a href="support-vector-machine-svm-svr.html#cb299-4" aria-hidden="true" tabindex="-1"></a>svm_classification_best_1se_model <span class="op">=</span> (</span>
+<span id="cb299-5"><a href="support-vector-machine-svm-svr.html#cb299-5" aria-hidden="true" tabindex="-1"></a>    svm_class_results.query(<span class="st">&quot;mean_test_score &gt;= @best_score - @std_score&quot;</span>)</span>
+<span id="cb299-6"><a href="support-vector-machine-svm-svr.html#cb299-6" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;param_model__C&quot;</span>)</span>
+<span id="cb299-7"><a href="support-vector-machine-svm-svr.html#cb299-7" aria-hidden="true" tabindex="-1"></a>    .iloc[<span class="dv">0</span>]</span>
+<span id="cb299-8"><a href="support-vector-machine-svm-svr.html#cb299-8" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(like<span class="op">=</span><span class="st">&quot;param_&quot;</span>)</span>
+<span id="cb299-9"><a href="support-vector-machine-svm-svr.html#cb299-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb299-10"><a href="support-vector-machine-svm-svr.html#cb299-10" aria-hidden="true" tabindex="-1"></a>svm_classification_best_1se_model</span></code></pre></div>
 <pre><code>## param_model__C        0.188936
 ## param_model__gamma     0.00543
 ## Name: 15, dtype: object</code></pre>
 <p><strong>Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)</strong></p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb167-1"><a href="support-vector-machine-svm-svr.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo final.</span></span>
-<span id="cb167-2"><a href="support-vector-machine-svm-svr.html#cb167-2" aria-hidden="true" tabindex="-1"></a>svm_classification_final_model <span class="op">=</span> svm_tune_class_result.best_estimator_</span>
-<span id="cb167-3"><a href="support-vector-machine-svm-svr.html#cb167-3" aria-hidden="true" tabindex="-1"></a>svm_classification_final_model</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb301-1"><a href="support-vector-machine-svm-svr.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo final.</span></span>
+<span id="cb301-2"><a href="support-vector-machine-svm-svr.html#cb301-2" aria-hidden="true" tabindex="-1"></a>svm_classification_final_model <span class="op">=</span> svm_tune_class_result.best_estimator_</span>
+<span id="cb301-3"><a href="support-vector-machine-svm-svr.html#cb301-3" aria-hidden="true" tabindex="-1"></a>svm_classification_final_model</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17af625c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
@@ -1019,40 +1031,40 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304421f10&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x30e327150&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;,
 ##                  SVC(C=1.8944836908329918, gamma=0.001774372883716282,
 ##                      probability=True, random_state=1352))])</code></pre>
 <p>Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.</p>
 <p>Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos <a href="https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba">data leakage</a>. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb169-1"><a href="support-vector-machine-svm-svr.html#cb169-1" aria-hidden="true" tabindex="-1"></a>churn_importance_result <span class="op">=</span> permutation_importance(</span>
-<span id="cb169-2"><a href="support-vector-machine-svm-svr.html#cb169-2" aria-hidden="true" tabindex="-1"></a>    svm_classification_final_model,</span>
-<span id="cb169-3"><a href="support-vector-machine-svm-svr.html#cb169-3" aria-hidden="true" tabindex="-1"></a>    X_telco_test,</span>
-<span id="cb169-4"><a href="support-vector-machine-svm-svr.html#cb169-4" aria-hidden="true" tabindex="-1"></a>    y_telco_test,</span>
-<span id="cb169-5"><a href="support-vector-machine-svm-svr.html#cb169-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
-<span id="cb169-6"><a href="support-vector-machine-svm-svr.html#cb169-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb169-7"><a href="support-vector-machine-svm-svr.html#cb169-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb169-8"><a href="support-vector-machine-svm-svr.html#cb169-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb170"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb170-1"><a href="support-vector-machine-svm-svr.html#cb170-1" aria-hidden="true" tabindex="-1"></a>churn_importance_result <span class="op">=</span> permutation_importance(</span>
-<span id="cb170-2"><a href="support-vector-machine-svm-svr.html#cb170-2" aria-hidden="true" tabindex="-1"></a>    svm_classification_final_model,</span>
-<span id="cb170-3"><a href="support-vector-machine-svm-svr.html#cb170-3" aria-hidden="true" tabindex="-1"></a>    X_telco_test,</span>
-<span id="cb170-4"><a href="support-vector-machine-svm-svr.html#cb170-4" aria-hidden="true" tabindex="-1"></a>    y_telco_test,</span>
-<span id="cb170-5"><a href="support-vector-machine-svm-svr.html#cb170-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
-<span id="cb170-6"><a href="support-vector-machine-svm-svr.html#cb170-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb170-7"><a href="support-vector-machine-svm-svr.html#cb170-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb170-8"><a href="support-vector-machine-svm-svr.html#cb170-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb170-9"><a href="support-vector-machine-svm-svr.html#cb170-9" aria-hidden="true" tabindex="-1"></a>churn_importance <span class="op">=</span> (</span>
-<span id="cb170-10"><a href="support-vector-machine-svm-svr.html#cb170-10" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
-<span id="cb170-11"><a href="support-vector-machine-svm-svr.html#cb170-11" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb170-12"><a href="support-vector-machine-svm-svr.html#cb170-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: X_telco_test.columns,</span>
-<span id="cb170-13"><a href="support-vector-machine-svm-svr.html#cb170-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Importance&quot;</span>: churn_importance_result.importances_mean,</span>
-<span id="cb170-14"><a href="support-vector-machine-svm-svr.html#cb170-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;StDev&quot;</span>: churn_importance_result.importances_std,</span>
-<span id="cb170-15"><a href="support-vector-machine-svm-svr.html#cb170-15" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb170-16"><a href="support-vector-machine-svm-svr.html#cb170-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb170-17"><a href="support-vector-machine-svm-svr.html#cb170-17" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importance&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb170-18"><a href="support-vector-machine-svm-svr.html#cb170-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb170-19"><a href="support-vector-machine-svm-svr.html#cb170-19" aria-hidden="true" tabindex="-1"></a>display(churn_importance.head(<span class="dv">20</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb303-1"><a href="support-vector-machine-svm-svr.html#cb303-1" aria-hidden="true" tabindex="-1"></a>churn_importance_result <span class="op">=</span> permutation_importance(</span>
+<span id="cb303-2"><a href="support-vector-machine-svm-svr.html#cb303-2" aria-hidden="true" tabindex="-1"></a>    svm_classification_final_model,</span>
+<span id="cb303-3"><a href="support-vector-machine-svm-svr.html#cb303-3" aria-hidden="true" tabindex="-1"></a>    X_telco_test,</span>
+<span id="cb303-4"><a href="support-vector-machine-svm-svr.html#cb303-4" aria-hidden="true" tabindex="-1"></a>    y_telco_test,</span>
+<span id="cb303-5"><a href="support-vector-machine-svm-svr.html#cb303-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
+<span id="cb303-6"><a href="support-vector-machine-svm-svr.html#cb303-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb303-7"><a href="support-vector-machine-svm-svr.html#cb303-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb303-8"><a href="support-vector-machine-svm-svr.html#cb303-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb304-1"><a href="support-vector-machine-svm-svr.html#cb304-1" aria-hidden="true" tabindex="-1"></a>churn_importance_result <span class="op">=</span> permutation_importance(</span>
+<span id="cb304-2"><a href="support-vector-machine-svm-svr.html#cb304-2" aria-hidden="true" tabindex="-1"></a>    svm_classification_final_model,</span>
+<span id="cb304-3"><a href="support-vector-machine-svm-svr.html#cb304-3" aria-hidden="true" tabindex="-1"></a>    X_telco_test,</span>
+<span id="cb304-4"><a href="support-vector-machine-svm-svr.html#cb304-4" aria-hidden="true" tabindex="-1"></a>    y_telco_test,</span>
+<span id="cb304-5"><a href="support-vector-machine-svm-svr.html#cb304-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">&quot;roc_auc&quot;</span>,</span>
+<span id="cb304-6"><a href="support-vector-machine-svm-svr.html#cb304-6" aria-hidden="true" tabindex="-1"></a>    n_repeats<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb304-7"><a href="support-vector-machine-svm-svr.html#cb304-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb304-8"><a href="support-vector-machine-svm-svr.html#cb304-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb304-9"><a href="support-vector-machine-svm-svr.html#cb304-9" aria-hidden="true" tabindex="-1"></a>churn_importance <span class="op">=</span> (</span>
+<span id="cb304-10"><a href="support-vector-machine-svm-svr.html#cb304-10" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(</span>
+<span id="cb304-11"><a href="support-vector-machine-svm-svr.html#cb304-11" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb304-12"><a href="support-vector-machine-svm-svr.html#cb304-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Variable&quot;</span>: X_telco_test.columns,</span>
+<span id="cb304-13"><a href="support-vector-machine-svm-svr.html#cb304-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Importance&quot;</span>: churn_importance_result.importances_mean,</span>
+<span id="cb304-14"><a href="support-vector-machine-svm-svr.html#cb304-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;StDev&quot;</span>: churn_importance_result.importances_std,</span>
+<span id="cb304-15"><a href="support-vector-machine-svm-svr.html#cb304-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb304-16"><a href="support-vector-machine-svm-svr.html#cb304-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb304-17"><a href="support-vector-machine-svm-svr.html#cb304-17" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">&quot;Importance&quot;</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb304-18"><a href="support-vector-machine-svm-svr.html#cb304-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb304-19"><a href="support-vector-machine-svm-svr.html#cb304-19" aria-hidden="true" tabindex="-1"></a>display(churn_importance.head(<span class="dv">20</span>))</span></code></pre></div>
 <pre><code>##             Variable  Importance     StDev
 ## 19      TotalCharges    0.093168  0.005815
 ## 18    MonthlyCharges    0.055057  0.004451
@@ -1074,56 +1086,56 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 1             gender    0.000001  0.000294
 ## 0         customerID    0.000000  0.000000
 ## 3            Partner   -0.000885  0.000538</code></pre>
-<div class="sourceCode" id="cb172"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb172-1"><a href="support-vector-machine-svm-svr.html#cb172-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> churn_importance.sort_values(<span class="st">&quot;Importance&quot;</span>).tail(<span class="dv">20</span>).plot.barh(</span>
-<span id="cb172-2"><a href="support-vector-machine-svm-svr.html#cb172-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importance&quot;</span>, xerr<span class="op">=</span><span class="st">&quot;StDev&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span>
-<span id="cb172-3"><a href="support-vector-machine-svm-svr.html#cb172-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb172-4"><a href="support-vector-machine-svm-svr.html#cb172-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Variable Importance Measure&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb306-1"><a href="support-vector-machine-svm-svr.html#cb306-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> churn_importance.sort_values(<span class="st">&quot;Importance&quot;</span>).tail(<span class="dv">20</span>).plot.barh(</span>
+<span id="cb306-2"><a href="support-vector-machine-svm-svr.html#cb306-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&quot;Variable&quot;</span>, y<span class="op">=</span><span class="st">&quot;Importance&quot;</span>, xerr<span class="op">=</span><span class="st">&quot;StDev&quot;</span>, legend<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span>
+<span id="cb306-3"><a href="support-vector-machine-svm-svr.html#cb306-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb306-4"><a href="support-vector-machine-svm-svr.html#cb306-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Variable Importance Measure&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Variable Importance Measure&#39;)</code></pre>
-<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-81-9.png" width="768" /></p>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-121-9.png" width="768" /></p>
 <p><strong>Paso 10: Validar poder predictivo con datos de prueba</strong></p>
 <p>Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb174-1"><a href="support-vector-machine-svm-svr.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicciones</span></span>
-<span id="cb174-2"><a href="support-vector-machine-svm-svr.html#cb174-2" aria-hidden="true" tabindex="-1"></a>proba <span class="op">=</span> svm_classification_final_model.predict_proba(X_telco_test)</span>
-<span id="cb174-3"><a href="support-vector-machine-svm-svr.html#cb174-3" aria-hidden="true" tabindex="-1"></a>classes <span class="op">=</span> svm_classification_final_model.named_steps[<span class="st">&quot;model&quot;</span>].classes_</span>
-<span id="cb174-4"><a href="support-vector-machine-svm-svr.html#cb174-4" aria-hidden="true" tabindex="-1"></a>results_cla <span class="op">=</span> pd.DataFrame({<span class="ss">f&quot;.pred_</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">&quot;</span>: proba[:, i] <span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(classes)})</span>
-<span id="cb174-5"><a href="support-vector-machine-svm-svr.html#cb174-5" aria-hidden="true" tabindex="-1"></a>results_cla[<span class="st">&quot;truth&quot;</span>] <span class="op">=</span> y_telco_test.to_numpy()</span>
-<span id="cb174-6"><a href="support-vector-machine-svm-svr.html#cb174-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-7"><a href="support-vector-machine-svm-svr.html#cb174-7" aria-hidden="true" tabindex="-1"></a>results_cla.head()</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb308-1"><a href="support-vector-machine-svm-svr.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicciones</span></span>
+<span id="cb308-2"><a href="support-vector-machine-svm-svr.html#cb308-2" aria-hidden="true" tabindex="-1"></a>proba <span class="op">=</span> svm_classification_final_model.predict_proba(X_telco_test)</span>
+<span id="cb308-3"><a href="support-vector-machine-svm-svr.html#cb308-3" aria-hidden="true" tabindex="-1"></a>classes <span class="op">=</span> svm_classification_final_model.named_steps[<span class="st">&quot;model&quot;</span>].classes_</span>
+<span id="cb308-4"><a href="support-vector-machine-svm-svr.html#cb308-4" aria-hidden="true" tabindex="-1"></a>results_cla <span class="op">=</span> pd.DataFrame({<span class="ss">f&quot;.pred_</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">&quot;</span>: proba[:, i] <span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(classes)})</span>
+<span id="cb308-5"><a href="support-vector-machine-svm-svr.html#cb308-5" aria-hidden="true" tabindex="-1"></a>results_cla[<span class="st">&quot;truth&quot;</span>] <span class="op">=</span> y_telco_test.to_numpy()</span>
+<span id="cb308-6"><a href="support-vector-machine-svm-svr.html#cb308-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-7"><a href="support-vector-machine-svm-svr.html#cb308-7" aria-hidden="true" tabindex="-1"></a>results_cla.head()</span></code></pre></div>
 <pre><code>##    .pred_No  .pred_Yes truth
 ## 0  0.858389   0.141611    No
 ## 1  0.829910   0.170090    No
 ## 2  0.927253   0.072747    No
 ## 3  0.357032   0.642968   Yes
 ## 4  0.452321   0.547679   Yes</code></pre>
-<div class="sourceCode" id="cb176"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb176-1"><a href="support-vector-machine-svm-svr.html#cb176-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="op">=</span> roc_curve_table(results_cla[<span class="st">&quot;truth&quot;</span>], results_cla[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
-<span id="cb176-2"><a href="support-vector-machine-svm-svr.html#cb176-2" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="op">=</span> pr_curve_table(results_cla[<span class="st">&quot;truth&quot;</span>], results_cla[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
-<span id="cb176-3"><a href="support-vector-machine-svm-svr.html#cb176-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb176-4"><a href="support-vector-machine-svm-svr.html#cb176-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
-<span id="cb176-5"><a href="support-vector-machine-svm-svr.html#cb176-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17e48fd10&gt;]</code></pre>
-<div class="sourceCode" id="cb178"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb178-1"><a href="support-vector-machine-svm-svr.html#cb178-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x303fee650&gt;]</code></pre>
-<div class="sourceCode" id="cb180"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb180-1"><a href="support-vector-machine-svm-svr.html#cb180-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb310-1"><a href="support-vector-machine-svm-svr.html#cb310-1" aria-hidden="true" tabindex="-1"></a>roc_curve_data <span class="op">=</span> roc_curve_table(results_cla[<span class="st">&quot;truth&quot;</span>], results_cla[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
+<span id="cb310-2"><a href="support-vector-machine-svm-svr.html#cb310-2" aria-hidden="true" tabindex="-1"></a>pr_curve_data <span class="op">=</span> pr_curve_table(results_cla[<span class="st">&quot;truth&quot;</span>], results_cla[<span class="st">&quot;.pred_Yes&quot;</span>])</span>
+<span id="cb310-3"><a href="support-vector-machine-svm-svr.html#cb310-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb310-4"><a href="support-vector-machine-svm-svr.html#cb310-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb310-5"><a href="support-vector-machine-svm-svr.html#cb310-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30df62210&gt;]</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb312-1"><a href="support-vector-machine-svm-svr.html#cb312-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3085b3c90&gt;]</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb314-1"><a href="support-vector-machine-svm-svr.html#cb314-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;ROC Curve&#39;)</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb182-1"><a href="support-vector-machine-svm-svr.html#cb182-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">&quot;1 - specificity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb316-1"><a href="support-vector-machine-svm-svr.html#cb316-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">&quot;1 - specificity&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 0, &#39;1 - specificity&#39;)</code></pre>
-<div class="sourceCode" id="cb184"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb184-1"><a href="support-vector-machine-svm-svr.html#cb184-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">&quot;sensitivity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb318-1"><a href="support-vector-machine-svm-svr.html#cb318-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">&quot;sensitivity&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;sensitivity&#39;)</code></pre>
-<div class="sourceCode" id="cb186"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb186-1"><a href="support-vector-machine-svm-svr.html#cb186-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3042e4f10&gt;]</code></pre>
-<div class="sourceCode" id="cb188"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb188-1"><a href="support-vector-machine-svm-svr.html#cb188-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">&quot;Precision vs Recall&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb320-1"><a href="support-vector-machine-svm-svr.html#cb320-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30df75f50&gt;]</code></pre>
+<div class="sourceCode" id="cb322"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb322-1"><a href="support-vector-machine-svm-svr.html#cb322-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">&quot;Precision vs Recall&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Precision vs Recall&#39;)</code></pre>
-<div class="sourceCode" id="cb190"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb190-1"><a href="support-vector-machine-svm-svr.html#cb190-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">&quot;recall&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb324-1"><a href="support-vector-machine-svm-svr.html#cb324-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">&quot;recall&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 0, &#39;recall&#39;)</code></pre>
-<div class="sourceCode" id="cb192"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb192-1"><a href="support-vector-machine-svm-svr.html#cb192-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">&quot;precision&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb326-1"><a href="support-vector-machine-svm-svr.html#cb326-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">&quot;precision&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;precision&#39;)</code></pre>
-<div class="sourceCode" id="cb194"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb194-1"><a href="support-vector-machine-svm-svr.html#cb194-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
-<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-83-11.png" width="960" /></p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb328-1"><a href="support-vector-machine-svm-svr.html#cb328-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
+<p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-123-11.png" width="960" /></p>
 <p>Pueden usar la app de <a href="https://acturio.shinyapps.io/confusion_matrix/?_ga=2.157345976.322506426.1653670259-130075619.1646374742">shiny</a> que nos permite jugar con el treshold de clasificación para tomar la mejor decisión.</p>
 </div>
 </div>
-<div id="ejercicios-1" class="section level2 hasAnchor" number="3.8">
-<h2><span class="header-section-number">3.8</span> Ejercicios<a href="support-vector-machine-svm-svr.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ejercicios-1" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> Ejercicios<a href="support-vector-machine-svm-svr.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li><p>Crear un workflow de principio a fin usando SVM con kernel lineal</p></li>
 <li><p>Crear un workflow de principio a fin usando SVM con kernel polinomial</p></li>
@@ -1160,7 +1172,7 @@ $('.pipehover_select_one_row tr').hover(function() {
           </div>
         </div>
       </div>
-<a href="feature-engineering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regularización-elasticnet.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="bagging-boosting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
