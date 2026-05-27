@@ -129,7 +129,7 @@ En esta sección se verán las regularizaciones más usadas en machine learning:
 * Lasso (también conocida como L1)
 * ElasticNet que combina tanto Lasso como Ridge.
 
-Para cada una de estas regularizaciones ajustaremos un modelo  de regresión lineal al conjunto de datos de viviendas de *Ames* con ayuda del paquete de *tidymodels* llamado *parsnip*.
+Para cada una de estas regularizaciones ajustaremos modelos lineales con `scikit-learn`. En regresión usaremos el conjunto de viviendas de *Ames*; en clasificación usaremos el conjunto de abandono de clientes de Telco.
 
 ```{r, fig.align='center', out.height='250pt', out.width='500pt', echo=F, include=TRUE}
 knitr::include_graphics("img/10-ml-elasticnet/overfitting.png")
@@ -215,11 +215,11 @@ Sin embargo, la restricción de *Lasso* **tiene esquinas en cada uno de los ejes
 *ElasticNet* tiene como objetivo minimizar la siguiente función de pérdida:
 
 $$\frac{\sum_{i=1}^n\left(y_i - \beta_0- \sum_{i=1}^p \beta_jx_{ij}\right)^2}{2n} + 
-\lambda\left( ({1-\alpha}) \sum_{j=1}^p|\beta_j| + \alpha \sum_{j=1}^p \beta_j ^2\right)$$
+\lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)$$
 
-$$= \frac{RSS}{2n}+ \lambda\left( ({1-\alpha}) \sum_{j=1}^p|\beta_j| + \alpha \sum_{j=1}^p \beta_j ^2\right)$$
+$$= \frac{RSS}{2n}+ \lambda\left(\alpha \sum_{j=1}^p|\beta_j| + \frac{1-\alpha}{2} \sum_{j=1}^p \beta_j ^2\right)$$
 
-donde $\alpha \in [0,1]$ es el parámetro de mezcla entre la regularización *Ridge* $(\alpha = 0)$ y la regularización *Lasso* $(\alpha = 1)$. 
+donde $\alpha \in [0,1]$ es el parámetro de mezcla entre la regularización *Ridge* $(\alpha = 0)$ y la regularización *Lasso* $(\alpha = 1)$. En `scikit-learn`, este parámetro se llama `l1_ratio`; la intensidad total de la penalización se controla con `alpha` en regresión y con `C` en regresión logística.
 
 La combinación de ambas penalizaciones suele dar lugar a buenos resultados. Una estrategia frecuentemente utilizada es asignarle casi todo el peso a la penalización *L1* ( $\alpha \approx 1$) para conseguir seleccionar predictores y menos peso a la regularización $L2$ para dar cierta estabilidad en el caso de que algunos predictores estén correlacionados.
 
@@ -228,146 +228,207 @@ knitr::include_graphics("img/10-ml-elasticnet/elastic-net.png")
 ```
 
 
-### Implementación en R
+### Implementación en Python
 
 #### Regresión
 
-Utilizando el modelo `linear_reg()` del paquete *parsnip*. Hay varios mecanismos que pueden realizar la regularización/penalización, los paquetes *glmnet*, *sparklyr*, *keras* o *stan*.
+Utilizaremos `Ridge`, `Lasso` y `ElasticNet` de `sklearn.linear_model`. El preprocesamiento se encapsula en un `Pipeline`, de forma que la imputación, escalamiento y codificación de variables se estimen solamente con los datos de entrenamiento.
 
-Usemos el primero aquí. El paquete *glmnet* solo implementa un método que no es de fórmula, pero *parsnip* permitirá que se use cualquiera de ellos.
+En `scikit-learn` los parámetros principales son:
 
-Cuando se utiliza la regularización, los predictores deben de centrarse y escalarse primero antes de pasar al modelo. El método de la fórmula no lo hará automáticamente, por lo que tendremos que hacerlo nosotros mismos como se hizo en la sección **4.6 Preparación de conjunto de datos** con la receta `receta_casas`. 
+* `alpha`: intensidad total de regularización en `Ridge`, `Lasso` y `ElasticNet`. Valores mayores producen coeficientes más pequeños.
 
-En *R* existen dos parámetros que nos permiten hacer la regularización:
-
-* `penalty`: Es un número no negativo que representa la cantidad total de regularización (solo *glmnet*, *keras* y *spark*). 
-
-* `mixture`: Es un número entre cero y uno (inclusivo) que es la proporción de regularización *L1* en el modelo. Cuando `mixture = 1`, es un modelo de *Lasso* puro, mientras que `mixture = 0` indica que se está utilizando un modelo *Ridge*.
+* `l1_ratio`: proporción de regularización *L1* en `ElasticNet`. Cuando `l1_ratio = 1`, el comportamiento es equivalente a *Lasso*; cuando `l1_ratio = 0`, es equivalente a *Ridge*. Para los casos puros usaremos directamente `Ridge` y `Lasso`.
 
 
 
 **Paso 1: Separación inicial de datos ( test, train, KFCV )**
-```{r, warning=FALSE, message=FALSE}
-library(tidymodels)
+```{python, warning=FALSE, message=FALSE}
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from IPython.display import display
+from scipy.stats import loguniform, uniform
+from sklearn.linear_model import ElasticNet, Lasso, LogisticRegression, Ridge
+from sklearn.metrics import average_precision_score, make_scorer
+from sklearn.model_selection import KFold, RandomizedSearchCV, StratifiedKFold, train_test_split
 
-data(ames)
+from dsml_utils import (
+    best_cv_results,
+    classification_metrics,
+    load_ames,
+    load_telco,
+    make_ames_pipeline,
+    make_telco_pipeline,
+    pr_curve_table,
+    regression_metrics,
+    roc_curve_table,
+)
 
-set.seed(4595)
-ames_split <- initial_split(ames, prop = 0.75)
-
-ames_train <- training(ames_split)
-ames_test  <- testing(ames_split)
-ames_folds <- vfold_cv(ames_train)
+ames = load_ames()
+ames_train, ames_test = train_test_split(ames, train_size=0.75, random_state=4595)
+X_ames_train = ames_train.drop(columns="Sale_Price")
+y_ames_train = ames_train["Sale_Price"]
+X_ames_test = ames_test.drop(columns="Sale_Price")
+y_ames_test = ames_test["Sale_Price"]
+ames_folds = KFold(n_splits=5, shuffle=True, random_state=4595)
 ```
 
 Contando con datos de entrenamiento, procedemos a realizar el feature engineering para extraer las mejores características que permitirán realizar las estimaciones en el modelo.
 
 **Paso 2: Pre-procesamiento e ingeniería de variables**
 
-```{r, warning=FALSE,message=FALSE}
-
-receta_casas <- recipe(
- Sale_Price ~ Gr_Liv_Area + TotRms_AbvGrd + Exter_Cond + Bsmt_Cond +
-  Year_Sold + Year_Remod_Add, 
- data = ames_train) %>%
-  step_mutate(
-    Age_House = Year_Sold - Year_Remod_Add,
-    Exter_Cond = forcats::fct_collapse(Exter_Cond, Good = c("Typical", "Good", "Excellent"))) %>% 
-  step_relevel(Exter_Cond, ref_level = "Good") %>% 
-  step_normalize(all_numeric_predictors()) %>%
-  step_dummy(all_nominal_predictors()) %>% 
-  step_interact(~ matches("Bsmt_Cond"):TotRms_AbvGrd) %>% 
-  prep()
-
+```{python, warning=FALSE,message=FALSE}
+receta_casas = make_ames_pipeline(ElasticNet(max_iter=20_000), scale_numeric=True)
 receta_casas
 ```
 
-Recordemos que la función **recipe()** solo son los pasos a seguir, necesitamos usar la función **prep()** que nos devuelve una receta actualizada con las estimaciones y la función **juice()** que nos devuelve la matriz de diseño.
+Recordemos que un **Pipeline** contiene los pasos a seguir. Usamos **fit()** para estimar transformaciones y modelo, y **transform()** o **predict()** para aplicarlo a nuevos datos.
 
 Una vez que la receta de transformación de datos está lista, procedemos a implementar el pipeline del modelo de interés.
 
 **Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
 
-```{r, warning=FALSE,message=FALSE, eval=TRUE}
-# install.packages("glmnet")
-
-elasticnet_regression_model <- linear_reg(
-  mixture = tune(),
-  penalty = tune()) %>% 
-  set_mode("regression") %>% 
-  set_engine("glmnet")
+```{python, warning=FALSE,message=FALSE}
+ridge_regression_model = Ridge()
+lasso_regression_model = Lasso(max_iter=20_000)
+elasticnet_regression_model = ElasticNet(max_iter=20_000)
+elasticnet_regression_model
 ```
 
 **Paso 4: Inicialización de workflow o pipeline**
 
-```{r, warning=FALSE,message=FALSE, eval=TRUE}
-elasticnet_workflow <- workflow() %>%
-  add_model(elasticnet_regression_model) %>%
-  add_recipe(receta_casas)
+```{python, warning=FALSE,message=FALSE}
+ridge_workflow = make_ames_pipeline(ridge_regression_model, scale_numeric=True)
+lasso_workflow = make_ames_pipeline(lasso_regression_model, scale_numeric=True)
+elasticnet_workflow = make_ames_pipeline(elasticnet_regression_model, scale_numeric=True)
+elasticnet_workflow
+```
+
+Antes de optimizar hiperparámetros, comparemos los tres enfoques con valores fijos de regularización:
+
+```{python, warning=FALSE,message=FALSE}
+regularized_models = {
+    "Ridge": make_ames_pipeline(Ridge(alpha=10), scale_numeric=True),
+    "Lasso": make_ames_pipeline(Lasso(alpha=1_000, max_iter=20_000), scale_numeric=True),
+    "ElasticNet": make_ames_pipeline(ElasticNet(alpha=1_000, l1_ratio=0.5, max_iter=20_000), scale_numeric=True),
+}
+
+comparison_rows = []
+for name, model in regularized_models.items():
+    model.fit(X_ames_train, y_ames_train)
+    predictions = model.predict(X_ames_test)
+    metrics = regression_metrics(y_ames_test, predictions)
+    coefficients = model.named_steps["model"].coef_
+    comparison_rows.append(
+        {
+            "modelo": name,
+            "rmse": metrics.query("metric == 'rmse'")["estimate"].iloc[0],
+            "mae": metrics.query("metric == 'mae'")["estimate"].iloc[0],
+            "rsq": metrics.query("metric == 'rsq'")["estimate"].iloc[0],
+            "coeficientes_no_cero": np.sum(np.abs(coefficients) > 1e-8),
+        }
+    )
+
+pd.DataFrame(comparison_rows).round(3)
 ```
 
 **Paso 5: Creación de grid search**
 
-```{r, warning=FALSE,message=FALSE, eval=TRUE}
+```{python, warning=FALSE,message=FALSE}
+elasticnet_param_distributions = {
+    "model__alpha": loguniform(1e-4, 1e2),
+    "model__l1_ratio": uniform(0.05, 0.95),
+}
 
-set.seed(195628)
-elasticnet_param_grid <- grid_random(
-  penalty(range = c(-15, 0), trans = log10_trans()),
-  mixture(range = c(0,1)),
-  size = 100
-)
-
-ctrl_grid <- control_grid(save_pred = T, verbose = T)
+regression_scoring = {
+    "rmse": "neg_root_mean_squared_error",
+    "mae": "neg_mean_absolute_error",
+    "mape": "neg_mean_absolute_percentage_error",
+    "rsq": "r2",
+}
+elasticnet_param_distributions
 ```
 
 **Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
 
-```{r, warning=FALSE,message=FALSE, eval=FALSE}
-library(doParallel)
-
-UseCores <- detectCores() - 1
-cluster <- makeCluster(UseCores)
-registerDoParallel(cluster)
-
-# Ajuste de parámetros
-elt1 <- Sys.time()
-
-elasticnet_tune_result <- tune_grid(
-  elasticnet_workflow,
-  resamples = ames_folds,
-  grid = elasticnet_param_grid,
-  metrics = metric_set(mae, mape, rmse, rsq),
-  control = ctrl_grid
+```{python, warning=FALSE,message=FALSE, eval=FALSE}
+elasticnet_tune_result = RandomizedSearchCV(
+    elasticnet_workflow,
+    param_distributions=elasticnet_param_distributions,
+    n_iter=50,
+    cv=ames_folds,
+    scoring=regression_scoring,
+    refit="rmse",
+    random_state=195628,
+    n_jobs=-1,
 )
-elt2 <- Sys.time(); elt2 - elt1
+elasticnet_tune_result.fit(X_ames_train, y_ames_train)
 
-stopCluster(cluster)
-
-elasticnet_tune_result %>% saveRDS("models/elasticnet_model_reg.rds")
+import joblib
+joblib.dump(elasticnet_tune_result, "models/elasticnet_model_reg.joblib")
 ```
 
-```{r}
-elasticnet_tune_result <- readRDS("models/elasticnet_model_reg.rds")
+Para que el documento se pueda ejecutar en clase sin esperar un ajuste largo, usamos menos iteraciones en el siguiente bloque:
+
+```{python, warning=FALSE,message=FALSE}
+elasticnet_tune_result = RandomizedSearchCV(
+    elasticnet_workflow,
+    param_distributions=elasticnet_param_distributions,
+    n_iter=20,
+    cv=ames_folds,
+    scoring=regression_scoring,
+    refit="rmse",
+    random_state=195628,
+    n_jobs=-1,
+)
+elasticnet_tune_result.fit(X_ames_train, y_ames_train)
+pd.DataFrame(elasticnet_tune_result.cv_results_).head()
 ```
 
 **Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
 
 Podemos obtener las métricas de cada *fold* con el siguiente código:
 
-```{r}
-collect_metrics(elasticnet_tune_result)
+```{python}
+best_cv_results(elasticnet_tune_result, metric="rmse", n=10)
 ```
 
-En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:
+En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:
 
-```{r}
-elasticnet_tune_result %>% autoplot()
+```{python}
+elasticnet_cv_results = pd.DataFrame(elasticnet_tune_result.cv_results_)
+elasticnet_cv_results["rmse"] = -elasticnet_cv_results["mean_test_rmse"]
+elasticnet_cv_results["mae"] = -elasticnet_cv_results["mean_test_mae"]
+elasticnet_cv_results["mape"] = -elasticnet_cv_results["mean_test_mape"]
+
+ax = elasticnet_cv_results.plot.scatter(
+    x="param_model__alpha",
+    y="rmse",
+    c="param_model__l1_ratio",
+    colormap="viridis",
+    logx=True,
+    figsize=(7, 4),
+)
+ax.set_title("RMSE por alpha y l1_ratio")
+ax.set_xlabel("alpha")
+ax.set_ylabel("RMSE")
 ```
 
-En la siguiente gráfica observamos el error cuadrático medio de las distintas métricas con distintos números de vecinos.
+En la siguiente gráfica observamos la $R^2$ asociada a distintos niveles de regularización.
 
-```{r}
-elasticnet_tune_result %>% autoplot(metric = "rsq")
+```{python}
+elasticnet_cv_results.plot.scatter(
+    x="param_model__alpha",
+    y="mean_test_rsq",
+    c="param_model__l1_ratio",
+    colormap="viridis",
+    logx=True,
+    figsize=(7, 4),
+)
+plt.title("R cuadrada por alpha y l1_ratio")
+plt.xlabel("alpha")
+plt.ylabel("R cuadrada promedio en CV")
 ```
 
 
@@ -375,38 +436,46 @@ elasticnet_tune_result %>% autoplot(metric = "rsq")
 
 Con el siguiente código obtenemos los mejores 10 modelos respecto al *rmse*.
 
-```{r}
-show_best(elasticnet_tune_result, n = 10, metric = "rmse")
+```{python}
+best_cv_results(elasticnet_tune_result, metric="rmse", n=10)
 ```
 
-Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el *rmse* y haremos las predicciones del conjunto de prueba con este modelo.
+Ahora obtendremos el modelo que mejor desempeño tiene tomando en cuenta el *rmse*.
 
-```{r}
-best_elasticnet_regression_model <- select_best(elasticnet_tune_result, metric = "rmse")
+```{python}
+best_elasticnet_regression_model = elasticnet_tune_result.best_params_
 best_elasticnet_regression_model
 ```
 
 **Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
 
-```{r}
-final_elasticnet_regression_model <- elasticnet_workflow %>%
-  finalize_workflow(best_elasticnet_regression_model) %>%
-  fit(data = ames_train)
+```{python}
+final_elasticnet_regression_model = elasticnet_tune_result.best_estimator_
+final_elasticnet_regression_model
 ```
 
 Este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones. 
 
-Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos [data leakage](https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba). Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo.
+Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos [data leakage](https://towardsdatascience.com/data-leakage-in-machine-learning-6161c167e8ba). Para enfrentar esto, ayuda estimar y ordenar el valor de importancia de cada variable en el modelo. En modelos lineales regularizados podemos inspeccionar los coeficientes después del preprocesamiento.
 
-```{r}
+```{python}
+feature_names = final_elasticnet_regression_model.named_steps["preprocess"].get_feature_names_out()
+coeficientes_elasticnet = (
+    pd.DataFrame(
+        {
+            "Variable": feature_names,
+            "Coeficiente": final_elasticnet_regression_model.named_steps["model"].coef_,
+        }
+    )
+    .assign(Importancia=lambda data: data["Coeficiente"].abs())
+    .sort_values("Importancia", ascending=False)
+)
+display(coeficientes_elasticnet.head(20))
 
-library(vip)
-
-final_elasticnet_regression_model %>% 
- extract_fit_parsnip() %>% 
- vip(geom = "col") + 
- ggtitle("Importancia de las variables")
-
+ax = coeficientes_elasticnet.head(20).sort_values("Importancia").plot.barh(
+    x="Variable", y="Importancia", legend=False, figsize=(8, 6)
+)
+ax.set_title("Importancia de las variables")
 ```
 
 
@@ -414,35 +483,38 @@ final_elasticnet_regression_model %>%
 
 Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
 
-```{r}
-results <- predict(final_elasticnet_regression_model, ames_test) %>%
-  dplyr::bind_cols(Sale_Price = ames_test$Sale_Price) %>%
-  dplyr::rename(pred_elasticnet_reg = .pred)
-
-results
+```{python}
+results = pd.DataFrame(
+    {
+        "Sale_Price": y_ames_test.to_numpy(),
+        "pred_elasticnet_reg": final_elasticnet_regression_model.predict(X_ames_test),
+    }
+)
+results.head()
 ```
 
 **Métricas de desempeño**
 
-Ahora para calcular las métricas de desempeño usaremos la paquetería *MLmetrics*. Es posible definir nuestro propio conjunto de métricas que deseamos reportar creando el objeto *metric_set*:
+Ahora para calcular las métricas de desempeño usaremos funciones de `sklearn.metrics` envueltas en una utilidad del repositorio:
 
-```{r}
-library(MLmetrics)
-
-multi_metric <- metric_set(mae, mape, rmse, rsq, ccc)
-multi_metric(results, truth = Sale_Price, estimate = pred_elasticnet_reg) %>% 
-  mutate(.estimate = round(.estimate, 2)) %>% 
-  select(-.estimator)
+```{python}
+regression_metrics(results["Sale_Price"], results["pred_elasticnet_reg"]).assign(
+    estimate=lambda data: data["estimate"].round(2)
+)
 ```
 
-```{r}
-results %>% 
-  ggplot(aes(x = pred_elasticnet_reg, y = Sale_Price)) +
-  geom_point() +
-  geom_abline(color = "red") +
-  xlab("Prediction") +
-  ylab("Observation") +
-  ggtitle("Comparisson")
+```{python}
+plt.figure(figsize=(6, 5))
+plt.scatter(results["pred_elasticnet_reg"], results["Sale_Price"], alpha=0.6)
+lims = [
+    results[["pred_elasticnet_reg", "Sale_Price"]].min().min(),
+    results[["pred_elasticnet_reg", "Sale_Price"]].max().max(),
+]
+plt.plot(lims, lims, color="red")
+plt.xlabel("Predicción")
+plt.ylabel("Observación")
+plt.title("Comparación")
+plt.tight_layout()
 ```
 
 
@@ -450,231 +522,244 @@ results %>%
 
 #### Clasificación
 
+Para clasificación usaremos regresión logística con penalización `elasticnet`. En `scikit-learn`, la regresión logística usa `C` como inverso de la regularización: valores pequeños de `C` implican una penalización más fuerte.
+
 **Paso 1: Separación inicial de datos (test, train)**
 
-```{r}
-telco <- read_csv("data/Churn.csv")
+```{python}
+telco = load_telco("data/Churn.csv")
 
-set.seed(1234)
-telco_split <- initial_split(telco, prop = .70)
-
-telco_train <- training(telco_split)
-telco_test  <- testing(telco_split)
-telco_folds <- vfold_cv(telco_train)
-
-telco_folds
+telco_train, telco_test = train_test_split(
+    telco,
+    train_size=0.70,
+    random_state=1234,
+    stratify=telco["Churn"],
+)
+X_telco_train = telco_train.drop(columns="Churn")
+y_telco_train = telco_train["Churn"]
+X_telco_test = telco_test.drop(columns="Churn")
+y_telco_test = telco_test["Churn"]
+telco_folds = StratifiedKFold(n_splits=5, shuffle=True, random_state=1234)
+telco_train.head()
 ```
 
 **Paso 2: Pre-procesamiento e ingeniería de variables**
 
-```{r}
-telco_rec <- recipe(
-  Churn ~ customerID + TotalCharges + MonthlyCharges + SeniorCitizen + Contract, 
-  data = telco_train) %>% 
-  update_role(customerID, new_role = "id variable") %>% 
-  step_mutate(Contract = as.factor(Contract)) %>% 
-  step_impute_median(all_numeric_predictors()) %>% 
-  step_normalize(all_numeric_predictors()) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  prep()
-
+```{python}
+telco_rec = make_telco_pipeline(
+    LogisticRegression(penalty="elasticnet", solver="saga", l1_ratio=0.5, max_iter=5_000),
+    scale_numeric=True,
+)
 telco_rec
 ```
 
 **Paso 3: Selección de tipo de modelo con hiperparámetros iniciales**
 
-```{r}
-
-elasticnet_class_model <- logistic_reg(
-   mixture = tune(), 
-   penalty = tune()) %>% 
-  set_mode('classification') %>% 
-  set_engine("glmnet") 
-
+```{python}
+elasticnet_class_model = LogisticRegression(
+    penalty="elasticnet",
+    solver="saga",
+    l1_ratio=0.5,
+    max_iter=5_000,
+    random_state=1234,
+)
 elasticnet_class_model
 ```
 
 **Paso 4: Inicialización de workflow o pipeline**
 
-```{r}
-elasticnet_workflow <- workflow() %>% 
-  add_model(elasticnet_class_model) %>% 
-  add_recipe(telco_rec)
-
-elasticnet_workflow
+```{python}
+elasticnet_class_workflow = make_telco_pipeline(elasticnet_class_model, scale_numeric=True)
+elasticnet_class_workflow
 ```
 
 **Paso 5: Creación de grid search**
-```{r}
-elasticnet_param_grid <- grid_random(
-  penalty(
-    range = c(-4, 0.1),
-    trans = log10_trans()
-  ),
-  dials::mixture(range = c(0, 1)),
-  size = 50
-)
 
-elasticnet_param_grid
+```{python}
+elasticnet_class_param_distributions = {
+    "model__C": loguniform(1e-2, 1e2),
+    "model__l1_ratio": uniform(0.05, 0.95),
+}
+
+classification_scoring = {
+    "roc_auc": "roc_auc",
+    "pr_auc": make_scorer(
+        average_precision_score,
+        response_method="predict_proba",
+        pos_label="Yes",
+    ),
+}
+elasticnet_class_param_distributions
 ```
 
 
 **Paso 6: Entrenamiento de modelos con hiperparámetros definidos**
 
-```{r, eval=FALSE}
-library(doParallel)
-
-UseCores <- detectCores() - 1
-cluster <- makeCluster(UseCores)
-registerDoParallel(cluster)
-
-ctrl_grid <- control_grid(save_pred = T, verbose = T)
-
-etnt1 <- Sys.time()
-elasticnet_tune_result <- tune_grid(
-  elasticnet_workflow,
-  resamples = telco_folds,
-  grid = elasticnet_param_grid,
-  metrics = metric_set(roc_auc, pr_auc)
+```{python, eval=FALSE}
+elasticnet_class_tune_result = RandomizedSearchCV(
+    elasticnet_class_workflow,
+    param_distributions=elasticnet_class_param_distributions,
+    n_iter=50,
+    cv=telco_folds,
+    scoring=classification_scoring,
+    refit="pr_auc",
+    random_state=1234,
+    n_jobs=-1,
 )
+elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)
 
-etn2 <- Sys.time(); etn2 - etnt1
-
-stopCluster(cluster)
-
-elasticnet_tune_result %>% saveRDS("models/elasticnet_class_model.rds")
-
+import joblib
+joblib.dump(elasticnet_class_tune_result, "models/elasticnet_class_model.joblib")
 ```
 
 **Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)**
 
-```{r}
-elasticnet_tune_result <- readRDS("models/elasticnet_class_model.rds")
-
-collect_metrics(elasticnet_tune_result)
+```{python}
+elasticnet_class_tune_result = RandomizedSearchCV(
+    elasticnet_class_workflow,
+    param_distributions=elasticnet_class_param_distributions,
+    n_iter=20,
+    cv=telco_folds,
+    scoring=classification_scoring,
+    refit="pr_auc",
+    random_state=1234,
+    n_jobs=-1,
+)
+elasticnet_class_tune_result.fit(X_telco_train, y_telco_train)
+best_cv_results(elasticnet_class_tune_result, metric="pr_auc", n=10)
 ```
 
-En la siguiente gráfica observamos las distintas métricas de error asociados a los hiperparámetros elegidos:
+En la siguiente gráfica observamos las distintas métricas de error asociadas a los hiperparámetros elegidos:
 
-```{r}
-autoplot(elasticnet_tune_result)
+```{python}
+elasticnet_class_results = pd.DataFrame(elasticnet_class_tune_result.cv_results_)
+elasticnet_class_results.plot.scatter(
+    x="param_model__C",
+    y="mean_test_pr_auc",
+    c="param_model__l1_ratio",
+    colormap="viridis",
+    logx=True,
+    figsize=(7, 4),
+)
+plt.title("PR AUC por C y l1_ratio")
+plt.xlabel("C")
+plt.ylabel("PR AUC promedio en CV")
 ```
 
-```{r}
-show_best(elasticnet_tune_result, n = 10, metric = "roc_auc") 
+```{python}
+best_cv_results(elasticnet_class_tune_result, metric="roc_auc", n=10)
 ```
 
-```{r}
-show_best(elasticnet_tune_result, n = 10, metric = "pr_auc") 
+```{python}
+best_cv_results(elasticnet_class_tune_result, metric="pr_auc", n=10)
 ```
 
 
 **Paso 8: Selección de modelo a usar**
 
-```{r, message=FALSE, warning=FALSE}
-best_elasticnet_class_model <- select_best(elasticnet_tune_result, metric = "pr_auc")
+```{python, message=FALSE, warning=FALSE}
+best_elasticnet_class_model = elasticnet_class_tune_result.best_params_
 best_elasticnet_class_model
-
-best_elasticnet_class_model_1se <- elasticnet_tune_result %>% 
- select_by_one_std_err(metric = "pr_auc", "pr_auc")
-best_elasticnet_class_model_1se
 ```
 
 **Paso 9: Ajuste de modelo final con todos los datos (Vuelve al paso 2, si es necesario)**
 
-```{r, message=FALSE, warning=FALSE}
-final_elasticnet_class_model <- elasticnet_workflow %>% 
-  #finalize_workflow(best_elasticnet_class_model) %>% 
-  finalize_workflow(best_elasticnet_class_model_1se) %>% 
-  fit(data = telco_test)
-
+```{python, message=FALSE, warning=FALSE}
+final_elasticnet_class_model = elasticnet_class_tune_result.best_estimator_
+final_elasticnet_class_model
 ```
 
 Como hemos hablado anteriormente, este último objeto es el modelo final entrenado, el cual contiene toda la información del pre-procesamiento de datos, por lo que en caso de ponerse en producción el modelo, sólo se necesita de este último elemento para poder realizar nuevas predicciones.
 
-Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En este momento es posible detectar variables que no estén aportando valor o variables que no debiéramos estar usando debido a que cometeríamos data leakage. Para enfrentar esto, ayuda estimar y ordenar el valor de importancia del modelo.
+Antes de pasar al siguiente paso, es importante validar que hayamos hecho un uso correcto de las variables predictivas. En modelos lineales regularizados podemos revisar los coeficientes para identificar qué variables tienen mayor peso en la predicción.
 
-```{r}
-library(vip)
+```{python}
+telco_feature_names = final_elasticnet_class_model.named_steps["preprocess"].get_feature_names_out()
+coeficientes_churn = (
+    pd.DataFrame(
+        {
+            "Variable": telco_feature_names,
+            "Coeficiente": final_elasticnet_class_model.named_steps["model"].coef_.ravel(),
+        }
+    )
+    .assign(Importancia=lambda data: data["Coeficiente"].abs())
+    .sort_values("Importancia", ascending=False)
+)
+display(coeficientes_churn.head(20))
 
-final_elasticnet_class_model %>%
-  extract_fit_parsnip() %>%
-  vip::vip() + 
-  ggtitle("Importancia de las variables")
+ax = coeficientes_churn.head(20).sort_values("Importancia").plot.barh(
+    x="Variable", y="Importancia", legend=False, figsize=(8, 6)
+)
+ax.set_title("Importancia de las variables")
 ```
 
 **Paso 10: Validar poder predictivo con datos de prueba**
 
 Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
 
-```{r, message=FALSE, warning=FALSE}
-
-class_results <- predict(final_elasticnet_class_model, telco_test, type = "prob") %>%
-  bind_cols(Churn = telco_test$Churn) %>% 
-  mutate(Churn = factor(Churn, levels = c('Yes', 'No'), labels = c('Yes', 'No'))) 
-
-class_results
+```{python, message=FALSE, warning=FALSE}
+class_labels = list(final_elasticnet_class_model.named_steps["model"].classes_)
+proba_yes_index = class_labels.index("Yes")
+class_results = pd.DataFrame(
+    {
+        "Churn": y_telco_test.to_numpy(),
+        "pred_Yes": final_elasticnet_class_model.predict_proba(X_telco_test)[:, proba_yes_index],
+    }
+)
+class_results.head()
 ```
 
-```{r}
-bind_rows(
-  roc_auc(class_results, truth = Churn, estimate = .pred_Yes),
-  pr_auc(class_results, truth = Churn, estimate = .pred_Yes)
-)
+```{python}
+classification_metrics(class_results["Churn"], class_results["pred_Yes"], positive_label="Yes")
 ```
 
 
 A continuación, conoceremos el nivel de sensitividad y especificidad para cada punto de corte:
 
-```{r}
-roc_curve_data <- roc_curve(
-  class_results, 
-  truth = Churn, 
-  estimate = .pred_Yes
-  )
-
-roc_curve_data
+```{python}
+roc_curve_data = roc_curve_table(
+    class_results["Churn"],
+    class_results["pred_Yes"],
+    positive_label="Yes",
+)
+roc_curve_data.head()
 ```
 
 A través de estas métricas es posible crear la curva ROC:
 
-```{r}
-roc_curve_plot <- roc_curve_data %>% 
-  ggplot(aes(x = 1 - specificity, y = sensitivity)) +
-  geom_path(size = 1, colour = 'lightblue') +
-  geom_abline() +
-  coord_equal() +
-  ggtitle("ROC Curve")+
-  theme_minimal()
-
-roc_curve_plot
+```{python}
+plt.figure(figsize=(5, 5))
+plt.plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue", lw=2)
+plt.plot([0, 1], [0, 1], color="gray", linestyle="--")
+plt.xlabel("1 - especificidad")
+plt.ylabel("sensitividad")
+plt.title("ROC Curve")
+plt.axis("square")
+plt.tight_layout()
 ```
 
-De igual manera, podemos calcular la precisión y cobertura para cada punte de corte:
+De igual manera, podemos calcular la precisión y cobertura para cada punto de corte:
 
-```{r}
-pr_curve_data <- pr_curve(
-  class_results, 
-  truth = Churn, 
-  estimate = .pred_Yes
-  )
-
-pr_curve_data
+```{python}
+pr_curve_data = pr_curve_table(
+    class_results["Churn"],
+    class_results["pred_Yes"],
+    positive_label="Yes",
+)
+pr_curve_data.head()
 ```
 
 Y graficar su respectiva curva:
 
-```{r}
-pr_curve_plot <- pr_curve_data %>% 
-  ggplot(aes(x = recall, y = precision)) +
-  ylim(0, 1) +
-  geom_abline(slope = -1, intercept = 1) +
-  geom_path(size = 1, colour = 'lightblue') +
-  coord_equal() +
-  ggtitle("Precision vs Recall")+
-  theme_minimal()
-
-pr_curve_plot
+```{python}
+plt.figure(figsize=(5, 5))
+plt.plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue", lw=2)
+plt.xlabel("cobertura")
+plt.ylabel("precisión")
+plt.title("Precision vs Recall")
+plt.ylim(0, 1)
+plt.axis("square")
+plt.tight_layout()
 ```
 
 
