@@ -382,7 +382,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb466-27"><a href="a-b---testing.html#cb466-27" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> telco_train[<span class="st">&quot;Churn&quot;</span>]</span></code></pre></div>
 <pre><code>## RandomizedSearchCV(cv=5,
 ##                    estimator=Pipeline(steps=[(&#39;features&#39;,
-##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
 ##                                                                            kw_args={&#39;keep_target&#39;: False})),
 ##                                              (&#39;preprocess&#39;,
 ##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
@@ -391,14 +391,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                                                                                                (&#39;scaler&#39;,
 ##                                                                                                 StandardScaler())]),
 ##                                                                                &lt;sklearn.compose._column_transfo...
-##                                                                                &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f077750&gt;)],
+##                                                                                &lt;sklearn.compose._column_transformer.make_column_selector object at 0x303191a50&gt;)],
 ##                                                                 verbose_feature_names_out=False)),
 ##                                              (&#39;model&#39;,
 ##                                               SVC(probability=True,
 ##                                                   random_state=1352))]),
 ##                    n_iter=20, n_jobs=-1,
-##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17ff4b9d0&gt;,
-##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17f1ab3d0&gt;},
+##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30318e650&gt;,
+##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x303185150&gt;},
 ##                    random_state=123, scoring=&#39;roc_auc&#39;)</code></pre>
 <p>A partir de los resultados de los modelos, se realizó una priorización para determinar cuál de ellos eran los más valiosos en términos de predicción.</p>
 <div class="sourceCode" id="cb468"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb468-1"><a href="a-b---testing.html#cb468-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(svm_tune_class_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
@@ -456,9 +456,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb474-7"><a href="a-b---testing.html#cb474-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb474-8"><a href="a-b---testing.html#cb474-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
 <span id="cb474-9"><a href="a-b---testing.html#cb474-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17f1f55d0&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3040daa50&gt;]</code></pre>
 <div class="sourceCode" id="cb476"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb476-1"><a href="a-b---testing.html#cb476-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x305a93390&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3179939d0&gt;]</code></pre>
 <div class="sourceCode" id="cb478"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb478-1"><a href="a-b---testing.html#cb478-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="ss">f&quot;ROC Curve (</span><span class="sc">{</span>roc_auc_value<span class="sc">:.2f}</span><span class="ss">)&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;ROC Curve (0.83)&#39;)</code></pre>
 <div class="sourceCode" id="cb480"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb480-1"><a href="a-b---testing.html#cb480-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">&quot;1 - specificity&quot;</span>)</span></code></pre></div>
@@ -468,7 +468,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb484"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb484-1"><a href="a-b---testing.html#cb484-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_aspect(<span class="st">&quot;equal&quot;</span>, adjustable<span class="op">=</span><span class="st">&quot;box&quot;</span>)</span>
 <span id="cb484-2"><a href="a-b---testing.html#cb484-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb484-3"><a href="a-b---testing.html#cb484-3" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17fd65190&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3031bd1d0&gt;]</code></pre>
 <div class="sourceCode" id="cb486"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb486-1"><a href="a-b---testing.html#cb486-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="ss">f&quot;Precision vs Recall (</span><span class="sc">{</span>pr_auc_value<span class="sc">:.2f}</span><span class="ss">)&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Precision vs Recall (0.62)&#39;)</code></pre>
 <div class="sourceCode" id="cb488"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb488-1"><a href="a-b---testing.html#cb488-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">&quot;recall&quot;</span>)</span></code></pre></div>
@@ -760,7 +760,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb518-5"><a href="a-b---testing.html#cb518-5" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>, <span class="dv">1500</span>)</span></code></pre></div>
 <pre><code>## (0.0, 1500.0)</code></pre>
 <div class="sourceCode" id="cb520"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb520-1"><a href="a-b---testing.html#cb520-1" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="dv">0</span>, <span class="dv">1501</span>, <span class="dv">100</span>))</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.axis.YTick object at 0x17eb40c50&gt;, &lt;matplotlib.axis.YTick object at 0x313d83750&gt;, &lt;matplotlib.axis.YTick object at 0x313db1590&gt;, &lt;matplotlib.axis.YTick object at 0x313e0de90&gt;, &lt;matplotlib.axis.YTick object at 0x313e0fd10&gt;, &lt;matplotlib.axis.YTick object at 0x313e19c50&gt;, &lt;matplotlib.axis.YTick object at 0x313e1a850&gt;, &lt;matplotlib.axis.YTick object at 0x313d60950&gt;, &lt;matplotlib.axis.YTick object at 0x313d627d0&gt;, &lt;matplotlib.axis.YTick object at 0x313d5c910&gt;, &lt;matplotlib.axis.YTick object at 0x313d5e8d0&gt;, &lt;matplotlib.axis.YTick object at 0x313e1ae10&gt;, &lt;matplotlib.axis.YTick object at 0x313e24ed0&gt;, &lt;matplotlib.axis.YTick object at 0x313e26e50&gt;, &lt;matplotlib.axis.YTick object at 0x313e2cf90&gt;, &lt;matplotlib.axis.YTick object at 0x313e2ef10&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.axis.YTick object at 0x317b14f90&gt;, &lt;matplotlib.axis.YTick object at 0x317ae8410&gt;, &lt;matplotlib.axis.YTick object at 0x317b40410&gt;, &lt;matplotlib.axis.YTick object at 0x317b79390&gt;, &lt;matplotlib.axis.YTick object at 0x317b61b90&gt;, &lt;matplotlib.axis.YTick object at 0x317b79ad0&gt;, &lt;matplotlib.axis.YTick object at 0x317b68f90&gt;, &lt;matplotlib.axis.YTick object at 0x317b6add0&gt;, &lt;matplotlib.axis.YTick object at 0x317c80e90&gt;, &lt;matplotlib.axis.YTick object at 0x317c82e10&gt;, &lt;matplotlib.axis.YTick object at 0x317b4eb50&gt;, &lt;matplotlib.axis.YTick object at 0x317c8d2d0&gt;, &lt;matplotlib.axis.YTick object at 0x317c8f090&gt;, &lt;matplotlib.axis.YTick object at 0x317c91510&gt;, &lt;matplotlib.axis.YTick object at 0x317c934d0&gt;, &lt;matplotlib.axis.YTick object at 0x317c91d50&gt;]</code></pre>
 <div class="sourceCode" id="cb522"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb522-1"><a href="a-b---testing.html#cb522-1" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&quot;Relación entre tamaño de población y tamaño de muestra&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Relación entre tamaño de población y tamaño de muestra&#39;)</code></pre>
 <div class="sourceCode" id="cb524"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb524-1"><a href="a-b---testing.html#cb524-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Tamaño de población&quot;</span>)</span></code></pre></div>
@@ -1215,7 +1215,7 @@ Aparentemente con el método por descuento la polarización en la tasa de cancel
 ## Link Function:                  Logit   Scale:                          1.0000
 ## Method:                          IRLS   Log-Likelihood:                -807.10
 ## Date:                Tue, 26 May 2026   Deviance:                       1614.2
-## Time:                        09:41:33   Pearson chi2:                 1.40e+03
+## Time:                        10:20:03   Pearson chi2:                 1.40e+03
 ## No. Iterations:                     4   Pseudo R-squ. (CS):             0.1090
 ## Covariance Type:            nonrobust                                         
 ## ======================================================================================

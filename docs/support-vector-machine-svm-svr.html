@@ -496,7 +496,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="support-vector-machine-svm-svr.html#cb88-1" aria-hidden="true" tabindex="-1"></a>receta_casas <span class="op">=</span> make_ames_pipeline(SVR(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>), scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb88-2"><a href="support-vector-machine-svm-svr.html#cb88-2" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
@@ -505,14 +505,14 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17ff9e350&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17a574e10&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17b7ae890&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3043836d0&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVR())])</code></pre>
 <p>Recordemos que un <strong>Pipeline</strong> contiene los pasos a seguir; usamos <strong>fit()</strong> para estimar transformaciones y modelo, y <strong>transform()</strong> o <strong>predict()</strong> para aplicarlo a nuevos datos.</p>
@@ -530,7 +530,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="support-vector-machine-svm-svr.html#cb92-1" aria-hidden="true" tabindex="-1"></a>svm_workflow <span class="op">=</span> make_ames_pipeline(svm_model, scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb92-2"><a href="support-vector-machine-svm-svr.html#cb92-2" aria-hidden="true" tabindex="-1"></a>svm_workflow</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
@@ -539,14 +539,14 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x16ff8e350&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17a59ce10&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17fdb1090&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3044588d0&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVR())])</code></pre>
 <p><strong>Paso 5: Creación de grid search</strong></p>
@@ -556,7 +556,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <span id="cb94-4"><a href="support-vector-machine-svm-svr.html#cb94-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__epsilon&quot;</span>: uniform(<span class="fl">0.01</span>, <span class="fl">0.50</span>),</span>
 <span id="cb94-5"><a href="support-vector-machine-svm-svr.html#cb94-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb94-6"><a href="support-vector-machine-svm-svr.html#cb94-6" aria-hidden="true" tabindex="-1"></a>svm_param_distributions</span></code></pre></div>
-<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17ff2c290&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301c0f590&gt;, &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fdd03d0&gt;}</code></pre>
+<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30439d410&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304502a90&gt;, &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3043de810&gt;}</code></pre>
 <p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="support-vector-machine-svm-svr.html#cb96-1" aria-hidden="true" tabindex="-1"></a>svm_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
 <span id="cb96-2"><a href="support-vector-machine-svm-svr.html#cb96-2" aria-hidden="true" tabindex="-1"></a>    svm_workflow,</span>
@@ -584,7 +584,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <span id="cb97-10"><a href="support-vector-machine-svm-svr.html#cb97-10" aria-hidden="true" tabindex="-1"></a>svm_tune_result.fit(X_ames_train, y_ames_train)</span></code></pre></div>
 <pre><code>## RandomizedSearchCV(cv=KFold(n_splits=5, random_state=4595, shuffle=True),
 ##                    estimator=Pipeline(steps=[(&#39;features&#39;,
-##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
 ##                                                                            kw_args={&#39;keep_target&#39;: False,
 ##                                                                                     &#39;large&#39;: False})),
 ##                                              (&#39;preprocess&#39;,
@@ -592,18 +592,18 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                                                 SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                                                (&#39;...
-##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17ff2c290&gt;,
-##                                         &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17fdd03d0&gt;,
-##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301c0f590&gt;},
+##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30439d410&gt;,
+##                                         &#39;model__epsilon&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3043de810&gt;,
+##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304502a90&gt;},
 ##                    random_state=123,
 ##                    scoring=&#39;neg_mean_absolute_percentage_error&#39;)</code></pre>
 <div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="support-vector-machine-svm-svr.html#cb99-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(svm_tune_result.cv_results_).head()</span></code></pre></div>
 <pre><code>##    mean_fit_time  std_fit_time  ...  std_test_score  rank_test_score
-## 0       0.244244      0.024587  ...        0.018045                7
-## 1       0.247325      0.054628  ...        0.017997                6
-## 2       0.197351      0.056118  ...        0.017114                1
-## 3       0.177653      0.017583  ...        0.018112               17
-## 4       0.160187      0.006176  ...        0.018074               10
+## 0       0.282041      0.039919  ...        0.018045                7
+## 1       0.296305      0.052391  ...        0.017997                6
+## 2       0.253354      0.024810  ...        0.017114                1
+## 3       0.291111      0.031608  ...        0.018112               17
+## 4       0.277628      0.038575  ...        0.018074               10
 ## 
 ## [5 rows x 16 columns]</code></pre>
 <p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
@@ -666,7 +666,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <span id="cb113-2"><a href="support-vector-machine-svm-svr.html#cb113-2" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model <span class="op">=</span> svm_tune_result.best_estimator_</span>
 <span id="cb113-3"><a href="support-vector-machine-svm-svr.html#cb113-3" aria-hidden="true" tabindex="-1"></a>svm_regression_final_model</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x16ff7e660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
@@ -682,7 +682,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x301c1d050&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304483fd0&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;,
 ##                  SVR(C=87.55734725056492, epsilon=0.35241486929243165,
@@ -778,10 +778,10 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ## 3    rsq      0.05
 ## 4    ccc      0.10</code></pre>
 <div class="sourceCode" id="cb126"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb126-1"><a href="support-vector-machine-svm-svr.html#cb126-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(results[<span class="st">&quot;pred_svm_reg&quot;</span>], results[<span class="st">&quot;Sale_Price&quot;</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span></code></pre></div>
-<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x301c6c890&gt;</code></pre>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x3046289d0&gt;</code></pre>
 <div class="sourceCode" id="cb128"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb128-1"><a href="support-vector-machine-svm-svr.html#cb128-1" aria-hidden="true" tabindex="-1"></a>lims <span class="op">=</span> [results[[<span class="st">&quot;pred_svm_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">min</span>().<span class="bu">min</span>(), results[[<span class="st">&quot;pred_svm_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">max</span>().<span class="bu">max</span>()]</span>
 <span id="cb128-2"><a href="support-vector-machine-svm-svr.html#cb128-2" aria-hidden="true" tabindex="-1"></a>plt.plot(lims, lims, color<span class="op">=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x301ea7b90&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x304718a10&gt;]</code></pre>
 <div class="sourceCode" id="cb130"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb130-1"><a href="support-vector-machine-svm-svr.html#cb130-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Prediction&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 0, &#39;Prediction&#39;)</code></pre>
 <div class="sourceCode" id="cb132"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb132-1"><a href="support-vector-machine-svm-svr.html#cb132-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Observation&quot;</span>)</span></code></pre></div>
@@ -851,7 +851,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb142-1"><a href="support-vector-machine-svm-svr.html#cb142-1" aria-hidden="true" tabindex="-1"></a>telco_rec <span class="op">=</span> make_telco_pipeline(SVC(kernel<span class="op">=</span><span class="st">&quot;rbf&quot;</span>, probability<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">1352</span>))</span>
 <span id="cb142-2"><a href="support-vector-machine-svm-svr.html#cb142-2" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
@@ -859,14 +859,14 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x301e10fd0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304600fd0&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x301ed3a10&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x302b94b10&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVC(probability=True, random_state=1352))])</code></pre>
 <p><strong>Paso 3: Selección de tipo de modelo con hiperparámetros iniciales</strong></p>
@@ -877,7 +877,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb146-1"><a href="support-vector-machine-svm-svr.html#cb146-1" aria-hidden="true" tabindex="-1"></a>svm_class_workflow <span class="op">=</span> make_telco_pipeline(svm_class_model)</span>
 <span id="cb146-2"><a href="support-vector-machine-svm-svr.html#cb146-2" aria-hidden="true" tabindex="-1"></a>svm_class_workflow</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
@@ -885,14 +885,14 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                   (&#39;scaler&#39;,
 ##                                                                    StandardScaler())]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f86c150&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x302274190&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f8664d0&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x302274910&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, SVC(probability=True, random_state=1352))])</code></pre>
 <p><strong>Paso 5: Creación de grid search</strong></p>
@@ -901,7 +901,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <span id="cb148-3"><a href="support-vector-machine-svm-svr.html#cb148-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__gamma&quot;</span>: loguniform(<span class="fl">1e-4</span>, <span class="fl">1e0</span>),</span>
 <span id="cb148-4"><a href="support-vector-machine-svm-svr.html#cb148-4" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb148-5"><a href="support-vector-machine-svm-svr.html#cb148-5" aria-hidden="true" tabindex="-1"></a>svm_class_param_distributions</span></code></pre></div>
-<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17f863590&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17f83a850&gt;}</code></pre>
+<pre><code>## {&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30425a510&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3045ffe90&gt;}</code></pre>
 <p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb150-1"><a href="support-vector-machine-svm-svr.html#cb150-1" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result <span class="op">=</span> RandomizedSearchCV(</span>
 <span id="cb150-2"><a href="support-vector-machine-svm-svr.html#cb150-2" aria-hidden="true" tabindex="-1"></a>    svm_class_workflow,</span>
@@ -925,29 +925,29 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <span id="cb151-10"><a href="support-vector-machine-svm-svr.html#cb151-10" aria-hidden="true" tabindex="-1"></a>svm_tune_class_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
 <pre><code>## RandomizedSearchCV(cv=StratifiedKFold(n_splits=5, random_state=1234, shuffle=True),
 ##                    estimator=Pipeline(steps=[(&#39;features&#39;,
-##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
 ##                                                                            kw_args={&#39;keep_target&#39;: False})),
 ##                                              (&#39;preprocess&#39;,
 ##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                                                 SimpleImputer(strategy=&#39;median&#39;)),
 ##                                                                                                (&#39;sca...
-##                                                                                &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17f8664d0&gt;)],
+##                                                                                &lt;sklearn.compose._column_transformer.make_column_selector object at 0x302274910&gt;)],
 ##                                                                 verbose_feature_names_out=False)),
 ##                                              (&#39;model&#39;,
 ##                                               SVC(probability=True,
 ##                                                   random_state=1352))]),
 ##                    n_iter=20, n_jobs=-1,
-##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17f863590&gt;,
-##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x17f83a850&gt;},
+##                    param_distributions={&#39;model__C&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30425a510&gt;,
+##                                         &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3045ffe90&gt;},
 ##                    random_state=123, scoring=&#39;roc_auc&#39;)</code></pre>
 <div class="sourceCode" id="cb153"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb153-1"><a href="support-vector-machine-svm-svr.html#cb153-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(svm_tune_class_result.cv_results_).head()</span></code></pre></div>
 <pre><code>##    mean_fit_time  std_fit_time  ...  std_test_score  rank_test_score
-## 0       3.223948      0.140484  ...        0.012270                8
-## 1       3.271660      0.148733  ...        0.012424                7
-## 2       3.343794      0.134356  ...        0.010325               11
-## 3       6.058380      0.175189  ...        0.009574               20
-## 4       3.324567      0.149583  ...        0.012803                6
+## 0       5.541229      0.315364  ...        0.012270                8
+## 1       6.520486      1.117663  ...        0.012424                7
+## 2       6.951474      0.196955  ...        0.010325               11
+## 3      10.385459      0.378335  ...        0.009574               20
+## 4       5.611289      0.136681  ...        0.012803                6
 ## 
 ## [5 rows x 15 columns]</code></pre>
 <p><strong>Paso 7: Análisis de métricas de error e hiperparámetros (Vuelve al paso 3, si es necesario)</strong></p>
@@ -1005,7 +1005,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <span id="cb167-2"><a href="support-vector-machine-svm-svr.html#cb167-2" aria-hidden="true" tabindex="-1"></a>svm_classification_final_model <span class="op">=</span> svm_tune_class_result.best_estimator_</span>
 <span id="cb167-3"><a href="support-vector-machine-svm-svr.html#cb167-3" aria-hidden="true" tabindex="-1"></a>svm_classification_final_model</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x16ff7e5c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
@@ -1019,7 +1019,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x301ea7d50&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3040f90d0&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;,
 ##                  SVC(C=1.8944836908329918, gamma=0.001774372883716282,
@@ -1100,9 +1100,9 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <span id="cb176-3"><a href="support-vector-machine-svm-svr.html#cb176-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb176-4"><a href="support-vector-machine-svm-svr.html#cb176-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
 <span id="cb176-5"><a href="support-vector-machine-svm-svr.html#cb176-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17ba7b390&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30405b390&gt;]</code></pre>
 <div class="sourceCode" id="cb178"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb178-1"><a href="support-vector-machine-svm-svr.html#cb178-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x305a1fd50&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x304036410&gt;]</code></pre>
 <div class="sourceCode" id="cb180"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb180-1"><a href="support-vector-machine-svm-svr.html#cb180-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;ROC Curve&#39;)</code></pre>
 <div class="sourceCode" id="cb182"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb182-1"><a href="support-vector-machine-svm-svr.html#cb182-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">&quot;1 - specificity&quot;</span>)</span></code></pre></div>
@@ -1110,7 +1110,7 @@ Entonces estas ecuaciones se transforman en la siguiente forma:</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb184-1"><a href="support-vector-machine-svm-svr.html#cb184-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">&quot;sensitivity&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;sensitivity&#39;)</code></pre>
 <div class="sourceCode" id="cb186"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb186-1"><a href="support-vector-machine-svm-svr.html#cb186-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x17fbefd50&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x302b9ffd0&gt;]</code></pre>
 <div class="sourceCode" id="cb188"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb188-1"><a href="support-vector-machine-svm-svr.html#cb188-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">&quot;Precision vs Recall&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Precision vs Recall&#39;)</code></pre>
 <div class="sourceCode" id="cb190"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb190-1"><a href="support-vector-machine-svm-svr.html#cb190-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">&quot;recall&quot;</span>)</span></code></pre></div>
