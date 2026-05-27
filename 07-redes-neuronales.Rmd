@@ -29,10 +29,15 @@ La idea es la misma que en otros modelos de machine learning:
 La diferencia es que una red neuronal organiza sus parámetros en **capas**. Cada capa transforma la información y la pasa a la siguiente. En este capítulo veremos sólo **redes neuronales densas**, también llamadas *fully connected networks*. No veremos redes convolucionales ni secuenciales todavía; esas aparecerán al final como siguientes pasos.
 
 ```{python, warning=FALSE, message=FALSE}
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 import torch
+from matplotlib.animation import FuncAnimation, PillowWriter
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from torch import nn
@@ -47,6 +52,24 @@ from dsml_utils import (
 
 torch.manual_seed(4595)
 np.random.seed(4595)
+
+_plotly_javascript_included = False
+
+
+def interactive_html(figure):
+    global _plotly_javascript_included
+    figure.update_layout(
+        template="plotly_white",
+        margin=dict(l=45, r=25, t=55, b=45),
+        hovermode="closest",
+    )
+    include_javascript = True if not _plotly_javascript_included else False
+    _plotly_javascript_included = True
+    return figure.to_html(
+        full_html=False,
+        include_plotlyjs=include_javascript,
+        config={"displaylogo": False, "responsive": True},
+    )
 ```
 
 ```{python, echo=FALSE}
@@ -86,6 +109,8 @@ for i, (x, label) in enumerate(zip(x_pos, steps)):
 ax.set_title("Flujo general de entrenamiento de una red neuronal", fontsize=13)
 plt.tight_layout()
 ```
+
+Las gráficas de curvas y comparaciones de este capítulo son interactivas en la versión HTML del libro. El descenso en gradiente también se presenta como animación `.gif`, de modo que el movimiento permanezca visible en una lectura no interactiva.
 
 ## Preparación de Datos
 
@@ -269,10 +294,28 @@ small_dense_model = nn.Sequential(
     nn.Linear(32, 1),
 )
 
-parameter_table(small_dense_model), count_parameters(small_dense_model)
+small_parameter_summary = parameter_table(small_dense_model)
+small_parameter_summary, count_parameters(small_dense_model)
 ```
 
 Más parámetros pueden dar más flexibilidad, pero también aumentan el riesgo de sobreajuste.
+
+```{python, results='asis', echo=FALSE}
+parameter_fig = px.bar(
+    small_parameter_summary,
+    x="capa",
+    y="parametros",
+    text="parametros",
+    title="Parámetros entrenables por tensor",
+)
+parameter_fig.update_traces(
+    marker_color="#4f46e5",
+    hovertemplate="<b>%{x}</b><br>Parámetros: %{y:,}<extra></extra>",
+)
+parameter_fig.update_xaxes(title="Tensor de pesos o sesgos")
+parameter_fig.update_yaxes(title="Número de parámetros")
+print(interactive_html(parameter_fig))
+```
 
 ## Funciones de Activación
 
@@ -289,7 +332,7 @@ Activaciones comunes:
 * **GELU:** activación suave usada en arquitecturas modernas.
 * **Softmax:** convierte un vector en probabilidades que suman 1. Se usa en clasificación multiclase.
 
-```{python}
+```{python, results='asis'}
 x = torch.linspace(-5, 5, 300)
 
 activations = {
@@ -302,17 +345,26 @@ activations = {
     "gelu": torch.nn.functional.gelu(x),
 }
 
-fig, axes = plt.subplots(2, 4, figsize=(12, 6), sharex=True)
-axes = axes.ravel()
+activation_df = pd.DataFrame(
+    {
+        "entrada": x.numpy(),
+        **{name: values.numpy() for name, values in activations.items()},
+    }
+).melt(id_vars="entrada", var_name="activacion", value_name="salida")
 
-for ax, (name, values) in zip(axes, activations.items()):
-    ax.plot(x.numpy(), values.numpy())
-    ax.axhline(0, color="gray", lw=0.8)
-    ax.axvline(0, color="gray", lw=0.8)
-    ax.set_title(name)
-
-axes[-1].axis("off")
-plt.tight_layout()
+activation_fig = px.line(
+    activation_df,
+    x="entrada",
+    y="salida",
+    color="activacion",
+    title="Funciones de activación",
+)
+activation_fig.add_hline(y=0, line_width=1, line_color="#9ca3af")
+activation_fig.add_vline(x=0, line_width=1, line_color="#9ca3af")
+activation_fig.update_traces(
+    hovertemplate="Entrada: %{x:.2f}<br>Salida: %{y:.3f}<extra></extra>"
+)
+print(interactive_html(activation_fig))
 ```
 
 ```{python}
@@ -326,6 +378,29 @@ pd.DataFrame(
         "softmax": probabilidades.numpy(),
     }
 )
+```
+
+```{python, results='asis', echo=FALSE}
+softmax_df = pd.DataFrame(
+    {
+        "clase": ["A", "B", "C"],
+        "probabilidad": probabilidades.numpy(),
+    }
+)
+softmax_fig = px.bar(
+    softmax_df,
+    x="clase",
+    y="probabilidad",
+    text="probabilidad",
+    title="Softmax: probabilidades a partir de logits",
+)
+softmax_fig.update_traces(
+    marker_color="#0f766e",
+    texttemplate="%{text:.3f}",
+    hovertemplate="Clase %{x}<br>Probabilidad: %{y:.3f}<extra></extra>",
+)
+softmax_fig.update_yaxes(range=[0, 1])
+print(interactive_html(softmax_fig))
 ```
 
 Para nuestro problema de Ames usamos salida **lineal** porque estamos resolviendo regresión: el precio puede tomar muchos valores continuos.
@@ -372,23 +447,35 @@ Para clasificación:
 * **BCEWithLogitsLoss:** clasificación binaria. Recibe logits y aplica sigmoid internamente.
 * **CrossEntropyLoss:** clasificación multiclase. Recibe logits y aplica softmax internamente.
 
-```{python}
+```{python, results='asis'}
 residuals = torch.linspace(-4, 4, 300)
 mse_curve = residuals**2
 mae_curve = torch.abs(residuals)
 huber_loss = nn.HuberLoss(delta=1.0, reduction="none")
 huber_curve = huber_loss(residuals, torch.zeros_like(residuals))
 
-plt.figure(figsize=(7, 4))
-plt.plot(residuals.numpy(), mse_curve.numpy(), label="MSE")
-plt.plot(residuals.numpy(), mae_curve.numpy(), label="MAE")
-plt.plot(residuals.numpy(), huber_curve.numpy(), label="Huber")
-plt.ylim(0, 8)
-plt.xlabel("Error = predicción - observación")
-plt.ylabel("Pérdida")
-plt.title("Comparación de pérdidas para regresión")
-plt.legend()
-plt.tight_layout()
+loss_curve_df = pd.DataFrame(
+    {
+        "error": residuals.numpy(),
+        "MSE": mse_curve.numpy(),
+        "MAE": mae_curve.numpy(),
+        "Huber": huber_curve.numpy(),
+    }
+).melt(id_vars="error", var_name="perdida", value_name="valor")
+
+loss_fig = px.line(
+    loss_curve_df,
+    x="error",
+    y="valor",
+    color="perdida",
+    title="Comparación de pérdidas para regresión",
+)
+loss_fig.update_yaxes(title="Pérdida", range=[0, 8])
+loss_fig.update_xaxes(title="Error = predicción - observación")
+loss_fig.update_traces(
+    hovertemplate="Error: %{x:.2f}<br>Pérdida: %{y:.3f}<extra></extra>"
+)
+print(interactive_html(loss_fig))
 ```
 
 Ejemplo de pérdidas en PyTorch:
@@ -452,22 +539,144 @@ donde:
 
 Como queremos bajar, nos movemos en dirección contraria al gradiente.
 
-```{python, echo=FALSE}
-theta = np.linspace(-4, 4, 300)
-loss = (theta - 1.2) ** 2 + 0.5
+```{python, results='asis', echo=FALSE}
+theta_grid = np.linspace(-4, 4, 300)
+loss_grid = (theta_grid - 1.2) ** 2 + 0.5
+learning_rate = 0.18
 
-points = np.array([-3.2, -1.7, -0.6, 0.2, 0.8, 1.1])
-point_loss = (points - 1.2) ** 2 + 0.5
+gd_path = [-3.2]
+for _ in range(12):
+    gradient = 2 * (gd_path[-1] - 1.2)
+    gd_path.append(gd_path[-1] - learning_rate * gradient)
 
-plt.figure(figsize=(7, 4))
-plt.plot(theta, loss)
-plt.scatter(points, point_loss, color="red")
-for i in range(len(points) - 1):
-    plt.annotate("", xy=(points[i + 1], point_loss[i + 1]), xytext=(points[i], point_loss[i]), arrowprops=dict(arrowstyle="->"))
-plt.title("Descenso en gradiente sobre una pérdida simple")
-plt.xlabel("parámetro")
-plt.ylabel("pérdida")
-plt.tight_layout()
+gd_path = np.array(gd_path)
+gd_loss = (gd_path - 1.2) ** 2 + 0.5
+
+
+def gradient_traces(iteration):
+    return [
+        go.Scatter(
+            x=theta_grid,
+            y=loss_grid,
+            mode="lines",
+            name="Función de pérdida",
+            line=dict(color="#2563eb"),
+        ),
+        go.Scatter(
+            x=gd_path[: iteration + 1],
+            y=gd_loss[: iteration + 1],
+            mode="lines+markers",
+            name="Recorrido",
+            line=dict(color="#dc2626"),
+            marker=dict(size=7),
+        ),
+        go.Scatter(
+            x=[gd_path[iteration]],
+            y=[gd_loss[iteration]],
+            mode="markers",
+            name="Posición actual",
+            marker=dict(size=13, color="#dc2626"),
+        ),
+    ]
+
+
+gradient_frames = [
+    go.Frame(name=str(iteration), data=gradient_traces(iteration))
+    for iteration in range(len(gd_path))
+]
+gradient_fig = go.Figure(
+    data=gradient_traces(0),
+    frames=gradient_frames,
+)
+gradient_fig.update_layout(
+    title="Descenso en gradiente: pérdida iteración a iteración",
+    xaxis_title="Parámetro",
+    yaxis_title="Pérdida",
+    updatemenus=[
+        {
+            "type": "buttons",
+            "buttons": [
+                {
+                    "label": "Reproducir",
+                    "method": "animate",
+                    "args": [
+                        None,
+                        {
+                            "frame": {"duration": 450, "redraw": True},
+                            "fromcurrent": True,
+                        },
+                    ],
+                },
+                {
+                    "label": "Pausa",
+                    "method": "animate",
+                    "args": [
+                        [None],
+                        {
+                            "frame": {"duration": 0, "redraw": False},
+                            "mode": "immediate",
+                        },
+                    ],
+                },
+            ],
+        }
+    ],
+    sliders=[
+        {
+            "currentvalue": {"prefix": "Iteración: "},
+            "steps": [
+                {
+                    "method": "animate",
+                    "label": str(iteration),
+                    "args": [
+                        [str(iteration)],
+                        {
+                            "frame": {"duration": 0, "redraw": True},
+                            "mode": "immediate",
+                        },
+                    ],
+                }
+                for iteration in range(len(gd_path))
+            ],
+        }
+    ],
+)
+print(interactive_html(gradient_fig))
+```
+
+En la animación siguiente, el punto parte de un parámetro con pérdida alta y actualiza su posición con el gradiente de la curva. La tasa de aprendizaje controla qué tan largo es cada paso.
+
+```{python, echo=FALSE, message=FALSE, warning=FALSE}
+gif_path = Path("img/10-nn/descenso-gradiente.gif")
+gif_path.parent.mkdir(parents=True, exist_ok=True)
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.plot(theta_grid, loss_grid, color="#2563eb", label="Pérdida")
+path_line, = ax.plot([], [], "-o", color="#dc2626", label="Recorrido")
+ax.set_xlabel("Parámetro")
+ax.set_ylabel("Pérdida")
+ax.legend(loc="upper right")
+
+
+def update_gradient_frame(frame):
+    path_line.set_data(gd_path[: frame + 1], gd_loss[: frame + 1])
+    ax.set_title(f"Descenso en gradiente | Iteración {frame} | pérdida = {gd_loss[frame]:.3f}")
+    return (path_line,)
+
+
+gradient_animation = FuncAnimation(
+    fig,
+    update_gradient_frame,
+    frames=len(gd_path),
+    interval=550,
+    repeat=True,
+)
+gradient_animation.save(gif_path, writer=PillowWriter(fps=2))
+plt.close(fig)
+```
+
+```{r, echo=FALSE, fig.align='center', out.width='650px'}
+knitr::include_graphics("img/10-nn/descenso-gradiente.gif")
 ```
 
 ### Batch, Estocástico y Mini-Batch
@@ -538,15 +747,35 @@ pd.DataFrame(
 ).round(4)
 ```
 
-```{python}
-plt.figure(figsize=(7, 4))
-for name, result in gd_results.items():
-    plt.plot(result["history"], label=name)
-plt.title("Batch vs estocástico vs mini-batch")
-plt.xlabel("Época")
-plt.ylabel("MSE")
-plt.legend()
-plt.tight_layout()
+```{python, results='asis'}
+gd_history_df = pd.concat(
+    [
+        pd.DataFrame(
+            {
+                "epoca": np.arange(1, len(result["history"]) + 1),
+                "mse": result["history"],
+                "tipo": name,
+            }
+        )
+        for name, result in gd_results.items()
+    ],
+    ignore_index=True,
+)
+
+gd_history_fig = px.line(
+    gd_history_df,
+    x="epoca",
+    y="mse",
+    color="tipo",
+    log_y=True,
+    title="Batch vs estocástico vs mini-batch",
+)
+gd_history_fig.update_xaxes(title="Época")
+gd_history_fig.update_yaxes(title="MSE (escala logarítmica)")
+gd_history_fig.update_traces(
+    hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
+)
+print(interactive_html(gd_history_fig))
 ```
 
 En redes neuronales casi siempre usamos mini-batches porque actualizan con frecuencia y reducen parte del ruido extremo del entrenamiento estocástico puro.
@@ -613,15 +842,37 @@ optimizer_histories = {
     name: train_toy_optimizer(name)
     for name in ["SGD", "Momentum", "RMSprop", "Adam", "AdamW"]
 }
+```
 
-plt.figure(figsize=(7, 4))
-for name, history in optimizer_histories.items():
-    plt.plot(history, label=name)
-plt.title("Comparación de optimizadores en un problema simple")
-plt.xlabel("Época")
-plt.ylabel("MSE")
-plt.legend()
-plt.tight_layout()
+```{python, results='asis'}
+optimizer_history_df = pd.concat(
+    [
+        pd.DataFrame(
+            {
+                "epoca": np.arange(1, len(history) + 1),
+                "mse": history,
+                "optimizador": name,
+            }
+        )
+        for name, history in optimizer_histories.items()
+    ],
+    ignore_index=True,
+)
+
+optimizer_fig = px.line(
+    optimizer_history_df,
+    x="epoca",
+    y="mse",
+    color="optimizador",
+    log_y=True,
+    title="Comparación de optimizadores en un problema simple",
+)
+optimizer_fig.update_xaxes(title="Época")
+optimizer_fig.update_yaxes(title="MSE (escala logarítmica)")
+optimizer_fig.update_traces(
+    hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
+)
+print(interactive_html(optimizer_fig))
 ```
 
 En la práctica, `Adam` o `AdamW` suelen ser buenos puntos de partida. `SGD` con momentum puede ser competitivo, pero normalmente requiere más cuidado con la tasa de aprendizaje.
@@ -696,12 +947,25 @@ unregularized_model, unregularized_history = train_model(
 unregularized_history.tail()
 ```
 
-```{python}
-unregularized_history.plot(x="epoch", y=["train_loss", "valid_loss"], figsize=(7, 4))
-plt.title("Red sin regularización explícita")
-plt.xlabel("Época")
-plt.ylabel("MSE en escala estandarizada")
-plt.tight_layout()
+```{python, results='asis'}
+base_history_long = unregularized_history.melt(
+    id_vars="epoch",
+    var_name="conjunto",
+    value_name="mse",
+)
+base_history_fig = px.line(
+    base_history_long,
+    x="epoch",
+    y="mse",
+    color="conjunto",
+    title="Red sin regularización explícita",
+)
+base_history_fig.update_xaxes(title="Época")
+base_history_fig.update_yaxes(title="MSE en escala estandarizada")
+base_history_fig.update_traces(
+    hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
+)
+print(interactive_html(base_history_fig))
 ```
 
 ## Regularización en Redes Neuronales
@@ -850,7 +1114,7 @@ regularized_history.tail()
 
 La red sin regularizar suele reducir rápido la pérdida de entrenamiento. La pregunta es si eso también se traduce en mejor validación.
 
-```{python}
+```{python, results='asis'}
 comparison_history = pd.concat(
     [
         unregularized_history.assign(modelo="sin_regularizacion"),
@@ -859,19 +1123,32 @@ comparison_history = pd.concat(
     ignore_index=True,
 )
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharey=True)
-
-for modelo, data in comparison_history.groupby("modelo"):
-    axes[0].plot(data["epoch"], data["train_loss"], label=modelo)
-    axes[1].plot(data["epoch"], data["valid_loss"], label=modelo)
-
-axes[0].set_title("Pérdida de entrenamiento")
-axes[1].set_title("Pérdida de validación")
-for ax in axes:
-    ax.set_xlabel("Época")
-    ax.set_ylabel("MSE estandarizado")
-    ax.legend()
-plt.tight_layout()
+comparison_long = comparison_history.melt(
+    id_vars=["epoch", "modelo"],
+    value_vars=["train_loss", "valid_loss"],
+    var_name="conjunto",
+    value_name="mse",
+)
+comparison_long["conjunto"] = comparison_long["conjunto"].replace(
+    {"train_loss": "entrenamiento", "valid_loss": "validación"}
+)
+regularization_fig = px.line(
+    comparison_long,
+    x="epoch",
+    y="mse",
+    color="modelo",
+    facet_col="conjunto",
+    title="Contraste de pérdida: sin regularización y regularizada",
+)
+regularization_fig.update_xaxes(title="Época")
+regularization_fig.update_yaxes(title="MSE estandarizado")
+regularization_fig.for_each_annotation(
+    lambda annotation: annotation.update(text=annotation.text.split("=")[-1])
+)
+regularization_fig.update_traces(
+    hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
+)
+print(interactive_html(regularization_fig))
 ```
 
 Evaluemos ambas redes en prueba:
@@ -898,7 +1175,7 @@ model_comparison = pd.concat(
 model_comparison.pivot(index="metric", columns="modelo", values="estimate").round(2)
 ```
 
-```{python}
+```{python, results='asis'}
 nn_results = pd.DataFrame(
     {
         "Sale_Price": y_test.to_numpy(),
@@ -906,17 +1183,35 @@ nn_results = pd.DataFrame(
     }
 )
 
-plt.figure(figsize=(6, 5))
-plt.scatter(nn_results["pred_regularizada"], nn_results["Sale_Price"], alpha=0.6)
 lims = [
     nn_results[["pred_regularizada", "Sale_Price"]].min().min(),
     nn_results[["pred_regularizada", "Sale_Price"]].max().max(),
 ]
-plt.plot(lims, lims, color="red")
-plt.xlabel("Predicción")
-plt.ylabel("Observación")
-plt.title("Red neuronal densa regularizada")
-plt.tight_layout()
+
+prediction_fig = px.scatter(
+    nn_results,
+    x="pred_regularizada",
+    y="Sale_Price",
+    opacity=0.65,
+    title="Predicción y observación: red neuronal densa regularizada",
+)
+prediction_fig.add_trace(
+    go.Scatter(
+        x=lims,
+        y=lims,
+        mode="lines",
+        line=dict(color="#dc2626"),
+        name="Predicción perfecta",
+        hoverinfo="skip",
+    )
+)
+prediction_fig.update_xaxes(title="Predicción")
+prediction_fig.update_yaxes(title="Observación")
+prediction_fig.update_traces(
+    selector=dict(mode="markers"),
+    hovertemplate="Predicción: $%{x:,.0f}<br>Observación: $%{y:,.0f}<extra></extra>",
+)
+print(interactive_html(prediction_fig))
 ```
 
 El objetivo no es que la red regularizada siempre gane en todos los conjuntos. El objetivo es mostrar la lógica: si una red aprende demasiado el entrenamiento, agregamos restricciones para mejorar su comportamiento en datos nuevos.
