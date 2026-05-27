@@ -455,20 +455,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb422-4"><a href="interpretabilidad-de-modelos.html#cb422-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb422-5"><a href="interpretabilidad-de-modelos.html#cb422-5" aria-hidden="true" tabindex="-1"></a>model_rf.fit(X_telco_train, y_telco_train)</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3041a0fd0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x307b60fd0&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;most_frequent&#39;)),
 ##                                                                   (&#39;onehot&#39;,
 ##                                                                    OneHotEncoder(handle_unknown=&#39;ignore&#39;,
 ##                                                                                  sparse_output=False))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3043a6050&gt;)],
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x307b27510&gt;)],
 ##                                    verbose_feature_names_out=False)),
 ##                 (&#39;model&#39;, RandomForestClassifier(n_jobs=-1, random_state=123))])</code></pre>
 <div class="sourceCode" id="cb424"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb424-1"><a href="interpretabilidad-de-modelos.html#cb424-1" aria-hidden="true" tabindex="-1"></a>telco_transformer <span class="op">=</span> model_rf[:<span class="op">-</span><span class="dv">1</span>]</span>
@@ -569,9 +569,9 @@ proporcionado para obtener una descripción visual de las explicaciones.</p>
 <span id="cb435-15"><a href="interpretabilidad-de-modelos.html#cb435-15" aria-hidden="true" tabindex="-1"></a>    ax.barh(values[<span class="st">&quot;feature&quot;</span>], values[<span class="st">&quot;weight&quot;</span>], color<span class="op">=</span>colors)</span>
 <span id="cb435-16"><a href="interpretabilidad-de-modelos.html#cb435-16" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## &lt;BarContainer object of 10 artists&gt;
-## &lt;matplotlib.lines.Line2D object at 0x304432fd0&gt;
+## &lt;matplotlib.lines.Line2D object at 0x3046a7d10&gt;
 ## &lt;BarContainer object of 10 artists&gt;
-## &lt;matplotlib.lines.Line2D object at 0x304426390&gt;</code></pre>
+## &lt;matplotlib.lines.Line2D object at 0x17a80e390&gt;</code></pre>
 <div class="sourceCode" id="cb437"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb437-1"><a href="interpretabilidad-de-modelos.html#cb437-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div>
 <p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-213-3.png" width="1152" /></p>
 </div>
@@ -605,14 +605,14 @@ proporcionado para obtener una descripción visual de las explicaciones.</p>
 <span id="cb438-20"><a href="interpretabilidad-de-modelos.html#cb438-20" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb438-21"><a href="interpretabilidad-de-modelos.html#cb438-21" aria-hidden="true" tabindex="-1"></a>final_xgboost_model.fit(X_ames_train, y_ames_train)</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x303138fd0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x302c50c50&gt;),
 ##                                                  (&#39;...
 ##                               feature_types=None, gamma=None, grow_policy=None,
 ##                               importance_type=None,
@@ -810,7 +810,7 @@ proporcionado para obtener una descripción visual de las explicaciones.</p>
 <span id="cb449-10"><a href="interpretabilidad-de-modelos.html#cb449-10" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>),</span>
 <span id="cb449-11"><a href="interpretabilidad-de-modelos.html#cb449-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb449-12"><a href="interpretabilidad-de-modelos.html#cb449-12" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## &lt;matplotlib.lines.Line2D object at 0x3045a7ed0&gt;</code></pre>
+<pre><code>## &lt;matplotlib.lines.Line2D object at 0x302bb34d0&gt;</code></pre>
 <div class="sourceCode" id="cb451"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb451-1"><a href="interpretabilidad-de-modelos.html#cb451-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="va">None</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;&#39;)</code></pre>
 <div class="sourceCode" id="cb453"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb453-1"><a href="interpretabilidad-de-modelos.html#cb453-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Contribución SHAP&quot;</span>)</span></code></pre></div>
@@ -943,7 +943,7 @@ proporcionado para obtener una descripción visual de las explicaciones.</p>
 <span id="cb460-11"><a href="interpretabilidad-de-modelos.html#cb460-11" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>),</span>
 <span id="cb460-12"><a href="interpretabilidad-de-modelos.html#cb460-12" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb460-13"><a href="interpretabilidad-de-modelos.html#cb460-13" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## &lt;matplotlib.lines.Line2D object at 0x30224afd0&gt;</code></pre>
+<pre><code>## &lt;matplotlib.lines.Line2D object at 0x302c77690&gt;</code></pre>
 <div class="sourceCode" id="cb462"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb462-1"><a href="interpretabilidad-de-modelos.html#cb462-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="va">None</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;&#39;)</code></pre>
 <div class="sourceCode" id="cb464"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb464-1"><a href="interpretabilidad-de-modelos.html#cb464-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Contribución SHAP&quot;</span>)</span></code></pre></div>

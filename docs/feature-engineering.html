@@ -949,7 +949,7 @@ primera componente principal.</p>
 <span id="cb21-3"><a href="feature-engineering.html#cb21-3" aria-hidden="true" tabindex="-1"></a>    ax.scatter(group[<span class="st">&quot;PC1&quot;</span>], group[<span class="st">&quot;PC2&quot;</span>], label<span class="op">=</span>gm, alpha<span class="op">=</span><span class="fl">0.7</span>, s<span class="op">=</span><span class="dv">35</span>)</span>
 <span id="cb21-4"><a href="feature-engineering.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, row <span class="kw">in</span> group.iterrows():</span>
 <span id="cb21-5"><a href="feature-engineering.html#cb21-5" aria-hidden="true" tabindex="-1"></a>        ax.annotate(row[<span class="st">&quot;NOM_ENT&quot;</span>], (row[<span class="st">&quot;PC1&quot;</span>], row[<span class="st">&quot;PC2&quot;</span>]), fontsize<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div>
-<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x3042046d0&gt;
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x304322950&gt;
 ## Text(1.1330017470316422, 0.832286855023612, &#39;Campeche&#39;)
 ## Text(1.7284464407525013, 0.3649603374661646, &#39;Hidalgo&#39;)
 ## Text(1.3741193012132469, -0.1322766484776937, &#39;Michoacán de Ocampo&#39;)
@@ -958,7 +958,7 @@ primera componente principal.</p>
 ## Text(1.2344622502895026, 0.08347549149458004, &#39;Tabasco&#39;)
 ## Text(2.8103873080431696, -1.0277230910779205, &#39;Veracruz de Ignacio de la Llave&#39;)
 ## Text(1.1052586554019805, 2.5917279721610025, &#39;Yucatán&#39;)
-## &lt;matplotlib.collections.PathCollection object at 0x30421e210&gt;
+## &lt;matplotlib.collections.PathCollection object at 0x302d5ea90&gt;
 ## Text(-2.3802461171009974, 0.2304068152348222, &#39;Aguascalientes&#39;)
 ## Text(-1.7803294478164762, -1.3958234393017566, &#39;Baja California Sur&#39;)
 ## Text(-2.034583239428266, -0.032058466372089874, &#39;Colima&#39;)
@@ -967,7 +967,7 @@ primera componente principal.</p>
 ## Text(-1.446979830339495, 0.5125679138084553, &#39;México&#39;)
 ## Text(-1.8382835562444921, -0.28225972822874174, &#39;Sonora&#39;)
 ## Text(-1.885244803013093, -0.1620882661489742, &#39;Tamaulipas&#39;)
-## &lt;matplotlib.collections.PathCollection object at 0x30421d310&gt;
+## &lt;matplotlib.collections.PathCollection object at 0x304416110&gt;
 ## Text(0.1371380062269162, -0.6854665181723801, &#39;Durango&#39;)
 ## Text(0.1587545096868669, 0.8431122098005449, &#39;Guanajuato&#39;)
 ## Text(-0.7111306529687837, -0.17356931091834216, &#39;Morelos&#39;)
@@ -977,11 +977,11 @@ primera componente principal.</p>
 ## Text(-0.6799076428336248, 0.2681637122234012, &#39;Sinaloa&#39;)
 ## Text(-0.39156344571741064, 1.258861027129756, &#39;Tlaxcala&#39;)
 ## Text(0.2710733407911827, 1.0493405572336736, &#39;Zacatecas&#39;)
-## &lt;matplotlib.collections.PathCollection object at 0x3041f0450&gt;
+## &lt;matplotlib.collections.PathCollection object at 0x304433890&gt;
 ## Text(6.056502404486059, -0.13412648045787878, &#39;Chiapas&#39;)
 ## Text(6.617791167142833, 0.6264721683309717, &#39;Guerrero&#39;)
 ## Text(5.60851267437469, -1.71830815079636, &#39;Oaxaca&#39;)
-## &lt;matplotlib.collections.PathCollection object at 0x3041e5190&gt;
+## &lt;matplotlib.collections.PathCollection object at 0x3044390d0&gt;
 ## Text(-2.979418408708472, -0.6045528511478017, &#39;Baja California&#39;)
 ## Text(-2.979041271413644, 0.14672073437371164, &#39;Coahuila de Zaragoza&#39;)
 ## Text(-3.8734669657017586, -0.11157867474097231, &#39;Distrito Federal&#39;)
@@ -993,16 +993,16 @@ primera componente principal.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="feature-engineering.html#cb27-1" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&quot;PC2&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;PC2&#39;)</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="feature-engineering.html#cb29-1" aria-hidden="true" tabindex="-1"></a>ax.legend()</span></code></pre></div>
-<pre><code>## &lt;matplotlib.legend.Legend object at 0x302bbe910&gt;</code></pre>
+<pre><code>## &lt;matplotlib.legend.Legend object at 0x304420110&gt;</code></pre>
 <p><img src="amt22_03intro2mls2_files/figure-html/unnamed-chunk-26-7.png" width="768" /></p>
 <p>Finalmente, podemos observar como (de izquierda a derecha) los estados con grado de marginación Muy bajo, Bajo, Medio, Alto y Muy Alto respectivamente.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="feature-engineering.html#cb31-1" aria-hidden="true" tabindex="-1"></a>lm_pc1 <span class="op">=</span> LinearRegression().fit(pca_recipe[[<span class="st">&quot;IM&quot;</span>]], pca_recipe[<span class="st">&quot;PC1&quot;</span>])</span>
 <span id="cb31-2"><a href="feature-engineering.html#cb31-2" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> pd.DataFrame({<span class="st">&quot;IM&quot;</span>: np.linspace(pca_recipe[<span class="st">&quot;IM&quot;</span>].<span class="bu">min</span>(), pca_recipe[<span class="st">&quot;IM&quot;</span>].<span class="bu">max</span>(), <span class="dv">100</span>)})</span>
 <span id="cb31-3"><a href="feature-engineering.html#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-4"><a href="feature-engineering.html#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(pca_recipe[<span class="st">&quot;IM&quot;</span>], pca_recipe[<span class="st">&quot;PC1&quot;</span>], s<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div>
-<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x304250610&gt;</code></pre>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x3044be490&gt;</code></pre>
 <div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="feature-engineering.html#cb33-1" aria-hidden="true" tabindex="-1"></a>plt.plot(grid[<span class="st">&quot;IM&quot;</span>], lm_pc1.predict(grid), color<span class="op">=</span><span class="st">&quot;tab:blue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x304206dd0&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3043f4450&gt;]</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="feature-engineering.html#cb35-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Comparación: Índice Marginación Vs PCA CP1&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Comparación: Índice Marginación Vs PCA CP1&#39;)</code></pre>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="feature-engineering.html#cb37-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;IM&quot;</span>)</span></code></pre></div>
@@ -1211,7 +1211,7 @@ contiene un conjunto de datos donde diferentes combustibles de biomasa se caract
 <span id="cb70-3"><a href="feature-engineering.html#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-4"><a href="feature-engineering.html#cb70-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
 <span id="cb70-5"><a href="feature-engineering.html#cb70-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(imputed_plot[<span class="st">&quot;nitrogen&quot;</span>], biomass_test_original[<span class="st">&quot;nitrogen&quot;</span>], c<span class="op">=</span>(imputed_plot[<span class="st">&quot;nitro_imputed&quot;</span>] <span class="op">==</span> <span class="st">&quot;Yes&quot;</span>))</span></code></pre></div>
-<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x304311b90&gt;</code></pre>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x304618e10&gt;</code></pre>
 <div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="feature-engineering.html#cb72-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">&quot;Comparación de datos reales vs imputados (Nitrógeno)&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Comparación de datos reales vs imputados (Nitrógeno)&#39;)</code></pre>
 <div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb74-1"><a href="feature-engineering.html#cb74-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">&quot;Imputado&quot;</span>)</span></code></pre></div>
@@ -1219,7 +1219,7 @@ contiene un conjunto de datos donde diferentes combustibles de biomasa se caract
 <div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb76-1"><a href="feature-engineering.html#cb76-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">&quot;Real&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0, 0.5, &#39;Real&#39;)</code></pre>
 <div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb78-1"><a href="feature-engineering.html#cb78-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].scatter(imputed_plot[<span class="st">&quot;carbon&quot;</span>], biomass_test_original[<span class="st">&quot;carbon&quot;</span>], c<span class="op">=</span>(imputed_plot[<span class="st">&quot;carb_imputed&quot;</span>] <span class="op">==</span> <span class="st">&quot;Yes&quot;</span>))</span></code></pre></div>
-<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x304446810&gt;</code></pre>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x30461f2d0&gt;</code></pre>
 <div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="feature-engineering.html#cb80-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">&quot;Comparación de datos reales vs imputados (Carbono)&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Comparación de datos reales vs imputados (Carbono)&#39;)</code></pre>
 <div class="sourceCode" id="cb82"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb82-1"><a href="feature-engineering.html#cb82-1" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">&quot;Imputado&quot;</span>)</span></code></pre></div>

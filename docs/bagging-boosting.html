@@ -538,14 +538,14 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <span id="cb202-4"><a href="bagging-boosting.html#cb202-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb202-5"><a href="bagging-boosting.html#cb202-5" aria-hidden="true" tabindex="-1"></a>receta_casas</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304290fd0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x17e4d8fd0&gt;),
 ##                                                  (&#39;...
 ##                               feature_types=None, gamma=None, grow_policy=None,
 ##                               importance_type=None,
@@ -582,14 +582,14 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <div class="sourceCode" id="cb206"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb206-1"><a href="bagging-boosting.html#cb206-1" aria-hidden="true" tabindex="-1"></a>xgboost_reg_workflow <span class="op">=</span> make_ames_pipeline(xgboost_reg_model, scale_numeric<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb206-2"><a href="bagging-boosting.html#cb206-2" aria-hidden="true" tabindex="-1"></a>xgboost_reg_workflow</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304560fd0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3023d0fd0&gt;),
 ##                                                  (&#39;...
 ##                               feature_types=None, gamma=None, grow_policy=None,
 ##                               importance_type=None,
@@ -613,7 +613,7 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <span id="cb208-9"><a href="bagging-boosting.html#cb208-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__reg_lambda&quot;</span>: loguniform(<span class="fl">1e-2</span>, <span class="dv">10</span>),</span>
 <span id="cb208-10"><a href="bagging-boosting.html#cb208-10" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb208-11"><a href="bagging-boosting.html#cb208-11" aria-hidden="true" tabindex="-1"></a>xgboost_param_distributions</span></code></pre></div>
-<pre><code>## {&#39;model__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x3019e3150&gt;, &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x3040f8a50&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3041f2a90&gt;, &#39;model__learning_rate&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301b36d90&gt;, &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301885fd0&gt;, &#39;model__colsample_bytree&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301b37510&gt;, &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30405a850&gt;, &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30186f7d0&gt;}</code></pre>
+<pre><code>## {&#39;model__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x3046dddd0&gt;, &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x3025b8c50&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x302682690&gt;, &#39;model__learning_rate&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30474c510&gt;, &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x302670d90&gt;, &#39;model__colsample_bytree&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3046d9a10&gt;, &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x302670c90&gt;, &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3026716d0&gt;}</code></pre>
 <p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb210-1"><a href="bagging-boosting.html#cb210-1" aria-hidden="true" tabindex="-1"></a>xgboost_reg_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
 <span id="cb210-2"><a href="bagging-boosting.html#cb210-2" aria-hidden="true" tabindex="-1"></a>    xgboost_reg_workflow,</span>
@@ -638,17 +638,17 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <span id="cb211-10"><a href="bagging-boosting.html#cb211-10" aria-hidden="true" tabindex="-1"></a>xgboost_reg_tune_result.fit(X_ames_train, y_ames_train)</span></code></pre></div>
 <pre><code>## RandomizedSearchCV(cv=KFold(n_splits=5, random_state=4595, shuffle=True),
 ##                    estimator=Pipeline(steps=[(&#39;features&#39;,
-##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
 ##                                                                            kw_args={&#39;keep_target&#39;: False,
 ##                                                                                     &#39;large&#39;: False})),
 ##                                              (&#39;preprocess&#39;,
 ##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                                                 SimpleImputer(strategy=&#39;median&#39;))]),...
-##                                         &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x3040f8a50&gt;,
-##                                         &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30405a850&gt;,
-##                                         &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30186f7d0&gt;,
-##                                         &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x301885fd0&gt;},
+##                                         &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x3025b8c50&gt;,
+##                                         &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x302670c90&gt;,
+##                                         &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3026716d0&gt;,
+##                                         &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x302670d90&gt;},
 ##                    random_state=4595, scoring=&#39;r2&#39;)</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb213-1"><a href="bagging-boosting.html#cb213-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(xgboost_reg_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     param_model__colsample_bytree  ...  std_test_score
@@ -693,14 +693,14 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <div class="sourceCode" id="cb223"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb223-1"><a href="bagging-boosting.html#cb223-1" aria-hidden="true" tabindex="-1"></a>final_xgboost_reg_model <span class="op">=</span> xgboost_reg_tune_result.best_estimator_</span>
 <span id="cb223-2"><a href="bagging-boosting.html#cb223-2" aria-hidden="true" tabindex="-1"></a>final_xgboost_reg_model</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a552660&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_ames_frame at 0x17a7ca660&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False,
 ##                                                        &#39;large&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x301a15f50&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x302568750&gt;),
 ##                                                  (&#39;...
 ##                               grow_policy=None, importance_type=None,
 ##                               interaction_constraints=None,
@@ -764,10 +764,10 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 ## 3    rsq      0.85
 ## 4    ccc      0.92</code></pre>
 <div class="sourceCode" id="cb233"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb233-1"><a href="bagging-boosting.html#cb233-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(results[<span class="st">&quot;pred_xgb_reg&quot;</span>], results[<span class="st">&quot;Sale_Price&quot;</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span></code></pre></div>
-<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x3046109d0&gt;</code></pre>
+<pre><code>## &lt;matplotlib.collections.PathCollection object at 0x3025b89d0&gt;</code></pre>
 <div class="sourceCode" id="cb235"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb235-1"><a href="bagging-boosting.html#cb235-1" aria-hidden="true" tabindex="-1"></a>lims <span class="op">=</span> [results[[<span class="st">&quot;pred_xgb_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">min</span>().<span class="bu">min</span>(), results[[<span class="st">&quot;pred_xgb_reg&quot;</span>, <span class="st">&quot;Sale_Price&quot;</span>]].<span class="bu">max</span>().<span class="bu">max</span>()]</span>
 <span id="cb235-2"><a href="bagging-boosting.html#cb235-2" aria-hidden="true" tabindex="-1"></a>plt.plot(lims, lims, color<span class="op">=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3047e1e90&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x307b6c650&gt;]</code></pre>
 <div class="sourceCode" id="cb237"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb237-1"><a href="bagging-boosting.html#cb237-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Prediction&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 0, &#39;Prediction&#39;)</code></pre>
 <div class="sourceCode" id="cb239"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb239-1"><a href="bagging-boosting.html#cb239-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Observation&quot;</span>)</span></code></pre></div>
@@ -800,13 +800,13 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <span id="cb245-4"><a href="bagging-boosting.html#cb245-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb245-5"><a href="bagging-boosting.html#cb245-5" aria-hidden="true" tabindex="-1"></a>telco_rec</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304458e10&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3042c4210&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline...
 ##                                feature_types=None, gamma=None, grow_policy=None,
@@ -843,13 +843,13 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <div class="sourceCode" id="cb249"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb249-1"><a href="bagging-boosting.html#cb249-1" aria-hidden="true" tabindex="-1"></a>xgboost_workflow <span class="op">=</span> make_telco_pipeline(xgboost_model, scale_numeric<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb249-2"><a href="bagging-boosting.html#cb249-2" aria-hidden="true" tabindex="-1"></a>xgboost_workflow</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3045d8fd0&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304390d90&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline...
 ##                                feature_types=None, gamma=None, grow_policy=None,
@@ -874,7 +874,7 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <span id="cb251-9"><a href="bagging-boosting.html#cb251-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;model__reg_lambda&quot;</span>: loguniform(<span class="fl">1e-2</span>, <span class="dv">10</span>),</span>
 <span id="cb251-10"><a href="bagging-boosting.html#cb251-10" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb251-11"><a href="bagging-boosting.html#cb251-11" aria-hidden="true" tabindex="-1"></a>xgboost_class_param_distributions</span></code></pre></div>
-<pre><code>## {&#39;model__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x3045da190&gt;, &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x304480110&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3045f5a50&gt;, &#39;model__learning_rate&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3044974d0&gt;, &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30477f050&gt;, &#39;model__colsample_bytree&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3045f7510&gt;, &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30454ba10&gt;, &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304541210&gt;}</code></pre>
+<pre><code>## {&#39;model__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x307b0bd10&gt;, &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x304343210&gt;, &#39;model__gamma&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x307bb39d0&gt;, &#39;model__learning_rate&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3043439d0&gt;, &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3047419d0&gt;, &#39;model__colsample_bytree&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304343350&gt;, &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304741890&gt;, &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304740550&gt;}</code></pre>
 <p><strong>Paso 6: Entrenamiento de modelos con hiperparámetros definidos</strong></p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb253-1"><a href="bagging-boosting.html#cb253-1" aria-hidden="true" tabindex="-1"></a>xgboost_tune_result <span class="op">=</span> RandomizedSearchCV(</span>
 <span id="cb253-2"><a href="bagging-boosting.html#cb253-2" aria-hidden="true" tabindex="-1"></a>    xgboost_workflow,</span>
@@ -899,17 +899,17 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <span id="cb254-10"><a href="bagging-boosting.html#cb254-10" aria-hidden="true" tabindex="-1"></a>xgboost_tune_result.fit(X_telco_train, y_telco_train)</span></code></pre></div>
 <pre><code>## RandomizedSearchCV(cv=StratifiedKFold(n_splits=5, random_state=1234, shuffle=True),
 ##                    estimator=Pipeline(steps=[(&#39;features&#39;,
-##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
+##                                               DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
 ##                                                                            kw_args={&#39;keep_target&#39;: False})),
 ##                                              (&#39;preprocess&#39;,
 ##                                               ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                                                Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                                                 SimpleImputer(strategy=&#39;median&#39;))]),
 ##                                                                                &lt;sk...
-##                                         &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x304480110&gt;,
-##                                         &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30454ba10&gt;,
-##                                         &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304541210&gt;,
-##                                         &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x30477f050&gt;},
+##                                         &#39;model__min_child_weight&#39;: &lt;scipy.stats._distn_infrastructure.rv_discrete_frozen object at 0x304343210&gt;,
+##                                         &#39;model__reg_alpha&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304741890&gt;,
+##                                         &#39;model__reg_lambda&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x304740550&gt;,
+##                                         &#39;model__subsample&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x3047419d0&gt;},
 ##                    random_state=1234, scoring=&#39;average_precision&#39;)</code></pre>
 <div class="sourceCode" id="cb256"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb256-1"><a href="bagging-boosting.html#cb256-1" aria-hidden="true" tabindex="-1"></a>best_cv_results(xgboost_tune_result, n<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     param_model__colsample_bytree  ...  std_test_score
@@ -968,13 +968,13 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 <div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb268-1"><a href="bagging-boosting.html#cb268-1" aria-hidden="true" tabindex="-1"></a>final_xgboost_model <span class="op">=</span> xgboost_tune_result.best_estimator_</span>
 <span id="cb268-2"><a href="bagging-boosting.html#cb268-2" aria-hidden="true" tabindex="-1"></a>final_xgboost_model</span></code></pre></div>
 <pre><code>## Pipeline(steps=[(&#39;features&#39;,
-##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a5525c0&gt;,
+##                  DataFrameFunctionTransformer(func=&lt;function preprocess_telco_frame at 0x17a7ca5c0&gt;,
 ##                                               kw_args={&#39;keep_target&#39;: False})),
 ##                 (&#39;preprocess&#39;,
 ##                  ColumnTransformer(transformers=[(&#39;num&#39;,
 ##                                                   Pipeline(steps=[(&#39;imputer&#39;,
 ##                                                                    SimpleImputer(strategy=&#39;median&#39;))]),
-##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x3047f8250&gt;),
+##                                                   &lt;sklearn.compose._column_transformer.make_column_selector object at 0x304641950&gt;),
 ##                                                  (&#39;cat&#39;,
 ##                                                   Pipeline...
 ##                                grow_policy=None, importance_type=None,
@@ -1047,9 +1047,9 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 ## 4   0.888814     0.998711     0.019608</code></pre>
 <p>A través de estas métricas es posible crear la curva ROC:</p>
 <div class="sourceCode" id="cb280"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb280-1"><a href="bagging-boosting.html#cb280-1" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="dv">1</span> <span class="op">-</span> roc_curve_data[<span class="st">&quot;specificity&quot;</span>], roc_curve_data[<span class="st">&quot;sensitivity&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x302b9f810&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x302d9d8d0&gt;]</code></pre>
 <div class="sourceCode" id="cb282"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb282-1"><a href="bagging-boosting.html#cb282-1" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">&quot;black&quot;</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x30477f9d0&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x3042cc310&gt;]</code></pre>
 <div class="sourceCode" id="cb284"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb284-1"><a href="bagging-boosting.html#cb284-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;ROC Curve&#39;)</code></pre>
 <div class="sourceCode" id="cb286"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb286-1"><a href="bagging-boosting.html#cb286-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;1 - specificity&quot;</span>)</span></code></pre></div>
@@ -1068,7 +1068,7 @@ Donde <span class="math inline">\(L(Y, F(X))\)</span> es una función de pérdid
 ## 4   0.005541   0.266003     1.0</code></pre>
 <p>Y graficar su respectiva curva:</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb292-1"><a href="bagging-boosting.html#cb292-1" aria-hidden="true" tabindex="-1"></a>plt.plot(pr_curve_data[<span class="st">&quot;recall&quot;</span>], pr_curve_data[<span class="st">&quot;precision&quot;</span>], color<span class="op">=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
-<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x302231e90&gt;]</code></pre>
+<pre><code>## [&lt;matplotlib.lines.Line2D object at 0x304299e50&gt;]</code></pre>
 <div class="sourceCode" id="cb294"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb294-1"><a href="bagging-boosting.html#cb294-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&quot;Precision vs Recall&quot;</span>)</span></code></pre></div>
 <pre><code>## Text(0.5, 1.0, &#39;Precision vs Recall&#39;)</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb296-1"><a href="bagging-boosting.html#cb296-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;recall&quot;</span>)</span></code></pre></div>
