@@ -31,13 +31,12 @@ La diferencia es que una red neuronal organiza sus parámetros en **capas**. Cad
 ```{python, warning=FALSE, message=FALSE}
 from pathlib import Path
 
-import matplotlib.pyplot as plt
+import joblib
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import torch
-from matplotlib.animation import FuncAnimation, PillowWriter
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from torch import nn
@@ -53,7 +52,20 @@ from dsml_utils import (
 torch.manual_seed(4595)
 np.random.seed(4595)
 
+CACHE_VERSION = "v1"
+RECALCULAR_CACHE = False
+CACHE_DIR = Path("data/cache/07-redes-neuronales")
 _plotly_javascript_included = False
+
+
+def read_or_create_cache(filename, builder):
+    cache_path = CACHE_DIR / filename
+    if cache_path.exists() and not RECALCULAR_CACHE:
+        return joblib.load(cache_path)
+    result = builder()
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    joblib.dump(result, cache_path, compress=3)
+    return result
 
 
 def interactive_html(figure):
@@ -72,45 +84,17 @@ def interactive_html(figure):
     )
 ```
 
-```{python, echo=FALSE}
-fig, ax = plt.subplots(figsize=(9, 2.6))
-ax.axis("off")
-
-steps = [
-    "Datos",
-    "Tensores",
-    "Modelo",
-    "Pérdida",
-    "Gradientes",
-    "Actualización",
-]
-x_pos = np.linspace(0.08, 0.92, len(steps))
-
-for i, (x, label) in enumerate(zip(x_pos, steps)):
-    ax.text(
-        x,
-        0.55,
-        label,
-        ha="center",
-        va="center",
-        fontsize=11,
-        bbox=dict(boxstyle="round,pad=0.35", fc="#eef2ff", ec="#4f46e5"),
-        transform=ax.transAxes,
-    )
-    if i < len(steps) - 1:
-        ax.annotate(
-            "",
-            xy=(x_pos[i + 1] - 0.055, 0.55),
-            xytext=(x + 0.055, 0.55),
-            arrowprops=dict(arrowstyle="->", color="#374151", lw=1.5),
-            xycoords=ax.transAxes,
-        )
-
-ax.set_title("Flujo general de entrenamiento de una red neuronal", fontsize=13)
-plt.tight_layout()
+```{r, echo=FALSE, fig.align='center', out.width='760px'}
+knitr::include_graphics("img/10-nn/flujo-entrenamiento.png")
 ```
 
 Las gráficas de curvas y comparaciones de este capítulo son interactivas en la versión HTML del libro. El descenso en gradiente también se presenta como animación `.gif`, de modo que el movimiento permanezca visible en una lectura no interactiva.
+
+### Ejecución Ágil y Reproducible
+
+Los ejemplos breves de tensores, capas, activaciones y pérdidas se ejecutan cada vez que se compila el capítulo. En cambio, los experimentos con miles de actualizaciones y la preparación completa de Ames tienen semilla fija y producen resultados estables: se conservan en archivos `.pkl` para que la compilación habitual sólo los lea.
+
+El código de entrenamiento sigue visible y es completamente reproducible. Para volver a entrenar los modelos o reconstruir los experimentos, basta cambiar `RECALCULAR_CACHE = True` en el chunk inicial, compilar una vez y después regresarlo a `False`. Si se modifica una arquitectura de manera permanente, debe incrementarse `CACHE_VERSION`.
 
 ## Preparación de Datos
 
@@ -125,26 +109,54 @@ Usaremos el conjunto de viviendas de *Ames* para predecir `Sale_Price`. El flujo
 La validación es importante porque las redes neuronales pueden aprender demasiado bien el conjunto de entrenamiento. Necesitamos un conjunto intermedio para observar si el modelo generaliza.
 
 ```{python}
-ames = load_ames()
-ames_train_full, ames_test = train_test_split(ames, train_size=0.75, random_state=4595)
-ames_train, ames_valid = train_test_split(ames_train_full, train_size=0.80, random_state=4595)
+def prepare_ames_data():
+    ames = load_ames()
+    ames_train_full, ames_test = train_test_split(ames, train_size=0.75, random_state=4595)
+    ames_train, ames_valid = train_test_split(ames_train_full, train_size=0.80, random_state=4595)
 
-X_train_raw = preprocess_ames_frame(ames_train, keep_target=False)
-X_valid_raw = preprocess_ames_frame(ames_valid, keep_target=False)
-X_test_raw = preprocess_ames_frame(ames_test, keep_target=False)
+    X_train_raw = preprocess_ames_frame(ames_train, keep_target=False)
+    X_valid_raw = preprocess_ames_frame(ames_valid, keep_target=False)
+    X_test_raw = preprocess_ames_frame(ames_test, keep_target=False)
 
-y_train = ames_train["Sale_Price"]
-y_valid = ames_valid["Sale_Price"]
-y_test = ames_test["Sale_Price"]
+    y_train = ames_train["Sale_Price"]
+    y_valid = ames_valid["Sale_Price"]
+    y_test = ames_test["Sale_Price"]
 
-preprocessor = tabular_preprocessor(scale_numeric=True)
-X_train = preprocessor.fit_transform(X_train_raw).astype("float32")
-X_valid = preprocessor.transform(X_valid_raw).astype("float32")
-X_test = preprocessor.transform(X_test_raw).astype("float32")
+    preprocessor = tabular_preprocessor(scale_numeric=True)
+    X_train = preprocessor.fit_transform(X_train_raw).astype("float32")
+    X_valid = preprocessor.transform(X_valid_raw).astype("float32")
+    X_test = preprocessor.transform(X_test_raw).astype("float32")
 
-target_scaler = StandardScaler()
-y_train_scaled = target_scaler.fit_transform(y_train.to_frame()).astype("float32")
-y_valid_scaled = target_scaler.transform(y_valid.to_frame()).astype("float32")
+    target_scaler = StandardScaler()
+    y_train_scaled = target_scaler.fit_transform(y_train.to_frame()).astype("float32")
+    y_valid_scaled = target_scaler.transform(y_valid.to_frame()).astype("float32")
+
+    return {
+        "X_train": X_train,
+        "X_valid": X_valid,
+        "X_test": X_test,
+        "y_train": y_train,
+        "y_valid": y_valid,
+        "y_test": y_test,
+        "y_train_scaled": y_train_scaled,
+        "y_valid_scaled": y_valid_scaled,
+        "target_scaler": target_scaler,
+    }
+
+
+ames_prepared = read_or_create_cache(
+    f"ames_preparado_{CACHE_VERSION}.pkl",
+    prepare_ames_data,
+)
+X_train = ames_prepared["X_train"]
+X_valid = ames_prepared["X_valid"]
+X_test = ames_prepared["X_test"]
+y_train = ames_prepared["y_train"]
+y_valid = ames_prepared["y_valid"]
+y_test = ames_prepared["y_test"]
+y_train_scaled = ames_prepared["y_train_scaled"]
+y_valid_scaled = ames_prepared["y_valid_scaled"]
+target_scaler = ames_prepared["target_scaler"]
 
 pd.DataFrame(
     {
@@ -173,22 +185,8 @@ $$a = g(z)$$
 
 Si no usamos activación, una neurona se parece mucho a una regresión lineal. Si usamos activaciones no lineales y muchas neuronas, la red puede aprender relaciones más flexibles.
 
-```{python, echo=FALSE}
-fig, ax = plt.subplots(figsize=(7, 3.2))
-ax.axis("off")
-
-inputs = ["x1", "x2", "x3", "...", "xp"]
-y_positions = np.linspace(0.85, 0.15, len(inputs))
-
-for label, y in zip(inputs, y_positions):
-    ax.text(0.08, y, label, ha="center", va="center", bbox=dict(boxstyle="circle", fc="#ecfeff", ec="#0891b2"))
-    ax.annotate("", xy=(0.45, 0.5), xytext=(0.12, y), arrowprops=dict(arrowstyle="->", color="#475569"))
-
-ax.text(0.5, 0.5, "z = Wx + b", ha="center", va="center", bbox=dict(boxstyle="round,pad=0.45", fc="#fef3c7", ec="#d97706"))
-ax.annotate("", xy=(0.78, 0.5), xytext=(0.59, 0.5), arrowprops=dict(arrowstyle="->", color="#475569"))
-ax.text(0.86, 0.5, "g(z)", ha="center", va="center", bbox=dict(boxstyle="round,pad=0.45", fc="#dcfce7", ec="#16a34a"))
-ax.set_title("Una neurona combina entradas, pesos, sesgo y activación")
-plt.tight_layout()
+```{r, echo=FALSE, fig.align='center', out.width='620px'}
+knitr::include_graphics("img/10-nn/neurona-densa.png")
 ```
 
 ## Tensores
@@ -300,7 +298,7 @@ small_parameter_summary, count_parameters(small_dense_model)
 
 Más parámetros pueden dar más flexibilidad, pero también aumentan el riesgo de sobreajuste.
 
-```{python, results='asis', echo=FALSE}
+```{python, include=FALSE}
 parameter_fig = px.bar(
     small_parameter_summary,
     x="capa",
@@ -314,6 +312,9 @@ parameter_fig.update_traces(
 )
 parameter_fig.update_xaxes(title="Tensor de pesos o sesgos")
 parameter_fig.update_yaxes(title="Número de parámetros")
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(parameter_fig))
 ```
 
@@ -332,7 +333,7 @@ Activaciones comunes:
 * **GELU:** activación suave usada en arquitecturas modernas.
 * **Softmax:** convierte un vector en probabilidades que suman 1. Se usa en clasificación multiclase.
 
-```{python, results='asis'}
+```{python}
 x = torch.linspace(-5, 5, 300)
 
 activations = {
@@ -351,7 +352,9 @@ activation_df = pd.DataFrame(
         **{name: values.numpy() for name, values in activations.items()},
     }
 ).melt(id_vars="entrada", var_name="activacion", value_name="salida")
+```
 
+```{python, include=FALSE}
 activation_fig = px.line(
     activation_df,
     x="entrada",
@@ -364,6 +367,9 @@ activation_fig.add_vline(x=0, line_width=1, line_color="#9ca3af")
 activation_fig.update_traces(
     hovertemplate="Entrada: %{x:.2f}<br>Salida: %{y:.3f}<extra></extra>"
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(activation_fig))
 ```
 
@@ -380,7 +386,7 @@ pd.DataFrame(
 )
 ```
 
-```{python, results='asis', echo=FALSE}
+```{python, include=FALSE}
 softmax_df = pd.DataFrame(
     {
         "clase": ["A", "B", "C"],
@@ -400,6 +406,9 @@ softmax_fig.update_traces(
     hovertemplate="Clase %{x}<br>Probabilidad: %{y:.3f}<extra></extra>",
 )
 softmax_fig.update_yaxes(range=[0, 1])
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(softmax_fig))
 ```
 
@@ -447,7 +456,7 @@ Para clasificación:
 * **BCEWithLogitsLoss:** clasificación binaria. Recibe logits y aplica sigmoid internamente.
 * **CrossEntropyLoss:** clasificación multiclase. Recibe logits y aplica softmax internamente.
 
-```{python, results='asis'}
+```{python}
 residuals = torch.linspace(-4, 4, 300)
 mse_curve = residuals**2
 mae_curve = torch.abs(residuals)
@@ -462,7 +471,9 @@ loss_curve_df = pd.DataFrame(
         "Huber": huber_curve.numpy(),
     }
 ).melt(id_vars="error", var_name="perdida", value_name="valor")
+```
 
+```{python, include=FALSE}
 loss_fig = px.line(
     loss_curve_df,
     x="error",
@@ -475,6 +486,9 @@ loss_fig.update_xaxes(title="Error = predicción - observación")
 loss_fig.update_traces(
     hovertemplate="Error: %{x:.2f}<br>Pérdida: %{y:.3f}<extra></extra>"
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(loss_fig))
 ```
 
@@ -539,7 +553,7 @@ donde:
 
 Como queremos bajar, nos movemos en dirección contraria al gradiente.
 
-```{python, results='asis', echo=FALSE}
+```{python, include=FALSE}
 theta_grid = np.linspace(-4, 4, 300)
 loss_grid = (theta_grid - 1.2) ** 2 + 0.5
 learning_rate = 0.18
@@ -641,12 +655,18 @@ gradient_fig.update_layout(
         }
     ],
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(gradient_fig))
 ```
 
-En la animación siguiente, el punto parte de un parámetro con pérdida alta y actualiza su posición con el gradiente de la curva. La tasa de aprendizaje controla qué tan largo es cada paso.
+En la animación siguiente, el punto parte de un parámetro con pérdida alta y actualiza su posición con el gradiente de la curva. La tasa de aprendizaje controla qué tan largo es cada paso. Como esta trayectoria es determinista, el GIF se conserva como imagen del capítulo; el código queda disponible para regenerarlo si se cambia el ejemplo.
 
-```{python, echo=FALSE, message=FALSE, warning=FALSE}
+```{python, eval=FALSE}
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation, PillowWriter
+
 gif_path = Path("img/10-nn/descenso-gradiente.gif")
 gif_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -727,11 +747,18 @@ def train_toy(batch_size, epochs=45, lr=0.05):
     }
 
 
-gd_results = {
-    "batch": train_toy(batch_size=len(toy_X)),
-    "estocástico": train_toy(batch_size=1),
-    "mini_batch": train_toy(batch_size=32),
-}
+def compare_gradient_batches():
+    return {
+        "batch": train_toy(batch_size=len(toy_X)),
+        "estocástico": train_toy(batch_size=1),
+        "mini_batch": train_toy(batch_size=32),
+    }
+
+
+gd_results = read_or_create_cache(
+    f"descenso_por_batches_{CACHE_VERSION}.pkl",
+    compare_gradient_batches,
+)
 
 pd.DataFrame(
     [
@@ -747,7 +774,7 @@ pd.DataFrame(
 ).round(4)
 ```
 
-```{python, results='asis'}
+```{python, include=FALSE}
 gd_history_df = pd.concat(
     [
         pd.DataFrame(
@@ -775,6 +802,9 @@ gd_history_fig.update_yaxes(title="MSE (escala logarítmica)")
 gd_history_fig.update_traces(
     hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(gd_history_fig))
 ```
 
@@ -790,7 +820,7 @@ El optimizador decide cómo actualizar los parámetros usando los gradientes. To
 * **Adam:** combina ideas de momentum y RMSprop. Es una opción práctica para iniciar.
 * **AdamW:** variante de Adam con mejor manejo de `weight_decay`; muy usada en redes modernas.
 
-```{python}
+```{python, eval=FALSE}
 optimizer_examples = {
     "SGD": torch.optim.SGD(base_model.parameters(), lr=0.01),
     "SGD_momentum": torch.optim.SGD(base_model.parameters(), lr=0.01, momentum=0.9),
@@ -838,13 +868,20 @@ def train_toy_optimizer(optimizer_name, epochs=45):
     return history
 
 
-optimizer_histories = {
-    name: train_toy_optimizer(name)
-    for name in ["SGD", "Momentum", "RMSprop", "Adam", "AdamW"]
-}
+def compare_optimizers():
+    return {
+        name: train_toy_optimizer(name)
+        for name in ["SGD", "Momentum", "RMSprop", "Adam", "AdamW"]
+    }
+
+
+optimizer_histories = read_or_create_cache(
+    f"optimizadores_{CACHE_VERSION}.pkl",
+    compare_optimizers,
+)
 ```
 
-```{python, results='asis'}
+```{python, include=FALSE}
 optimizer_history_df = pd.concat(
     [
         pd.DataFrame(
@@ -872,6 +909,9 @@ optimizer_fig.update_yaxes(title="MSE (escala logarítmica)")
 optimizer_fig.update_traces(
     hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(optimizer_fig))
 ```
 
@@ -930,24 +970,43 @@ def train_model(model, optimizer, train_loader, X_valid_tensor, y_valid_tensor, 
 ```
 
 ```{python}
-torch.manual_seed(4595)
 base_train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
-unregularized_model = make_base_model()
-unregularized_optimizer = torch.optim.Adam(unregularized_model.parameters(), lr=0.001)
 
-unregularized_model, unregularized_history = train_model(
-    unregularized_model,
-    unregularized_optimizer,
-    base_train_loader,
-    X_valid_tensor,
-    y_valid_tensor,
-    epochs=80,
+
+def train_unregularized_experiment():
+    torch.manual_seed(4595)
+    model = make_base_model()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    model, history = train_model(
+        model,
+        optimizer,
+        base_train_loader,
+        X_valid_tensor,
+        y_valid_tensor,
+        epochs=80,
+    )
+    return {
+        "n_features": n_features,
+        "state_dict": {name: value.detach().cpu() for name, value in model.state_dict().items()},
+        "history": history,
+    }
+
+
+unregularized_result = read_or_create_cache(
+    f"red_sin_regularizacion_{CACHE_VERSION}.pkl",
+    train_unregularized_experiment,
 )
+if unregularized_result["n_features"] != n_features:
+    raise ValueError("La caché no corresponde a las variables actuales. Actualice CACHE_VERSION.")
+
+unregularized_model = make_base_model().to(device)
+unregularized_model.load_state_dict(unregularized_result["state_dict"])
+unregularized_history = unregularized_result["history"]
 
 unregularized_history.tail()
 ```
 
-```{python, results='asis'}
+```{python, include=FALSE}
 base_history_long = unregularized_history.melt(
     id_vars="epoch",
     var_name="conjunto",
@@ -965,6 +1024,9 @@ base_history_fig.update_yaxes(title="MSE en escala estandarizada")
 base_history_fig.update_traces(
     hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(base_history_fig))
 ```
 
@@ -980,9 +1042,9 @@ La regularización busca reducir sobreajuste. En redes neuronales densas, las t�
 
 ### Weight Decay
 
-En PyTorch se agrega desde el optimizador:
+En PyTorch se agrega desde el optimizador. Este fragmento muestra la configuración; su aplicación completa aparece en el entrenamiento regularizado posterior.
 
-```{python}
+```{python, eval=FALSE}
 weight_decay_example_model = make_base_model()
 weight_decay_optimizer = torch.optim.AdamW(
     weight_decay_example_model.parameters(),
@@ -1089,23 +1151,40 @@ def train_model_early_stopping(
 ```
 
 ```{python}
-torch.manual_seed(4595)
-regularized_model = make_regularized_model(dropout=0.25)
-regularized_optimizer = torch.optim.AdamW(
-    regularized_model.parameters(),
-    lr=0.001,
-    weight_decay=1e-4,
-)
+def train_regularized_experiment():
+    torch.manual_seed(4595)
+    model = make_regularized_model(dropout=0.25)
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=0.001,
+        weight_decay=1e-4,
+    )
+    model, history = train_model_early_stopping(
+        model,
+        optimizer,
+        base_train_loader,
+        X_valid_tensor,
+        y_valid_tensor,
+        epochs=120,
+        patience=12,
+    )
+    return {
+        "n_features": n_features,
+        "state_dict": {name: value.detach().cpu() for name, value in model.state_dict().items()},
+        "history": history,
+    }
 
-regularized_model, regularized_history = train_model_early_stopping(
-    regularized_model,
-    regularized_optimizer,
-    base_train_loader,
-    X_valid_tensor,
-    y_valid_tensor,
-    epochs=120,
-    patience=12,
+
+regularized_result = read_or_create_cache(
+    f"red_regularizada_{CACHE_VERSION}.pkl",
+    train_regularized_experiment,
 )
+if regularized_result["n_features"] != n_features:
+    raise ValueError("La caché no corresponde a las variables actuales. Actualice CACHE_VERSION.")
+
+regularized_model = make_regularized_model(dropout=0.25).to(device)
+regularized_model.load_state_dict(regularized_result["state_dict"])
+regularized_history = regularized_result["history"]
 
 regularized_history.tail()
 ```
@@ -1114,7 +1193,7 @@ regularized_history.tail()
 
 La red sin regularizar suele reducir rápido la pérdida de entrenamiento. La pregunta es si eso también se traduce en mejor validación.
 
-```{python, results='asis'}
+```{python, include=FALSE}
 comparison_history = pd.concat(
     [
         unregularized_history.assign(modelo="sin_regularizacion"),
@@ -1148,6 +1227,9 @@ regularization_fig.for_each_annotation(
 regularization_fig.update_traces(
     hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(regularization_fig))
 ```
 
@@ -1175,7 +1257,7 @@ model_comparison = pd.concat(
 model_comparison.pivot(index="metric", columns="modelo", values="estimate").round(2)
 ```
 
-```{python, results='asis'}
+```{python, include=FALSE}
 nn_results = pd.DataFrame(
     {
         "Sale_Price": y_test.to_numpy(),
@@ -1211,6 +1293,9 @@ prediction_fig.update_traces(
     selector=dict(mode="markers"),
     hovertemplate="Predicción: $%{x:,.0f}<br>Observación: $%{y:,.0f}<extra></extra>",
 )
+```
+
+```{python, results='asis', echo=FALSE}
 print(interactive_html(prediction_fig))
 ```
 

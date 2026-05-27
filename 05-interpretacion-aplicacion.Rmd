@@ -269,7 +269,7 @@ Para obtener una representación más intuitiva, podemos usar `plot_features()`
 proporcionado para obtener una descripción visual de las explicaciones.
 
 ```{python}
-explanation.as_pyplot_figure(label=lime_positive_label)
+fig = explanation.as_pyplot_figure(label=lime_positive_label)
 plt.tight_layout()
 ```
 
@@ -293,9 +293,9 @@ fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 for ax, exp in zip(axes, explanations2):
     values = pd.DataFrame(exp.as_list(label=lime_positive_label), columns=["feature", "weight"])
     colors = np.where(values["weight"] > 0, "tab:blue", "tab:red")
-    ax.barh(values["feature"], values["weight"], color=colors)
-    ax.axvline(0, color="black", linewidth=1)
-plt.tight_layout()
+    _artist = ax.barh(values["feature"], values["weight"], color=colors)
+    _artist = ax.axvline(0, color="black", linewidth=1)
+_artist = plt.tight_layout()
 ```
 
 
@@ -414,9 +414,9 @@ ax = shap_duplex2.sort_values("abs_contribution").plot(
     legend=False,
     figsize=(8, 6),
 )
-ax.axvline(0, color="black", linewidth=1)
-ax.set_ylabel(None)
-ax.set_xlabel("Contribución SHAP")
+_artist = ax.axvline(0, color="black", linewidth=1)
+_artist = ax.set_ylabel(None)
+_artist = ax.set_xlabel("Contribución SHAP")
 ```
 
 ¿Qué pasa con una observación diferente en nuestro conjunto de datos? Veamos una casa unifamiliar más grande y nueva en el vecindario de Gilbert.
@@ -446,9 +446,9 @@ ax = shap_house2.sort_values("abs_contribution").plot(
     legend=False,
     figsize=(8, 6),
 )
-ax.axvline(0, color="black", linewidth=1)
-ax.set_ylabel(None)
-ax.set_xlabel("Contribución SHAP")
+_artist = ax.axvline(0, color="black", linewidth=1)
+_artist = ax.set_ylabel(None)
+_artist = ax.set_xlabel("Contribución SHAP")
 ```
 
 A diferencia del dúplex, el área habitable, año de construcción y área del segundo piso de esta casa contribuyen a que su precio sea más alto.
@@ -472,9 +472,6 @@ Las explicaciones del modelo son solo una parte de la comprensión de si su mode
 * Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad en tu proceso de desarrollo.
 
 * Siempre que tengas un modelo de aprendizaje supervisado genera interpretabilidad para el usuario final.
-
-
-
 
 
 

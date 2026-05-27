@@ -145,18 +145,18 @@ roc_curve_data = roc_curve_table(class_results["Churn"], class_results[".pred_Ye
 pr_curve_data = pr_curve_table(class_results["Churn"], class_results[".pred_Yes"])
 
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-axes[0].plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue")
-axes[0].plot([0, 1], [0, 1], color="black", linewidth=1)
-axes[0].set_title(f"ROC Curve ({roc_auc_value:.2f})")
-axes[0].set_xlabel("1 - specificity")
-axes[0].set_ylabel("sensitivity")
-axes[0].set_aspect("equal", adjustable="box")
+_artist = axes[0].plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue")
+_artist = axes[0].plot([0, 1], [0, 1], color="black", linewidth=1)
+_artist = axes[0].set_title(f"ROC Curve ({roc_auc_value:.2f})")
+_artist = axes[0].set_xlabel("1 - specificity")
+_artist = axes[0].set_ylabel("sensitivity")
+_artist = axes[0].set_aspect("equal", adjustable="box")
 
-axes[1].plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue")
-axes[1].set_title(f"Precision vs Recall ({pr_auc_value:.2f})")
-axes[1].set_xlabel("recall")
-axes[1].set_ylabel("precision")
-axes[1].set_aspect("equal", adjustable="box")
+_artist = axes[1].plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue")
+_artist = axes[1].set_title(f"Precision vs Recall ({pr_auc_value:.2f})")
+_artist = axes[1].set_xlabel("recall")
+_artist = axes[1].set_ylabel("precision")
+_artist = axes[1].set_aspect("equal", adjustable="box")
 plt.tight_layout()
 ```
 
@@ -467,9 +467,9 @@ tam_muestra["n"] = tam_muestra["error"].apply(
 )
 
 ax = tam_muestra.plot(x="error", y="n", marker="o", legend=False)
-ax.set_title("Relación entre error de muestreo y tamaño de muestra")
-ax.set_xlabel("Error de muestreo")
-ax.set_ylabel("Tamaño de muestra")
+_artist = ax.set_title("Relación entre error de muestreo y tamaño de muestra")
+_artist = ax.set_xlabel("Error de muestreo")
+_artist = ax.set_ylabel("Tamaño de muestra")
 
 ```
 
@@ -480,11 +480,11 @@ tam_muestra = pd.DataFrame({"N": np.arange(1, 100_001, 1000)})
 tam_muestra["n"] = tam_muestra["N"].apply(lambda N: n_muestra(e=0.035, N=int(N)))
 
 ax = tam_muestra.plot(x="N", y="n", marker="o", legend=False)
-ax.set_ylim(0, 1500)
-ax.set_yticks(np.arange(0, 1501, 100))
-ax.set_title("Relación entre tamaño de población y tamaño de muestra")
-ax.set_xlabel("Tamaño de población")
-ax.set_ylabel("Tamaño de muestra")
+_artist = ax.set_ylim(0, 1500)
+_artist = ax.set_yticks(np.arange(0, 1501, 100))
+_artist = ax.set_title("Relación entre tamaño de población y tamaño de muestra")
+_artist = ax.set_xlabel("Tamaño de población")
+_artist = ax.set_ylabel("Tamaño de muestra")
 
 ```
 
@@ -790,8 +790,8 @@ axes = np.atleast_1d(axes)
 for ax, promotion in zip(axes, promotions):
     data_plot = estimation_1.query("promotion == @promotion")
     colors = data_plot["Churn"].map({"No": "lightblue", "Yes": "red"})
-    ax.bar(data_plot["Churn"], data_plot["prop"], color=colors)
-    ax.errorbar(
+    _artist = ax.bar(data_plot["Churn"], data_plot["prop"], color=colors)
+    _artist = ax.errorbar(
         data_plot["Churn"],
         data_plot["prop"],
         yerr=[data_plot["prop"] - data_plot["prop_low"], data_plot["prop_upp"] - data_plot["prop"]],
@@ -800,11 +800,11 @@ for ax, promotion in zip(axes, promotions):
         capsize=4,
     )
     for _, row in data_plot.iterrows():
-        ax.text(row["Churn"], 0.05, f"{row['prop']:.0%}", ha="center")
-    ax.set_title(promotion)
-    ax.set_ylabel("Percentage")
+        _artist = ax.text(row["Churn"], 0.05, f"{row['prop']:.0%}", ha="center")
+    _artist = ax.set_title(promotion)
+    _artist = ax.set_ylabel("Percentage")
 
-fig.suptitle("Churn rate by groups")
+_artist = fig.suptitle("Churn rate by groups")
 plt.tight_layout()
 ```
 
@@ -839,8 +839,8 @@ axes = np.atleast_1d(axes)
 for ax, (_, facet) in zip(axes, facets.iterrows()):
     data_plot = estimation_2.query("promotion == @facet.promotion and gender == @facet.gender")
     colors = data_plot["Churn"].map({"No": "lightblue", "Yes": "red"})
-    ax.bar(data_plot["Churn"], data_plot["prop"], color=colors)
-    ax.errorbar(
+    _artist = ax.bar(data_plot["Churn"], data_plot["prop"], color=colors)
+    _artist = ax.errorbar(
         data_plot["Churn"],
         data_plot["prop"],
         yerr=[data_plot["prop"] - data_plot["prop_low"], data_plot["prop_upp"] - data_plot["prop"]],
@@ -849,11 +849,11 @@ for ax, (_, facet) in zip(axes, facets.iterrows()):
         capsize=4,
     )
     for _, row in data_plot.iterrows():
-        ax.text(row["Churn"], 0.15, f"{row['prop']:.0%}", ha="center")
-    ax.set_title(f"{facet.promotion} | {facet.gender}")
-    ax.set_ylabel("Percentage")
+        _artist = ax.text(row["Churn"], 0.15, f"{row['prop']:.0%}", ha="center")
+    _artist = ax.set_title(f"{facet.promotion} | {facet.gender}")
+    _artist = ax.set_ylabel("Percentage")
 
-fig.suptitle("Churn rate by groups and gender")
+_artist = fig.suptitle("Churn rate by groups and gender")
 plt.tight_layout()
 ```
 Aparentemente con el método por descuento la polarización en la tasa de cancelación es más grande para hombres que para mujeres, no obstante, debieran realizarse pruebas de hipótesis de tomar una decisión en cuanto a la proposición mencionada.
@@ -888,6 +888,3 @@ Los resultados de este modelo buscan implementar un ajuste que explique la decis
 
 Calcula la diferencia en el beneficio económico para la empresa entre las distintas promociones aplicadas y concluye resultados
 :::
-
-
-

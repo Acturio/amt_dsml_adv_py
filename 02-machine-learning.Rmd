@@ -49,13 +49,13 @@ for ax, x, y, title in [
         [("poly", PolynomialFeatures(degree=3, include_bias=False)), ("lm", LinearRegression())]
     ).fit(x_matrix, y)
     grid = np.linspace(x.min(), x.max(), 200).reshape(-1, 1)
-    ax.scatter(x, y, s=20)
-    ax.plot(grid.ravel(), linear.predict(grid), color="red", label="Lineal")
-    ax.plot(grid.ravel(), polynomial.predict(grid), color="tab:blue", label="Polinomial")
-    ax.set_title(title)
-    ax.set_xlabel("Variable dependiente")
-    ax.set_ylabel("Variable de respuesta")
-    ax.legend()
+    _artist = ax.scatter(x, y, s=20)
+    _artist = ax.plot(grid.ravel(), linear.predict(grid), color="red", label="Lineal")
+    _artist = ax.plot(grid.ravel(), polynomial.predict(grid), color="tab:blue", label="Polinomial")
+    _artist = ax.set_title(title)
+    _artist = ax.set_xlabel("Variable dependiente")
+    _artist = ax.set_ylabel("Variable de respuesta")
+    _artist = ax.legend()
 plt.tight_layout()
 
 ```
@@ -96,11 +96,11 @@ coeficientes = pd.Series(
 display(coeficientes)
 
 grid = pd.DataFrame({"x": np.linspace(-10, 10, 200)})
-plt.scatter(original_data["x"], original_data["y"], s=20)
-plt.plot(grid["x"], poly_model.predict(grid), color="tab:blue")
-plt.title("Regresión polinomial")
-plt.xlabel("x")
-plt.ylabel("y")
+_artist = plt.scatter(original_data["x"], original_data["y"], s=20)
+_artist = plt.plot(grid["x"], poly_model.predict(grid), color="tab:blue")
+_artist = plt.title("Regresión polinomial")
+_artist = plt.xlabel("x")
+_artist = plt.ylabel("y")
 ```
 
 En el ejemplo anterior puede mostrarse que es a través de la ponderación de los términos polinomiales que se logra estimar a la variable de respuesta *Y*.
@@ -247,9 +247,9 @@ fig, axes = plt.subplots(2, 2, figsize=(12, 8))
 for ax, component in zip(axes.ravel(), ["PC1", "PC2", "PC3", "PC4"]):
     values = loadings[component].sort_values(key=lambda s: s.abs())
     colors = np.where(values > 0, "tab:blue", "tab:red")
-    ax.barh(values.index, values.abs(), color=colors)
-    ax.set_title(component)
-    ax.set_xlabel("Absolute value of contribution")
+    _artist = ax.barh(values.index, values.abs(), color=colors)
+    _artist = ax.set_title(component)
+    _artist = ax.set_xlabel("Absolute value of contribution")
 plt.tight_layout()
 ```
 
@@ -261,13 +261,13 @@ primera componente principal.
 ```{python}
 fig, ax = plt.subplots(figsize=(8, 6))
 for gm, group in pca_recipe.groupby("GM"):
-    ax.scatter(group["PC1"], group["PC2"], label=gm, alpha=0.7, s=35)
+    _artist = ax.scatter(group["PC1"], group["PC2"], label=gm, alpha=0.7, s=35)
     for _, row in group.iterrows():
-        ax.annotate(row["NOM_ENT"], (row["PC1"], row["PC2"]), fontsize=8)
-ax.set_title("Grado de marginación de entidades")
-ax.set_xlabel("PC1")
-ax.set_ylabel("PC2")
-ax.legend()
+        _artist = ax.annotate(row["NOM_ENT"], (row["PC1"], row["PC2"]), fontsize=8)
+_artist = ax.set_title("Grado de marginación de entidades")
+_artist = ax.set_xlabel("PC1")
+_artist = ax.set_ylabel("PC2")
+_artist = ax.legend()
 
 ```
 
@@ -277,11 +277,11 @@ Finalmente, podemos observar como (de izquierda a derecha) los estados con grado
 lm_pc1 = LinearRegression().fit(pca_recipe[["IM"]], pca_recipe["PC1"])
 grid = pd.DataFrame({"IM": np.linspace(pca_recipe["IM"].min(), pca_recipe["IM"].max(), 100)})
 
-plt.scatter(pca_recipe["IM"], pca_recipe["PC1"], s=30)
-plt.plot(grid["IM"], lm_pc1.predict(grid), color="tab:blue")
-plt.title("Comparación: Índice Marginación Vs PCA CP1")
-plt.xlabel("IM")
-plt.ylabel("PC1")
+_artist = plt.scatter(pca_recipe["IM"], pca_recipe["PC1"], s=30)
+_artist = plt.plot(grid["IM"], lm_pc1.predict(grid), color="tab:blue")
+_artist = plt.title("Comparación: Índice Marginación Vs PCA CP1")
+_artist = plt.xlabel("IM")
+_artist = plt.ylabel("PC1")
 ```
 
 ### ¿Cuántas componentes retener?
@@ -292,12 +292,12 @@ Existe en la literatura basta información sobre el número de componentes a ret
 eig = pca_summary.assign(variance_percent=lambda x: x["variance_ratio"] * 100)
 
 ax = eig.plot(kind="bar", x="component", y="variance_percent", legend=False, figsize=(8, 4))
-ax.set_ylim(0, 100)
-ax.set_title("Porcentaje de varianza explicada")
-ax.set_xlabel("Componente")
-ax.set_ylabel("% varianza")
+_artist = ax.set_ylim(0, 100)
+_artist = ax.set_title("Porcentaje de varianza explicada")
+_artist = ax.set_xlabel("Componente")
+_artist = ax.set_ylabel("% varianza")
 for i, value in enumerate(eig["variance_percent"]):
-    ax.text(i, value + 1, f"{value:.1f}%", ha="center", fontsize=8)
+    _artist = ax.text(i, value + 1, f"{value:.1f}%", ha="center", fontsize=8)
 ```
 
 ```{python, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
@@ -472,15 +472,15 @@ biomass_test_original = biomass.query("dataset == 'Testing'").reset_index(drop=T
 imputed_plot = imputed.reset_index(drop=True)
 
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-axes[0].scatter(imputed_plot["nitrogen"], biomass_test_original["nitrogen"], c=(imputed_plot["nitro_imputed"] == "Yes"))
-axes[0].set_title("Comparación de datos reales vs imputados (Nitrógeno)")
-axes[0].set_xlabel("Imputado")
-axes[0].set_ylabel("Real")
+_artist = axes[0].scatter(imputed_plot["nitrogen"], biomass_test_original["nitrogen"], c=(imputed_plot["nitro_imputed"] == "Yes"))
+_artist = axes[0].set_title("Comparación de datos reales vs imputados (Nitrógeno)")
+_artist = axes[0].set_xlabel("Imputado")
+_artist = axes[0].set_ylabel("Real")
 
-axes[1].scatter(imputed_plot["carbon"], biomass_test_original["carbon"], c=(imputed_plot["carb_imputed"] == "Yes"))
-axes[1].set_title("Comparación de datos reales vs imputados (Carbono)")
-axes[1].set_xlabel("Imputado")
-axes[1].set_ylabel("Real")
+_artist = axes[1].scatter(imputed_plot["carbon"], biomass_test_original["carbon"], c=(imputed_plot["carb_imputed"] == "Yes"))
+_artist = axes[1].set_title("Comparación de datos reales vs imputados (Carbono)")
+_artist = axes[1].set_xlabel("Imputado")
+_artist = axes[1].set_ylabel("Real")
 plt.tight_layout()
 ```
 
@@ -788,15 +788,15 @@ ax = elasticnet_cv_results.plot.scatter(
     logx=True,
     figsize=(7, 4),
 )
-ax.set_title("RMSE por alpha y l1_ratio")
-ax.set_xlabel("alpha")
-ax.set_ylabel("RMSE")
+_artist = ax.set_title("RMSE por alpha y l1_ratio")
+_artist = ax.set_xlabel("alpha")
+_artist = ax.set_ylabel("RMSE")
 ```
 
 En la siguiente gráfica observamos la $R^2$ asociada a distintos niveles de regularización.
 
 ```{python}
-elasticnet_cv_results.plot.scatter(
+ax = elasticnet_cv_results.plot.scatter(
     x="param_model__alpha",
     y="mean_test_rsq",
     c="param_model__l1_ratio",
@@ -804,9 +804,9 @@ elasticnet_cv_results.plot.scatter(
     logx=True,
     figsize=(7, 4),
 )
-plt.title("R cuadrada por alpha y l1_ratio")
-plt.xlabel("alpha")
-plt.ylabel("R cuadrada promedio en CV")
+_artist = plt.title("R cuadrada por alpha y l1_ratio")
+_artist = plt.xlabel("alpha")
+_artist = plt.ylabel("R cuadrada promedio en CV")
 ```
 
 
@@ -853,7 +853,7 @@ display(coeficientes_elasticnet.head(20))
 ax = coeficientes_elasticnet.head(20).sort_values("Importancia").plot.barh(
     x="Variable", y="Importancia", legend=False, figsize=(8, 6)
 )
-ax.set_title("Importancia de las variables")
+_artist = ax.set_title("Importancia de las variables")
 ```
 
 
@@ -882,16 +882,16 @@ regression_metrics(results["Sale_Price"], results["pred_elasticnet_reg"]).assign
 ```
 
 ```{python}
-plt.figure(figsize=(6, 5))
-plt.scatter(results["pred_elasticnet_reg"], results["Sale_Price"], alpha=0.6)
+_artist = plt.figure(figsize=(6, 5))
+_artist = plt.scatter(results["pred_elasticnet_reg"], results["Sale_Price"], alpha=0.6)
 lims = [
     results[["pred_elasticnet_reg", "Sale_Price"]].min().min(),
     results[["pred_elasticnet_reg", "Sale_Price"]].max().max(),
 ]
-plt.plot(lims, lims, color="red")
-plt.xlabel("Predicción")
-plt.ylabel("Observación")
-plt.title("Comparación")
+_artist = plt.plot(lims, lims, color="red")
+_artist = plt.xlabel("Predicción")
+_artist = plt.ylabel("Observación")
+_artist = plt.title("Comparación")
 plt.tight_layout()
 ```
 
@@ -1011,7 +1011,7 @@ En la siguiente gráfica observamos las distintas métricas de error asociadas a
 
 ```{python}
 elasticnet_class_results = pd.DataFrame(elasticnet_class_tune_result.cv_results_)
-elasticnet_class_results.plot.scatter(
+ax = elasticnet_class_results.plot.scatter(
     x="param_model__C",
     y="mean_test_pr_auc",
     c="param_model__l1_ratio",
@@ -1019,9 +1019,9 @@ elasticnet_class_results.plot.scatter(
     logx=True,
     figsize=(7, 4),
 )
-plt.title("PR AUC por C y l1_ratio")
-plt.xlabel("C")
-plt.ylabel("PR AUC promedio en CV")
+_artist = plt.title("PR AUC por C y l1_ratio")
+_artist = plt.xlabel("C")
+_artist = plt.ylabel("PR AUC promedio en CV")
 ```
 
 ```{python}
@@ -1068,7 +1068,7 @@ display(coeficientes_churn.head(20))
 ax = coeficientes_churn.head(20).sort_values("Importancia").plot.barh(
     x="Variable", y="Importancia", legend=False, figsize=(8, 6)
 )
-ax.set_title("Importancia de las variables")
+_artist = ax.set_title("Importancia de las variables")
 ```
 
 **Paso 10: Validar poder predictivo con datos de prueba**
@@ -1106,13 +1106,13 @@ roc_curve_data.head()
 A través de estas métricas es posible crear la curva ROC:
 
 ```{python}
-plt.figure(figsize=(5, 5))
-plt.plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue", lw=2)
-plt.plot([0, 1], [0, 1], color="gray", linestyle="--")
-plt.xlabel("1 - especificidad")
-plt.ylabel("sensitividad")
-plt.title("ROC Curve")
-plt.axis("square")
+_artist = plt.figure(figsize=(5, 5))
+_artist = plt.plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue", lw=2)
+_artist = plt.plot([0, 1], [0, 1], color="gray", linestyle="--")
+_artist = plt.xlabel("1 - especificidad")
+_artist = plt.ylabel("sensitividad")
+_artist = plt.title("ROC Curve")
+_artist = plt.axis("square")
 plt.tight_layout()
 ```
 
@@ -1130,13 +1130,13 @@ pr_curve_data.head()
 Y graficar su respectiva curva:
 
 ```{python}
-plt.figure(figsize=(5, 5))
-plt.plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue", lw=2)
-plt.xlabel("cobertura")
-plt.ylabel("precisión")
-plt.title("Precision vs Recall")
-plt.ylim(0, 1)
-plt.axis("square")
+_artist = plt.figure(figsize=(5, 5))
+_artist = plt.plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue", lw=2)
+_artist = plt.xlabel("cobertura")
+_artist = plt.ylabel("precisión")
+_artist = plt.title("Precision vs Recall")
+_artist = plt.ylim(0, 1)
+_artist = plt.axis("square")
 plt.tight_layout()
 ```
 
@@ -1471,8 +1471,8 @@ En la siguiente gráfica observamos las distintas métricas de error asociados a
 
 ```{python}
 svm_results = pd.DataFrame(svm_tune_result.cv_results_)
-svm_results.plot.scatter(x="param_model__C", y="mean_test_score", logx=True)
-plt.title("Desempeño por C")
+ax = svm_results.plot.scatter(x="param_model__C", y="mean_test_score", logx=True)
+_artist = plt.title("Desempeño por C")
 ```
 
 ```{python}
@@ -1547,7 +1547,7 @@ display(ames_importance)
 ax = ames_importance.sort_values("Importance").plot.barh(
     x="Variable", y="Importance", xerr="StDev", legend=False, figsize=(8, 6)
 )
-ax.set_title("Variable Importance Measure")
+_artist = ax.set_title("Variable Importance Measure")
 ```
 
 **Paso 10: Validar poder predictivo con datos de prueba**
@@ -1578,12 +1578,12 @@ regression_metrics(results["Sale_Price"], results["pred_svm_reg"]).assign(
 ```
 
 ```{python}
-plt.scatter(results["pred_svm_reg"], results["Sale_Price"], alpha=0.6)
+_artist = plt.scatter(results["pred_svm_reg"], results["Sale_Price"], alpha=0.6)
 lims = [results[["pred_svm_reg", "Sale_Price"]].min().min(), results[["pred_svm_reg", "Sale_Price"]].max().max()]
-plt.plot(lims, lims, color="red")
-plt.xlabel("Prediction")
-plt.ylabel("Observation")
-plt.title("Comparison")
+_artist = plt.plot(lims, lims, color="red")
+_artist = plt.xlabel("Prediction")
+_artist = plt.ylabel("Observation")
+_artist = plt.title("Comparison")
 ```
 
 
@@ -1682,8 +1682,8 @@ En la siguiente gráfica observamos las distintas métricas de error asociados a
 
 ```{python}
 svm_class_results = pd.DataFrame(svm_tune_class_result.cv_results_)
-svm_class_results.plot.scatter(x="param_model__C", y="mean_test_score", logx=True)
-plt.title("ROC AUC por C")
+_artist = svm_class_results.plot.scatter(x="param_model__C", y="mean_test_score", logx=True)
+_artist = plt.title("ROC AUC por C")
 best_cv_results(svm_tune_class_result, n=10)
 ```
 
@@ -1754,7 +1754,7 @@ display(churn_importance.head(20))
 ax = churn_importance.sort_values("Importance").tail(20).plot.barh(
     x="Variable", y="Importance", xerr="StDev", legend=False, figsize=(8, 6)
 )
-ax.set_title("Variable Importance Measure")
+_artist = ax.set_title("Variable Importance Measure")
 ```
 
 **Paso 10: Validar poder predictivo con datos de prueba**
@@ -1776,16 +1776,16 @@ roc_curve_data = roc_curve_table(results_cla["truth"], results_cla[".pred_Yes"])
 pr_curve_data = pr_curve_table(results_cla["truth"], results_cla[".pred_Yes"])
 
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-axes[0].plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue")
-axes[0].plot([0, 1], [0, 1], color="black", linewidth=1)
-axes[0].set_title("ROC Curve")
-axes[0].set_xlabel("1 - specificity")
-axes[0].set_ylabel("sensitivity")
+_artist = axes[0].plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue")
+_artist = axes[0].plot([0, 1], [0, 1], color="black", linewidth=1)
+_artist = axes[0].set_title("ROC Curve")
+_artist = axes[0].set_xlabel("1 - specificity")
+_artist = axes[0].set_ylabel("sensitivity")
 
-axes[1].plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue")
-axes[1].set_title("Precision vs Recall")
-axes[1].set_xlabel("recall")
-axes[1].set_ylabel("precision")
+_artist = axes[1].plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue")
+_artist = axes[1].set_title("Precision vs Recall")
+_artist = axes[1].set_xlabel("recall")
+_artist = axes[1].set_ylabel("precision")
 plt.tight_layout()
 ```
 
@@ -1941,9 +1941,9 @@ ames_coefs.head()
 terms = ames_coefs["term"].unique()
 fig, axes = plt.subplots(1, len(terms), figsize=(5 * len(terms), 4))
 for ax, term in zip(axes, terms):
-    ax.hist(ames_coefs.loc[ames_coefs["term"].eq(term), "estimate"], color="lightblue")
-    ax.set_title(term)
-    ax.set_xlabel("estimate")
+    _artist = ax.hist(ames_coefs.loc[ames_coefs["term"].eq(term), "estimate"], color="lightblue")
+    _artist = ax.set_title(term)
+    _artist = ax.set_xlabel("estimate")
 plt.tight_layout()
 
 ```
@@ -2163,8 +2163,8 @@ En la siguiente gráfica observamos las distintas métricas de error asociados a
 
 ```{python}
 xgb_reg_results = pd.DataFrame(xgboost_reg_tune_result.cv_results_)
-xgb_reg_results.plot.scatter(x="param_model__learning_rate", y="mean_test_score", logx=True)
-plt.title("XGBoost regression: R2 por learning rate")
+ax = xgb_reg_results.plot.scatter(x="param_model__learning_rate", y="mean_test_score", logx=True)
+_artist = plt.title("XGBoost regression: R2 por learning rate")
 ```
 
 ```{python}
@@ -2210,10 +2210,10 @@ xgb_reg_importance_df = (
     .sort_values("Importance", ascending=False)
     .head(25)
 )
-xgb_reg_importance_df.sort_values("Importance").plot.barh(
+ax = xgb_reg_importance_df.sort_values("Importance").plot.barh(
     x="Variable", y="Importance", xerr="StDev", legend=False, figsize=(8, 8)
 )
-plt.title("Importancia de las variables")
+_artist = plt.title("Importancia de las variables")
 ```
 
 **Paso 10: Validar poder predictivo con datos de prueba**
@@ -2238,12 +2238,12 @@ regression_metrics(results["Sale_Price"], results["pred_xgb_reg"]).assign(
 
 
 ```{python}
-plt.scatter(results["pred_xgb_reg"], results["Sale_Price"], alpha=0.6)
+_artist = plt.scatter(results["pred_xgb_reg"], results["Sale_Price"], alpha=0.6)
 lims = [results[["pred_xgb_reg", "Sale_Price"]].min().min(), results[["pred_xgb_reg", "Sale_Price"]].max().max()]
-plt.plot(lims, lims, color="red")
-plt.xlabel("Prediction")
-plt.ylabel("Observation")
-plt.title("Comparison")
+_artist = plt.plot(lims, lims, color="red")
+_artist = plt.xlabel("Prediction")
+_artist = plt.ylabel("Observation")
+_artist = plt.title("Comparison")
 ```
 
 
@@ -2359,8 +2359,8 @@ En la siguiente gráfica observamos las distintas métricas de error asociados a
 
 ```{python}
 xgb_class_results = pd.DataFrame(xgboost_tune_result.cv_results_)
-xgb_class_results.plot.scatter(x="param_model__learning_rate", y="mean_test_score", logx=True)
-plt.title("XGBoost classification: PR AUC por learning rate")
+ax = xgb_class_results.plot.scatter(x="param_model__learning_rate", y="mean_test_score", logx=True)
+_artist = plt.title("XGBoost classification: PR AUC por learning rate")
 ```
 
 ```{python}
@@ -2410,10 +2410,10 @@ xgb_class_importance_df = (
     .sort_values("Importance", ascending=False)
     .head(25)
 )
-xgb_class_importance_df.sort_values("Importance").plot.barh(
+ax = xgb_class_importance_df.sort_values("Importance").plot.barh(
     x="Variable", y="Importance", xerr="StDev", legend=False, figsize=(8, 8)
 )
-plt.title("Importancia de las variables")
+_artist = plt.title("Importancia de las variables")
 ```
 
 **Paso 10: Validar poder predictivo con datos de prueba**
@@ -2447,11 +2447,11 @@ roc_curve_data.head()
 A través de estas métricas es posible crear la curva ROC:
 
 ```{python}
-plt.plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue")
-plt.plot([0, 1], [0, 1], color="black", linewidth=1)
-plt.title("ROC Curve")
-plt.xlabel("1 - specificity")
-plt.ylabel("sensitivity")
+_artist = plt.plot(1 - roc_curve_data["specificity"], roc_curve_data["sensitivity"], color="lightblue")
+_artist = plt.plot([0, 1], [0, 1], color="black", linewidth=1)
+_artist = plt.title("ROC Curve")
+_artist = plt.xlabel("1 - specificity")
+_artist = plt.ylabel("sensitivity")
 ```
 
 De igual manera, podemos calcular la precisión y cobertura para cada punte de corte:
@@ -2464,10 +2464,10 @@ pr_curve_data.head()
 Y graficar su respectiva curva:
 
 ```{python}
-plt.plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue")
-plt.title("Precision vs Recall")
-plt.xlabel("recall")
-plt.ylabel("precision")
+_artist = plt.plot(pr_curve_data["recall"], pr_curve_data["precision"], color="lightblue")
+_artist = plt.title("Precision vs Recall")
+_artist = plt.xlabel("recall")
+_artist = plt.ylabel("precision")
 ```
 
 ## Ejercicios

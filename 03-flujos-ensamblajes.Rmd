@@ -219,15 +219,15 @@ tuning_results
 
 ```{python}
 ax = tuning_results.sort_values("rsq").plot.barh(x="wflow_id", y="rsq", legend=False, figsize=(8, 8))
-ax.set_xlim(0, 1)
-ax.set_title("Model Comparison")
+_artist = ax.set_xlim(0, 1)
+_artist = ax.set_title("Model Comparison")
 ```
 
 ```{python}
 best_by_workflow = tuning_results.sort_values("rsq", ascending=False).head(10)
 ax = best_by_workflow.sort_values("rsq").plot.barh(x="wflow_id", y="rsq", legend=False, figsize=(8, 6))
-ax.set_xlim(0, 1)
-ax.set_title("Best Model Comparison")
+_artist = ax.set_xlim(0, 1)
+_artist = ax.set_title("Best Model Comparison")
 ```
 
 
@@ -319,10 +319,10 @@ importance_df = (
     .sort_values("Importance", ascending=False)
     .head(25)
 )
-importance_df.sort_values("Importance").plot.barh(
+ax = importance_df.sort_values("Importance").plot.barh(
     x="Variable", y="Importance", xerr="StDev", legend=False, figsize=(8, 8)
 )
-plt.title("Importancia de las variables")
+_artist = plt.title("Importancia de las variables")
 ```
 
 Por último... Imaginemos por un momento que pasa un mes de tiempo desde que hicimos nuestro modelo, es hora de ponerlo a prueba prediciendo valores de nuevos elementos:
@@ -344,12 +344,12 @@ regression_metrics(results["Sale_Price"], results["pred_xgb_reg"]).assign(
 ```
 
 ```{python}
-plt.scatter(results["pred_xgb_reg"], results["Sale_Price"], alpha=0.6)
+_artist = plt.scatter(results["pred_xgb_reg"], results["Sale_Price"], alpha=0.6)
 lims = [results[["pred_xgb_reg", "Sale_Price"]].min().min(), results[["pred_xgb_reg", "Sale_Price"]].max().max()]
-plt.plot(lims, lims, color="red")
-plt.xlabel("Prediction")
-plt.ylabel("Observation")
-plt.title("Comparison")
+_artist = plt.plot(lims, lims, color="red")
+_artist = plt.xlabel("Prediction")
+_artist = plt.ylabel("Observation")
+_artist = plt.title("Comparison")
 ```
 
 
@@ -395,7 +395,7 @@ tuning_race_anova_results
 
 ```{python}
 ax = tuning_race_anova_results.sort_values("rsq").plot.barh(x="wflow_id", y="rsq", legend=False)
-ax.set_xlim(0, 1)
+_artist = ax.set_xlim(0, 1)
 ```
 
 ### Optimización Logística
@@ -427,7 +427,7 @@ tuning_race_win_loss_results
 
 ```{python}
 ax = tuning_race_win_loss_results.sort_values("rsq").plot.barh(x="wflow_id", y="rsq", legend=False)
-ax.set_xlim(0, 1)
+_artist = ax.set_xlim(0, 1)
 ```
 
 ### Optimización Bayesiana
@@ -478,7 +478,7 @@ tuning_race_bayes_results.sort_values("rsq", ascending=False)
 
 ```{python}
 ax = tuning_race_bayes_results.sort_values("rsq").plot.barh(x="wflow_id", y="rsq", legend=False)
-ax.set_xlim(0, 1)
+_artist = ax.set_xlim(0, 1)
 ```
 
 
@@ -580,7 +580,7 @@ assembly
 
 ```{python}
 assembly_weights = stacking_weights(assembly)
-assembly_weights.sort_values("weight").plot.barh(x="model", y="weight", legend=False)
+ax = assembly_weights.sort_values("weight").plot.barh(x="model", y="weight", legend=False)
 ```
 
 Esto evalúa el modelo de meta aprendizaje sobre un grid predefinido de valores de penalización y proporciones L1/L2; `ElasticNetCV` usa remuestreo interno para elegir la combinación.
@@ -618,7 +618,7 @@ assembly_v2.fit(X_train, y_train)
 
 ```{python}
 assembly_v2 = assembly
-assembly_weights.sort_values("weight").plot.barh(x="model", y="weight", legend=False)
+ax = assembly_weights.sort_values("weight").plot.barh(x="model", y="weight", legend=False)
 ```
 
 La impresión del objeto muestra los detalles del modelo de meta aprendizaje:
@@ -630,7 +630,7 @@ assembly_v2
 El modelo de meta aprendizaje contiene un coeficiente de combinación por cada modelo base. Podemos volver a mostrar las contribuciones de cada tipo de modelo:
 
 ```{python}
-assembly_weights.sort_values("weight").plot.barh(x="model", y="weight", legend=False)
+ax = assembly_weights.sort_values("weight").plot.barh(x="model", y="weight", legend=False)
 ```
 
 El modelo con mayor contribución puede cambiar según el remuestreo y el grid. Por eso conviene reportar los pesos aprendidos por el metamodelo en vez de escribir una ecuación fija:
