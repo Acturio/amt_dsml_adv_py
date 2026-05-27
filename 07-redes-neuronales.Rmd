@@ -15,17 +15,18 @@ ensure_conda_environment()
 
 ## Idea General
 
-Una red neuronal es un modelo que aprende una función a partir de ejemplos. Si tenemos variables de entrada $X$ y una respuesta $Y$, la red busca una transformación que convierta las entradas en una predicción útil:
+Una red neuronal es un modelo supervisado que aprende una función a partir de ejemplos. Si tenemos variables de entrada $X$ y una respuesta $Y$, la red intenta construir una función que produzca una predicción $\hat{Y}$:
 
 $$X \rightarrow \hat{Y}$$
 
-La intuición es parecida a otros modelos supervisados: le mostramos muchos ejemplos, medimos qué tan lejos estuvo la predicción y ajustamos sus parámetros para equivocarse menos. La diferencia es que una red neuronal construye varias capas de transformaciones aprendidas.
+La idea es la misma que en otros modelos de machine learning:
 
-En este capítulo usaremos una **red neuronal densa** para predecir el precio de viviendas en el conjunto de datos de *Ames*. No veremos redes convolucionales ni secuenciales todavía; esas serán parte de los siguientes pasos.
+1. Hacer una predicción.
+2. Medir qué tan mala fue la predicción.
+3. Ajustar los parámetros.
+4. Repetir muchas veces.
 
-## Preparación de Datos
-
-Primero cargamos los datos, separamos entrenamiento, validación y prueba, y aplicamos el mismo tipo de preprocesamiento tabular usado en otros capítulos: ingeniería de variables, imputación, escalamiento y variables dummy.
+La diferencia es que una red neuronal organiza sus parámetros en **capas**. Cada capa transforma la información y la pasa a la siguiente. En este capítulo veremos sólo **redes neuronales densas**, también llamadas *fully connected networks*. No veremos redes convolucionales ni secuenciales todavía; esas aparecerán al final como siguientes pasos.
 
 ```{python, warning=FALSE, message=FALSE}
 import matplotlib.pyplot as plt
@@ -46,7 +47,59 @@ from dsml_utils import (
 
 torch.manual_seed(4595)
 np.random.seed(4595)
+```
 
+```{python, echo=FALSE}
+fig, ax = plt.subplots(figsize=(9, 2.6))
+ax.axis("off")
+
+steps = [
+    "Datos",
+    "Tensores",
+    "Modelo",
+    "Pérdida",
+    "Gradientes",
+    "Actualización",
+]
+x_pos = np.linspace(0.08, 0.92, len(steps))
+
+for i, (x, label) in enumerate(zip(x_pos, steps)):
+    ax.text(
+        x,
+        0.55,
+        label,
+        ha="center",
+        va="center",
+        fontsize=11,
+        bbox=dict(boxstyle="round,pad=0.35", fc="#eef2ff", ec="#4f46e5"),
+        transform=ax.transAxes,
+    )
+    if i < len(steps) - 1:
+        ax.annotate(
+            "",
+            xy=(x_pos[i + 1] - 0.055, 0.55),
+            xytext=(x + 0.055, 0.55),
+            arrowprops=dict(arrowstyle="->", color="#374151", lw=1.5),
+            xycoords=ax.transAxes,
+        )
+
+ax.set_title("Flujo general de entrenamiento de una red neuronal", fontsize=13)
+plt.tight_layout()
+```
+
+## Preparación de Datos
+
+Usaremos el conjunto de viviendas de *Ames* para predecir `Sale_Price`. El flujo será:
+
+1. Cargar datos.
+2. Separar entrenamiento, validación y prueba.
+3. Aplicar ingeniería de variables.
+4. Imputar, escalar y convertir variables categóricas a dummies.
+5. Escalar también la respuesta.
+
+La validación es importante porque las redes neuronales pueden aprender demasiado bien el conjunto de entrenamiento. Necesitamos un conjunto intermedio para observar si el modelo generaliza.
+
+```{python}
 ames = load_ames()
 ames_train_full, ames_test = train_test_split(ames, train_size=0.75, random_state=4595)
 ames_train, ames_valid = train_test_split(ames_train_full, train_size=0.80, random_state=4595)
@@ -68,21 +121,65 @@ target_scaler = StandardScaler()
 y_train_scaled = target_scaler.fit_transform(y_train.to_frame()).astype("float32")
 y_valid_scaled = target_scaler.transform(y_valid.to_frame()).astype("float32")
 
-X_train.shape, X_valid.shape, X_test.shape
+pd.DataFrame(
+    {
+        "conjunto": ["entrenamiento", "validación", "prueba"],
+        "filas": [X_train.shape[0], X_valid.shape[0], X_test.shape[0]],
+        "columnas": [X_train.shape[1], X_valid.shape[1], X_test.shape[1]],
+    }
+)
 ```
 
-Escalamos también la variable objetivo porque las redes neuronales suelen entrenar mejor cuando los valores no están en escalas muy grandes.
+Escalar `Sale_Price` ayuda porque una red neuronal aprende con gradientes. Si la respuesta está en cientos de miles, las pérdidas y gradientes pueden ser muy grandes y el entrenamiento se vuelve menos estable.
+
+## De Regresión Lineal a Neurona
+
+Una regresión lineal calcula:
+
+$$\hat{y} = b + w_1x_1 + w_2x_2 + \dots + w_px_p$$
+
+Una neurona hace casi lo mismo:
+
+$$z = b + w_1x_1 + w_2x_2 + \dots + w_px_p$$
+
+Después puede aplicar una función de activación:
+
+$$a = g(z)$$
+
+Si no usamos activación, una neurona se parece mucho a una regresión lineal. Si usamos activaciones no lineales y muchas neuronas, la red puede aprender relaciones más flexibles.
+
+```{python, echo=FALSE}
+fig, ax = plt.subplots(figsize=(7, 3.2))
+ax.axis("off")
+
+inputs = ["x1", "x2", "x3", "...", "xp"]
+y_positions = np.linspace(0.85, 0.15, len(inputs))
+
+for label, y in zip(inputs, y_positions):
+    ax.text(0.08, y, label, ha="center", va="center", bbox=dict(boxstyle="circle", fc="#ecfeff", ec="#0891b2"))
+    ax.annotate("", xy=(0.45, 0.5), xytext=(0.12, y), arrowprops=dict(arrowstyle="->", color="#475569"))
+
+ax.text(0.5, 0.5, "z = Wx + b", ha="center", va="center", bbox=dict(boxstyle="round,pad=0.45", fc="#fef3c7", ec="#d97706"))
+ax.annotate("", xy=(0.78, 0.5), xytext=(0.59, 0.5), arrowprops=dict(arrowstyle="->", color="#475569"))
+ax.text(0.86, 0.5, "g(z)", ha="center", va="center", bbox=dict(boxstyle="round,pad=0.45", fc="#dcfce7", ec="#16a34a"))
+ax.set_title("Una neurona combina entradas, pesos, sesgo y activación")
+plt.tight_layout()
+```
 
 ## Tensores
 
-PyTorch trabaja con **tensores**. Un tensor es parecido a un arreglo de `numpy`, pero además puede vivir en CPU o GPU y puede guardar la información necesaria para calcular gradientes.
+PyTorch trabaja con **tensores**. Un tensor es parecido a un arreglo de `numpy`, pero puede:
+
+* vivir en CPU o GPU;
+* guardar tipo de dato, forma y dispositivo;
+* participar en cálculo automático de gradientes.
 
 ```{python}
 ejemplo_tensor = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
-ejemplo_tensor
+ejemplo_tensor, ejemplo_tensor.shape, ejemplo_tensor.dtype
 ```
 
-Convertimos nuestros datos de `numpy` a tensores:
+Convertimos los datos ya preprocesados a tensores:
 
 ```{python}
 X_train_tensor = torch.tensor(X_train, dtype=torch.float32)
@@ -94,9 +191,11 @@ X_test_tensor = torch.tensor(X_test, dtype=torch.float32)
 X_train_tensor.shape, y_train_tensor.shape
 ```
 
-## Datasets y DataLoaders
+## Datasets, Batches y DataLoaders
 
-Un `TensorDataset` guarda pares `(X, y)`. Un `DataLoader` permite tomar pequeños lotes de datos. En vez de actualizar el modelo con todos los datos a la vez, lo entrenamos por **mini-batches**.
+Una red neuronal no suele actualizar sus pesos con todo el conjunto de datos en cada paso. Es más común usar **mini-batches**, pequeños grupos de observaciones.
+
+`TensorDataset` guarda pares `(X, y)`. `DataLoader` toma esos pares y los entrega por lotes.
 
 ```{python}
 train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
@@ -106,36 +205,144 @@ batch_X, batch_y = next(iter(train_loader))
 batch_X.shape, batch_y.shape
 ```
 
-## Neuronas, Capas y Activaciones
+## Capas Densas
 
-Una capa densa combina todas las variables de entrada con pesos aprendidos. En PyTorch se representa con `nn.Linear`.
+Una capa densa se implementa con `nn.Linear`. Si una capa recibe 10 variables y produce 5 neuronas, aprende:
 
-Una función de activación agrega no linealidad. Sin activaciones, muchas capas lineales se comportarían como una sola regresión lineal grande. Una activación muy común es `ReLU`, que deja pasar valores positivos y manda los negativos a cero.
+* una matriz de pesos de tamaño $10 \times 5$;
+* un sesgo por cada neurona de salida.
 
 ```{python}
-x_demo = torch.linspace(-3, 3, 7)
+capa_demo = nn.Linear(in_features=10, out_features=5)
+capa_demo.weight.shape, capa_demo.bias.shape
+```
+
+La capa recibe un tensor y produce otro:
+
+```{python}
+entrada_demo = torch.randn(4, 10)
+salida_demo = capa_demo(entrada_demo)
+salida_demo.shape
+```
+
+## Parámetros Entrenables
+
+Los parámetros entrenables son los valores que la red ajusta durante el entrenamiento. En una capa densa:
+
+$$\text{parámetros} = (\text{entradas} \times \text{salidas}) + \text{salidas}$$
+
+El primer término son los pesos y el segundo son los sesgos.
+
+```{python}
+def count_parameters(model):
+    return sum(parameter.numel() for parameter in model.parameters() if parameter.requires_grad)
+
+
+def parameter_table(model):
+    rows = []
+    for name, parameter in model.named_parameters():
+        rows.append(
+            {
+                "capa": name,
+                "forma": tuple(parameter.shape),
+                "parametros": parameter.numel(),
+            }
+        )
+    return pd.DataFrame(rows)
+```
+
+```{python}
+n_features = X_train_tensor.shape[1]
+
+linear_model = nn.Sequential(nn.Linear(n_features, 1))
+parameter_table(linear_model)
+```
+
+Una red con capas ocultas aprende más parámetros:
+
+```{python}
+small_dense_model = nn.Sequential(
+    nn.Linear(n_features, 64),
+    nn.ReLU(),
+    nn.Linear(64, 32),
+    nn.ReLU(),
+    nn.Linear(32, 1),
+)
+
+parameter_table(small_dense_model), count_parameters(small_dense_model)
+```
+
+Más parámetros pueden dar más flexibilidad, pero también aumentan el riesgo de sobreajuste.
+
+## Funciones de Activación
+
+Las activaciones permiten que la red aprenda relaciones no lineales. Sin activaciones, apilar muchas capas lineales sería equivalente a tener una sola transformación lineal.
+
+Activaciones comunes:
+
+* **Lineal:** no cambia el valor. Se usa en salidas de regresión.
+* **Sigmoid:** comprime a valores entre 0 y 1. Útil para probabilidades binarias, aunque puede saturarse.
+* **Tanh:** comprime entre -1 y 1. Centrada en cero, pero también puede saturarse.
+* **ReLU:** deja pasar positivos y apaga negativos. Es simple, rápida y muy usada.
+* **Leaky ReLU:** parecida a ReLU, pero deja pasar una pequeña pendiente negativa.
+* **ELU:** suaviza la parte negativa y puede ayudar en algunas redes.
+* **GELU:** activación suave usada en arquitecturas modernas.
+* **Softmax:** convierte un vector en probabilidades que suman 1. Se usa en clasificación multiclase.
+
+```{python}
+x = torch.linspace(-5, 5, 300)
+
+activations = {
+    "lineal": x,
+    "sigmoid": torch.sigmoid(x),
+    "tanh": torch.tanh(x),
+    "relu": torch.relu(x),
+    "leaky_relu": torch.nn.functional.leaky_relu(x, negative_slope=0.1),
+    "elu": torch.nn.functional.elu(x),
+    "gelu": torch.nn.functional.gelu(x),
+}
+
+fig, axes = plt.subplots(2, 4, figsize=(12, 6), sharex=True)
+axes = axes.ravel()
+
+for ax, (name, values) in zip(axes, activations.items()):
+    ax.plot(x.numpy(), values.numpy())
+    ax.axhline(0, color="gray", lw=0.8)
+    ax.axvline(0, color="gray", lw=0.8)
+    ax.set_title(name)
+
+axes[-1].axis("off")
+plt.tight_layout()
+```
+
+```{python}
+logits_demo = torch.tensor([1.2, 0.4, -0.8])
+probabilidades = torch.softmax(logits_demo, dim=0)
+
 pd.DataFrame(
     {
-        "entrada": x_demo.numpy(),
-        "relu": torch.relu(x_demo).numpy(),
+        "clase": ["A", "B", "C"],
+        "logit": logits_demo.numpy(),
+        "softmax": probabilidades.numpy(),
     }
 )
 ```
 
-## Una Red Neuronal Densa
+Para nuestro problema de Ames usamos salida **lineal** porque estamos resolviendo regresión: el precio puede tomar muchos valores continuos.
 
-Una red densa para regresión tabular puede verse así:
+## Arquitectura de una Red Densa
 
-1. Una primera capa que recibe todas las variables.
-2. Una activación para aprender relaciones no lineales.
-3. Una segunda capa oculta.
-4. Una salida de tamaño 1, porque queremos predecir un precio.
+Una red densa para regresión tabular suele tener:
+
+1. una capa de entrada con tantas variables como columnas tenga `X`;
+2. una o más capas ocultas;
+3. activaciones en las capas ocultas;
+4. una salida de una neurona para predecir el valor continuo.
 
 ```{python}
-n_features = X_train_tensor.shape[1]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-dense_model = nn.Sequential(
+base_model = nn.Sequential(
     nn.Linear(n_features, 64),
     nn.ReLU(),
     nn.Linear(64, 32),
@@ -143,139 +350,599 @@ dense_model = nn.Sequential(
     nn.Linear(32, 1),
 ).to(device)
 
-dense_model
+base_model
 ```
 
-## Pérdida y Optimizador
+```{python}
+parameter_table(base_model)
+```
 
-La **función de pérdida** mide qué tan mal lo hizo el modelo. Para regresión usaremos error cuadrático medio con `nn.MSELoss`.
+## Funciones de Pérdida
 
-El **optimizador** modifica los pesos de la red para reducir esa pérdida. Usaremos `Adam`, una opción práctica y muy común.
+La función de pérdida responde: **¿qué tan mal estuvo mi predicción?**
+
+Para regresión:
+
+* **MSELoss:** penaliza mucho los errores grandes. Es suave y común, pero sensible a outliers.
+* **L1Loss / MAE:** mide error absoluto. Es más robusta a outliers, pero su gradiente es menos suave.
+* **HuberLoss / SmoothL1Loss:** combina MSE para errores pequeños y MAE para errores grandes. Es una alternativa balanceada.
+
+Para clasificación:
+
+* **BCEWithLogitsLoss:** clasificación binaria. Recibe logits y aplica sigmoid internamente.
+* **CrossEntropyLoss:** clasificación multiclase. Recibe logits y aplica softmax internamente.
+
+```{python}
+residuals = torch.linspace(-4, 4, 300)
+mse_curve = residuals**2
+mae_curve = torch.abs(residuals)
+huber_loss = nn.HuberLoss(delta=1.0, reduction="none")
+huber_curve = huber_loss(residuals, torch.zeros_like(residuals))
+
+plt.figure(figsize=(7, 4))
+plt.plot(residuals.numpy(), mse_curve.numpy(), label="MSE")
+plt.plot(residuals.numpy(), mae_curve.numpy(), label="MAE")
+plt.plot(residuals.numpy(), huber_curve.numpy(), label="Huber")
+plt.ylim(0, 8)
+plt.xlabel("Error = predicción - observación")
+plt.ylabel("Pérdida")
+plt.title("Comparación de pérdidas para regresión")
+plt.legend()
+plt.tight_layout()
+```
+
+Ejemplo de pérdidas en PyTorch:
+
+```{python}
+y_real_demo = torch.tensor([[2.0], [4.0], [8.0]])
+y_pred_demo = torch.tensor([[2.5], [3.0], [11.0]])
+
+loss_examples = pd.DataFrame(
+    {
+        "loss": ["MSELoss", "L1Loss", "HuberLoss"],
+        "valor": [
+            nn.MSELoss()(y_pred_demo, y_real_demo).item(),
+            nn.L1Loss()(y_pred_demo, y_real_demo).item(),
+            nn.HuberLoss(delta=1.0)(y_pred_demo, y_real_demo).item(),
+        ],
+    }
+)
+loss_examples
+```
+
+Ejemplo de pérdidas para clasificación:
+
+```{python}
+binary_logits = torch.tensor([[1.2], [-0.7], [0.3]])
+binary_target = torch.tensor([[1.0], [0.0], [1.0]])
+
+multiclass_logits = torch.tensor([[2.0, 0.5, -1.0], [0.2, 1.5, 0.1]])
+multiclass_target = torch.tensor([0, 1])
+
+pd.DataFrame(
+    {
+        "problema": ["binario", "multiclase"],
+        "loss": ["BCEWithLogitsLoss", "CrossEntropyLoss"],
+        "valor": [
+            nn.BCEWithLogitsLoss()(binary_logits, binary_target).item(),
+            nn.CrossEntropyLoss()(multiclass_logits, multiclass_target).item(),
+        ],
+    }
+)
+```
+
+Para Ames usaremos `MSELoss`, porque queremos penalizar errores grandes de precio y estamos trabajando con la respuesta escalada.
 
 ```{python}
 loss_fn = nn.MSELoss()
-optimizer = torch.optim.Adam(dense_model.parameters(), lr=0.001)
-loss_fn, optimizer
+loss_fn
 ```
 
-## Ciclo de Entrenamiento
+## Descenso en Gradiente
 
-Entrenar una red neuronal consiste en repetir cuatro pasos:
+El descenso en gradiente busca parámetros que reduzcan la pérdida. La intuición es caminar cuesta abajo:
 
-1. Hacer predicciones.
-2. Calcular la pérdida.
-3. Calcular gradientes con `backward()`.
-4. Actualizar pesos con `optimizer.step()`.
+$$\theta_{nuevo} = \theta_{actual} - \eta \nabla L(\theta)$$
+
+donde:
+
+* $\theta$ son los parámetros;
+* $\eta$ es la tasa de aprendizaje;
+* $\nabla L(\theta)$ es la dirección de mayor crecimiento de la pérdida.
+
+Como queremos bajar, nos movemos en dirección contraria al gradiente.
+
+```{python, echo=FALSE}
+theta = np.linspace(-4, 4, 300)
+loss = (theta - 1.2) ** 2 + 0.5
+
+points = np.array([-3.2, -1.7, -0.6, 0.2, 0.8, 1.1])
+point_loss = (points - 1.2) ** 2 + 0.5
+
+plt.figure(figsize=(7, 4))
+plt.plot(theta, loss)
+plt.scatter(points, point_loss, color="red")
+for i in range(len(points) - 1):
+    plt.annotate("", xy=(points[i + 1], point_loss[i + 1]), xytext=(points[i], point_loss[i]), arrowprops=dict(arrowstyle="->"))
+plt.title("Descenso en gradiente sobre una pérdida simple")
+plt.xlabel("parámetro")
+plt.ylabel("pérdida")
+plt.tight_layout()
+```
+
+### Batch, Estocástico y Mini-Batch
+
+Hay tres formas comunes de calcular gradientes:
+
+* **Batch gradient descent:** usa todos los datos en cada actualización. Es estable, pero puede ser lento.
+* **Stochastic gradient descent:** usa una observación por actualización. Es rápido por paso, pero muy ruidoso.
+* **Mini-batch gradient descent:** usa grupos pequeños. Es el equilibrio más usado en redes neuronales.
 
 ```{python}
-def evaluate_loss(model, X, y):
-    model.eval()
-    with torch.no_grad():
-        predictions = model(X.to(device))
-        loss = loss_fn(predictions, y.to(device))
-    return loss.item()
+def make_toy_regression(n=256):
+    rng = np.random.default_rng(4595)
+    x = rng.normal(size=(n, 1)).astype("float32")
+    y = (3.0 * x + 0.7 + rng.normal(scale=0.35, size=(n, 1))).astype("float32")
+    return torch.tensor(x), torch.tensor(y)
 
 
-history = []
-epochs = 60
+toy_X, toy_y = make_toy_regression()
 
-for epoch in range(1, epochs + 1):
-    dense_model.train()
-    batch_losses = []
 
-    for batch_X, batch_y in train_loader:
-        batch_X = batch_X.to(device)
-        batch_y = batch_y.to(device)
+def train_toy(batch_size, epochs=45, lr=0.05):
+    torch.manual_seed(4595)
+    dataset = TensorDataset(toy_X, toy_y)
+    loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    model = nn.Linear(1, 1)
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+    loss = nn.MSELoss()
+    history = []
 
-        predictions = dense_model(batch_X)
-        loss = loss_fn(predictions, batch_y)
+    for epoch in range(epochs):
+        batch_losses = []
+        for bx, by in loader:
+            pred = model(bx)
+            current_loss = loss(pred, by)
+            optimizer.zero_grad()
+            current_loss.backward()
+            optimizer.step()
+            batch_losses.append(current_loss.item())
+        history.append(np.mean(batch_losses))
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+    return {
+        "batch_size": batch_size,
+        "w": model.weight.item(),
+        "b": model.bias.item(),
+        "loss": history[-1],
+        "history": history,
+    }
 
-        batch_losses.append(loss.item())
 
-    history.append(
+gd_results = {
+    "batch": train_toy(batch_size=len(toy_X)),
+    "estocástico": train_toy(batch_size=1),
+    "mini_batch": train_toy(batch_size=32),
+}
+
+pd.DataFrame(
+    [
         {
-            "epoch": epoch,
-            "train_loss": np.mean(batch_losses),
-            "valid_loss": evaluate_loss(dense_model, X_valid_tensor, y_valid_tensor),
+            "tipo": name,
+            "batch_size": result["batch_size"],
+            "w_aprendido": result["w"],
+            "b_aprendido": result["b"],
+            "loss_final": result["loss"],
         }
+        for name, result in gd_results.items()
+    ]
+).round(4)
+```
+
+```{python}
+plt.figure(figsize=(7, 4))
+for name, result in gd_results.items():
+    plt.plot(result["history"], label=name)
+plt.title("Batch vs estocástico vs mini-batch")
+plt.xlabel("Época")
+plt.ylabel("MSE")
+plt.legend()
+plt.tight_layout()
+```
+
+En redes neuronales casi siempre usamos mini-batches porque actualizan con frecuencia y reducen parte del ruido extremo del entrenamiento estocástico puro.
+
+## Optimizadores
+
+El optimizador decide cómo actualizar los parámetros usando los gradientes. Todos buscan reducir la pérdida, pero no todos se mueven igual.
+
+* **SGD:** descenso en gradiente simple. Es fácil de entender y puede generalizar bien, pero puede ser lento.
+* **SGD con momentum:** acumula dirección de pasos anteriores. Ayuda a avanzar en direcciones consistentes y reduce oscilaciones.
+* **RMSprop:** adapta el tamaño de paso por parámetro usando promedios de gradientes recientes.
+* **Adam:** combina ideas de momentum y RMSprop. Es una opción práctica para iniciar.
+* **AdamW:** variante de Adam con mejor manejo de `weight_decay`; muy usada en redes modernas.
+
+```{python}
+optimizer_examples = {
+    "SGD": torch.optim.SGD(base_model.parameters(), lr=0.01),
+    "SGD_momentum": torch.optim.SGD(base_model.parameters(), lr=0.01, momentum=0.9),
+    "RMSprop": torch.optim.RMSprop(base_model.parameters(), lr=0.001),
+    "Adam": torch.optim.Adam(base_model.parameters(), lr=0.001),
+    "AdamW": torch.optim.AdamW(base_model.parameters(), lr=0.001, weight_decay=1e-4),
+}
+
+list(optimizer_examples)
+```
+
+Comparemos optimizadores en el ejemplo sencillo de una recta:
+
+```{python}
+def train_toy_optimizer(optimizer_name, epochs=45):
+    torch.manual_seed(4595)
+    model = nn.Linear(1, 1)
+    loss = nn.MSELoss()
+
+    if optimizer_name == "SGD":
+        optimizer = torch.optim.SGD(model.parameters(), lr=0.03)
+    elif optimizer_name == "Momentum":
+        optimizer = torch.optim.SGD(model.parameters(), lr=0.03, momentum=0.9)
+    elif optimizer_name == "RMSprop":
+        optimizer = torch.optim.RMSprop(model.parameters(), lr=0.01)
+    elif optimizer_name == "Adam":
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.03)
+    elif optimizer_name == "AdamW":
+        optimizer = torch.optim.AdamW(model.parameters(), lr=0.03, weight_decay=1e-3)
+
+    loader = DataLoader(TensorDataset(toy_X, toy_y), batch_size=32, shuffle=True)
+    history = []
+
+    for epoch in range(epochs):
+        losses = []
+        for bx, by in loader:
+            pred = model(bx)
+            current_loss = loss(pred, by)
+            optimizer.zero_grad()
+            current_loss.backward()
+            optimizer.step()
+            losses.append(current_loss.item())
+        history.append(np.mean(losses))
+
+    return history
+
+
+optimizer_histories = {
+    name: train_toy_optimizer(name)
+    for name in ["SGD", "Momentum", "RMSprop", "Adam", "AdamW"]
+}
+
+plt.figure(figsize=(7, 4))
+for name, history in optimizer_histories.items():
+    plt.plot(history, label=name)
+plt.title("Comparación de optimizadores en un problema simple")
+plt.xlabel("Época")
+plt.ylabel("MSE")
+plt.legend()
+plt.tight_layout()
+```
+
+En la práctica, `Adam` o `AdamW` suelen ser buenos puntos de partida. `SGD` con momentum puede ser competitivo, pero normalmente requiere más cuidado con la tasa de aprendizaje.
+
+## Entrenamiento de una Red Densa Base
+
+Ahora entrenamos una red densa sobre Ames. Esta primera red no tiene técnicas explícitas de regularización.
+
+```{python}
+def make_base_model(hidden_1=128, hidden_2=64):
+    return nn.Sequential(
+        nn.Linear(n_features, hidden_1),
+        nn.ReLU(),
+        nn.Linear(hidden_1, hidden_2),
+        nn.ReLU(),
+        nn.Linear(hidden_2, 1),
     )
 
-history_df = pd.DataFrame(history)
-history_df.tail()
+
+def train_model(model, optimizer, train_loader, X_valid_tensor, y_valid_tensor, epochs=80):
+    model = model.to(device)
+    history = []
+
+    for epoch in range(1, epochs + 1):
+        model.train()
+        train_losses = []
+
+        for batch_X, batch_y in train_loader:
+            batch_X = batch_X.to(device)
+            batch_y = batch_y.to(device)
+
+            predictions = model(batch_X)
+            loss = loss_fn(predictions, batch_y)
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            train_losses.append(loss.item())
+
+        model.eval()
+        with torch.no_grad():
+            valid_predictions = model(X_valid_tensor.to(device))
+            valid_loss = loss_fn(valid_predictions, y_valid_tensor.to(device)).item()
+
+        history.append(
+            {
+                "epoch": epoch,
+                "train_loss": np.mean(train_losses),
+                "valid_loss": valid_loss,
+            }
+        )
+
+    return model, pd.DataFrame(history)
 ```
 
-Si la pérdida baja en entrenamiento y validación, el modelo está aprendiendo una relación útil. Si baja mucho en entrenamiento pero empeora en validación, probablemente hay sobreajuste.
+```{python}
+torch.manual_seed(4595)
+base_train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+unregularized_model = make_base_model()
+unregularized_optimizer = torch.optim.Adam(unregularized_model.parameters(), lr=0.001)
+
+unregularized_model, unregularized_history = train_model(
+    unregularized_model,
+    unregularized_optimizer,
+    base_train_loader,
+    X_valid_tensor,
+    y_valid_tensor,
+    epochs=80,
+)
+
+unregularized_history.tail()
+```
 
 ```{python}
-history_df.plot(x="epoch", y=["train_loss", "valid_loss"], figsize=(7, 4))
-plt.title("Evolución de la pérdida")
+unregularized_history.plot(x="epoch", y=["train_loss", "valid_loss"], figsize=(7, 4))
+plt.title("Red sin regularización explícita")
 plt.xlabel("Época")
 plt.ylabel("MSE en escala estandarizada")
 plt.tight_layout()
 ```
 
-## Evaluación en Prueba
+## Regularización en Redes Neuronales
 
-Finalmente usamos el conjunto de prueba. Como el modelo predice precios escalados, regresamos las predicciones a pesos originales con `inverse_transform`.
+La regularización busca reducir sobreajuste. En redes neuronales densas, las técnicas más comunes son:
+
+* **Weight decay:** penaliza pesos grandes. Es parecido a regularización L2.
+* **Dropout:** apaga neuronas aleatoriamente durante entrenamiento para evitar dependencia excesiva.
+* **Batch normalization:** estabiliza la distribución interna de activaciones.
+* **Early stopping:** detiene entrenamiento cuando la pérdida de validación deja de mejorar.
+* **Reducir arquitectura:** menos capas o menos neuronas también regulariza.
+
+### Weight Decay
+
+En PyTorch se agrega desde el optimizador:
 
 ```{python}
-dense_model.eval()
-with torch.no_grad():
-    test_predictions_scaled = dense_model(X_test_tensor.to(device)).cpu().numpy()
-
-test_predictions = target_scaler.inverse_transform(test_predictions_scaled).ravel()
-
-nn_results = pd.DataFrame(
-    {
-        "Sale_Price": y_test.to_numpy(),
-        "pred_nn": test_predictions,
-    }
+weight_decay_example_model = make_base_model()
+weight_decay_optimizer = torch.optim.AdamW(
+    weight_decay_example_model.parameters(),
+    lr=0.001,
+    weight_decay=1e-4,
 )
+weight_decay_optimizer
+```
 
-regression_metrics(nn_results["Sale_Price"], nn_results["pred_nn"]).assign(
-    estimate=lambda data: data["estimate"].round(2)
-)
+### Dropout
+
+`nn.Dropout(p=0.2)` apaga 20% de las activaciones durante entrenamiento. En evaluación se desactiva automáticamente con `model.eval()`.
+
+```{python}
+dropout_demo = nn.Dropout(p=0.5)
+dropout_demo.train()
+dropout_demo(torch.ones(10))
+```
+
+### Batch Normalization
+
+`nn.BatchNorm1d` normaliza activaciones dentro de la red. Puede hacer el entrenamiento más estable, aunque no siempre mejora todos los problemas tabulares.
+
+```{python}
+batch_norm_demo = nn.BatchNorm1d(num_features=4)
+batch_norm_demo(torch.randn(5, 4))
+```
+
+### Early Stopping
+
+Early stopping guarda el mejor modelo observado en validación y detiene el entrenamiento si deja de mejorar durante varias épocas.
+
+```{python}
+def make_regularized_model(hidden_1=128, hidden_2=64, dropout=0.25):
+    return nn.Sequential(
+        nn.Linear(n_features, hidden_1),
+        nn.BatchNorm1d(hidden_1),
+        nn.ReLU(),
+        nn.Dropout(dropout),
+        nn.Linear(hidden_1, hidden_2),
+        nn.BatchNorm1d(hidden_2),
+        nn.ReLU(),
+        nn.Dropout(dropout),
+        nn.Linear(hidden_2, 1),
+    )
+
+
+def train_model_early_stopping(
+    model,
+    optimizer,
+    train_loader,
+    X_valid_tensor,
+    y_valid_tensor,
+    epochs=120,
+    patience=12,
+):
+    model = model.to(device)
+    best_state = None
+    best_valid_loss = np.inf
+    epochs_without_improvement = 0
+    history = []
+
+    for epoch in range(1, epochs + 1):
+        model.train()
+        train_losses = []
+
+        for batch_X, batch_y in train_loader:
+            batch_X = batch_X.to(device)
+            batch_y = batch_y.to(device)
+            predictions = model(batch_X)
+            loss = loss_fn(predictions, batch_y)
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            train_losses.append(loss.item())
+
+        model.eval()
+        with torch.no_grad():
+            valid_predictions = model(X_valid_tensor.to(device))
+            valid_loss = loss_fn(valid_predictions, y_valid_tensor.to(device)).item()
+
+        history.append(
+            {
+                "epoch": epoch,
+                "train_loss": np.mean(train_losses),
+                "valid_loss": valid_loss,
+            }
+        )
+
+        if valid_loss < best_valid_loss:
+            best_valid_loss = valid_loss
+            best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
+            epochs_without_improvement = 0
+        else:
+            epochs_without_improvement += 1
+
+        if epochs_without_improvement >= patience:
+            break
+
+    model.load_state_dict(best_state)
+    return model, pd.DataFrame(history)
 ```
 
 ```{python}
+torch.manual_seed(4595)
+regularized_model = make_regularized_model(dropout=0.25)
+regularized_optimizer = torch.optim.AdamW(
+    regularized_model.parameters(),
+    lr=0.001,
+    weight_decay=1e-4,
+)
+
+regularized_model, regularized_history = train_model_early_stopping(
+    regularized_model,
+    regularized_optimizer,
+    base_train_loader,
+    X_valid_tensor,
+    y_valid_tensor,
+    epochs=120,
+    patience=12,
+)
+
+regularized_history.tail()
+```
+
+## Contraste: Sin Regularizar vs Regularizada
+
+La red sin regularizar suele reducir rápido la pérdida de entrenamiento. La pregunta es si eso también se traduce en mejor validación.
+
+```{python}
+comparison_history = pd.concat(
+    [
+        unregularized_history.assign(modelo="sin_regularizacion"),
+        regularized_history.assign(modelo="regularizada"),
+    ],
+    ignore_index=True,
+)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharey=True)
+
+for modelo, data in comparison_history.groupby("modelo"):
+    axes[0].plot(data["epoch"], data["train_loss"], label=modelo)
+    axes[1].plot(data["epoch"], data["valid_loss"], label=modelo)
+
+axes[0].set_title("Pérdida de entrenamiento")
+axes[1].set_title("Pérdida de validación")
+for ax in axes:
+    ax.set_xlabel("Época")
+    ax.set_ylabel("MSE estandarizado")
+    ax.legend()
+plt.tight_layout()
+```
+
+Evaluemos ambas redes en prueba:
+
+```{python}
+def predict_price(model, X_tensor):
+    model.eval()
+    with torch.no_grad():
+        predictions_scaled = model(X_tensor.to(device)).cpu().numpy()
+    return target_scaler.inverse_transform(predictions_scaled).ravel()
+
+
+unregularized_pred = predict_price(unregularized_model, X_test_tensor)
+regularized_pred = predict_price(regularized_model, X_test_tensor)
+
+model_comparison = pd.concat(
+    [
+        regression_metrics(y_test, unregularized_pred).assign(modelo="sin_regularizacion"),
+        regression_metrics(y_test, regularized_pred).assign(modelo="regularizada"),
+    ],
+    ignore_index=True,
+)
+
+model_comparison.pivot(index="metric", columns="modelo", values="estimate").round(2)
+```
+
+```{python}
+nn_results = pd.DataFrame(
+    {
+        "Sale_Price": y_test.to_numpy(),
+        "pred_regularizada": regularized_pred,
+    }
+)
+
 plt.figure(figsize=(6, 5))
-plt.scatter(nn_results["pred_nn"], nn_results["Sale_Price"], alpha=0.6)
+plt.scatter(nn_results["pred_regularizada"], nn_results["Sale_Price"], alpha=0.6)
 lims = [
-    nn_results[["pred_nn", "Sale_Price"]].min().min(),
-    nn_results[["pred_nn", "Sale_Price"]].max().max(),
+    nn_results[["pred_regularizada", "Sale_Price"]].min().min(),
+    nn_results[["pred_regularizada", "Sale_Price"]].max().max(),
 ]
 plt.plot(lims, lims, color="red")
 plt.xlabel("Predicción")
 plt.ylabel("Observación")
-plt.title("Red neuronal densa")
+plt.title("Red neuronal densa regularizada")
 plt.tight_layout()
 ```
 
-## Qué Aprendimos
+El objetivo no es que la red regularizada siempre gane en todos los conjuntos. El objetivo es mostrar la lógica: si una red aprende demasiado el entrenamiento, agregamos restricciones para mejorar su comportamiento en datos nuevos.
 
-Una red neuronal densa es una secuencia de capas completamente conectadas. Cada capa aprende transformaciones de los datos y las activaciones permiten capturar relaciones no lineales.
+## Qué Conviene Revisar al Entrenar
 
-En PyTorch, el flujo básico es:
+Al entrenar redes densas, conviene revisar:
 
-* Convertir datos a tensores.
-* Crear un `Dataset` y un `DataLoader`.
-* Definir un modelo con `nn.Module` o `nn.Sequential`.
-* Elegir una pérdida y un optimizador.
-* Entrenar con `forward`, `loss`, `backward` y `step`.
-* Evaluar en datos no vistos.
+* **Escalas:** variables y respuesta en rangos razonables.
+* **Arquitectura:** número de capas y neuronas.
+* **Activación:** ReLU o variantes suelen ser un buen inicio.
+* **Pérdida:** depende del tipo de problema.
+* **Optimizador:** Adam o AdamW suelen ser buenos puntos de partida.
+* **Learning rate:** si es muy alto, la pérdida puede explotar; si es muy bajo, aprende lento.
+* **Batch size:** controla ruido y costo por actualización.
+* **Regularización:** dropout, weight decay, batch normalization y early stopping.
+* **Validación:** mirar validación, no sólo entrenamiento.
 
 ## Siguientes Pasos
 
-En un curso completo de redes neuronales, después de redes densas se estudiarían otros tipos de arquitecturas:
+En un curso completo de redes neuronales, después de redes densas se estudiarían:
 
 * **Redes convolucionales:** útiles para imágenes, visión por computadora y datos con estructura espacial.
 * **Redes secuenciales y recurrentes:** útiles para texto, series de tiempo y datos ordenados.
 * **Transformers:** útiles en lenguaje natural, visión moderna y modelos generativos.
-* **Regularización en redes neuronales:** `dropout`, `weight decay`, *early stopping* y normalización por lotes.
-* **Ajuste de hiperparámetros:** número de capas, neuronas, tasa de aprendizaje, tamaño de batch y funciones de activación.
+* **Regularización avanzada:** programación de tasa de aprendizaje, normalización, aumentación y búsqueda de hiperparámetros.
+* **Interpretabilidad:** cómo entender qué aprende una red y cuándo confiar en ella.
 
-Por ahora, lo más importante es reconocer que una red neuronal densa es simplemente otro modelo supervisado: recibe variables, aprende pesos y produce predicciones. Lo especial está en que puede combinar muchas transformaciones para aprender relaciones flexibles.
+Por ahora, lo más importante es reconocer que una red neuronal densa es otro modelo supervisado: recibe variables, aprende parámetros y produce predicciones. Lo especial está en que puede combinar muchas transformaciones para aprender relaciones flexibles.
