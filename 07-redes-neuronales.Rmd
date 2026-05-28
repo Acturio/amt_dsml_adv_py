@@ -170,6 +170,7 @@ pd.DataFrame(
 
 Escalar `Sale_Price` ayuda porque una red neuronal aprende con gradientes. Si la respuesta está en cientos de miles, las pérdidas y gradientes pueden ser muy grandes y el entrenamiento se vuelve menos estable.
 
+
 ## De Regresión Lineal a Neurona
 
 Una regresión lineal calcula:
@@ -214,6 +215,7 @@ X_test_tensor = torch.tensor(X_test, dtype=torch.float32)
 
 X_train_tensor.shape, y_train_tensor.shape
 ```
+
 
 ## Datasets, Batches y DataLoaders
 
@@ -417,8 +419,18 @@ parameter_fig.update_xaxes(title="Tensor de pesos o sesgos")
 parameter_fig.update_yaxes(title="Número de parámetros")
 ```
 
-```{python, results='asis', echo=FALSE}
-print(interactive_html(parameter_fig))
+```{python, echo=FALSE}
+#print(interactive_html(parameter_fig))
+parameter_fig.show()
+# pip install kaleido
+#parameter_fig.write_image("parameter_fig.png")
+#parameter_fig.write_html("parameter_fig.html")
+```
+
+```{r, echo=FALSE, out.width='90%'}
+#knitr::include_graphics("parameter_fig.png")
+#htmltools::includeHTML("parameter_fig.html")
+
 ```
 
 ## Funciones de Activación
@@ -592,6 +604,10 @@ $$\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}$$
 
 No se aplica de forma independiente a cada elemento: compara todas las clases entre sí. Si un logit sube, su probabilidad sube y las demás bajan.
 
+```{python, results='asis', echo=FALSE}
+#print(interactive_html(activation_fig))
+```
+
 ```{python}
 logits_demo = torch.tensor([1.2, 0.4, -0.8])
 probabilidades = torch.softmax(logits_demo, dim=0)
@@ -616,6 +632,30 @@ _artist = ax.set_ylabel("Probabilidad")
 for idx, row in softmax_df.iterrows():
     _artist = ax.text(idx, row["probabilidad"] + 0.03, f"{row['probabilidad']:.3f}", ha="center")
 plt.tight_layout()
+```{python, include=FALSE}
+softmax_df = pd.DataFrame(
+    {
+        "clase": ["A", "B", "C"],
+        "probabilidad": probabilidades.numpy(),
+    }
+)
+softmax_fig = px.bar(
+    softmax_df,
+    x="clase",
+    y="probabilidad",
+    text="probabilidad",
+    title="Softmax: probabilidades a partir de logits",
+)
+softmax_fig.update_traces(
+    marker_color="#0f766e",
+    texttemplate="%{text:.3f}",
+    hovertemplate="Clase %{x}<br>Probabilidad: %{y:.3f}<extra></extra>",
+)
+softmax_fig.update_yaxes(range=[0, 1])
+```
+
+```{python, results='asis', echo=FALSE}
+#print(interactive_html(softmax_fig))
 ```
 
 Para nuestro problema de Ames usamos salida **lineal** porque estamos resolviendo regresión: el precio puede tomar muchos valores continuos.
@@ -740,6 +780,8 @@ pd.DataFrame(
         ],
     }
 )
+```{python, results='asis', echo=FALSE}
+#print(interactive_html(loss_fig))
 ```
 
 Ejemplo de pérdidas en PyTorch:
@@ -847,6 +889,8 @@ Para Ames usaremos `MSELoss`, porque queremos penalizar errores grandes de preci
 loss_fn = nn.MSELoss()
 loss_fn
 ```
+
+
 
 ## Descenso en Gradiente
 
@@ -967,7 +1011,7 @@ gradient_fig.update_layout(
 ```
 
 ```{python, results='asis', echo=FALSE}
-print(interactive_html(gradient_fig))
+#print(interactive_html(gradient_fig))
 ```
 
 En la animación siguiente, el punto parte de un parámetro con pérdida alta y actualiza su posición con el gradiente de la curva. La tasa de aprendizaje controla qué tan largo es cada paso. Como esta trayectoria es determinista, el GIF se conserva como imagen del capítulo; el código queda disponible para regenerarlo si se cambia el ejemplo.
@@ -1007,6 +1051,8 @@ plt.close(fig)
 ```{r, echo=FALSE, fig.align='center', out.width='650px'}
 knitr::include_graphics("img/10-nn/descenso-gradiente.gif")
 ```
+
+
 
 ### Batch, Estocástico y Mini-Batch
 
@@ -1145,9 +1191,13 @@ _artist = ax.set_ylabel("MSE en escala logarítmica")
 _artist = ax.legend()
 _artist = ax.grid(True, alpha=0.25)
 plt.tight_layout()
+```{python, results='asis', echo=FALSE}
+#print(interactive_html(gd_history_fig))
 ```
 
 En redes neuronales casi siempre usamos mini-batches porque actualizan con frecuencia y reducen parte del ruido extremo del entrenamiento estocástico puro.
+
+
 
 ## Optimizadores
 
@@ -1335,9 +1385,12 @@ _artist = ax.set_ylabel("MSE en escala logarítmica")
 _artist = ax.legend()
 _artist = ax.grid(True, alpha=0.25)
 plt.tight_layout()
+```{python, results='asis', echo=FALSE}
+#print(interactive_html(optimizer_fig))
 ```
 
 En la práctica, `Adam` o `AdamW` suelen ser buenos puntos de partida. `SGD` con momentum puede ser competitivo, pero normalmente requiere más cuidado con la tasa de aprendizaje.
+
 
 ## Entrenamiento de una Red Densa Base
 
@@ -1449,7 +1502,7 @@ base_history_fig.update_traces(
 ```
 
 ```{python, results='asis', echo=FALSE}
-print(interactive_html(base_history_fig))
+#print(interactive_html(base_history_fig))
 ```
 
 ## Regularización en Redes Neuronales
@@ -1812,6 +1865,8 @@ _artist = fig.suptitle(
     fontweight="bold",
 )
 plt.tight_layout()
+```{python, results='asis', echo=FALSE}
+#print(interactive_html(regularization_fig))
 ```
 
 En el panel de entrenamiento normalmente esperamos que la red sin regularizar baje muy rápido. La parte importante está en validación: si la pérdida de validación deja de mejorar o empeora mientras entrenamiento sigue bajando, el modelo está aprendiendo detalles que no generalizan. La red regularizada acepta un poco más de restricción para buscar una curva de validación más estable.
@@ -1879,7 +1934,7 @@ prediction_fig.update_traces(
 ```
 
 ```{python, results='asis', echo=FALSE}
-print(interactive_html(prediction_fig))
+#print(interactive_html(prediction_fig))
 ```
 
 El objetivo no es que la red regularizada siempre gane en todos los conjuntos. El objetivo es mostrar la lógica: si una red aprende demasiado el entrenamiento, agregamos restricciones para mejorar su comportamiento en datos nuevos.
@@ -1909,3 +1964,4 @@ En un curso completo de redes neuronales, después de redes densas se estudiarí
 * **Interpretabilidad:** cómo entender qué aprende una red y cuándo confiar en ella.
 
 Por ahora, lo más importante es reconocer que una red neuronal densa es otro modelo supervisado: recibe variables, aprende parámetros y produce predicciones. Lo especial está en que puede combinar muchas transformaciones para aprender relaciones flexibles.
+
