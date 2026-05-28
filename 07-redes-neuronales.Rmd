@@ -32,6 +32,7 @@ La diferencia es que una red neuronal organiza sus parámetros en **capas**. Cad
 from pathlib import Path
 
 import joblib
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -49,7 +50,7 @@ from dsml_utils import (
     tabular_preprocessor,
 )
 
-torch.manual_seed(4595)
+seed_status = torch.manual_seed(4595)
 np.random.seed(4595)
 
 CACHE_VERSION = "v1"
@@ -88,7 +89,7 @@ def interactive_html(figure):
 knitr::include_graphics("img/10-nn/flujo-entrenamiento.png")
 ```
 
-Las gráficas de curvas y comparaciones de este capítulo son interactivas en la versión HTML del libro. El descenso en gradiente también se presenta como animación `.gif`, de modo que el movimiento permanezca visible en una lectura no interactiva.
+Algunas comparaciones de entrenamiento se conservan como gráficas interactivas en la versión HTML del libro. En las secciones conceptuales usaremos también gráficas estáticas para que la idea se entienda sin depender de controles interactivos.
 
 ### Ejecución Ágil y Reproducible
 
@@ -220,6 +221,63 @@ Una red neuronal no suele actualizar sus pesos con todo el conjunto de datos en 
 
 `TensorDataset` guarda pares `(X, y)`. `DataLoader` toma esos pares y los entrega por lotes.
 
+La forma más tangible de verlo es imaginar una tabla pequeña. Cada fila es una casa, `X` contiene sus variables y `y` contiene su precio. El `DataLoader` no cambia el contenido de los datos: sólo decide **qué filas se agrupan en cada paso de entrenamiento**.
+
+```{python}
+toy_ids = torch.arange(1, 11)
+toy_features = torch.tensor(
+    [
+        [80.0, 1960.0],
+        [95.0, 1972.0],
+        [110.0, 1985.0],
+        [120.0, 1990.0],
+        [150.0, 2001.0],
+        [165.0, 2005.0],
+        [175.0, 2010.0],
+        [190.0, 2014.0],
+        [205.0, 2018.0],
+        [230.0, 2020.0],
+    ]
+)
+toy_target = torch.tensor([140, 155, 170, 185, 230, 245, 260, 285, 310, 340], dtype=torch.float32)
+
+toy_dataset = TensorDataset(toy_ids, toy_features, toy_target)
+toy_loader = DataLoader(toy_dataset, batch_size=4, shuffle=False)
+
+batch_rows = []
+for batch_number, (ids, features, target) in enumerate(toy_loader, start=1):
+    for row_id, row_features, row_target in zip(ids, features, target):
+        batch_rows.append(
+            {
+                "batch": batch_number,
+                "id_casa": int(row_id),
+                "area_m2": row_features[0].item(),
+                "anio": int(row_features[1].item()),
+                "precio_miles": row_target.item(),
+            }
+        )
+
+pd.DataFrame(batch_rows)
+```
+
+En este ejemplo `batch_size=4` produce tres grupos: dos lotes de 4 casas y un último lote de 2 casas. Durante el entrenamiento, la red hace una predicción para las casas del lote, calcula una pérdida promedio para ese lote y actualiza sus pesos una vez.
+
+Cuando `shuffle=True`, el orden se mezcla al inicio de cada época. Esto ayuda a que el modelo no aprenda patrones artificiales del orden de la tabla.
+
+```{python}
+shuffled_loader = DataLoader(
+    toy_dataset,
+    batch_size=4,
+    shuffle=True,
+    generator=torch.Generator().manual_seed(4595),
+)
+
+[
+    ids.numpy().tolist()
+    for ids, _, _ in shuffled_loader
+]
+```
+
 ```{python}
 train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
 train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
@@ -235,6 +293,12 @@ Una capa densa se implementa con `nn.Linear`. Si una capa recibe 10 variables y 
 * una matriz de pesos de tamaño $10 \times 5$;
 * un sesgo por cada neurona de salida.
 
+Matemáticamente, si la entrada de una observación es un vector fila $x$, una capa densa calcula:
+
+$$z = xW^\top + b$$
+
+donde $W$ es la matriz de pesos y $b$ es el vector de sesgos. Cada neurona de salida tiene una columna de pesos que mira todas las entradas. Por eso se llama **densa** o **fully connected**: cada entrada se conecta con cada neurona de la siguiente capa.
+
 ```{python}
 capa_demo = nn.Linear(in_features=10, out_features=5)
 capa_demo.weight.shape, capa_demo.bias.shape
@@ -246,6 +310,45 @@ La capa recibe un tensor y produce otro:
 entrada_demo = torch.randn(4, 10)
 salida_demo = capa_demo(entrada_demo)
 salida_demo.shape
+```
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+fig, ax = plt.subplots(figsize=(7, 4))
+_artist = ax.axis("off")
+
+input_y = np.linspace(0.85, 0.15, 4)
+hidden_y = np.linspace(0.8, 0.2, 3)
+output_y = np.array([0.5])
+
+for idx, y_pos in enumerate(input_y, start=1):
+    _artist = ax.scatter(0.12, y_pos, s=750, color="#dbeafe", edgecolor="#1d4ed8", zorder=3)
+    _artist = ax.text(0.12, y_pos, f"x{idx}", ha="center", va="center", fontsize=10)
+
+for idx, y_pos in enumerate(hidden_y, start=1):
+    _artist = ax.scatter(0.52, y_pos, s=850, color="#dcfce7", edgecolor="#15803d", zorder=3)
+    _artist = ax.text(0.52, y_pos, f"h{idx}", ha="center", va="center", fontsize=10)
+
+_artist = ax.scatter(0.88, output_y[0], s=850, color="#fef3c7", edgecolor="#b45309", zorder=3)
+_artist = ax.text(0.88, output_y[0], "ŷ", ha="center", va="center", fontsize=12)
+
+for y_in in input_y:
+    for y_h in hidden_y:
+        _artist = ax.plot([0.16, 0.48], [y_in, y_h], color="#94a3b8", linewidth=1)
+
+for y_h in hidden_y:
+    _artist = ax.plot([0.56, 0.84], [y_h, output_y[0]], color="#94a3b8", linewidth=1)
+
+_artist = ax.text(0.12, 0.98, "Entradas", ha="center", fontsize=11, fontweight="bold")
+_artist = ax.text(0.52, 0.98, "Capa densa", ha="center", fontsize=11, fontweight="bold")
+_artist = ax.text(0.88, 0.98, "Salida", ha="center", fontsize=11, fontweight="bold")
+_artist = ax.text(
+    0.52,
+    0.04,
+    "Cada línea representa un peso aprendible; cada neurona también tiene un sesgo.",
+    ha="center",
+    fontsize=10,
+)
+plt.tight_layout()
 ```
 
 ## Parámetros Entrenables
@@ -320,18 +423,75 @@ print(interactive_html(parameter_fig))
 
 ## Funciones de Activación
 
-Las activaciones permiten que la red aprenda relaciones no lineales. Sin activaciones, apilar muchas capas lineales sería equivalente a tener una sola transformación lineal.
+Las activaciones permiten que la red aprenda relaciones no lineales. Sin activaciones, apilar muchas capas densas sería equivalente a tener una sola transformación lineal, por muy profunda que parezca la arquitectura.
 
-Activaciones comunes:
+La estructura general es:
 
-* **Lineal:** no cambia el valor. Se usa en salidas de regresión.
-* **Sigmoid:** comprime a valores entre 0 y 1. Útil para probabilidades binarias, aunque puede saturarse.
-* **Tanh:** comprime entre -1 y 1. Centrada en cero, pero también puede saturarse.
-* **ReLU:** deja pasar positivos y apaga negativos. Es simple, rápida y muy usada.
-* **Leaky ReLU:** parecida a ReLU, pero deja pasar una pequeña pendiente negativa.
-* **ELU:** suaviza la parte negativa y puede ayudar en algunas redes.
-* **GELU:** activación suave usada en arquitecturas modernas.
-* **Softmax:** convierte un vector en probabilidades que suman 1. Se usa en clasificación multiclase.
+$$z = xW^\top + b$$
+
+$$a = g(z)$$
+
+donde $g(\cdot)$ es la función de activación. La capa densa calcula una combinación lineal; la activación decide cómo pasa esa señal a la siguiente capa.
+
+### Activación Lineal
+
+La activación lineal no transforma la señal:
+
+$$g(z) = z$$
+
+Es útil cuando la salida debe ser un número continuo sin límite fijo, como el precio de una casa. Por eso la última capa de una red de regresión suele ser lineal.
+
+### Sigmoid
+
+La función sigmoid comprime cualquier número real al intervalo $(0, 1)$:
+
+$$g(z) = \frac{1}{1 + e^{-z}}$$
+
+Es interpretable como probabilidad binaria. Su problema es la saturación: para valores muy negativos o muy positivos, la curva se aplana y los gradientes se vuelven pequeños.
+
+### Tanh
+
+La función tangente hiperbólica comprime al intervalo $(-1, 1)$:
+
+$$g(z) = \tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$$
+
+Tiene la ventaja de estar centrada en cero, pero también puede saturarse cuando $z$ está lejos de cero.
+
+### ReLU
+
+ReLU deja pasar los valores positivos y corta los negativos:
+
+$$g(z) = \max(0, z)$$
+
+Es rápida, simple y funciona muy bien como activación de capas ocultas. Su riesgo es que algunas neuronas pueden quedar "muertas" si siempre reciben valores negativos y dejan de actualizarse de forma útil.
+
+### Leaky ReLU
+
+Leaky ReLU conserva una pequeña pendiente para valores negativos:
+
+$$g(z) = \max(\alpha z, z)$$
+
+donde $\alpha$ suele ser pequeño, por ejemplo $0.01$ o $0.1$. Reduce el riesgo de neuronas muertas.
+
+### ELU
+
+ELU suaviza la parte negativa:
+
+$$g(z)=
+\begin{cases}
+z, & z > 0 \\
+\alpha(e^z - 1), & z \leq 0
+\end{cases}$$
+
+Puede producir activaciones negativas suaves y ayudar a centrar la señal, aunque es un poco más costosa que ReLU.
+
+### GELU
+
+GELU usa una compuerta suave basada en la distribución normal:
+
+$$g(z) = z \Phi(z)$$
+
+donde $\Phi(z)$ es la función de distribución acumulada normal estándar. Es común en arquitecturas modernas, especialmente en modelos tipo transformer.
 
 ```{python}
 x = torch.linspace(-5, 5, 300)
@@ -354,24 +514,83 @@ activation_df = pd.DataFrame(
 ).melt(id_vars="entrada", var_name="activacion", value_name="salida")
 ```
 
-```{python, include=FALSE}
-activation_fig = px.line(
-    activation_df,
-    x="entrada",
-    y="salida",
-    color="activacion",
-    title="Funciones de activación",
-)
-activation_fig.add_hline(y=0, line_width=1, line_color="#9ca3af")
-activation_fig.add_vline(x=0, line_width=1, line_color="#9ca3af")
-activation_fig.update_traces(
-    hovertemplate="Entrada: %{x:.2f}<br>Salida: %{y:.3f}<extra></extra>"
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+activation_order = ["lineal", "sigmoid", "tanh", "relu", "leaky_relu", "elu", "gelu"]
+activation_colors = {
+    "lineal": "#2563eb",
+    "sigmoid": "#7c3aed",
+    "tanh": "#0891b2",
+    "relu": "#16a34a",
+    "leaky_relu": "#ea580c",
+    "elu": "#dc2626",
+    "gelu": "#4f46e5",
+}
+
+fig, axes = plt.subplots(3, 3, figsize=(10, 8), sharex=True)
+axes = axes.ravel()
+
+for ax, name in zip(axes, activation_order):
+    values = activation_df.query("activacion == @name")
+    _artist = ax.plot(
+        values["entrada"],
+        values["salida"],
+        color=activation_colors[name],
+        linewidth=2,
+    )
+    _artist = ax.axhline(0, color="#94a3b8", linewidth=0.8)
+    _artist = ax.axvline(0, color="#94a3b8", linewidth=0.8)
+    _artist = ax.set_title(name)
+    _artist = ax.grid(True, alpha=0.25)
+
+for ax in axes[len(activation_order):]:
+    _artist = ax.axis("off")
+
+_artist = fig.suptitle("Funciones de activación comunes", fontsize=13, fontweight="bold")
+plt.tight_layout()
+```
+
+```{python}
+pd.DataFrame(
+    {
+        "activacion": ["lineal", "sigmoid", "tanh", "ReLU", "Leaky ReLU", "ELU", "GELU"],
+        "ventaja": [
+            "No limita la escala de salida.",
+            "Produce valores interpretables como probabilidad.",
+            "Está centrada en cero.",
+            "Es simple, rápida y reduce saturación positiva.",
+            "Evita que la parte negativa quede totalmente apagada.",
+            "Tiene parte negativa suave.",
+            "Es suave y flexible.",
+        ],
+        "desventaja": [
+            "No agrega no linealidad.",
+            "Satura y puede producir gradientes pequeños.",
+            "También satura en los extremos.",
+            "Puede generar neuronas muertas.",
+            "Agrega un hiperparámetro de pendiente negativa.",
+            "Es más costosa que ReLU.",
+            "Es más costosa e intuitivamente menos simple.",
+        ],
+        "uso_comun": [
+            "Salida de regresión.",
+            "Salida binaria cuando se trabaja explícitamente con probabilidades.",
+            "Capas ocultas en redes pequeñas o recurrentes clásicas.",
+            "Capas ocultas en redes densas profundas.",
+            "Capas ocultas cuando ReLU muere con frecuencia.",
+            "Capas ocultas cuando se busca suavidad en negativos.",
+            "Arquitecturas modernas y transformers.",
+        ],
+    }
 )
 ```
 
-```{python, results='asis', echo=FALSE}
-print(interactive_html(activation_fig))
-```
+### Softmax
+
+Softmax se usa cuando queremos convertir varios logits en probabilidades que suman 1:
+
+$$\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}$$
+
+No se aplica de forma independiente a cada elemento: compara todas las clases entre sí. Si un logit sube, su probabilidad sube y las demás bajan.
 
 ```{python}
 logits_demo = torch.tensor([1.2, 0.4, -0.8])
@@ -386,30 +605,17 @@ pd.DataFrame(
 )
 ```
 
-```{python, include=FALSE}
-softmax_df = pd.DataFrame(
-    {
-        "clase": ["A", "B", "C"],
-        "probabilidad": probabilidades.numpy(),
-    }
-)
-softmax_fig = px.bar(
-    softmax_df,
-    x="clase",
-    y="probabilidad",
-    text="probabilidad",
-    title="Softmax: probabilidades a partir de logits",
-)
-softmax_fig.update_traces(
-    marker_color="#0f766e",
-    texttemplate="%{text:.3f}",
-    hovertemplate="Clase %{x}<br>Probabilidad: %{y:.3f}<extra></extra>",
-)
-softmax_fig.update_yaxes(range=[0, 1])
-```
-
-```{python, results='asis', echo=FALSE}
-print(interactive_html(softmax_fig))
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+softmax_df = pd.DataFrame({"clase": ["A", "B", "C"], "probabilidad": probabilidades.numpy()})
+fig, ax = plt.subplots(figsize=(5.5, 3.4))
+_artist = ax.bar(softmax_df["clase"], softmax_df["probabilidad"], color="#0f766e")
+_artist = ax.set_ylim(0, 1)
+_artist = ax.set_title("Softmax: probabilidades a partir de logits")
+_artist = ax.set_xlabel("Clase")
+_artist = ax.set_ylabel("Probabilidad")
+for idx, row in softmax_df.iterrows():
+    _artist = ax.text(idx, row["probabilidad"] + 0.03, f"{row['probabilidad']:.3f}", ha="center")
+plt.tight_layout()
 ```
 
 Para nuestro problema de Ames usamos salida **lineal** porque estamos resolviendo regresión: el precio puede tomar muchos valores continuos.
@@ -443,18 +649,41 @@ parameter_table(base_model)
 
 ## Funciones de Pérdida
 
-La función de pérdida responde: **¿qué tan mal estuvo mi predicción?**
+La función de pérdida responde: **¿qué tan mal estuvo mi predicción?** Durante el entrenamiento, PyTorch calcula esa pérdida y después calcula gradientes para saber cómo ajustar los pesos.
 
-Para regresión:
+En una red neuronal no optimizamos directamente métricas de negocio como "que el precio estimado sea útil". Optimizamos una función matemática que actúa como sustituto. Por eso conviene elegirla con intención.
 
-* **MSELoss:** penaliza mucho los errores grandes. Es suave y común, pero sensible a outliers.
-* **L1Loss / MAE:** mide error absoluto. Es más robusta a outliers, pero su gradiente es menos suave.
-* **HuberLoss / SmoothL1Loss:** combina MSE para errores pequeños y MAE para errores grandes. Es una alternativa balanceada.
+### Pérdidas para Regresión
 
-Para clasificación:
+Si definimos el residual como:
 
-* **BCEWithLogitsLoss:** clasificación binaria. Recibe logits y aplica sigmoid internamente.
-* **CrossEntropyLoss:** clasificación multiclase. Recibe logits y aplica softmax internamente.
+$$e_i = \hat{y}_i - y_i$$
+
+entonces las pérdidas de regresión más comunes son:
+
+**MSELoss**
+
+$$\text{MSE} = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$$
+
+Penaliza mucho los errores grandes porque eleva el error al cuadrado. Es suave, diferenciable y suele entrenar de forma estable. Su desventaja es que un outlier puede dominar el entrenamiento.
+
+**L1Loss / MAE**
+
+$$\text{MAE} = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y}_i|$$
+
+Trata los errores de forma lineal, por lo que es más robusta a valores extremos. Su desventaja es que el gradiente cambia abruptamente en cero y puede ser menos cómodo para optimizar.
+
+**HuberLoss**
+
+$$
+L_\delta(e)=
+\begin{cases}
+\frac{1}{2}e^2, & |e| \leq \delta \\
+\delta(|e|-\frac{1}{2}\delta), & |e| > \delta
+\end{cases}
+$$
+
+Se comporta como MSE cerca de cero y como MAE cuando el error es grande. Es una opción intermedia cuando queremos estabilidad pero también cierta robustez.
 
 ```{python}
 residuals = torch.linspace(-4, 4, 300)
@@ -473,23 +702,44 @@ loss_curve_df = pd.DataFrame(
 ).melt(id_vars="error", var_name="perdida", value_name="valor")
 ```
 
-```{python, include=FALSE}
-loss_fig = px.line(
-    loss_curve_df,
-    x="error",
-    y="valor",
-    color="perdida",
-    title="Comparación de pérdidas para regresión",
-)
-loss_fig.update_yaxes(title="Pérdida", range=[0, 8])
-loss_fig.update_xaxes(title="Error = predicción - observación")
-loss_fig.update_traces(
-    hovertemplate="Error: %{x:.2f}<br>Pérdida: %{y:.3f}<extra></extra>"
-)
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+fig, ax = plt.subplots(figsize=(7, 4))
+loss_colors = {"MSE": "#2563eb", "MAE": "#16a34a", "Huber": "#dc2626"}
+
+for name, group in loss_curve_df.groupby("perdida"):
+    _artist = ax.plot(group["error"], group["valor"], label=name, color=loss_colors[name], linewidth=2)
+
+_artist = ax.set_ylim(0, 8)
+_artist = ax.set_title("Pérdidas de regresión según el residual")
+_artist = ax.set_xlabel("Residual: predicción - observación")
+_artist = ax.set_ylabel("Pérdida")
+_artist = ax.axvline(0, color="#94a3b8", linewidth=0.8)
+_artist = ax.legend()
+_artist = ax.grid(True, alpha=0.25)
+plt.tight_layout()
 ```
 
-```{python, results='asis', echo=FALSE}
-print(interactive_html(loss_fig))
+```{python}
+pd.DataFrame(
+    {
+        "perdida": ["MSELoss", "L1Loss / MAE", "HuberLoss"],
+        "ventaja": [
+            "Gradiente suave; castiga con fuerza los errores grandes.",
+            "Más robusta ante outliers.",
+            "Balancea suavidad y robustez.",
+        ],
+        "desventaja": [
+            "Muy sensible a outliers.",
+            "Menos suave alrededor de cero.",
+            "Requiere elegir delta.",
+        ],
+        "uso_comun": [
+            "Regresión cuando los errores grandes son muy costosos.",
+            "Regresión con valores extremos o ruido fuerte.",
+            "Regresión con algunos outliers, pero donde se desea entrenamiento estable.",
+        ],
+    }
+)
 ```
 
 Ejemplo de pérdidas en PyTorch:
@@ -511,7 +761,31 @@ loss_examples = pd.DataFrame(
 loss_examples
 ```
 
-Ejemplo de pérdidas para clasificación:
+### Pérdidas para Clasificación
+
+En clasificación no comparamos números continuos, sino probabilidades o logits.
+
+**BCEWithLogitsLoss**
+
+Para clasificación binaria, la entropía cruzada binaria se puede escribir como:
+
+$$
+\text{BCE} = -\frac{1}{n}\sum_{i=1}^{n}
+\left[y_i\log(p_i) + (1-y_i)\log(1-p_i)\right]
+$$
+
+En PyTorch, `BCEWithLogitsLoss` recibe logits, no probabilidades. Internamente aplica sigmoid de manera numéricamente estable. Es preferible a aplicar `torch.sigmoid()` y luego usar una pérdida separada.
+
+**CrossEntropyLoss**
+
+Para clasificación multiclase:
+
+$$
+\text{CE} = -\frac{1}{n}\sum_{i=1}^{n}\log
+\left(\frac{e^{z_{i,y_i}}}{\sum_{k=1}^{K}e^{z_{i,k}}}\right)
+$$
+
+PyTorch también recibe logits aquí. Internamente combina `log_softmax` y negative log likelihood. La clase correcta debe tener el logit más alto para reducir la pérdida.
 
 ```{python}
 binary_logits = torch.tensor([[1.2], [-0.7], [0.3]])
@@ -527,6 +801,41 @@ pd.DataFrame(
         "valor": [
             nn.BCEWithLogitsLoss()(binary_logits, binary_target).item(),
             nn.CrossEntropyLoss()(multiclass_logits, multiclass_target).item(),
+        ],
+    }
+)
+```
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+logit_grid = torch.linspace(-6, 6, 300).reshape(-1, 1)
+bce_loss = nn.BCEWithLogitsLoss(reduction="none")
+bce_y0 = bce_loss(logit_grid, torch.zeros_like(logit_grid)).numpy().ravel()
+bce_y1 = bce_loss(logit_grid, torch.ones_like(logit_grid)).numpy().ravel()
+
+fig, ax = plt.subplots(figsize=(7, 4))
+_artist = ax.plot(logit_grid.numpy().ravel(), bce_y0, label="y = 0", color="#2563eb", linewidth=2)
+_artist = ax.plot(logit_grid.numpy().ravel(), bce_y1, label="y = 1", color="#dc2626", linewidth=2)
+_artist = ax.set_title("BCEWithLogitsLoss según el logit")
+_artist = ax.set_xlabel("Logit")
+_artist = ax.set_ylabel("Pérdida")
+_artist = ax.legend()
+_artist = ax.grid(True, alpha=0.25)
+plt.tight_layout()
+```
+
+```{python}
+pd.DataFrame(
+    {
+        "perdida": ["BCEWithLogitsLoss", "CrossEntropyLoss"],
+        "problema": ["Clasificación binaria", "Clasificación multiclase"],
+        "entrada_esperada": ["Logit por observación", "Vector de logits por observación"],
+        "ventaja": [
+            "Estable numéricamente y directa para probabilidades binarias.",
+            "Estable numéricamente y estándar para múltiples clases.",
+        ],
+        "cuidado": [
+            "No pasarle probabilidades ya transformadas por sigmoid.",
+            "No pasarle probabilidades ya transformadas por softmax.",
         ],
     }
 )
@@ -707,6 +1016,38 @@ Hay tres formas comunes de calcular gradientes:
 * **Stochastic gradient descent:** usa una observación por actualización. Es rápido por paso, pero muy ruidoso.
 * **Mini-batch gradient descent:** usa grupos pequeños. Es el equilibrio más usado en redes neuronales.
 
+La diferencia no está en la fórmula de actualización, sino en **cuántas observaciones usamos para estimar el gradiente**. Si el conjunto completo tiene $n$ observaciones:
+
+$$\nabla L_{\text{batch}}(\theta) = \frac{1}{n}\sum_{i=1}^{n}\nabla L_i(\theta)$$
+
+$$\nabla L_{\text{estocástico}}(\theta) = \nabla L_i(\theta)$$
+
+$$\nabla L_{\text{mini-batch}}(\theta) = \frac{1}{m}\sum_{i \in B}\nabla L_i(\theta)$$
+
+donde $B$ es un lote con $m$ observaciones. El gradiente de batch completo es más estable, pero puede ser costoso. El estocástico es barato por paso, pero tiene mucho ruido. El mini-batch combina ambas ideas.
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+fig, axes = plt.subplots(3, 1, figsize=(8, 4.8), sharex=True)
+sample_positions = np.arange(24)
+batch_styles = {
+    "Batch completo": np.repeat(0, 24),
+    "Estocástico": np.arange(24),
+    "Mini-batch": np.repeat(np.arange(6), 4),
+}
+
+for ax, (title, groups) in zip(axes, batch_styles.items()):
+    colors = plt.cm.tab20(groups % 20)
+    _artist = ax.scatter(sample_positions, np.zeros_like(sample_positions), s=120, c=colors)
+    _artist = ax.set_yticks([])
+    _artist = ax.set_ylabel(title, rotation=0, ha="right", va="center")
+    _artist = ax.set_xlim(-1, 24)
+    _artist = ax.grid(axis="x", alpha=0.15)
+
+_artist = axes[-1].set_xlabel("Observaciones del conjunto de entrenamiento")
+_artist = fig.suptitle("Qué observaciones participan en cada actualización", fontsize=12, fontweight="bold")
+plt.tight_layout()
+```
+
 ```{python}
 def make_toy_regression(n=256):
     rng = np.random.default_rng(4595)
@@ -774,7 +1115,7 @@ pd.DataFrame(
 ).round(4)
 ```
 
-```{python, include=FALSE}
+```{python}
 gd_history_df = pd.concat(
     [
         pd.DataFrame(
@@ -788,24 +1129,22 @@ gd_history_df = pd.concat(
     ],
     ignore_index=True,
 )
-
-gd_history_fig = px.line(
-    gd_history_df,
-    x="epoca",
-    y="mse",
-    color="tipo",
-    log_y=True,
-    title="Batch vs estocástico vs mini-batch",
-)
-gd_history_fig.update_xaxes(title="Época")
-gd_history_fig.update_yaxes(title="MSE (escala logarítmica)")
-gd_history_fig.update_traces(
-    hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
-)
 ```
 
-```{python, results='asis', echo=FALSE}
-print(interactive_html(gd_history_fig))
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+fig, ax = plt.subplots(figsize=(7, 4))
+batch_colors = {"batch": "#2563eb", "estocástico": "#dc2626", "mini_batch": "#16a34a"}
+
+for name, group in gd_history_df.groupby("tipo"):
+    _artist = ax.plot(group["epoca"], group["mse"], label=name, color=batch_colors[name], linewidth=2)
+
+_artist = ax.set_yscale("log")
+_artist = ax.set_title("Batch vs estocástico vs mini-batch")
+_artist = ax.set_xlabel("Época")
+_artist = ax.set_ylabel("MSE en escala logarítmica")
+_artist = ax.legend()
+_artist = ax.grid(True, alpha=0.25)
+plt.tight_layout()
 ```
 
 En redes neuronales casi siempre usamos mini-batches porque actualizan con frecuencia y reducen parte del ruido extremo del entrenamiento estocástico puro.
@@ -814,11 +1153,84 @@ En redes neuronales casi siempre usamos mini-batches porque actualizan con frecu
 
 El optimizador decide cómo actualizar los parámetros usando los gradientes. Todos buscan reducir la pérdida, pero no todos se mueven igual.
 
-* **SGD:** descenso en gradiente simple. Es fácil de entender y puede generalizar bien, pero puede ser lento.
-* **SGD con momentum:** acumula dirección de pasos anteriores. Ayuda a avanzar en direcciones consistentes y reduce oscilaciones.
-* **RMSprop:** adapta el tamaño de paso por parámetro usando promedios de gradientes recientes.
-* **Adam:** combina ideas de momentum y RMSprop. Es una opción práctica para iniciar.
-* **AdamW:** variante de Adam con mejor manejo de `weight_decay`; muy usada en redes modernas.
+### SGD
+
+El descenso en gradiente estocástico actualiza los parámetros con el gradiente del lote actual:
+
+$$\theta_{t+1} = \theta_t - \eta g_t$$
+
+donde $g_t = \nabla_\theta L_t(\theta_t)$ y $\eta$ es la tasa de aprendizaje. Es el optimizador más fácil de entender. Su ventaja es que puede generalizar bien; su desventaja es que puede avanzar lento y oscilar en superficies con curvaturas diferentes.
+
+### SGD con Momentum
+
+Momentum acumula una dirección de movimiento:
+
+$$v_t = \beta v_{t-1} + g_t$$
+
+$$\theta_{t+1} = \theta_t - \eta v_t$$
+
+La intuición es empujar una bola cuesta abajo: si varios gradientes apuntan en dirección parecida, el avance se vuelve más decidido. Ayuda a reducir zigzags.
+
+### RMSprop
+
+RMSprop mantiene un promedio móvil de gradientes cuadrados:
+
+$$s_t = \rho s_{t-1} + (1-\rho)g_t^2$$
+
+$$\theta_{t+1} = \theta_t - \eta \frac{g_t}{\sqrt{s_t} + \epsilon}$$
+
+Si un parámetro recibe gradientes grandes de forma repetida, RMSprop reduce su paso. Si recibe gradientes pequeños, permite pasos relativamente mayores. Esto ayuda cuando cada parámetro tiene una escala de gradiente distinta.
+
+### Adam
+
+Adam combina momentum y RMSprop. Guarda un promedio móvil del gradiente y otro del gradiente cuadrado:
+
+$$m_t = \beta_1 m_{t-1} + (1-\beta_1)g_t$$
+
+$$v_t = \beta_2 v_{t-1} + (1-\beta_2)g_t^2$$
+
+$$\theta_{t+1} = \theta_t - \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}$$
+
+En la práctica suele ser un excelente punto de partida porque adapta los pasos por parámetro y usa una dirección suavizada.
+
+### AdamW
+
+AdamW usa la misma idea de Adam, pero desacopla la penalización de pesos del gradiente principal:
+
+$$\theta_{t+1} =
+\theta_t - \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t}+\epsilon}
+- \eta\lambda\theta_t$$
+
+Esta forma hace que `weight_decay` se comporte de manera más clara como regularización. Suele preferirse sobre Adam cuando queremos usar decaimiento de pesos.
+
+```{python}
+pd.DataFrame(
+    {
+        "optimizador": ["SGD", "Momentum", "RMSprop", "Adam", "AdamW"],
+        "intuicion": [
+            "Dar un paso opuesto al gradiente actual.",
+            "Acumular dirección para reducir zigzags.",
+            "Ajustar el paso según magnitud reciente del gradiente.",
+            "Combinar dirección suavizada y escala adaptativa.",
+            "Adam con weight decay desacoplado.",
+        ],
+        "ventaja": [
+            "Simple y robusto.",
+            "Converge mejor en valles alargados.",
+            "Ayuda con gradientes de distintas escalas.",
+            "Funciona bien sin demasiado ajuste inicial.",
+            "Mejor manejo de regularización L2 práctica.",
+        ],
+        "cuidado": [
+            "Sensible a learning rate.",
+            "Requiere elegir momentum.",
+            "Puede necesitar learning rate menor.",
+            "Puede generalizar peor si no se regulariza.",
+            "Weight decay también debe ajustarse.",
+        ],
+    }
+)
+```
 
 ```{python, eval=FALSE}
 optimizer_examples = {
@@ -878,10 +1290,10 @@ def compare_optimizers():
 optimizer_histories = read_or_create_cache(
     f"optimizadores_{CACHE_VERSION}.pkl",
     compare_optimizers,
-)
+	)
 ```
 
-```{python, include=FALSE}
+```{python}
 optimizer_history_df = pd.concat(
     [
         pd.DataFrame(
@@ -895,24 +1307,34 @@ optimizer_history_df = pd.concat(
     ],
     ignore_index=True,
 )
-
-optimizer_fig = px.line(
-    optimizer_history_df,
-    x="epoca",
-    y="mse",
-    color="optimizador",
-    log_y=True,
-    title="Comparación de optimizadores en un problema simple",
-)
-optimizer_fig.update_xaxes(title="Época")
-optimizer_fig.update_yaxes(title="MSE (escala logarítmica)")
-optimizer_fig.update_traces(
-    hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
-)
 ```
 
-```{python, results='asis', echo=FALSE}
-print(interactive_html(optimizer_fig))
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+fig, ax = plt.subplots(figsize=(7, 4))
+optimizer_colors = {
+    "SGD": "#2563eb",
+    "Momentum": "#7c3aed",
+    "RMSprop": "#0891b2",
+    "Adam": "#16a34a",
+    "AdamW": "#dc2626",
+}
+
+for name, group in optimizer_history_df.groupby("optimizador"):
+    _artist = ax.plot(
+        group["epoca"],
+        group["mse"],
+        label=name,
+        color=optimizer_colors[name],
+        linewidth=2,
+    )
+
+_artist = ax.set_yscale("log")
+_artist = ax.set_title("Comparación de optimizadores en un problema simple")
+_artist = ax.set_xlabel("Época")
+_artist = ax.set_ylabel("MSE en escala logarítmica")
+_artist = ax.legend()
+_artist = ax.grid(True, alpha=0.25)
+plt.tight_layout()
 ```
 
 En la práctica, `Adam` o `AdamW` suelen ser buenos puntos de partida. `SGD` con momentum puede ser competitivo, pero normalmente requiere más cuidado con la tasa de aprendizaje.
@@ -1000,7 +1422,7 @@ if unregularized_result["n_features"] != n_features:
     raise ValueError("La caché no corresponde a las variables actuales. Actualice CACHE_VERSION.")
 
 unregularized_model = make_base_model().to(device)
-unregularized_model.load_state_dict(unregularized_result["state_dict"])
+unregularized_load_status = unregularized_model.load_state_dict(unregularized_result["state_dict"])
 unregularized_history = unregularized_result["history"]
 
 unregularized_history.tail()
@@ -1032,7 +1454,34 @@ print(interactive_html(base_history_fig))
 
 ## Regularización en Redes Neuronales
 
-La regularización busca reducir sobreajuste. En redes neuronales densas, las técnicas más comunes son:
+La regularización nace de un problema muy común: una red con muchos parámetros puede memorizar detalles accidentales del entrenamiento. A eso le llamamos **sobreajuste**. El modelo parece excelente en entrenamiento, pero pierde desempeño cuando ve datos nuevos.
+
+La idea de fondo es agregar alguna forma de restricción:
+
+$$\text{objetivo regularizado} =
+\text{pérdida en datos} + \lambda \cdot \text{penalización}$$
+
+El primer término empuja al modelo a explicar los datos. El segundo término evita soluciones demasiado complejas. El parámetro $\lambda$ controla la fuerza de la regularización.
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+complexity = np.linspace(0, 10, 200)
+train_error = 1.4 * np.exp(-0.35 * complexity) + 0.08
+valid_error = 0.09 * (complexity - 5.2) ** 2 + 0.55
+
+fig, ax = plt.subplots(figsize=(7, 4))
+_artist = ax.plot(complexity, train_error, label="Error de entrenamiento", color="#2563eb", linewidth=2)
+_artist = ax.plot(complexity, valid_error, label="Error de validación", color="#dc2626", linewidth=2)
+_artist = ax.axvline(complexity[np.argmin(valid_error)], color="#64748b", linestyle="--", linewidth=1)
+_artist = ax.text(5.4, 1.1, "Zona razonable", color="#334155")
+_artist = ax.set_title("Regularización: evitar complejidad innecesaria")
+_artist = ax.set_xlabel("Complejidad del modelo")
+_artist = ax.set_ylabel("Error")
+_artist = ax.legend()
+_artist = ax.grid(True, alpha=0.25)
+plt.tight_layout()
+```
+
+En redes neuronales densas, las técnicas más comunes son:
 
 * **Weight decay:** penaliza pesos grandes. Es parecido a regularización L2.
 * **Dropout:** apaga neuronas aleatoriamente durante entrenamiento para evitar dependencia excesiva.
@@ -1040,7 +1489,55 @@ La regularización busca reducir sobreajuste. En redes neuronales densas, las t�
 * **Early stopping:** detiene entrenamiento cuando la pérdida de validación deja de mejorar.
 * **Reducir arquitectura:** menos capas o menos neuronas también regulariza.
 
+```{python}
+pd.DataFrame(
+    {
+        "tecnica": ["Weight decay", "Dropout", "Batch normalization", "Early stopping", "Reducir arquitectura"],
+        "intuicion": [
+            "Preferir pesos pequeños.",
+            "Evitar que la red dependa demasiado de neuronas específicas.",
+            "Mantener activaciones con escala más estable.",
+            "Detener antes de memorizar ruido.",
+            "Dar menos capacidad al modelo.",
+        ],
+        "ventaja": [
+            "Simple y efectivo.",
+            "Reduce coadaptación entre neuronas.",
+            "Puede estabilizar y acelerar entrenamiento.",
+            "Muy fácil de interpretar con validación.",
+            "Reduce costo y riesgo de sobreajuste.",
+        ],
+        "desventaja": [
+            "Demasiado weight decay puede subajustar.",
+            "Puede volver el entrenamiento más lento.",
+            "No siempre ayuda en tabular pequeño.",
+            "Depende de una validación confiable.",
+            "Puede perder capacidad predictiva.",
+        ],
+    }
+)
+```
+
 ### Weight Decay
+
+Weight decay agrega una penalización proporcional al tamaño de los pesos:
+
+$$L_{\text{total}} = L_{\text{datos}} + \lambda \sum_j w_j^2$$
+
+La intuición es: si dos modelos tienen una pérdida similar, preferimos el que usa pesos más pequeños, porque suele ser menos sensible a pequeñas variaciones de entrada.
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+w_grid = np.linspace(-3, 3, 300)
+fig, ax = plt.subplots(figsize=(6.5, 3.8))
+_artist = ax.plot(w_grid, w_grid**2, label="L2 / weight decay", color="#2563eb", linewidth=2)
+_artist = ax.plot(w_grid, np.abs(w_grid), label="L1", color="#16a34a", linewidth=2, linestyle="--")
+_artist = ax.set_title("Penalizaciones según el tamaño del peso")
+_artist = ax.set_xlabel("Peso")
+_artist = ax.set_ylabel("Penalización")
+_artist = ax.legend()
+_artist = ax.grid(True, alpha=0.25)
+plt.tight_layout()
+```
 
 En PyTorch se agrega desde el optimizador. Este fragmento muestra la configuración; su aplicación completa aparece en el entrenamiento regularizado posterior.
 
@@ -1058,6 +1555,30 @@ weight_decay_optimizer
 
 `nn.Dropout(p=0.2)` apaga 20% de las activaciones durante entrenamiento. En evaluación se desactiva automáticamente con `model.eval()`.
 
+Matemáticamente, durante entrenamiento se multiplica la activación por una máscara aleatoria:
+
+$$\tilde{a} = \frac{m \odot a}{1-p}$$
+
+donde $m$ contiene ceros y unos, $p$ es la probabilidad de apagar una activación y $\odot$ indica multiplicación elemento a elemento. La división entre $1-p$ mantiene la escala esperada.
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+rng = np.random.default_rng(4595)
+activacion_demo = np.ones(18)
+mask_demo = rng.binomial(1, 0.7, size=18)
+
+fig, axes = plt.subplots(2, 1, figsize=(7, 3.8), sharex=True)
+_artist = axes[0].bar(np.arange(len(activacion_demo)), activacion_demo, color="#2563eb")
+_artist = axes[0].set_title("Antes de dropout")
+_artist = axes[0].set_ylabel("Activación")
+
+colors = np.where(mask_demo == 1, "#16a34a", "#dc2626")
+_artist = axes[1].bar(np.arange(len(mask_demo)), mask_demo, color=colors)
+_artist = axes[1].set_title("Máscara de dropout: algunas activaciones se apagan")
+_artist = axes[1].set_ylabel("Máscara")
+_artist = axes[1].set_xlabel("Neurona")
+plt.tight_layout()
+```
+
 ```{python}
 dropout_demo = nn.Dropout(p=0.5)
 dropout_demo.train()
@@ -1068,6 +1589,33 @@ dropout_demo(torch.ones(10))
 
 `nn.BatchNorm1d` normaliza activaciones dentro de la red. Puede hacer el entrenamiento más estable, aunque no siempre mejora todos los problemas tabulares.
 
+Para un mini-batch, la normalización base es:
+
+$$\hat{x} = \frac{x - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}$$
+
+Después se aprende una escala y un desplazamiento:
+
+$$y = \gamma \hat{x} + \beta$$
+
+La intuición es que las capas siguientes reciben señales con escala más estable, en lugar de tener que adaptarse a activaciones que cambian mucho durante el entrenamiento.
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+rng = np.random.default_rng(4595)
+raw_activation = rng.normal(loc=6.0, scale=2.2, size=600)
+normalized_activation = (raw_activation - raw_activation.mean()) / raw_activation.std()
+
+fig, axes = plt.subplots(1, 2, figsize=(8, 3.5), sharey=True)
+_artist = axes[0].hist(raw_activation, bins=28, color="#f97316", alpha=0.85)
+_artist = axes[0].set_title("Antes")
+_artist = axes[0].set_xlabel("Activación")
+_artist = axes[0].set_ylabel("Frecuencia")
+
+_artist = axes[1].hist(normalized_activation, bins=28, color="#0f766e", alpha=0.85)
+_artist = axes[1].set_title("Después de normalizar")
+_artist = axes[1].set_xlabel("Activación normalizada")
+plt.tight_layout()
+```
+
 ```{python}
 batch_norm_demo = nn.BatchNorm1d(num_features=4)
 batch_norm_demo(torch.randn(5, 4))
@@ -1076,6 +1624,28 @@ batch_norm_demo(torch.randn(5, 4))
 ### Early Stopping
 
 Early stopping guarda el mejor modelo observado en validación y detiene el entrenamiento si deja de mejorar durante varias épocas.
+
+La regla práctica es:
+
+$$\text{detener si } L_{\text{validación}} \text{ no mejora durante } p \text{ épocas}$$
+
+donde $p$ es la paciencia. Esta técnica no cambia la arquitectura ni la función de pérdida; cambia **cuándo dejamos de entrenar**.
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+epochs_demo = np.arange(1, 41)
+valid_demo = 1.2 * np.exp(-0.12 * epochs_demo) + 0.015 * np.maximum(epochs_demo - 20, 0) + 0.18
+best_epoch_demo = epochs_demo[np.argmin(valid_demo)]
+
+fig, ax = plt.subplots(figsize=(7, 3.8))
+_artist = ax.plot(epochs_demo, valid_demo, color="#dc2626", linewidth=2)
+_artist = ax.axvline(best_epoch_demo, color="#2563eb", linestyle="--", label=f"Mejor época: {best_epoch_demo}")
+_artist = ax.set_title("Early stopping usa la pérdida de validación")
+_artist = ax.set_xlabel("Época")
+_artist = ax.set_ylabel("Pérdida de validación")
+_artist = ax.legend()
+_artist = ax.grid(True, alpha=0.25)
+plt.tight_layout()
+```
 
 ```{python}
 def make_regularized_model(hidden_1=128, hidden_2=64, dropout=0.25):
@@ -1183,7 +1753,7 @@ if regularized_result["n_features"] != n_features:
     raise ValueError("La caché no corresponde a las variables actuales. Actualice CACHE_VERSION.")
 
 regularized_model = make_regularized_model(dropout=0.25).to(device)
-regularized_model.load_state_dict(regularized_result["state_dict"])
+regularized_load_status = regularized_model.load_state_dict(regularized_result["state_dict"])
 regularized_history = regularized_result["history"]
 
 regularized_history.tail()
@@ -1193,7 +1763,7 @@ regularized_history.tail()
 
 La red sin regularizar suele reducir rápido la pérdida de entrenamiento. La pregunta es si eso también se traduce en mejor validación.
 
-```{python, include=FALSE}
+```{python}
 comparison_history = pd.concat(
     [
         unregularized_history.assign(modelo="sin_regularizacion"),
@@ -1211,27 +1781,40 @@ comparison_long = comparison_history.melt(
 comparison_long["conjunto"] = comparison_long["conjunto"].replace(
     {"train_loss": "entrenamiento", "valid_loss": "validación"}
 )
-regularization_fig = px.line(
-    comparison_long,
-    x="epoch",
-    y="mse",
-    color="modelo",
-    facet_col="conjunto",
-    title="Contraste de pérdida: sin regularización y regularizada",
-)
-regularization_fig.update_xaxes(title="Época")
-regularization_fig.update_yaxes(title="MSE estandarizado")
-regularization_fig.for_each_annotation(
-    lambda annotation: annotation.update(text=annotation.text.split("=")[-1])
-)
-regularization_fig.update_traces(
-    hovertemplate="Época: %{x}<br>MSE: %{y:.4f}<extra></extra>"
-)
 ```
 
-```{python, results='asis', echo=FALSE}
-print(interactive_html(regularization_fig))
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+fig, axes = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
+regularization_colors = {
+    "sin_regularizacion": "#dc2626",
+    "regularizada": "#2563eb",
+}
+
+for ax, subset_name in zip(axes, ["entrenamiento", "validación"]):
+    subset = comparison_long.query("conjunto == @subset_name")
+    for model_name, group in subset.groupby("modelo"):
+        _artist = ax.plot(
+            group["epoch"],
+            group["mse"],
+            label=model_name,
+            color=regularization_colors[model_name],
+            linewidth=2,
+        )
+    _artist = ax.set_title(subset_name.capitalize())
+    _artist = ax.set_xlabel("Época")
+    _artist = ax.grid(True, alpha=0.25)
+
+_artist = axes[0].set_ylabel("MSE estandarizado")
+_artist = axes[1].legend()
+_artist = fig.suptitle(
+    "Contraste de pérdida: sin regularización y regularizada",
+    fontsize=13,
+    fontweight="bold",
+)
+plt.tight_layout()
 ```
+
+En el panel de entrenamiento normalmente esperamos que la red sin regularizar baje muy rápido. La parte importante está en validación: si la pérdida de validación deja de mejorar o empeora mientras entrenamiento sigue bajando, el modelo está aprendiendo detalles que no generalizan. La red regularizada acepta un poco más de restricción para buscar una curva de validación más estable.
 
 Evaluemos ambas redes en prueba:
 
