@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 10 Introducción a Redes Neuronales | AMAT- Ciencia de Datos y Machine Learning 2</title>
+  <meta name="description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 10 Introducción a Redes Neuronales | AMAT- Ciencia de Datos y Machine Learning 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 10 Introducción a Redes Neuronales | AMAT- Ciencia de Datos y Machine Learning 2" />
+  
+  <meta name="twitter:description" content="AMAT Curso 2 : Ciencia de Datos y Machine Learning 2" />
+  
+
+<meta name="author" content="Karina Lizette Gamboa Puente" />
+<meta name="author" content="Oscar Arturo Bringas López" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="a-b---testing.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li|
+|:-:|  
+<center>Ciencia de Datos y Machine Learning 2</center>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>BIENVENIDA</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#objetivo"><i class="fa fa-check"></i>Objetivo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#instructores"><i class="fa fa-check"></i>Instructores</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#ciencia-de-datos-en-python"><i class="fa fa-check"></i>Ciencia de Datos en Python</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-curso-actual"><i class="fa fa-check"></i>Estructura del curso actual</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#alcances-del-curso"><i class="fa fa-check"></i>Alcances del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#duración-y-evaluación-del-curso"><i class="fa fa-check"></i>Duración y evaluación del curso</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#recursos-y-dinámica-de-clase"><i class="fa fa-check"></i>Recursos y dinámica de clase</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="repaso.html"><a href="repaso.html"><i class="fa fa-check"></i><b>1</b> Repaso</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="repaso.html"><a href="repaso.html#machine-learning"><i class="fa fa-check"></i><b>1.1</b> Machine Learning</a></li>
+<li class="chapter" data-level="1.2" data-path="repaso.html"><a href="repaso.html#tipos-de-aprendizaje"><i class="fa fa-check"></i><b>1.2</b> Tipos de aprendizaje</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="repaso.html"><a href="repaso.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2.1</b> Aprendizaje supervisado</a></li>
+<li class="chapter" data-level="1.2.2" data-path="repaso.html"><a href="repaso.html#aprendizaje-no-supervisado"><i class="fa fa-check"></i><b>1.2.2</b> Aprendizaje no supervisado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="repaso.html"><a href="repaso.html#errores-sesgo-vs-varianza"><i class="fa fa-check"></i><b>1.3</b> Errores: Sesgo vs varianza</a></li>
+<li class="chapter" data-level="1.4" data-path="repaso.html"><a href="repaso.html#partición-de-datos"><i class="fa fa-check"></i><b>1.4</b> Partición de datos</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="repaso.html"><a href="repaso.html#métodos-comunes-para-particionar-datos"><i class="fa fa-check"></i><b>1.4.1</b> Métodos comunes para particionar datos</a></li>
+<li class="chapter" data-level="1.4.2" data-path="repaso.html"><a href="repaso.html#conjunto-de-validación"><i class="fa fa-check"></i><b>1.4.2</b> Conjunto de validación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="repaso.html"><a href="repaso.html#recetas-y-tratamiento-de-datos"><i class="fa fa-check"></i><b>1.5</b> Recetas y tratamiento de datos</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="repaso.html"><a href="repaso.html#pre-procesamiento-de-datos"><i class="fa fa-check"></i><b>1.5.1</b> Pre-procesamiento de datos</a></li>
+<li class="chapter" data-level="1.5.2" data-path="repaso.html"><a href="repaso.html#recetas"><i class="fa fa-check"></i><b>1.5.2</b> Recetas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature Engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#regresión-polinomial"><i class="fa fa-check"></i><b>2.1</b> Regresión polinomial</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#análisis-de-componentes-principales"><i class="fa fa-check"></i><b>2.2</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#eigenvalores-y-eigenvectores"><i class="fa fa-check"></i><b>2.2.1</b> Eigenvalores y eigenvectores</a></li>
+<li class="chapter" data-level="2.2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python"><i class="fa fa-check"></i><b>2.2.2</b> Implementación en Python</a></li>
+<li class="chapter" data-level="2.2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#representación-gráfica"><i class="fa fa-check"></i><b>2.2.3</b> Representación gráfica</a></li>
+<li class="chapter" data-level="2.2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#cuántas-componentes-retener"><i class="fa fa-check"></i><b>2.2.4</b> ¿Cuántas componentes retener?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#imputación-knn"><i class="fa fa-check"></i><b>2.3</b> Imputación KNN</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#ventajas-y-limitaciones-del-clasificador-knn"><i class="fa fa-check"></i><b>2.3.1</b> <strong>Ventajas y limitaciones del Clasificador KNN</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#implementación-en-python-1"><i class="fa fa-check"></i><b>2.3.2</b> Implementación en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#ejercicios"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html"><i class="fa fa-check"></i><b>3</b> Regularización Elasticnet</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-ridge"><i class="fa fa-check"></i><b>3.1</b> Regularización Ridge</a></li>
+<li class="chapter" data-level="3.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regularización-lasso"><i class="fa fa-check"></i><b>3.2</b> Regularización Lasso</a></li>
+<li class="chapter" data-level="3.3" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#comparación-entre-ridge-y-lasso"><i class="fa fa-check"></i><b>3.3</b> Comparación entre Ridge y Lasso</a></li>
+<li class="chapter" data-level="3.4" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#elasticnet"><i class="fa fa-check"></i><b>3.4</b> ElasticNet</a></li>
+<li class="chapter" data-level="3.5" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#implementación-en-python-2"><i class="fa fa-check"></i><b>3.5</b> Implementación en Python</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#regresión"><i class="fa fa-check"></i><b>3.5.1</b> Regresión</a></li>
+<li class="chapter" data-level="3.5.2" data-path="regularización-elasticnet.html"><a href="regularización-elasticnet.html#clasificación"><i class="fa fa-check"></i><b>3.5.2</b> Clasificación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html"><i class="fa fa-check"></i><b>4</b> Support Vector Machine (SVM / SVR)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#maximum-margin-classifier"><i class="fa fa-check"></i><b>4.1</b> Maximum Margin Classifier</a></li>
+<li class="chapter" data-level="4.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-classifiers"><i class="fa fa-check"></i><b>4.2</b> Support Vector Classifiers</a></li>
+<li class="chapter" data-level="4.3" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-machine"><i class="fa fa-check"></i><b>4.3</b> Support Vector Machine</a></li>
+<li class="chapter" data-level="4.4" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#el-truco-del-kernel"><i class="fa fa-check"></i><b>4.4</b> El truco del Kernel</a></li>
+<li class="chapter" data-level="4.5" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#support-vector-regression"><i class="fa fa-check"></i><b>4.5</b> Support Vector Regression</a></li>
+<li class="chapter" data-level="4.6" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ventajas-y-desventajas"><i class="fa fa-check"></i><b>4.6</b> Ventajas y desventajas</a></li>
+<li class="chapter" data-level="4.7" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ajuste-del-modelo-con-python"><i class="fa fa-check"></i><b>4.7</b> Ajuste del modelo con Python</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svr-en-python"><i class="fa fa-check"></i><b>4.7.1</b> Implementación de SVR en Python</a></li>
+<li class="chapter" data-level="4.7.2" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#implementación-de-svm-en-python"><i class="fa fa-check"></i><b>4.7.2</b> Implementación de SVM en Python</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="support-vector-machine-svm-svr.html"><a href="support-vector-machine-svm-svr.html#ejercicios-1"><i class="fa fa-check"></i><b>4.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bagging-boosting.html"><a href="bagging-boosting.html"><i class="fa fa-check"></i><b>5</b> Bagging &amp; Boosting</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aprendizaje-conjunto"><i class="fa fa-check"></i><b>5.1</b> Aprendizaje conjunto</a></li>
+<li class="chapter" data-level="5.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#bagging-vs.-boosting"><i class="fa fa-check"></i><b>5.2</b> Bagging vs. boosting</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#error-out-of-bag"><i class="fa fa-check"></i><b>5.2.1</b> Error Out-Of-Bag</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-bagging"><i class="fa fa-check"></i><b>5.3</b> Algoritmo Bagging</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ventajas-y-desventajas-de-bagging"><i class="fa fa-check"></i><b>5.3.1</b> Ventajas y desventajas de bagging</a></li>
+<li class="chapter" data-level="5.3.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#aplicaciónes-de-bagging"><i class="fa fa-check"></i><b>5.3.2</b> Aplicaciónes de Bagging</a></li>
+<li class="chapter" data-level="5.3.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-3"><i class="fa fa-check"></i><b>5.3.3</b> Implementación en <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#algoritmo-boosting"><i class="fa fa-check"></i><b>5.4</b> Algoritmo Boosting</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bagging-boosting.html"><a href="bagging-boosting.html#predicciones-de-boosting"><i class="fa fa-check"></i><b>5.4.1</b> Predicciones de <em>Boosting</em></a></li>
+<li class="chapter" data-level="5.4.2" data-path="bagging-boosting.html"><a href="bagging-boosting.html#modelos-boosting"><i class="fa fa-check"></i><b>5.4.2</b> Modelos <em>Boosting</em></a></li>
+<li class="chapter" data-level="5.4.3" data-path="bagging-boosting.html"><a href="bagging-boosting.html#implementación-en-python-4"><i class="fa fa-check"></i><b>5.4.3</b> Implementación en Python</a></li>
+<li class="chapter" data-level="5.4.4" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-regresión"><i class="fa fa-check"></i><b>5.4.4</b> XGBoost para regresión</a></li>
+<li class="chapter" data-level="5.4.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#xgboost-para-clasificación"><i class="fa fa-check"></i><b>5.4.5</b> XGBoost para clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="bagging-boosting.html"><a href="bagging-boosting.html#ejercicios-2"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html"><i class="fa fa-check"></i><b>6</b> Workflowsets &amp; Stacking</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-recetas"><i class="fa fa-check"></i><b>6.1</b> Múltiples recetas</a></li>
+<li class="chapter" data-level="6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#múltiples-modelos"><i class="fa fa-check"></i><b>6.2</b> Múltiples modelos</a></li>
+<li class="chapter" data-level="6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#creación-de-workflow-set-en-python"><i class="fa fa-check"></i><b>6.3</b> Creación de workflow set en Python</a></li>
+<li class="chapter" data-level="6.4" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-y-evaluación-de-modelos"><i class="fa fa-check"></i><b>6.4</b> Ajuste y evaluación de modelos</a></li>
+<li class="chapter" data-level="6.5" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#extracción-de-modelos"><i class="fa fa-check"></i><b>6.5</b> Extracción de modelos</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#selección-de-modelo"><i class="fa fa-check"></i><b>6.5.1</b> Selección de modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#métodos-de-carrera"><i class="fa fa-check"></i><b>6.6</b> Métodos de carrera</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-anova"><i class="fa fa-check"></i><b>6.6.1</b> Optimización ANOVA</a></li>
+<li class="chapter" data-level="6.6.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-logística"><i class="fa fa-check"></i><b>6.6.2</b> Optimización Logística</a></li>
+<li class="chapter" data-level="6.6.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#optimización-bayesiana"><i class="fa fa-check"></i><b>6.6.3</b> Optimización Bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#stacking"><i class="fa fa-check"></i><b>6.7</b> Stacking</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#elección-de-modelos"><i class="fa fa-check"></i><b>6.7.1</b> Elección de modelos</a></li>
+<li class="chapter" data-level="6.7.2" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ajuste-final"><i class="fa fa-check"></i><b>6.7.2</b> Ajuste final</a></li>
+<li class="chapter" data-level="6.7.3" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#comparación-de-métricas"><i class="fa fa-check"></i><b>6.7.3</b> Comparación de métricas</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="workflowsets-stacking.html"><a href="workflowsets-stacking.html#ejercicios-3"><i class="fa fa-check"></i><b>6.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html"><i class="fa fa-check"></i><b>7</b> Sesgo e Inequidad</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#propósito-vs-error"><i class="fa fa-check"></i><b>7.1</b> Propósito Vs Error</a></li>
+<li class="chapter" data-level="7.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#métricas"><i class="fa fa-check"></i><b>7.2</b> Métricas</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equal-parity-or-demographic-or-statistical-parity"><i class="fa fa-check"></i><b>7.2.1</b> Equal Parity or Demographic or Statistical Parity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#proportional-parity-o-impact-parity-o-minimizing-disparate-impact"><i class="fa fa-check"></i><b>7.2.2</b> Proportional Parity o Impact Parity o Minimizing Disparate Impact</a></li>
+<li class="chapter" data-level="7.2.3" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#equalized-odds"><i class="fa fa-check"></i><b>7.2.3</b> Equalized odds</a></li>
+<li class="chapter" data-level="7.2.4" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#predictive-rate-parity"><i class="fa fa-check"></i><b>7.2.4</b> Predictive rate parity</a></li>
+<li class="chapter" data-level="7.2.5" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#accuracy-parity"><i class="fa fa-check"></i><b>7.2.5</b> Accuracy parity</a></li>
+<li class="chapter" data-level="7.2.6" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-negative-parity-o-equal-oppportunity"><i class="fa fa-check"></i><b>7.2.6</b> False Negative Parity o Equal Oppportunity</a></li>
+<li class="chapter" data-level="7.2.7" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#false-positive-parity"><i class="fa fa-check"></i><b>7.2.7</b> False Positive Parity</a></li>
+<li class="chapter" data-level="7.2.8" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#negative-predictive-value-parity"><i class="fa fa-check"></i><b>7.2.8</b> Negative predictive value parity</a></li>
+<li class="chapter" data-level="7.2.9" data-path="sesgo-e-inequidad.html"><a href="sesgo-e-inequidad.html#specificity-parity"><i class="fa fa-check"></i><b>7.2.9</b> Specificity parity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html"><i class="fa fa-check"></i><b>8</b> Interpretabilidad de modelos</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#lime"><i class="fa fa-check"></i><b>8.1</b> LIME</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#proceso"><i class="fa fa-check"></i><b>8.1.1</b> Proceso</a></li>
+<li class="chapter" data-level="8.1.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#características-principales"><i class="fa fa-check"></i><b>8.1.2</b> Características principales</a></li>
+<li class="chapter" data-level="8.1.3" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#implementación-con-python"><i class="fa fa-check"></i><b>8.1.3</b> Implementación con <em>Python</em></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#shap"><i class="fa fa-check"></i><b>8.2</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#otros-métodos"><i class="fa fa-check"></i><b>8.2.1</b> Otros métodos</a></li>
+<li class="chapter" data-level="8.2.2" data-path="interpretabilidad-de-modelos.html"><a href="interpretabilidad-de-modelos.html#consejos"><i class="fa fa-check"></i><b>8.2.2</b> Consejos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="a-b---testing.html"><a href="a-b---testing.html"><i class="fa fa-check"></i><b>9</b> A / B - testing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="a-b---testing.html"><a href="a-b---testing.html#elementos-en-riesgo"><i class="fa fa-check"></i><b>9.1</b> Elementos en riesgo</a></li>
+<li class="chapter" data-level="9.2" data-path="a-b---testing.html"><a href="a-b---testing.html#costo-de-retención"><i class="fa fa-check"></i><b>9.2</b> Costo de retención</a></li>
+<li class="chapter" data-level="9.3" data-path="a-b---testing.html"><a href="a-b---testing.html#diseño-experimental"><i class="fa fa-check"></i><b>9.3</b> Diseño experimental</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="a-b---testing.html"><a href="a-b---testing.html#qué-es-y-para-qué-sirve-muestreo"><i class="fa fa-check"></i><b>9.3.1</b> ¿Qué es y para qué sirve muestreo?</a></li>
+<li class="chapter" data-level="9.3.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple"><i class="fa fa-check"></i><b>9.3.2</b> Muestreo aleatorio simple</a></li>
+<li class="chapter" data-level="9.3.3" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado"><i class="fa fa-check"></i><b>9.3.3</b> Muestreo estratificado</a></li>
+<li class="chapter" data-level="9.3.4" data-path="a-b---testing.html"><a href="a-b---testing.html#marco-de-muestreo"><i class="fa fa-check"></i><b>9.3.4</b> Marco de muestreo</a></li>
+<li class="chapter" data-level="9.3.5" data-path="a-b---testing.html"><a href="a-b---testing.html#tamaño-de-muestra"><i class="fa fa-check"></i><b>9.3.5</b> Tamaño de muestra</a></li>
+<li class="chapter" data-level="9.3.6" data-path="a-b---testing.html"><a href="a-b---testing.html#distribución-muestral"><i class="fa fa-check"></i><b>9.3.6</b> Distribución muestral</a></li>
+<li class="chapter" data-level="9.3.7" data-path="a-b---testing.html"><a href="a-b---testing.html#probabilidades-y-factores"><i class="fa fa-check"></i><b>9.3.7</b> Probabilidades y Factores</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="a-b---testing.html"><a href="a-b---testing.html#extracción-de-muestra"><i class="fa fa-check"></i><b>9.4</b> Extracción de muestra</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-aleatorio-simple-sin-remplazo"><i class="fa fa-check"></i><b>9.4.1</b> Muestreo Aleatorio Simple sin remplazo</a></li>
+<li class="chapter" data-level="9.4.2" data-path="a-b---testing.html"><a href="a-b---testing.html#muestreo-estratificado-1"><i class="fa fa-check"></i><b>9.4.2</b> Muestreo estratificado</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-muestral"><i class="fa fa-check"></i><b>9.5</b> Estimación muestral</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="a-b---testing.html"><a href="a-b---testing.html#implementación-de-diseño-muestral"><i class="fa fa-check"></i><b>9.5.1</b> Implementación de diseño muestral</a></li>
+<li class="chapter" data-level="9.5.2" data-path="a-b---testing.html"><a href="a-b---testing.html#estimación-de-resultados"><i class="fa fa-check"></i><b>9.5.2</b> Estimación de resultados</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html"><i class="fa fa-check"></i><b>10</b> Introducción a Redes Neuronales</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#idea-general"><i class="fa fa-check"></i><b>10.1</b> Idea General</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#ejecución-ágil-y-reproducible"><i class="fa fa-check"></i><b>10.1.1</b> Ejecución Ágil y Reproducible</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#preparación-de-datos"><i class="fa fa-check"></i><b>10.2</b> Preparación de Datos</a></li>
+<li class="chapter" data-level="10.3" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#de-regresión-lineal-a-neurona"><i class="fa fa-check"></i><b>10.3</b> De Regresión Lineal a Neurona</a></li>
+<li class="chapter" data-level="10.4" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#tensores"><i class="fa fa-check"></i><b>10.4</b> Tensores</a></li>
+<li class="chapter" data-level="10.5" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#datasets-batches-y-dataloaders"><i class="fa fa-check"></i><b>10.5</b> Datasets, Batches y DataLoaders</a></li>
+<li class="chapter" data-level="10.6" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#capas-densas"><i class="fa fa-check"></i><b>10.6</b> Capas Densas</a></li>
+<li class="chapter" data-level="10.7" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#parámetros-entrenables"><i class="fa fa-check"></i><b>10.7</b> Parámetros Entrenables</a></li>
+<li class="chapter" data-level="10.8" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#funciones-de-activación"><i class="fa fa-check"></i><b>10.8</b> Funciones de Activación</a></li>
+<li class="chapter" data-level="10.9" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#arquitectura-de-una-red-densa"><i class="fa fa-check"></i><b>10.9</b> Arquitectura de una Red Densa</a></li>
+<li class="chapter" data-level="10.10" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#funciones-de-pérdida"><i class="fa fa-check"></i><b>10.10</b> Funciones de Pérdida</a></li>
+<li class="chapter" data-level="10.11" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#descenso-en-gradiente"><i class="fa fa-check"></i><b>10.11</b> Descenso en Gradiente</a>
+<ul>
+<li class="chapter" data-level="10.11.1" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#batch-estocástico-y-mini-batch"><i class="fa fa-check"></i><b>10.11.1</b> Batch, Estocástico y Mini-Batch</a></li>
+</ul></li>
+<li class="chapter" data-level="10.12" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#optimizadores"><i class="fa fa-check"></i><b>10.12</b> Optimizadores</a></li>
+<li class="chapter" data-level="10.13" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#entrenamiento-de-una-red-densa-base"><i class="fa fa-check"></i><b>10.13</b> Entrenamiento de una Red Densa Base</a></li>
+<li class="chapter" data-level="10.14" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#regularización-en-redes-neuronales"><i class="fa fa-check"></i><b>10.14</b> Regularización en Redes Neuronales</a>
+<ul>
+<li class="chapter" data-level="10.14.1" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#weight-decay"><i class="fa fa-check"></i><b>10.14.1</b> Weight Decay</a></li>
+<li class="chapter" data-level="10.14.2" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#dropout"><i class="fa fa-check"></i><b>10.14.2</b> Dropout</a></li>
+<li class="chapter" data-level="10.14.3" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#batch-normalization"><i class="fa fa-check"></i><b>10.14.3</b> Batch Normalization</a></li>
+<li class="chapter" data-level="10.14.4" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#early-stopping"><i class="fa fa-check"></i><b>10.14.4</b> Early Stopping</a></li>
+</ul></li>
+<li class="chapter" data-level="10.15" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#contraste-sin-regularizar-vs-regularizada"><i class="fa fa-check"></i><b>10.15</b> Contraste: Sin Regularizar vs Regularizada</a></li>
+<li class="chapter" data-level="10.16" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#qué-conviene-revisar-al-entrenar"><i class="fa fa-check"></i><b>10.16</b> Qué Conviene Revisar al Entrenar</a></li>
+<li class="chapter" data-level="10.17" data-path="introducción-a-redes-neuronales.html"><a href="introducción-a-redes-neuronales.html#siguientes-pasos"><i class="fa fa-check"></i><b>10.17</b> Siguientes Pasos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="./"><img src="img/amat-logo.png" width="280"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">AMAT- Ciencia de Datos y Machine Learning 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introducción-a-redes-neuronales" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Capítulo 10</span> Introducción a Redes Neuronales<a href="introducción-a-redes-neuronales.html#introducción-a-redes-neuronales" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="idea-general" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Idea General<a href="introducción-a-redes-neuronales.html#idea-general" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una red neuronal es un modelo supervisado que aprende una función a partir de ejemplos. Si tenemos variables de entrada <span class="math inline">\(X\)</span> y una respuesta <span class="math inline">\(Y\)</span>, la red intenta construir una función que produzca una predicción <span class="math inline">\(\hat{Y}\)</span>:</p>
+<p><span class="math display">\[X \rightarrow \hat{Y}\]</span></p>
+<p>La idea es la misma que en otros modelos de machine learning:</p>
+<ol style="list-style-type: decimal">
+<li>Hacer una predicción.</li>
+<li>Medir qué tan mala fue la predicción.</li>
+<li>Ajustar los parámetros.</li>
+<li>Repetir muchas veces.</li>
+</ol>
+<p>La diferencia es que una red neuronal organiza sus parámetros en <strong>capas</strong>. Cada capa transforma la información y la pasa a la siguiente. En este capítulo veremos sólo <strong>redes neuronales densas</strong>, también llamadas <em>fully connected networks</em>. No veremos redes convolucionales ni secuenciales todavía; esas aparecerán al final como siguientes pasos.</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb446-1"><a href="introducción-a-redes-neuronales.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb446-2"><a href="introducción-a-redes-neuronales.html#cb446-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-3"><a href="introducción-a-redes-neuronales.html#cb446-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb446-4"><a href="introducción-a-redes-neuronales.html#cb446-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb446-5"><a href="introducción-a-redes-neuronales.html#cb446-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb446-6"><a href="introducción-a-redes-neuronales.html#cb446-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb446-7"><a href="introducción-a-redes-neuronales.html#cb446-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb446-8"><a href="introducción-a-redes-neuronales.html#cb446-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb446-9"><a href="introducción-a-redes-neuronales.html#cb446-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb446-10"><a href="introducción-a-redes-neuronales.html#cb446-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb446-11"><a href="introducción-a-redes-neuronales.html#cb446-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb446-12"><a href="introducción-a-redes-neuronales.html#cb446-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader, TensorDataset</span>
+<span id="cb446-13"><a href="introducción-a-redes-neuronales.html#cb446-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-14"><a href="introducción-a-redes-neuronales.html#cb446-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dsml_utils <span class="im">import</span> (</span>
+<span id="cb446-15"><a href="introducción-a-redes-neuronales.html#cb446-15" aria-hidden="true" tabindex="-1"></a>    load_ames,</span>
+<span id="cb446-16"><a href="introducción-a-redes-neuronales.html#cb446-16" aria-hidden="true" tabindex="-1"></a>    preprocess_ames_frame,</span>
+<span id="cb446-17"><a href="introducción-a-redes-neuronales.html#cb446-17" aria-hidden="true" tabindex="-1"></a>    regression_metrics,</span>
+<span id="cb446-18"><a href="introducción-a-redes-neuronales.html#cb446-18" aria-hidden="true" tabindex="-1"></a>    tabular_preprocessor,</span>
+<span id="cb446-19"><a href="introducción-a-redes-neuronales.html#cb446-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb446-20"><a href="introducción-a-redes-neuronales.html#cb446-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-21"><a href="introducción-a-redes-neuronales.html#cb446-21" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">4595</span>)</span></code></pre></div>
+<pre><code>## &lt;torch._C.Generator object at 0x3057b2bb0&gt;</code></pre>
+<div class="sourceCode" id="cb448"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb448-1"><a href="introducción-a-redes-neuronales.html#cb448-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">4595</span>)</span>
+<span id="cb448-2"><a href="introducción-a-redes-neuronales.html#cb448-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb448-3"><a href="introducción-a-redes-neuronales.html#cb448-3" aria-hidden="true" tabindex="-1"></a>CACHE_VERSION <span class="op">=</span> <span class="st">&quot;v1&quot;</span></span>
+<span id="cb448-4"><a href="introducción-a-redes-neuronales.html#cb448-4" aria-hidden="true" tabindex="-1"></a>RECALCULAR_CACHE <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb448-5"><a href="introducción-a-redes-neuronales.html#cb448-5" aria-hidden="true" tabindex="-1"></a>CACHE_DIR <span class="op">=</span> Path(<span class="st">&quot;data/cache/07-redes-neuronales&quot;</span>)</span>
+<span id="cb448-6"><a href="introducción-a-redes-neuronales.html#cb448-6" aria-hidden="true" tabindex="-1"></a>_plotly_javascript_included <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb448-7"><a href="introducción-a-redes-neuronales.html#cb448-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb448-8"><a href="introducción-a-redes-neuronales.html#cb448-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb448-9"><a href="introducción-a-redes-neuronales.html#cb448-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_or_create_cache(filename, builder):</span>
+<span id="cb448-10"><a href="introducción-a-redes-neuronales.html#cb448-10" aria-hidden="true" tabindex="-1"></a>    cache_path <span class="op">=</span> CACHE_DIR <span class="op">/</span> filename</span>
+<span id="cb448-11"><a href="introducción-a-redes-neuronales.html#cb448-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cache_path.exists() <span class="kw">and</span> <span class="kw">not</span> RECALCULAR_CACHE:</span>
+<span id="cb448-12"><a href="introducción-a-redes-neuronales.html#cb448-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> joblib.load(cache_path)</span>
+<span id="cb448-13"><a href="introducción-a-redes-neuronales.html#cb448-13" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> builder()</span>
+<span id="cb448-14"><a href="introducción-a-redes-neuronales.html#cb448-14" aria-hidden="true" tabindex="-1"></a>    CACHE_DIR.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb448-15"><a href="introducción-a-redes-neuronales.html#cb448-15" aria-hidden="true" tabindex="-1"></a>    joblib.dump(result, cache_path, compress<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb448-16"><a href="introducción-a-redes-neuronales.html#cb448-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
+<span id="cb448-17"><a href="introducción-a-redes-neuronales.html#cb448-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb448-18"><a href="introducción-a-redes-neuronales.html#cb448-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb448-19"><a href="introducción-a-redes-neuronales.html#cb448-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> interactive_html(figure):</span>
+<span id="cb448-20"><a href="introducción-a-redes-neuronales.html#cb448-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> _plotly_javascript_included</span>
+<span id="cb448-21"><a href="introducción-a-redes-neuronales.html#cb448-21" aria-hidden="true" tabindex="-1"></a>    figure.update_layout(</span>
+<span id="cb448-22"><a href="introducción-a-redes-neuronales.html#cb448-22" aria-hidden="true" tabindex="-1"></a>        template<span class="op">=</span><span class="st">&quot;plotly_white&quot;</span>,</span>
+<span id="cb448-23"><a href="introducción-a-redes-neuronales.html#cb448-23" aria-hidden="true" tabindex="-1"></a>        margin<span class="op">=</span><span class="bu">dict</span>(l<span class="op">=</span><span class="dv">45</span>, r<span class="op">=</span><span class="dv">25</span>, t<span class="op">=</span><span class="dv">55</span>, b<span class="op">=</span><span class="dv">45</span>),</span>
+<span id="cb448-24"><a href="introducción-a-redes-neuronales.html#cb448-24" aria-hidden="true" tabindex="-1"></a>        hovermode<span class="op">=</span><span class="st">&quot;closest&quot;</span>,</span>
+<span id="cb448-25"><a href="introducción-a-redes-neuronales.html#cb448-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb448-26"><a href="introducción-a-redes-neuronales.html#cb448-26" aria-hidden="true" tabindex="-1"></a>    include_javascript <span class="op">=</span> <span class="va">True</span> <span class="cf">if</span> <span class="kw">not</span> _plotly_javascript_included <span class="cf">else</span> <span class="va">False</span></span>
+<span id="cb448-27"><a href="introducción-a-redes-neuronales.html#cb448-27" aria-hidden="true" tabindex="-1"></a>    _plotly_javascript_included <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb448-28"><a href="introducción-a-redes-neuronales.html#cb448-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> figure.to_html(</span>
+<span id="cb448-29"><a href="introducción-a-redes-neuronales.html#cb448-29" aria-hidden="true" tabindex="-1"></a>        full_html<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb448-30"><a href="introducción-a-redes-neuronales.html#cb448-30" aria-hidden="true" tabindex="-1"></a>        include_plotlyjs<span class="op">=</span>include_javascript,</span>
+<span id="cb448-31"><a href="introducción-a-redes-neuronales.html#cb448-31" aria-hidden="true" tabindex="-1"></a>        config<span class="op">=</span>{<span class="st">&quot;displaylogo&quot;</span>: <span class="va">False</span>, <span class="st">&quot;responsive&quot;</span>: <span class="va">True</span>},</span>
+<span id="cb448-32"><a href="introducción-a-redes-neuronales.html#cb448-32" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<p><img src="img/10-nn/flujo-entrenamiento.png" width="760px" style="display: block; margin: auto;" /></p>
+<p>Las gráficas de curvas y comparaciones de este capítulo son interactivas en la versión HTML del libro. El descenso en gradiente también se presenta como animación <code>.gif</code>, de modo que el movimiento permanezca visible en una lectura no interactiva.</p>
+<div id="ejecución-ágil-y-reproducible" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> Ejecución Ágil y Reproducible<a href="introducción-a-redes-neuronales.html#ejecución-ágil-y-reproducible" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los ejemplos breves de tensores, capas, activaciones y pérdidas se ejecutan cada vez que se compila el capítulo. En cambio, los experimentos con miles de actualizaciones y la preparación completa de Ames tienen semilla fija y producen resultados estables: se conservan en archivos <code>.pkl</code> para que la compilación habitual sólo los lea.</p>
+<p>El código de entrenamiento sigue visible y es completamente reproducible. Para volver a entrenar los modelos o reconstruir los experimentos, basta cambiar <code>RECALCULAR_CACHE = True</code> en el chunk inicial, compilar una vez y después regresarlo a <code>False</code>. Si se modifica una arquitectura de manera permanente, debe incrementarse <code>CACHE_VERSION</code>.</p>
+</div>
+</div>
+<div id="preparación-de-datos" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Preparación de Datos<a href="introducción-a-redes-neuronales.html#preparación-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Usaremos el conjunto de viviendas de <em>Ames</em> para predecir <code>Sale_Price</code>. El flujo será:</p>
+<ol style="list-style-type: decimal">
+<li>Cargar datos.</li>
+<li>Separar entrenamiento, validación y prueba.</li>
+<li>Aplicar ingeniería de variables.</li>
+<li>Imputar, escalar y convertir variables categóricas a dummies.</li>
+<li>Escalar también la respuesta.</li>
+</ol>
+<p>La validación es importante porque las redes neuronales pueden aprender demasiado bien el conjunto de entrenamiento. Necesitamos un conjunto intermedio para observar si el modelo generaliza.</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb449-1"><a href="introducción-a-redes-neuronales.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_ames_data():</span>
+<span id="cb449-2"><a href="introducción-a-redes-neuronales.html#cb449-2" aria-hidden="true" tabindex="-1"></a>    ames <span class="op">=</span> load_ames()</span>
+<span id="cb449-3"><a href="introducción-a-redes-neuronales.html#cb449-3" aria-hidden="true" tabindex="-1"></a>    ames_train_full, ames_test <span class="op">=</span> train_test_split(ames, train_size<span class="op">=</span><span class="fl">0.75</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span>
+<span id="cb449-4"><a href="introducción-a-redes-neuronales.html#cb449-4" aria-hidden="true" tabindex="-1"></a>    ames_train, ames_valid <span class="op">=</span> train_test_split(ames_train_full, train_size<span class="op">=</span><span class="fl">0.80</span>, random_state<span class="op">=</span><span class="dv">4595</span>)</span>
+<span id="cb449-5"><a href="introducción-a-redes-neuronales.html#cb449-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-6"><a href="introducción-a-redes-neuronales.html#cb449-6" aria-hidden="true" tabindex="-1"></a>    X_train_raw <span class="op">=</span> preprocess_ames_frame(ames_train, keep_target<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb449-7"><a href="introducción-a-redes-neuronales.html#cb449-7" aria-hidden="true" tabindex="-1"></a>    X_valid_raw <span class="op">=</span> preprocess_ames_frame(ames_valid, keep_target<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb449-8"><a href="introducción-a-redes-neuronales.html#cb449-8" aria-hidden="true" tabindex="-1"></a>    X_test_raw <span class="op">=</span> preprocess_ames_frame(ames_test, keep_target<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb449-9"><a href="introducción-a-redes-neuronales.html#cb449-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-10"><a href="introducción-a-redes-neuronales.html#cb449-10" aria-hidden="true" tabindex="-1"></a>    y_train <span class="op">=</span> ames_train[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb449-11"><a href="introducción-a-redes-neuronales.html#cb449-11" aria-hidden="true" tabindex="-1"></a>    y_valid <span class="op">=</span> ames_valid[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb449-12"><a href="introducción-a-redes-neuronales.html#cb449-12" aria-hidden="true" tabindex="-1"></a>    y_test <span class="op">=</span> ames_test[<span class="st">&quot;Sale_Price&quot;</span>]</span>
+<span id="cb449-13"><a href="introducción-a-redes-neuronales.html#cb449-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-14"><a href="introducción-a-redes-neuronales.html#cb449-14" aria-hidden="true" tabindex="-1"></a>    preprocessor <span class="op">=</span> tabular_preprocessor(scale_numeric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb449-15"><a href="introducción-a-redes-neuronales.html#cb449-15" aria-hidden="true" tabindex="-1"></a>    X_train <span class="op">=</span> preprocessor.fit_transform(X_train_raw).astype(<span class="st">&quot;float32&quot;</span>)</span>
+<span id="cb449-16"><a href="introducción-a-redes-neuronales.html#cb449-16" aria-hidden="true" tabindex="-1"></a>    X_valid <span class="op">=</span> preprocessor.transform(X_valid_raw).astype(<span class="st">&quot;float32&quot;</span>)</span>
+<span id="cb449-17"><a href="introducción-a-redes-neuronales.html#cb449-17" aria-hidden="true" tabindex="-1"></a>    X_test <span class="op">=</span> preprocessor.transform(X_test_raw).astype(<span class="st">&quot;float32&quot;</span>)</span>
+<span id="cb449-18"><a href="introducción-a-redes-neuronales.html#cb449-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-19"><a href="introducción-a-redes-neuronales.html#cb449-19" aria-hidden="true" tabindex="-1"></a>    target_scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb449-20"><a href="introducción-a-redes-neuronales.html#cb449-20" aria-hidden="true" tabindex="-1"></a>    y_train_scaled <span class="op">=</span> target_scaler.fit_transform(y_train.to_frame()).astype(<span class="st">&quot;float32&quot;</span>)</span>
+<span id="cb449-21"><a href="introducción-a-redes-neuronales.html#cb449-21" aria-hidden="true" tabindex="-1"></a>    y_valid_scaled <span class="op">=</span> target_scaler.transform(y_valid.to_frame()).astype(<span class="st">&quot;float32&quot;</span>)</span>
+<span id="cb449-22"><a href="introducción-a-redes-neuronales.html#cb449-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-23"><a href="introducción-a-redes-neuronales.html#cb449-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb449-24"><a href="introducción-a-redes-neuronales.html#cb449-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;X_train&quot;</span>: X_train,</span>
+<span id="cb449-25"><a href="introducción-a-redes-neuronales.html#cb449-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;X_valid&quot;</span>: X_valid,</span>
+<span id="cb449-26"><a href="introducción-a-redes-neuronales.html#cb449-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;X_test&quot;</span>: X_test,</span>
+<span id="cb449-27"><a href="introducción-a-redes-neuronales.html#cb449-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;y_train&quot;</span>: y_train,</span>
+<span id="cb449-28"><a href="introducción-a-redes-neuronales.html#cb449-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;y_valid&quot;</span>: y_valid,</span>
+<span id="cb449-29"><a href="introducción-a-redes-neuronales.html#cb449-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;y_test&quot;</span>: y_test,</span>
+<span id="cb449-30"><a href="introducción-a-redes-neuronales.html#cb449-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;y_train_scaled&quot;</span>: y_train_scaled,</span>
+<span id="cb449-31"><a href="introducción-a-redes-neuronales.html#cb449-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;y_valid_scaled&quot;</span>: y_valid_scaled,</span>
+<span id="cb449-32"><a href="introducción-a-redes-neuronales.html#cb449-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;target_scaler&quot;</span>: target_scaler,</span>
+<span id="cb449-33"><a href="introducción-a-redes-neuronales.html#cb449-33" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb449-34"><a href="introducción-a-redes-neuronales.html#cb449-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-35"><a href="introducción-a-redes-neuronales.html#cb449-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-36"><a href="introducción-a-redes-neuronales.html#cb449-36" aria-hidden="true" tabindex="-1"></a>ames_prepared <span class="op">=</span> read_or_create_cache(</span>
+<span id="cb449-37"><a href="introducción-a-redes-neuronales.html#cb449-37" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f&quot;ames_preparado_</span><span class="sc">{</span>CACHE_VERSION<span class="sc">}</span><span class="ss">.pkl&quot;</span>,</span>
+<span id="cb449-38"><a href="introducción-a-redes-neuronales.html#cb449-38" aria-hidden="true" tabindex="-1"></a>    prepare_ames_data,</span>
+<span id="cb449-39"><a href="introducción-a-redes-neuronales.html#cb449-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb449-40"><a href="introducción-a-redes-neuronales.html#cb449-40" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> ames_prepared[<span class="st">&quot;X_train&quot;</span>]</span>
+<span id="cb449-41"><a href="introducción-a-redes-neuronales.html#cb449-41" aria-hidden="true" tabindex="-1"></a>X_valid <span class="op">=</span> ames_prepared[<span class="st">&quot;X_valid&quot;</span>]</span>
+<span id="cb449-42"><a href="introducción-a-redes-neuronales.html#cb449-42" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> ames_prepared[<span class="st">&quot;X_test&quot;</span>]</span>
+<span id="cb449-43"><a href="introducción-a-redes-neuronales.html#cb449-43" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> ames_prepared[<span class="st">&quot;y_train&quot;</span>]</span>
+<span id="cb449-44"><a href="introducción-a-redes-neuronales.html#cb449-44" aria-hidden="true" tabindex="-1"></a>y_valid <span class="op">=</span> ames_prepared[<span class="st">&quot;y_valid&quot;</span>]</span>
+<span id="cb449-45"><a href="introducción-a-redes-neuronales.html#cb449-45" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> ames_prepared[<span class="st">&quot;y_test&quot;</span>]</span>
+<span id="cb449-46"><a href="introducción-a-redes-neuronales.html#cb449-46" aria-hidden="true" tabindex="-1"></a>y_train_scaled <span class="op">=</span> ames_prepared[<span class="st">&quot;y_train_scaled&quot;</span>]</span>
+<span id="cb449-47"><a href="introducción-a-redes-neuronales.html#cb449-47" aria-hidden="true" tabindex="-1"></a>y_valid_scaled <span class="op">=</span> ames_prepared[<span class="st">&quot;y_valid_scaled&quot;</span>]</span>
+<span id="cb449-48"><a href="introducción-a-redes-neuronales.html#cb449-48" aria-hidden="true" tabindex="-1"></a>target_scaler <span class="op">=</span> ames_prepared[<span class="st">&quot;target_scaler&quot;</span>]</span>
+<span id="cb449-49"><a href="introducción-a-redes-neuronales.html#cb449-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb449-50"><a href="introducción-a-redes-neuronales.html#cb449-50" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
+<span id="cb449-51"><a href="introducción-a-redes-neuronales.html#cb449-51" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb449-52"><a href="introducción-a-redes-neuronales.html#cb449-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;conjunto&quot;</span>: [<span class="st">&quot;entrenamiento&quot;</span>, <span class="st">&quot;validación&quot;</span>, <span class="st">&quot;prueba&quot;</span>],</span>
+<span id="cb449-53"><a href="introducción-a-redes-neuronales.html#cb449-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;filas&quot;</span>: [X_train.shape[<span class="dv">0</span>], X_valid.shape[<span class="dv">0</span>], X_test.shape[<span class="dv">0</span>]],</span>
+<span id="cb449-54"><a href="introducción-a-redes-neuronales.html#cb449-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;columnas&quot;</span>: [X_train.shape[<span class="dv">1</span>], X_valid.shape[<span class="dv">1</span>], X_test.shape[<span class="dv">1</span>]],</span>
+<span id="cb449-55"><a href="introducción-a-redes-neuronales.html#cb449-55" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb449-56"><a href="introducción-a-redes-neuronales.html#cb449-56" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##         conjunto  filas  columnas
+## 0  entrenamiento   1757       126
+## 1     validación    440       126
+## 2         prueba    733       126</code></pre>
+<p>Escalar <code>Sale_Price</code> ayuda porque una red neuronal aprende con gradientes. Si la respuesta está en cientos de miles, las pérdidas y gradientes pueden ser muy grandes y el entrenamiento se vuelve menos estable.</p>
+</div>
+<div id="de-regresión-lineal-a-neurona" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> De Regresión Lineal a Neurona<a href="introducción-a-redes-neuronales.html#de-regresión-lineal-a-neurona" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una regresión lineal calcula:</p>
+<p><span class="math display">\[\hat{y} = b + w_1x_1 + w_2x_2 + \dots + w_px_p\]</span></p>
+<p>Una neurona hace casi lo mismo:</p>
+<p><span class="math display">\[z = b + w_1x_1 + w_2x_2 + \dots + w_px_p\]</span></p>
+<p>Después puede aplicar una función de activación:</p>
+<p><span class="math display">\[a = g(z)\]</span></p>
+<p>Si no usamos activación, una neurona se parece mucho a una regresión lineal. Si usamos activaciones no lineales y muchas neuronas, la red puede aprender relaciones más flexibles.</p>
+<p><img src="img/10-nn/neurona-densa.png" width="620px" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tensores" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Tensores<a href="introducción-a-redes-neuronales.html#tensores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>PyTorch trabaja con <strong>tensores</strong>. Un tensor es parecido a un arreglo de <code>numpy</code>, pero puede:</p>
+<ul>
+<li>vivir en CPU o GPU;</li>
+<li>guardar tipo de dato, forma y dispositivo;</li>
+<li>participar en cálculo automático de gradientes.</li>
+</ul>
+<div class="sourceCode" id="cb451"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb451-1"><a href="introducción-a-redes-neuronales.html#cb451-1" aria-hidden="true" tabindex="-1"></a>ejemplo_tensor <span class="op">=</span> torch.tensor([[<span class="fl">1.0</span>, <span class="fl">2.0</span>], [<span class="fl">3.0</span>, <span class="fl">4.0</span>]])</span>
+<span id="cb451-2"><a href="introducción-a-redes-neuronales.html#cb451-2" aria-hidden="true" tabindex="-1"></a>ejemplo_tensor, ejemplo_tensor.shape, ejemplo_tensor.dtype</span></code></pre></div>
+<pre><code>## (tensor([[1., 2.],
+##         [3., 4.]]), torch.Size([2, 2]), torch.float32)</code></pre>
+<p>Convertimos los datos ya preprocesados a tensores:</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb453-1"><a href="introducción-a-redes-neuronales.html#cb453-1" aria-hidden="true" tabindex="-1"></a>X_train_tensor <span class="op">=</span> torch.tensor(X_train, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb453-2"><a href="introducción-a-redes-neuronales.html#cb453-2" aria-hidden="true" tabindex="-1"></a>y_train_tensor <span class="op">=</span> torch.tensor(y_train_scaled, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb453-3"><a href="introducción-a-redes-neuronales.html#cb453-3" aria-hidden="true" tabindex="-1"></a>X_valid_tensor <span class="op">=</span> torch.tensor(X_valid, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb453-4"><a href="introducción-a-redes-neuronales.html#cb453-4" aria-hidden="true" tabindex="-1"></a>y_valid_tensor <span class="op">=</span> torch.tensor(y_valid_scaled, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb453-5"><a href="introducción-a-redes-neuronales.html#cb453-5" aria-hidden="true" tabindex="-1"></a>X_test_tensor <span class="op">=</span> torch.tensor(X_test, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb453-6"><a href="introducción-a-redes-neuronales.html#cb453-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb453-7"><a href="introducción-a-redes-neuronales.html#cb453-7" aria-hidden="true" tabindex="-1"></a>X_train_tensor.shape, y_train_tensor.shape</span></code></pre></div>
+<pre><code>## (torch.Size([1757, 126]), torch.Size([1757, 1]))</code></pre>
+</div>
+<div id="datasets-batches-y-dataloaders" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Datasets, Batches y DataLoaders<a href="introducción-a-redes-neuronales.html#datasets-batches-y-dataloaders" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una red neuronal no suele actualizar sus pesos con todo el conjunto de datos en cada paso. Es más común usar <strong>mini-batches</strong>, pequeños grupos de observaciones.</p>
+<p><code>TensorDataset</code> guarda pares <code>(X, y)</code>. <code>DataLoader</code> toma esos pares y los entrega por lotes.</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb455-1"><a href="introducción-a-redes-neuronales.html#cb455-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> TensorDataset(X_train_tensor, y_train_tensor)</span>
+<span id="cb455-2"><a href="introducción-a-redes-neuronales.html#cb455-2" aria-hidden="true" tabindex="-1"></a>train_loader <span class="op">=</span> DataLoader(train_dataset, batch_size<span class="op">=</span><span class="dv">64</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb455-3"><a href="introducción-a-redes-neuronales.html#cb455-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-4"><a href="introducción-a-redes-neuronales.html#cb455-4" aria-hidden="true" tabindex="-1"></a>batch_X, batch_y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(train_loader))</span>
+<span id="cb455-5"><a href="introducción-a-redes-neuronales.html#cb455-5" aria-hidden="true" tabindex="-1"></a>batch_X.shape, batch_y.shape</span></code></pre></div>
+<pre><code>## (torch.Size([64, 126]), torch.Size([64, 1]))</code></pre>
+</div>
+<div id="capas-densas" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> Capas Densas<a href="introducción-a-redes-neuronales.html#capas-densas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una capa densa se implementa con <code>nn.Linear</code>. Si una capa recibe 10 variables y produce 5 neuronas, aprende:</p>
+<ul>
+<li>una matriz de pesos de tamaño <span class="math inline">\(10 \times 5\)</span>;</li>
+<li>un sesgo por cada neurona de salida.</li>
+</ul>
+<div class="sourceCode" id="cb457"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb457-1"><a href="introducción-a-redes-neuronales.html#cb457-1" aria-hidden="true" tabindex="-1"></a>capa_demo <span class="op">=</span> nn.Linear(in_features<span class="op">=</span><span class="dv">10</span>, out_features<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb457-2"><a href="introducción-a-redes-neuronales.html#cb457-2" aria-hidden="true" tabindex="-1"></a>capa_demo.weight.shape, capa_demo.bias.shape</span></code></pre></div>
+<pre><code>## (torch.Size([5, 10]), torch.Size([5]))</code></pre>
+<p>La capa recibe un tensor y produce otro:</p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb459-1"><a href="introducción-a-redes-neuronales.html#cb459-1" aria-hidden="true" tabindex="-1"></a>entrada_demo <span class="op">=</span> torch.randn(<span class="dv">4</span>, <span class="dv">10</span>)</span>
+<span id="cb459-2"><a href="introducción-a-redes-neuronales.html#cb459-2" aria-hidden="true" tabindex="-1"></a>salida_demo <span class="op">=</span> capa_demo(entrada_demo)</span>
+<span id="cb459-3"><a href="introducción-a-redes-neuronales.html#cb459-3" aria-hidden="true" tabindex="-1"></a>salida_demo.shape</span></code></pre></div>
+<pre><code>## torch.Size([4, 5])</code></pre>
+</div>
+<div id="parámetros-entrenables" class="section level2 hasAnchor" number="10.7">
+<h2><span class="header-section-number">10.7</span> Parámetros Entrenables<a href="introducción-a-redes-neuronales.html#parámetros-entrenables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los parámetros entrenables son los valores que la red ajusta durante el entrenamiento. En una capa densa:</p>
+<p><span class="math display">\[\text{parámetros} = (\text{entradas} \times \text{salidas}) + \text{salidas}\]</span></p>
+<p>El primer término son los pesos y el segundo son los sesgos.</p>
+<div class="sourceCode" id="cb461"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb461-1"><a href="introducción-a-redes-neuronales.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_parameters(model):</span>
+<span id="cb461-2"><a href="introducción-a-redes-neuronales.html#cb461-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(parameter.numel() <span class="cf">for</span> parameter <span class="kw">in</span> model.parameters() <span class="cf">if</span> parameter.requires_grad)</span>
+<span id="cb461-3"><a href="introducción-a-redes-neuronales.html#cb461-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb461-4"><a href="introducción-a-redes-neuronales.html#cb461-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb461-5"><a href="introducción-a-redes-neuronales.html#cb461-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parameter_table(model):</span>
+<span id="cb461-6"><a href="introducción-a-redes-neuronales.html#cb461-6" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
+<span id="cb461-7"><a href="introducción-a-redes-neuronales.html#cb461-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, parameter <span class="kw">in</span> model.named_parameters():</span>
+<span id="cb461-8"><a href="introducción-a-redes-neuronales.html#cb461-8" aria-hidden="true" tabindex="-1"></a>        rows.append(</span>
+<span id="cb461-9"><a href="introducción-a-redes-neuronales.html#cb461-9" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb461-10"><a href="introducción-a-redes-neuronales.html#cb461-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;capa&quot;</span>: name,</span>
+<span id="cb461-11"><a href="introducción-a-redes-neuronales.html#cb461-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;forma&quot;</span>: <span class="bu">tuple</span>(parameter.shape),</span>
+<span id="cb461-12"><a href="introducción-a-redes-neuronales.html#cb461-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;parametros&quot;</span>: parameter.numel(),</span>
+<span id="cb461-13"><a href="introducción-a-redes-neuronales.html#cb461-13" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb461-14"><a href="introducción-a-redes-neuronales.html#cb461-14" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb461-15"><a href="introducción-a-redes-neuronales.html#cb461-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(rows)</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb462-1"><a href="introducción-a-redes-neuronales.html#cb462-1" aria-hidden="true" tabindex="-1"></a>n_features <span class="op">=</span> X_train_tensor.shape[<span class="dv">1</span>]</span>
+<span id="cb462-2"><a href="introducción-a-redes-neuronales.html#cb462-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb462-3"><a href="introducción-a-redes-neuronales.html#cb462-3" aria-hidden="true" tabindex="-1"></a>linear_model <span class="op">=</span> nn.Sequential(nn.Linear(n_features, <span class="dv">1</span>))</span>
+<span id="cb462-4"><a href="introducción-a-redes-neuronales.html#cb462-4" aria-hidden="true" tabindex="-1"></a>parameter_table(linear_model)</span></code></pre></div>
+<pre><code>##        capa     forma  parametros
+## 0  0.weight  (1, 126)         126
+## 1    0.bias      (1,)           1</code></pre>
+<p>Una red con capas ocultas aprende más parámetros:</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb464-1"><a href="introducción-a-redes-neuronales.html#cb464-1" aria-hidden="true" tabindex="-1"></a>small_dense_model <span class="op">=</span> nn.Sequential(</span>
+<span id="cb464-2"><a href="introducción-a-redes-neuronales.html#cb464-2" aria-hidden="true" tabindex="-1"></a>    nn.Linear(n_features, <span class="dv">64</span>),</span>
+<span id="cb464-3"><a href="introducción-a-redes-neuronales.html#cb464-3" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb464-4"><a href="introducción-a-redes-neuronales.html#cb464-4" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">64</span>, <span class="dv">32</span>),</span>
+<span id="cb464-5"><a href="introducción-a-redes-neuronales.html#cb464-5" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb464-6"><a href="introducción-a-redes-neuronales.html#cb464-6" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
+<span id="cb464-7"><a href="introducción-a-redes-neuronales.html#cb464-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb464-8"><a href="introducción-a-redes-neuronales.html#cb464-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb464-9"><a href="introducción-a-redes-neuronales.html#cb464-9" aria-hidden="true" tabindex="-1"></a>small_parameter_summary <span class="op">=</span> parameter_table(small_dense_model)</span>
+<span id="cb464-10"><a href="introducción-a-redes-neuronales.html#cb464-10" aria-hidden="true" tabindex="-1"></a>small_parameter_summary, count_parameters(small_dense_model)</span></code></pre></div>
+<pre><code>## (       capa      forma  parametros
+## 0  0.weight  (64, 126)        8064
+## 1    0.bias      (64,)          64
+## 2  2.weight   (32, 64)        2048
+## 3    2.bias      (32,)          32
+## 4  4.weight    (1, 32)          32
+## 5    4.bias       (1,)           1, 10241)</code></pre>
+<p>Más parámetros pueden dar más flexibilidad, pero también aumentan el riesgo de sobreajuste.</p>
+<pre><code>## Figure({
+##     &#39;data&#39;: [{&#39;alignmentgroup&#39;: &#39;True&#39;,
+##               &#39;hovertemplate&#39;: &#39;&lt;b&gt;%{x}&lt;/b&gt;&lt;br&gt;Parámetros: %{y:,}&lt;extra&gt;&lt;/extra&gt;&#39;,
+##               &#39;legendgroup&#39;: &#39;&#39;,
+##               &#39;marker&#39;: {&#39;color&#39;: &#39;#4f46e5&#39;, &#39;pattern&#39;: {&#39;shape&#39;: &#39;&#39;}},
+##               &#39;name&#39;: &#39;&#39;,
+##               &#39;offsetgroup&#39;: &#39;&#39;,
+##               &#39;orientation&#39;: &#39;v&#39;,
+##               &#39;showlegend&#39;: False,
+##               &#39;text&#39;: array([8.064e+03, 6.400e+01, 2.048e+03, 3.200e+01, 3.200e+01, 1.000e+00]),
+##               &#39;textposition&#39;: &#39;auto&#39;,
+##               &#39;type&#39;: &#39;bar&#39;,
+##               &#39;x&#39;: array([&#39;0.weight&#39;, &#39;0.bias&#39;, &#39;2.weight&#39;, &#39;2.bias&#39;, &#39;4.weight&#39;, &#39;4.bias&#39;],
+##                          dtype=object),
+##               &#39;xaxis&#39;: &#39;x&#39;,
+##               &#39;y&#39;: array([8064,   64, 2048,   32,   32,    1]),
+##               &#39;yaxis&#39;: &#39;y&#39;}],
+##     &#39;layout&#39;: {&#39;barmode&#39;: &#39;relative&#39;,
+##                &#39;legend&#39;: {&#39;tracegroupgap&#39;: 0},
+##                &#39;template&#39;: &#39;...&#39;,
+##                &#39;title&#39;: {&#39;text&#39;: &#39;Parámetros entrenables por tensor&#39;},
+##                &#39;xaxis&#39;: {&#39;anchor&#39;: &#39;y&#39;, &#39;domain&#39;: [0.0, 1.0], &#39;title&#39;: {&#39;text&#39;: &#39;Tensor de pesos o sesgos&#39;}},
+##                &#39;yaxis&#39;: {&#39;anchor&#39;: &#39;x&#39;, &#39;domain&#39;: [0.0, 1.0], &#39;title&#39;: {&#39;text&#39;: &#39;Número de parámetros&#39;}}}
+## })</code></pre>
+</div>
+<div id="funciones-de-activación" class="section level2 hasAnchor" number="10.8">
+<h2><span class="header-section-number">10.8</span> Funciones de Activación<a href="introducción-a-redes-neuronales.html#funciones-de-activación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Las activaciones permiten que la red aprenda relaciones no lineales. Sin activaciones, apilar muchas capas lineales sería equivalente a tener una sola transformación lineal.</p>
+<p>Activaciones comunes:</p>
+<ul>
+<li><strong>Lineal:</strong> no cambia el valor. Se usa en salidas de regresión.</li>
+<li><strong>Sigmoid:</strong> comprime a valores entre 0 y 1. Útil para probabilidades binarias, aunque puede saturarse.</li>
+<li><strong>Tanh:</strong> comprime entre -1 y 1. Centrada en cero, pero también puede saturarse.</li>
+<li><strong>ReLU:</strong> deja pasar positivos y apaga negativos. Es simple, rápida y muy usada.</li>
+<li><strong>Leaky ReLU:</strong> parecida a ReLU, pero deja pasar una pequeña pendiente negativa.</li>
+<li><strong>ELU:</strong> suaviza la parte negativa y puede ayudar en algunas redes.</li>
+<li><strong>GELU:</strong> activación suave usada en arquitecturas modernas.</li>
+<li><strong>Softmax:</strong> convierte un vector en probabilidades que suman 1. Se usa en clasificación multiclase.</li>
+</ul>
+<div class="sourceCode" id="cb467"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb467-1"><a href="introducción-a-redes-neuronales.html#cb467-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">300</span>)</span>
+<span id="cb467-2"><a href="introducción-a-redes-neuronales.html#cb467-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb467-3"><a href="introducción-a-redes-neuronales.html#cb467-3" aria-hidden="true" tabindex="-1"></a>activations <span class="op">=</span> {</span>
+<span id="cb467-4"><a href="introducción-a-redes-neuronales.html#cb467-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;lineal&quot;</span>: x,</span>
+<span id="cb467-5"><a href="introducción-a-redes-neuronales.html#cb467-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;sigmoid&quot;</span>: torch.sigmoid(x),</span>
+<span id="cb467-6"><a href="introducción-a-redes-neuronales.html#cb467-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tanh&quot;</span>: torch.tanh(x),</span>
+<span id="cb467-7"><a href="introducción-a-redes-neuronales.html#cb467-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;relu&quot;</span>: torch.relu(x),</span>
+<span id="cb467-8"><a href="introducción-a-redes-neuronales.html#cb467-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;leaky_relu&quot;</span>: torch.nn.functional.leaky_relu(x, negative_slope<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb467-9"><a href="introducción-a-redes-neuronales.html#cb467-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;elu&quot;</span>: torch.nn.functional.elu(x),</span>
+<span id="cb467-10"><a href="introducción-a-redes-neuronales.html#cb467-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;gelu&quot;</span>: torch.nn.functional.gelu(x),</span>
+<span id="cb467-11"><a href="introducción-a-redes-neuronales.html#cb467-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb467-12"><a href="introducción-a-redes-neuronales.html#cb467-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb467-13"><a href="introducción-a-redes-neuronales.html#cb467-13" aria-hidden="true" tabindex="-1"></a>activation_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb467-14"><a href="introducción-a-redes-neuronales.html#cb467-14" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb467-15"><a href="introducción-a-redes-neuronales.html#cb467-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;entrada&quot;</span>: x.numpy(),</span>
+<span id="cb467-16"><a href="introducción-a-redes-neuronales.html#cb467-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{name: values.numpy() <span class="cf">for</span> name, values <span class="kw">in</span> activations.items()},</span>
+<span id="cb467-17"><a href="introducción-a-redes-neuronales.html#cb467-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb467-18"><a href="introducción-a-redes-neuronales.html#cb467-18" aria-hidden="true" tabindex="-1"></a>).melt(id_vars<span class="op">=</span><span class="st">&quot;entrada&quot;</span>, var_name<span class="op">=</span><span class="st">&quot;activacion&quot;</span>, value_name<span class="op">=</span><span class="st">&quot;salida&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb468-1"><a href="introducción-a-redes-neuronales.html#cb468-1" aria-hidden="true" tabindex="-1"></a>logits_demo <span class="op">=</span> torch.tensor([<span class="fl">1.2</span>, <span class="fl">0.4</span>, <span class="op">-</span><span class="fl">0.8</span>])</span>
+<span id="cb468-2"><a href="introducción-a-redes-neuronales.html#cb468-2" aria-hidden="true" tabindex="-1"></a>probabilidades <span class="op">=</span> torch.softmax(logits_demo, dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb468-3"><a href="introducción-a-redes-neuronales.html#cb468-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb468-4"><a href="introducción-a-redes-neuronales.html#cb468-4" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
+<span id="cb468-5"><a href="introducción-a-redes-neuronales.html#cb468-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb468-6"><a href="introducción-a-redes-neuronales.html#cb468-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;clase&quot;</span>: [<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>],</span>
+<span id="cb468-7"><a href="introducción-a-redes-neuronales.html#cb468-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;logit&quot;</span>: logits_demo.numpy(),</span>
+<span id="cb468-8"><a href="introducción-a-redes-neuronales.html#cb468-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;softmax&quot;</span>: probabilidades.numpy(),</span>
+<span id="cb468-9"><a href="introducción-a-redes-neuronales.html#cb468-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb468-10"><a href="introducción-a-redes-neuronales.html#cb468-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##   clase  logit   softmax
+## 0     A    1.2  0.631049
+## 1     B    0.4  0.283548
+## 2     C   -0.8  0.085403</code></pre>
+<p>Para nuestro problema de Ames usamos salida <strong>lineal</strong> porque estamos resolviendo regresión: el precio puede tomar muchos valores continuos.</p>
+</div>
+<div id="arquitectura-de-una-red-densa" class="section level2 hasAnchor" number="10.9">
+<h2><span class="header-section-number">10.9</span> Arquitectura de una Red Densa<a href="introducción-a-redes-neuronales.html#arquitectura-de-una-red-densa" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una red densa para regresión tabular suele tener:</p>
+<ol style="list-style-type: decimal">
+<li>una capa de entrada con tantas variables como columnas tenga <code>X</code>;</li>
+<li>una o más capas ocultas;</li>
+<li>activaciones en las capas ocultas;</li>
+<li>una salida de una neurona para predecir el valor continuo.</li>
+</ol>
+<div class="sourceCode" id="cb470"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb470-1"><a href="introducción-a-redes-neuronales.html#cb470-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">&quot;cuda&quot;</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">&quot;cpu&quot;</span>)</span>
+<span id="cb470-2"><a href="introducción-a-redes-neuronales.html#cb470-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb470-3"><a href="introducción-a-redes-neuronales.html#cb470-3" aria-hidden="true" tabindex="-1"></a>base_model <span class="op">=</span> nn.Sequential(</span>
+<span id="cb470-4"><a href="introducción-a-redes-neuronales.html#cb470-4" aria-hidden="true" tabindex="-1"></a>    nn.Linear(n_features, <span class="dv">64</span>),</span>
+<span id="cb470-5"><a href="introducción-a-redes-neuronales.html#cb470-5" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb470-6"><a href="introducción-a-redes-neuronales.html#cb470-6" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">64</span>, <span class="dv">32</span>),</span>
+<span id="cb470-7"><a href="introducción-a-redes-neuronales.html#cb470-7" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb470-8"><a href="introducción-a-redes-neuronales.html#cb470-8" aria-hidden="true" tabindex="-1"></a>    nn.Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
+<span id="cb470-9"><a href="introducción-a-redes-neuronales.html#cb470-9" aria-hidden="true" tabindex="-1"></a>).to(device)</span>
+<span id="cb470-10"><a href="introducción-a-redes-neuronales.html#cb470-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb470-11"><a href="introducción-a-redes-neuronales.html#cb470-11" aria-hidden="true" tabindex="-1"></a>base_model</span></code></pre></div>
+<pre><code>## Sequential(
+##   (0): Linear(in_features=126, out_features=64, bias=True)
+##   (1): ReLU()
+##   (2): Linear(in_features=64, out_features=32, bias=True)
+##   (3): ReLU()
+##   (4): Linear(in_features=32, out_features=1, bias=True)
+## )</code></pre>
+<div class="sourceCode" id="cb472"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb472-1"><a href="introducción-a-redes-neuronales.html#cb472-1" aria-hidden="true" tabindex="-1"></a>parameter_table(base_model)</span></code></pre></div>
+<pre><code>##        capa      forma  parametros
+## 0  0.weight  (64, 126)        8064
+## 1    0.bias      (64,)          64
+## 2  2.weight   (32, 64)        2048
+## 3    2.bias      (32,)          32
+## 4  4.weight    (1, 32)          32
+## 5    4.bias       (1,)           1</code></pre>
+</div>
+<div id="funciones-de-pérdida" class="section level2 hasAnchor" number="10.10">
+<h2><span class="header-section-number">10.10</span> Funciones de Pérdida<a href="introducción-a-redes-neuronales.html#funciones-de-pérdida" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La función de pérdida responde: <strong>¿qué tan mal estuvo mi predicción?</strong></p>
+<p>Para regresión:</p>
+<ul>
+<li><strong>MSELoss:</strong> penaliza mucho los errores grandes. Es suave y común, pero sensible a outliers.</li>
+<li><strong>L1Loss / MAE:</strong> mide error absoluto. Es más robusta a outliers, pero su gradiente es menos suave.</li>
+<li><strong>HuberLoss / SmoothL1Loss:</strong> combina MSE para errores pequeños y MAE para errores grandes. Es una alternativa balanceada.</li>
+</ul>
+<p>Para clasificación:</p>
+<ul>
+<li><strong>BCEWithLogitsLoss:</strong> clasificación binaria. Recibe logits y aplica sigmoid internamente.</li>
+<li><strong>CrossEntropyLoss:</strong> clasificación multiclase. Recibe logits y aplica softmax internamente.</li>
+</ul>
+<div class="sourceCode" id="cb474"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb474-1"><a href="introducción-a-redes-neuronales.html#cb474-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">300</span>)</span>
+<span id="cb474-2"><a href="introducción-a-redes-neuronales.html#cb474-2" aria-hidden="true" tabindex="-1"></a>mse_curve <span class="op">=</span> residuals<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb474-3"><a href="introducción-a-redes-neuronales.html#cb474-3" aria-hidden="true" tabindex="-1"></a>mae_curve <span class="op">=</span> torch.<span class="bu">abs</span>(residuals)</span>
+<span id="cb474-4"><a href="introducción-a-redes-neuronales.html#cb474-4" aria-hidden="true" tabindex="-1"></a>huber_loss <span class="op">=</span> nn.HuberLoss(delta<span class="op">=</span><span class="fl">1.0</span>, reduction<span class="op">=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb474-5"><a href="introducción-a-redes-neuronales.html#cb474-5" aria-hidden="true" tabindex="-1"></a>huber_curve <span class="op">=</span> huber_loss(residuals, torch.zeros_like(residuals))</span>
+<span id="cb474-6"><a href="introducción-a-redes-neuronales.html#cb474-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb474-7"><a href="introducción-a-redes-neuronales.html#cb474-7" aria-hidden="true" tabindex="-1"></a>loss_curve_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb474-8"><a href="introducción-a-redes-neuronales.html#cb474-8" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb474-9"><a href="introducción-a-redes-neuronales.html#cb474-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;error&quot;</span>: residuals.numpy(),</span>
+<span id="cb474-10"><a href="introducción-a-redes-neuronales.html#cb474-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;MSE&quot;</span>: mse_curve.numpy(),</span>
+<span id="cb474-11"><a href="introducción-a-redes-neuronales.html#cb474-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;MAE&quot;</span>: mae_curve.numpy(),</span>
+<span id="cb474-12"><a href="introducción-a-redes-neuronales.html#cb474-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Huber&quot;</span>: huber_curve.numpy(),</span>
+<span id="cb474-13"><a href="introducción-a-redes-neuronales.html#cb474-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb474-14"><a href="introducción-a-redes-neuronales.html#cb474-14" aria-hidden="true" tabindex="-1"></a>).melt(id_vars<span class="op">=</span><span class="st">&quot;error&quot;</span>, var_name<span class="op">=</span><span class="st">&quot;perdida&quot;</span>, value_name<span class="op">=</span><span class="st">&quot;valor&quot;</span>)</span></code></pre></div>
+<p>Ejemplo de pérdidas en PyTorch:</p>
+<div class="sourceCode" id="cb475"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb475-1"><a href="introducción-a-redes-neuronales.html#cb475-1" aria-hidden="true" tabindex="-1"></a>y_real_demo <span class="op">=</span> torch.tensor([[<span class="fl">2.0</span>], [<span class="fl">4.0</span>], [<span class="fl">8.0</span>]])</span>
+<span id="cb475-2"><a href="introducción-a-redes-neuronales.html#cb475-2" aria-hidden="true" tabindex="-1"></a>y_pred_demo <span class="op">=</span> torch.tensor([[<span class="fl">2.5</span>], [<span class="fl">3.0</span>], [<span class="fl">11.0</span>]])</span>
+<span id="cb475-3"><a href="introducción-a-redes-neuronales.html#cb475-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb475-4"><a href="introducción-a-redes-neuronales.html#cb475-4" aria-hidden="true" tabindex="-1"></a>loss_examples <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb475-5"><a href="introducción-a-redes-neuronales.html#cb475-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb475-6"><a href="introducción-a-redes-neuronales.html#cb475-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;loss&quot;</span>: [<span class="st">&quot;MSELoss&quot;</span>, <span class="st">&quot;L1Loss&quot;</span>, <span class="st">&quot;HuberLoss&quot;</span>],</span>
+<span id="cb475-7"><a href="introducción-a-redes-neuronales.html#cb475-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;valor&quot;</span>: [</span>
+<span id="cb475-8"><a href="introducción-a-redes-neuronales.html#cb475-8" aria-hidden="true" tabindex="-1"></a>            nn.MSELoss()(y_pred_demo, y_real_demo).item(),</span>
+<span id="cb475-9"><a href="introducción-a-redes-neuronales.html#cb475-9" aria-hidden="true" tabindex="-1"></a>            nn.L1Loss()(y_pred_demo, y_real_demo).item(),</span>
+<span id="cb475-10"><a href="introducción-a-redes-neuronales.html#cb475-10" aria-hidden="true" tabindex="-1"></a>            nn.HuberLoss(delta<span class="op">=</span><span class="fl">1.0</span>)(y_pred_demo, y_real_demo).item(),</span>
+<span id="cb475-11"><a href="introducción-a-redes-neuronales.html#cb475-11" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb475-12"><a href="introducción-a-redes-neuronales.html#cb475-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb475-13"><a href="introducción-a-redes-neuronales.html#cb475-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb475-14"><a href="introducción-a-redes-neuronales.html#cb475-14" aria-hidden="true" tabindex="-1"></a>loss_examples</span></code></pre></div>
+<pre><code>##         loss     valor
+## 0    MSELoss  3.416667
+## 1     L1Loss  1.500000
+## 2  HuberLoss  1.041667</code></pre>
+<p>Ejemplo de pérdidas para clasificación:</p>
+<div class="sourceCode" id="cb477"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb477-1"><a href="introducción-a-redes-neuronales.html#cb477-1" aria-hidden="true" tabindex="-1"></a>binary_logits <span class="op">=</span> torch.tensor([[<span class="fl">1.2</span>], [<span class="op">-</span><span class="fl">0.7</span>], [<span class="fl">0.3</span>]])</span>
+<span id="cb477-2"><a href="introducción-a-redes-neuronales.html#cb477-2" aria-hidden="true" tabindex="-1"></a>binary_target <span class="op">=</span> torch.tensor([[<span class="fl">1.0</span>], [<span class="fl">0.0</span>], [<span class="fl">1.0</span>]])</span>
+<span id="cb477-3"><a href="introducción-a-redes-neuronales.html#cb477-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-4"><a href="introducción-a-redes-neuronales.html#cb477-4" aria-hidden="true" tabindex="-1"></a>multiclass_logits <span class="op">=</span> torch.tensor([[<span class="fl">2.0</span>, <span class="fl">0.5</span>, <span class="op">-</span><span class="fl">1.0</span>], [<span class="fl">0.2</span>, <span class="fl">1.5</span>, <span class="fl">0.1</span>]])</span>
+<span id="cb477-5"><a href="introducción-a-redes-neuronales.html#cb477-5" aria-hidden="true" tabindex="-1"></a>multiclass_target <span class="op">=</span> torch.tensor([<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb477-6"><a href="introducción-a-redes-neuronales.html#cb477-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-7"><a href="introducción-a-redes-neuronales.html#cb477-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
+<span id="cb477-8"><a href="introducción-a-redes-neuronales.html#cb477-8" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb477-9"><a href="introducción-a-redes-neuronales.html#cb477-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;problema&quot;</span>: [<span class="st">&quot;binario&quot;</span>, <span class="st">&quot;multiclase&quot;</span>],</span>
+<span id="cb477-10"><a href="introducción-a-redes-neuronales.html#cb477-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;loss&quot;</span>: [<span class="st">&quot;BCEWithLogitsLoss&quot;</span>, <span class="st">&quot;CrossEntropyLoss&quot;</span>],</span>
+<span id="cb477-11"><a href="introducción-a-redes-neuronales.html#cb477-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;valor&quot;</span>: [</span>
+<span id="cb477-12"><a href="introducción-a-redes-neuronales.html#cb477-12" aria-hidden="true" tabindex="-1"></a>            nn.BCEWithLogitsLoss()(binary_logits, binary_target).item(),</span>
+<span id="cb477-13"><a href="introducción-a-redes-neuronales.html#cb477-13" aria-hidden="true" tabindex="-1"></a>            nn.CrossEntropyLoss()(multiclass_logits, multiclass_target).item(),</span>
+<span id="cb477-14"><a href="introducción-a-redes-neuronales.html#cb477-14" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb477-15"><a href="introducción-a-redes-neuronales.html#cb477-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb477-16"><a href="introducción-a-redes-neuronales.html#cb477-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##      problema               loss     valor
+## 0     binario  BCEWithLogitsLoss  0.406941
+## 1  multiclase   CrossEntropyLoss  0.329724</code></pre>
+<p>Para Ames usaremos <code>MSELoss</code>, porque queremos penalizar errores grandes de precio y estamos trabajando con la respuesta escalada.</p>
+<div class="sourceCode" id="cb479"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb479-1"><a href="introducción-a-redes-neuronales.html#cb479-1" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> nn.MSELoss()</span>
+<span id="cb479-2"><a href="introducción-a-redes-neuronales.html#cb479-2" aria-hidden="true" tabindex="-1"></a>loss_fn</span></code></pre></div>
+<pre><code>## MSELoss()</code></pre>
+</div>
+<div id="descenso-en-gradiente" class="section level2 hasAnchor" number="10.11">
+<h2><span class="header-section-number">10.11</span> Descenso en Gradiente<a href="introducción-a-redes-neuronales.html#descenso-en-gradiente" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El descenso en gradiente busca parámetros que reduzcan la pérdida. La intuición es caminar cuesta abajo:</p>
+<p><span class="math display">\[\theta_{nuevo} = \theta_{actual} - \eta \nabla L(\theta)\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(\theta\)</span> son los parámetros;</li>
+<li><span class="math inline">\(\eta\)</span> es la tasa de aprendizaje;</li>
+<li><span class="math inline">\(\nabla L(\theta)\)</span> es la dirección de mayor crecimiento de la pérdida.</li>
+</ul>
+<p>Como queremos bajar, nos movemos en dirección contraria al gradiente.</p>
+<p>En la animación siguiente, el punto parte de un parámetro con pérdida alta y actualiza su posición con el gradiente de la curva. La tasa de aprendizaje controla qué tan largo es cada paso. Como esta trayectoria es determinista, el GIF se conserva como imagen del capítulo; el código queda disponible para regenerarlo si se cambia el ejemplo.</p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb481-1"><a href="introducción-a-redes-neuronales.html#cb481-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb481-2"><a href="introducción-a-redes-neuronales.html#cb481-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.animation <span class="im">import</span> FuncAnimation, PillowWriter</span>
+<span id="cb481-3"><a href="introducción-a-redes-neuronales.html#cb481-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-4"><a href="introducción-a-redes-neuronales.html#cb481-4" aria-hidden="true" tabindex="-1"></a>gif_path <span class="op">=</span> Path(<span class="st">&quot;img/10-nn/descenso-gradiente.gif&quot;</span>)</span>
+<span id="cb481-5"><a href="introducción-a-redes-neuronales.html#cb481-5" aria-hidden="true" tabindex="-1"></a>gif_path.parent.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb481-6"><a href="introducción-a-redes-neuronales.html#cb481-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-7"><a href="introducción-a-redes-neuronales.html#cb481-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb481-8"><a href="introducción-a-redes-neuronales.html#cb481-8" aria-hidden="true" tabindex="-1"></a>ax.plot(theta_grid, loss_grid, color<span class="op">=</span><span class="st">&quot;#2563eb&quot;</span>, label<span class="op">=</span><span class="st">&quot;Pérdida&quot;</span>)</span>
+<span id="cb481-9"><a href="introducción-a-redes-neuronales.html#cb481-9" aria-hidden="true" tabindex="-1"></a>path_line, <span class="op">=</span> ax.plot([], [], <span class="st">&quot;-o&quot;</span>, color<span class="op">=</span><span class="st">&quot;#dc2626&quot;</span>, label<span class="op">=</span><span class="st">&quot;Recorrido&quot;</span>)</span>
+<span id="cb481-10"><a href="introducción-a-redes-neuronales.html#cb481-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&quot;Parámetro&quot;</span>)</span>
+<span id="cb481-11"><a href="introducción-a-redes-neuronales.html#cb481-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&quot;Pérdida&quot;</span>)</span>
+<span id="cb481-12"><a href="introducción-a-redes-neuronales.html#cb481-12" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">&quot;upper right&quot;</span>)</span>
+<span id="cb481-13"><a href="introducción-a-redes-neuronales.html#cb481-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-14"><a href="introducción-a-redes-neuronales.html#cb481-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-15"><a href="introducción-a-redes-neuronales.html#cb481-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_gradient_frame(frame):</span>
+<span id="cb481-16"><a href="introducción-a-redes-neuronales.html#cb481-16" aria-hidden="true" tabindex="-1"></a>    path_line.set_data(gd_path[: frame <span class="op">+</span> <span class="dv">1</span>], gd_loss[: frame <span class="op">+</span> <span class="dv">1</span>])</span>
+<span id="cb481-17"><a href="introducción-a-redes-neuronales.html#cb481-17" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f&quot;Descenso en gradiente | Iteración </span><span class="sc">{</span>frame<span class="sc">}</span><span class="ss"> | pérdida = </span><span class="sc">{</span>gd_loss[frame]<span class="sc">:.3f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb481-18"><a href="introducción-a-redes-neuronales.html#cb481-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (path_line,)</span>
+<span id="cb481-19"><a href="introducción-a-redes-neuronales.html#cb481-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-20"><a href="introducción-a-redes-neuronales.html#cb481-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-21"><a href="introducción-a-redes-neuronales.html#cb481-21" aria-hidden="true" tabindex="-1"></a>gradient_animation <span class="op">=</span> FuncAnimation(</span>
+<span id="cb481-22"><a href="introducción-a-redes-neuronales.html#cb481-22" aria-hidden="true" tabindex="-1"></a>    fig,</span>
+<span id="cb481-23"><a href="introducción-a-redes-neuronales.html#cb481-23" aria-hidden="true" tabindex="-1"></a>    update_gradient_frame,</span>
+<span id="cb481-24"><a href="introducción-a-redes-neuronales.html#cb481-24" aria-hidden="true" tabindex="-1"></a>    frames<span class="op">=</span><span class="bu">len</span>(gd_path),</span>
+<span id="cb481-25"><a href="introducción-a-redes-neuronales.html#cb481-25" aria-hidden="true" tabindex="-1"></a>    interval<span class="op">=</span><span class="dv">550</span>,</span>
+<span id="cb481-26"><a href="introducción-a-redes-neuronales.html#cb481-26" aria-hidden="true" tabindex="-1"></a>    repeat<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb481-27"><a href="introducción-a-redes-neuronales.html#cb481-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb481-28"><a href="introducción-a-redes-neuronales.html#cb481-28" aria-hidden="true" tabindex="-1"></a>gradient_animation.save(gif_path, writer<span class="op">=</span>PillowWriter(fps<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb481-29"><a href="introducción-a-redes-neuronales.html#cb481-29" aria-hidden="true" tabindex="-1"></a>plt.close(fig)</span></code></pre></div>
+<p><img src="img/10-nn/descenso-gradiente.gif" width="650px" style="display: block; margin: auto;" /></p>
+<div id="batch-estocástico-y-mini-batch" class="section level3 hasAnchor" number="10.11.1">
+<h3><span class="header-section-number">10.11.1</span> Batch, Estocástico y Mini-Batch<a href="introducción-a-redes-neuronales.html#batch-estocástico-y-mini-batch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Hay tres formas comunes de calcular gradientes:</p>
+<ul>
+<li><strong>Batch gradient descent:</strong> usa todos los datos en cada actualización. Es estable, pero puede ser lento.</li>
+<li><strong>Stochastic gradient descent:</strong> usa una observación por actualización. Es rápido por paso, pero muy ruidoso.</li>
+<li><strong>Mini-batch gradient descent:</strong> usa grupos pequeños. Es el equilibrio más usado en redes neuronales.</li>
+</ul>
+<div class="sourceCode" id="cb482"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb482-1"><a href="introducción-a-redes-neuronales.html#cb482-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_toy_regression(n<span class="op">=</span><span class="dv">256</span>):</span>
+<span id="cb482-2"><a href="introducción-a-redes-neuronales.html#cb482-2" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(<span class="dv">4595</span>)</span>
+<span id="cb482-3"><a href="introducción-a-redes-neuronales.html#cb482-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> rng.normal(size<span class="op">=</span>(n, <span class="dv">1</span>)).astype(<span class="st">&quot;float32&quot;</span>)</span>
+<span id="cb482-4"><a href="introducción-a-redes-neuronales.html#cb482-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> (<span class="fl">3.0</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">0.7</span> <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="fl">0.35</span>, size<span class="op">=</span>(n, <span class="dv">1</span>))).astype(<span class="st">&quot;float32&quot;</span>)</span>
+<span id="cb482-5"><a href="introducción-a-redes-neuronales.html#cb482-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.tensor(x), torch.tensor(y)</span>
+<span id="cb482-6"><a href="introducción-a-redes-neuronales.html#cb482-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-7"><a href="introducción-a-redes-neuronales.html#cb482-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-8"><a href="introducción-a-redes-neuronales.html#cb482-8" aria-hidden="true" tabindex="-1"></a>toy_X, toy_y <span class="op">=</span> make_toy_regression()</span>
+<span id="cb482-9"><a href="introducción-a-redes-neuronales.html#cb482-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-10"><a href="introducción-a-redes-neuronales.html#cb482-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-11"><a href="introducción-a-redes-neuronales.html#cb482-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_toy(batch_size, epochs<span class="op">=</span><span class="dv">45</span>, lr<span class="op">=</span><span class="fl">0.05</span>):</span>
+<span id="cb482-12"><a href="introducción-a-redes-neuronales.html#cb482-12" aria-hidden="true" tabindex="-1"></a>    torch.manual_seed(<span class="dv">4595</span>)</span>
+<span id="cb482-13"><a href="introducción-a-redes-neuronales.html#cb482-13" aria-hidden="true" tabindex="-1"></a>    dataset <span class="op">=</span> TensorDataset(toy_X, toy_y)</span>
+<span id="cb482-14"><a href="introducción-a-redes-neuronales.html#cb482-14" aria-hidden="true" tabindex="-1"></a>    loader <span class="op">=</span> DataLoader(dataset, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb482-15"><a href="introducción-a-redes-neuronales.html#cb482-15" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> nn.Linear(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb482-16"><a href="introducción-a-redes-neuronales.html#cb482-16" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span>lr)</span>
+<span id="cb482-17"><a href="introducción-a-redes-neuronales.html#cb482-17" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> nn.MSELoss()</span>
+<span id="cb482-18"><a href="introducción-a-redes-neuronales.html#cb482-18" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
+<span id="cb482-19"><a href="introducción-a-redes-neuronales.html#cb482-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-20"><a href="introducción-a-redes-neuronales.html#cb482-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb482-21"><a href="introducción-a-redes-neuronales.html#cb482-21" aria-hidden="true" tabindex="-1"></a>        batch_losses <span class="op">=</span> []</span>
+<span id="cb482-22"><a href="introducción-a-redes-neuronales.html#cb482-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> bx, by <span class="kw">in</span> loader:</span>
+<span id="cb482-23"><a href="introducción-a-redes-neuronales.html#cb482-23" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> model(bx)</span>
+<span id="cb482-24"><a href="introducción-a-redes-neuronales.html#cb482-24" aria-hidden="true" tabindex="-1"></a>            current_loss <span class="op">=</span> loss(pred, by)</span>
+<span id="cb482-25"><a href="introducción-a-redes-neuronales.html#cb482-25" aria-hidden="true" tabindex="-1"></a>            optimizer.zero_grad()</span>
+<span id="cb482-26"><a href="introducción-a-redes-neuronales.html#cb482-26" aria-hidden="true" tabindex="-1"></a>            current_loss.backward()</span>
+<span id="cb482-27"><a href="introducción-a-redes-neuronales.html#cb482-27" aria-hidden="true" tabindex="-1"></a>            optimizer.step()</span>
+<span id="cb482-28"><a href="introducción-a-redes-neuronales.html#cb482-28" aria-hidden="true" tabindex="-1"></a>            batch_losses.append(current_loss.item())</span>
+<span id="cb482-29"><a href="introducción-a-redes-neuronales.html#cb482-29" aria-hidden="true" tabindex="-1"></a>        history.append(np.mean(batch_losses))</span>
+<span id="cb482-30"><a href="introducción-a-redes-neuronales.html#cb482-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-31"><a href="introducción-a-redes-neuronales.html#cb482-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb482-32"><a href="introducción-a-redes-neuronales.html#cb482-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;batch_size&quot;</span>: batch_size,</span>
+<span id="cb482-33"><a href="introducción-a-redes-neuronales.html#cb482-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;w&quot;</span>: model.weight.item(),</span>
+<span id="cb482-34"><a href="introducción-a-redes-neuronales.html#cb482-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;b&quot;</span>: model.bias.item(),</span>
+<span id="cb482-35"><a href="introducción-a-redes-neuronales.html#cb482-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;loss&quot;</span>: history[<span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb482-36"><a href="introducción-a-redes-neuronales.html#cb482-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;history&quot;</span>: history,</span>
+<span id="cb482-37"><a href="introducción-a-redes-neuronales.html#cb482-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb482-38"><a href="introducción-a-redes-neuronales.html#cb482-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-39"><a href="introducción-a-redes-neuronales.html#cb482-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-40"><a href="introducción-a-redes-neuronales.html#cb482-40" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compare_gradient_batches():</span>
+<span id="cb482-41"><a href="introducción-a-redes-neuronales.html#cb482-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb482-42"><a href="introducción-a-redes-neuronales.html#cb482-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;batch&quot;</span>: train_toy(batch_size<span class="op">=</span><span class="bu">len</span>(toy_X)),</span>
+<span id="cb482-43"><a href="introducción-a-redes-neuronales.html#cb482-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;estocástico&quot;</span>: train_toy(batch_size<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb482-44"><a href="introducción-a-redes-neuronales.html#cb482-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;mini_batch&quot;</span>: train_toy(batch_size<span class="op">=</span><span class="dv">32</span>),</span>
+<span id="cb482-45"><a href="introducción-a-redes-neuronales.html#cb482-45" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb482-46"><a href="introducción-a-redes-neuronales.html#cb482-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-47"><a href="introducción-a-redes-neuronales.html#cb482-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-48"><a href="introducción-a-redes-neuronales.html#cb482-48" aria-hidden="true" tabindex="-1"></a>gd_results <span class="op">=</span> read_or_create_cache(</span>
+<span id="cb482-49"><a href="introducción-a-redes-neuronales.html#cb482-49" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f&quot;descenso_por_batches_</span><span class="sc">{</span>CACHE_VERSION<span class="sc">}</span><span class="ss">.pkl&quot;</span>,</span>
+<span id="cb482-50"><a href="introducción-a-redes-neuronales.html#cb482-50" aria-hidden="true" tabindex="-1"></a>    compare_gradient_batches,</span>
+<span id="cb482-51"><a href="introducción-a-redes-neuronales.html#cb482-51" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb482-52"><a href="introducción-a-redes-neuronales.html#cb482-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-53"><a href="introducción-a-redes-neuronales.html#cb482-53" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
+<span id="cb482-54"><a href="introducción-a-redes-neuronales.html#cb482-54" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb482-55"><a href="introducción-a-redes-neuronales.html#cb482-55" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb482-56"><a href="introducción-a-redes-neuronales.html#cb482-56" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;tipo&quot;</span>: name,</span>
+<span id="cb482-57"><a href="introducción-a-redes-neuronales.html#cb482-57" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;batch_size&quot;</span>: result[<span class="st">&quot;batch_size&quot;</span>],</span>
+<span id="cb482-58"><a href="introducción-a-redes-neuronales.html#cb482-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;w_aprendido&quot;</span>: result[<span class="st">&quot;w&quot;</span>],</span>
+<span id="cb482-59"><a href="introducción-a-redes-neuronales.html#cb482-59" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;b_aprendido&quot;</span>: result[<span class="st">&quot;b&quot;</span>],</span>
+<span id="cb482-60"><a href="introducción-a-redes-neuronales.html#cb482-60" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;loss_final&quot;</span>: result[<span class="st">&quot;loss&quot;</span>],</span>
+<span id="cb482-61"><a href="introducción-a-redes-neuronales.html#cb482-61" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb482-62"><a href="introducción-a-redes-neuronales.html#cb482-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> name, result <span class="kw">in</span> gd_results.items()</span>
+<span id="cb482-63"><a href="introducción-a-redes-neuronales.html#cb482-63" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb482-64"><a href="introducción-a-redes-neuronales.html#cb482-64" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
+<pre><code>##           tipo  batch_size  w_aprendido  b_aprendido  loss_final
+## 0        batch         256       2.9704       0.7104      0.1192
+## 1  estocástico           1       3.0749       0.8519      0.1372
+## 2   mini_batch          32       2.9953       0.7213      0.1188</code></pre>
+<p>En redes neuronales casi siempre usamos mini-batches porque actualizan con frecuencia y reducen parte del ruido extremo del entrenamiento estocástico puro.</p>
+</div>
+</div>
+<div id="optimizadores" class="section level2 hasAnchor" number="10.12">
+<h2><span class="header-section-number">10.12</span> Optimizadores<a href="introducción-a-redes-neuronales.html#optimizadores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El optimizador decide cómo actualizar los parámetros usando los gradientes. Todos buscan reducir la pérdida, pero no todos se mueven igual.</p>
+<ul>
+<li><strong>SGD:</strong> descenso en gradiente simple. Es fácil de entender y puede generalizar bien, pero puede ser lento.</li>
+<li><strong>SGD con momentum:</strong> acumula dirección de pasos anteriores. Ayuda a avanzar en direcciones consistentes y reduce oscilaciones.</li>
+<li><strong>RMSprop:</strong> adapta el tamaño de paso por parámetro usando promedios de gradientes recientes.</li>
+<li><strong>Adam:</strong> combina ideas de momentum y RMSprop. Es una opción práctica para iniciar.</li>
+<li><strong>AdamW:</strong> variante de Adam con mejor manejo de <code>weight_decay</code>; muy usada en redes modernas.</li>
+</ul>
+<div class="sourceCode" id="cb484"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb484-1"><a href="introducción-a-redes-neuronales.html#cb484-1" aria-hidden="true" tabindex="-1"></a>optimizer_examples <span class="op">=</span> {</span>
+<span id="cb484-2"><a href="introducción-a-redes-neuronales.html#cb484-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;SGD&quot;</span>: torch.optim.SGD(base_model.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>),</span>
+<span id="cb484-3"><a href="introducción-a-redes-neuronales.html#cb484-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;SGD_momentum&quot;</span>: torch.optim.SGD(base_model.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>, momentum<span class="op">=</span><span class="fl">0.9</span>),</span>
+<span id="cb484-4"><a href="introducción-a-redes-neuronales.html#cb484-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;RMSprop&quot;</span>: torch.optim.RMSprop(base_model.parameters(), lr<span class="op">=</span><span class="fl">0.001</span>),</span>
+<span id="cb484-5"><a href="introducción-a-redes-neuronales.html#cb484-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Adam&quot;</span>: torch.optim.Adam(base_model.parameters(), lr<span class="op">=</span><span class="fl">0.001</span>),</span>
+<span id="cb484-6"><a href="introducción-a-redes-neuronales.html#cb484-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;AdamW&quot;</span>: torch.optim.AdamW(base_model.parameters(), lr<span class="op">=</span><span class="fl">0.001</span>, weight_decay<span class="op">=</span><span class="fl">1e-4</span>),</span>
+<span id="cb484-7"><a href="introducción-a-redes-neuronales.html#cb484-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb484-8"><a href="introducción-a-redes-neuronales.html#cb484-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb484-9"><a href="introducción-a-redes-neuronales.html#cb484-9" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(optimizer_examples)</span></code></pre></div>
+<p>Comparemos optimizadores en el ejemplo sencillo de una recta:</p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb485-1"><a href="introducción-a-redes-neuronales.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_toy_optimizer(optimizer_name, epochs<span class="op">=</span><span class="dv">45</span>):</span>
+<span id="cb485-2"><a href="introducción-a-redes-neuronales.html#cb485-2" aria-hidden="true" tabindex="-1"></a>    torch.manual_seed(<span class="dv">4595</span>)</span>
+<span id="cb485-3"><a href="introducción-a-redes-neuronales.html#cb485-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> nn.Linear(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb485-4"><a href="introducción-a-redes-neuronales.html#cb485-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> nn.MSELoss()</span>
+<span id="cb485-5"><a href="introducción-a-redes-neuronales.html#cb485-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-6"><a href="introducción-a-redes-neuronales.html#cb485-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> optimizer_name <span class="op">==</span> <span class="st">&quot;SGD&quot;</span>:</span>
+<span id="cb485-7"><a href="introducción-a-redes-neuronales.html#cb485-7" aria-hidden="true" tabindex="-1"></a>        optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">0.03</span>)</span>
+<span id="cb485-8"><a href="introducción-a-redes-neuronales.html#cb485-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> optimizer_name <span class="op">==</span> <span class="st">&quot;Momentum&quot;</span>:</span>
+<span id="cb485-9"><a href="introducción-a-redes-neuronales.html#cb485-9" aria-hidden="true" tabindex="-1"></a>        optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">0.03</span>, momentum<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb485-10"><a href="introducción-a-redes-neuronales.html#cb485-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> optimizer_name <span class="op">==</span> <span class="st">&quot;RMSprop&quot;</span>:</span>
+<span id="cb485-11"><a href="introducción-a-redes-neuronales.html#cb485-11" aria-hidden="true" tabindex="-1"></a>        optimizer <span class="op">=</span> torch.optim.RMSprop(model.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb485-12"><a href="introducción-a-redes-neuronales.html#cb485-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> optimizer_name <span class="op">==</span> <span class="st">&quot;Adam&quot;</span>:</span>
+<span id="cb485-13"><a href="introducción-a-redes-neuronales.html#cb485-13" aria-hidden="true" tabindex="-1"></a>        optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span><span class="fl">0.03</span>)</span>
+<span id="cb485-14"><a href="introducción-a-redes-neuronales.html#cb485-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> optimizer_name <span class="op">==</span> <span class="st">&quot;AdamW&quot;</span>:</span>
+<span id="cb485-15"><a href="introducción-a-redes-neuronales.html#cb485-15" aria-hidden="true" tabindex="-1"></a>        optimizer <span class="op">=</span> torch.optim.AdamW(model.parameters(), lr<span class="op">=</span><span class="fl">0.03</span>, weight_decay<span class="op">=</span><span class="fl">1e-3</span>)</span>
+<span id="cb485-16"><a href="introducción-a-redes-neuronales.html#cb485-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-17"><a href="introducción-a-redes-neuronales.html#cb485-17" aria-hidden="true" tabindex="-1"></a>    loader <span class="op">=</span> DataLoader(TensorDataset(toy_X, toy_y), batch_size<span class="op">=</span><span class="dv">32</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb485-18"><a href="introducción-a-redes-neuronales.html#cb485-18" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
+<span id="cb485-19"><a href="introducción-a-redes-neuronales.html#cb485-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-20"><a href="introducción-a-redes-neuronales.html#cb485-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb485-21"><a href="introducción-a-redes-neuronales.html#cb485-21" aria-hidden="true" tabindex="-1"></a>        losses <span class="op">=</span> []</span>
+<span id="cb485-22"><a href="introducción-a-redes-neuronales.html#cb485-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> bx, by <span class="kw">in</span> loader:</span>
+<span id="cb485-23"><a href="introducción-a-redes-neuronales.html#cb485-23" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> model(bx)</span>
+<span id="cb485-24"><a href="introducción-a-redes-neuronales.html#cb485-24" aria-hidden="true" tabindex="-1"></a>            current_loss <span class="op">=</span> loss(pred, by)</span>
+<span id="cb485-25"><a href="introducción-a-redes-neuronales.html#cb485-25" aria-hidden="true" tabindex="-1"></a>            optimizer.zero_grad()</span>
+<span id="cb485-26"><a href="introducción-a-redes-neuronales.html#cb485-26" aria-hidden="true" tabindex="-1"></a>            current_loss.backward()</span>
+<span id="cb485-27"><a href="introducción-a-redes-neuronales.html#cb485-27" aria-hidden="true" tabindex="-1"></a>            optimizer.step()</span>
+<span id="cb485-28"><a href="introducción-a-redes-neuronales.html#cb485-28" aria-hidden="true" tabindex="-1"></a>            losses.append(current_loss.item())</span>
+<span id="cb485-29"><a href="introducción-a-redes-neuronales.html#cb485-29" aria-hidden="true" tabindex="-1"></a>        history.append(np.mean(losses))</span>
+<span id="cb485-30"><a href="introducción-a-redes-neuronales.html#cb485-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-31"><a href="introducción-a-redes-neuronales.html#cb485-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> history</span>
+<span id="cb485-32"><a href="introducción-a-redes-neuronales.html#cb485-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-33"><a href="introducción-a-redes-neuronales.html#cb485-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-34"><a href="introducción-a-redes-neuronales.html#cb485-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compare_optimizers():</span>
+<span id="cb485-35"><a href="introducción-a-redes-neuronales.html#cb485-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb485-36"><a href="introducción-a-redes-neuronales.html#cb485-36" aria-hidden="true" tabindex="-1"></a>        name: train_toy_optimizer(name)</span>
+<span id="cb485-37"><a href="introducción-a-redes-neuronales.html#cb485-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> name <span class="kw">in</span> [<span class="st">&quot;SGD&quot;</span>, <span class="st">&quot;Momentum&quot;</span>, <span class="st">&quot;RMSprop&quot;</span>, <span class="st">&quot;Adam&quot;</span>, <span class="st">&quot;AdamW&quot;</span>]</span>
+<span id="cb485-38"><a href="introducción-a-redes-neuronales.html#cb485-38" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb485-39"><a href="introducción-a-redes-neuronales.html#cb485-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-40"><a href="introducción-a-redes-neuronales.html#cb485-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-41"><a href="introducción-a-redes-neuronales.html#cb485-41" aria-hidden="true" tabindex="-1"></a>optimizer_histories <span class="op">=</span> read_or_create_cache(</span>
+<span id="cb485-42"><a href="introducción-a-redes-neuronales.html#cb485-42" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f&quot;optimizadores_</span><span class="sc">{</span>CACHE_VERSION<span class="sc">}</span><span class="ss">.pkl&quot;</span>,</span>
+<span id="cb485-43"><a href="introducción-a-redes-neuronales.html#cb485-43" aria-hidden="true" tabindex="-1"></a>    compare_optimizers,</span>
+<span id="cb485-44"><a href="introducción-a-redes-neuronales.html#cb485-44" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>En la práctica, <code>Adam</code> o <code>AdamW</code> suelen ser buenos puntos de partida. <code>SGD</code> con momentum puede ser competitivo, pero normalmente requiere más cuidado con la tasa de aprendizaje.</p>
+</div>
+<div id="entrenamiento-de-una-red-densa-base" class="section level2 hasAnchor" number="10.13">
+<h2><span class="header-section-number">10.13</span> Entrenamiento de una Red Densa Base<a href="introducción-a-redes-neuronales.html#entrenamiento-de-una-red-densa-base" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ahora entrenamos una red densa sobre Ames. Esta primera red no tiene técnicas explícitas de regularización.</p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb486-1"><a href="introducción-a-redes-neuronales.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_base_model(hidden_1<span class="op">=</span><span class="dv">128</span>, hidden_2<span class="op">=</span><span class="dv">64</span>):</span>
+<span id="cb486-2"><a href="introducción-a-redes-neuronales.html#cb486-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> nn.Sequential(</span>
+<span id="cb486-3"><a href="introducción-a-redes-neuronales.html#cb486-3" aria-hidden="true" tabindex="-1"></a>        nn.Linear(n_features, hidden_1),</span>
+<span id="cb486-4"><a href="introducción-a-redes-neuronales.html#cb486-4" aria-hidden="true" tabindex="-1"></a>        nn.ReLU(),</span>
+<span id="cb486-5"><a href="introducción-a-redes-neuronales.html#cb486-5" aria-hidden="true" tabindex="-1"></a>        nn.Linear(hidden_1, hidden_2),</span>
+<span id="cb486-6"><a href="introducción-a-redes-neuronales.html#cb486-6" aria-hidden="true" tabindex="-1"></a>        nn.ReLU(),</span>
+<span id="cb486-7"><a href="introducción-a-redes-neuronales.html#cb486-7" aria-hidden="true" tabindex="-1"></a>        nn.Linear(hidden_2, <span class="dv">1</span>),</span>
+<span id="cb486-8"><a href="introducción-a-redes-neuronales.html#cb486-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb486-9"><a href="introducción-a-redes-neuronales.html#cb486-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-10"><a href="introducción-a-redes-neuronales.html#cb486-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-11"><a href="introducción-a-redes-neuronales.html#cb486-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model(model, optimizer, train_loader, X_valid_tensor, y_valid_tensor, epochs<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb486-12"><a href="introducción-a-redes-neuronales.html#cb486-12" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> model.to(device)</span>
+<span id="cb486-13"><a href="introducción-a-redes-neuronales.html#cb486-13" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
+<span id="cb486-14"><a href="introducción-a-redes-neuronales.html#cb486-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-15"><a href="introducción-a-redes-neuronales.html#cb486-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, epochs <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb486-16"><a href="introducción-a-redes-neuronales.html#cb486-16" aria-hidden="true" tabindex="-1"></a>        model.train()</span>
+<span id="cb486-17"><a href="introducción-a-redes-neuronales.html#cb486-17" aria-hidden="true" tabindex="-1"></a>        train_losses <span class="op">=</span> []</span>
+<span id="cb486-18"><a href="introducción-a-redes-neuronales.html#cb486-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-19"><a href="introducción-a-redes-neuronales.html#cb486-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> batch_X, batch_y <span class="kw">in</span> train_loader:</span>
+<span id="cb486-20"><a href="introducción-a-redes-neuronales.html#cb486-20" aria-hidden="true" tabindex="-1"></a>            batch_X <span class="op">=</span> batch_X.to(device)</span>
+<span id="cb486-21"><a href="introducción-a-redes-neuronales.html#cb486-21" aria-hidden="true" tabindex="-1"></a>            batch_y <span class="op">=</span> batch_y.to(device)</span>
+<span id="cb486-22"><a href="introducción-a-redes-neuronales.html#cb486-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-23"><a href="introducción-a-redes-neuronales.html#cb486-23" aria-hidden="true" tabindex="-1"></a>            predictions <span class="op">=</span> model(batch_X)</span>
+<span id="cb486-24"><a href="introducción-a-redes-neuronales.html#cb486-24" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">=</span> loss_fn(predictions, batch_y)</span>
+<span id="cb486-25"><a href="introducción-a-redes-neuronales.html#cb486-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-26"><a href="introducción-a-redes-neuronales.html#cb486-26" aria-hidden="true" tabindex="-1"></a>            optimizer.zero_grad()</span>
+<span id="cb486-27"><a href="introducción-a-redes-neuronales.html#cb486-27" aria-hidden="true" tabindex="-1"></a>            loss.backward()</span>
+<span id="cb486-28"><a href="introducción-a-redes-neuronales.html#cb486-28" aria-hidden="true" tabindex="-1"></a>            optimizer.step()</span>
+<span id="cb486-29"><a href="introducción-a-redes-neuronales.html#cb486-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-30"><a href="introducción-a-redes-neuronales.html#cb486-30" aria-hidden="true" tabindex="-1"></a>            train_losses.append(loss.item())</span>
+<span id="cb486-31"><a href="introducción-a-redes-neuronales.html#cb486-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-32"><a href="introducción-a-redes-neuronales.html#cb486-32" aria-hidden="true" tabindex="-1"></a>        model.<span class="bu">eval</span>()</span>
+<span id="cb486-33"><a href="introducción-a-redes-neuronales.html#cb486-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb486-34"><a href="introducción-a-redes-neuronales.html#cb486-34" aria-hidden="true" tabindex="-1"></a>            valid_predictions <span class="op">=</span> model(X_valid_tensor.to(device))</span>
+<span id="cb486-35"><a href="introducción-a-redes-neuronales.html#cb486-35" aria-hidden="true" tabindex="-1"></a>            valid_loss <span class="op">=</span> loss_fn(valid_predictions, y_valid_tensor.to(device)).item()</span>
+<span id="cb486-36"><a href="introducción-a-redes-neuronales.html#cb486-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-37"><a href="introducción-a-redes-neuronales.html#cb486-37" aria-hidden="true" tabindex="-1"></a>        history.append(</span>
+<span id="cb486-38"><a href="introducción-a-redes-neuronales.html#cb486-38" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb486-39"><a href="introducción-a-redes-neuronales.html#cb486-39" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;epoch&quot;</span>: epoch,</span>
+<span id="cb486-40"><a href="introducción-a-redes-neuronales.html#cb486-40" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;train_loss&quot;</span>: np.mean(train_losses),</span>
+<span id="cb486-41"><a href="introducción-a-redes-neuronales.html#cb486-41" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;valid_loss&quot;</span>: valid_loss,</span>
+<span id="cb486-42"><a href="introducción-a-redes-neuronales.html#cb486-42" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb486-43"><a href="introducción-a-redes-neuronales.html#cb486-43" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb486-44"><a href="introducción-a-redes-neuronales.html#cb486-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-45"><a href="introducción-a-redes-neuronales.html#cb486-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model, pd.DataFrame(history)</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb487-1"><a href="introducción-a-redes-neuronales.html#cb487-1" aria-hidden="true" tabindex="-1"></a>base_train_loader <span class="op">=</span> DataLoader(train_dataset, batch_size<span class="op">=</span><span class="dv">64</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb487-2"><a href="introducción-a-redes-neuronales.html#cb487-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-3"><a href="introducción-a-redes-neuronales.html#cb487-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-4"><a href="introducción-a-redes-neuronales.html#cb487-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_unregularized_experiment():</span>
+<span id="cb487-5"><a href="introducción-a-redes-neuronales.html#cb487-5" aria-hidden="true" tabindex="-1"></a>    torch.manual_seed(<span class="dv">4595</span>)</span>
+<span id="cb487-6"><a href="introducción-a-redes-neuronales.html#cb487-6" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> make_base_model()</span>
+<span id="cb487-7"><a href="introducción-a-redes-neuronales.html#cb487-7" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span><span class="fl">0.001</span>)</span>
+<span id="cb487-8"><a href="introducción-a-redes-neuronales.html#cb487-8" aria-hidden="true" tabindex="-1"></a>    model, history <span class="op">=</span> train_model(</span>
+<span id="cb487-9"><a href="introducción-a-redes-neuronales.html#cb487-9" aria-hidden="true" tabindex="-1"></a>        model,</span>
+<span id="cb487-10"><a href="introducción-a-redes-neuronales.html#cb487-10" aria-hidden="true" tabindex="-1"></a>        optimizer,</span>
+<span id="cb487-11"><a href="introducción-a-redes-neuronales.html#cb487-11" aria-hidden="true" tabindex="-1"></a>        base_train_loader,</span>
+<span id="cb487-12"><a href="introducción-a-redes-neuronales.html#cb487-12" aria-hidden="true" tabindex="-1"></a>        X_valid_tensor,</span>
+<span id="cb487-13"><a href="introducción-a-redes-neuronales.html#cb487-13" aria-hidden="true" tabindex="-1"></a>        y_valid_tensor,</span>
+<span id="cb487-14"><a href="introducción-a-redes-neuronales.html#cb487-14" aria-hidden="true" tabindex="-1"></a>        epochs<span class="op">=</span><span class="dv">80</span>,</span>
+<span id="cb487-15"><a href="introducción-a-redes-neuronales.html#cb487-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb487-16"><a href="introducción-a-redes-neuronales.html#cb487-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb487-17"><a href="introducción-a-redes-neuronales.html#cb487-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;n_features&quot;</span>: n_features,</span>
+<span id="cb487-18"><a href="introducción-a-redes-neuronales.html#cb487-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;state_dict&quot;</span>: {name: value.detach().cpu() <span class="cf">for</span> name, value <span class="kw">in</span> model.state_dict().items()},</span>
+<span id="cb487-19"><a href="introducción-a-redes-neuronales.html#cb487-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;history&quot;</span>: history,</span>
+<span id="cb487-20"><a href="introducción-a-redes-neuronales.html#cb487-20" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb487-21"><a href="introducción-a-redes-neuronales.html#cb487-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-22"><a href="introducción-a-redes-neuronales.html#cb487-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-23"><a href="introducción-a-redes-neuronales.html#cb487-23" aria-hidden="true" tabindex="-1"></a>unregularized_result <span class="op">=</span> read_or_create_cache(</span>
+<span id="cb487-24"><a href="introducción-a-redes-neuronales.html#cb487-24" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f&quot;red_sin_regularizacion_</span><span class="sc">{</span>CACHE_VERSION<span class="sc">}</span><span class="ss">.pkl&quot;</span>,</span>
+<span id="cb487-25"><a href="introducción-a-redes-neuronales.html#cb487-25" aria-hidden="true" tabindex="-1"></a>    train_unregularized_experiment,</span>
+<span id="cb487-26"><a href="introducción-a-redes-neuronales.html#cb487-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb487-27"><a href="introducción-a-redes-neuronales.html#cb487-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> unregularized_result[<span class="st">&quot;n_features&quot;</span>] <span class="op">!=</span> n_features:</span>
+<span id="cb487-28"><a href="introducción-a-redes-neuronales.html#cb487-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;La caché no corresponde a las variables actuales. Actualice CACHE_VERSION.&quot;</span>)</span>
+<span id="cb487-29"><a href="introducción-a-redes-neuronales.html#cb487-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-30"><a href="introducción-a-redes-neuronales.html#cb487-30" aria-hidden="true" tabindex="-1"></a>unregularized_model <span class="op">=</span> make_base_model().to(device)</span>
+<span id="cb487-31"><a href="introducción-a-redes-neuronales.html#cb487-31" aria-hidden="true" tabindex="-1"></a>unregularized_model.load_state_dict(unregularized_result[<span class="st">&quot;state_dict&quot;</span>])</span></code></pre></div>
+<pre><code>## &lt;All keys matched successfully&gt;</code></pre>
+<div class="sourceCode" id="cb489"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb489-1"><a href="introducción-a-redes-neuronales.html#cb489-1" aria-hidden="true" tabindex="-1"></a>unregularized_history <span class="op">=</span> unregularized_result[<span class="st">&quot;history&quot;</span>]</span>
+<span id="cb489-2"><a href="introducción-a-redes-neuronales.html#cb489-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb489-3"><a href="introducción-a-redes-neuronales.html#cb489-3" aria-hidden="true" tabindex="-1"></a>unregularized_history.tail()</span></code></pre></div>
+<pre><code>##     epoch  train_loss  valid_loss
+## 75     76    0.002082    0.345390
+## 76     77    0.001663    0.344058
+## 77     78    0.001563    0.348479
+## 78     79    0.001393    0.346144
+## 79     80    0.001336    0.347732</code></pre>
+</div>
+<div id="regularización-en-redes-neuronales" class="section level2 hasAnchor" number="10.14">
+<h2><span class="header-section-number">10.14</span> Regularización en Redes Neuronales<a href="introducción-a-redes-neuronales.html#regularización-en-redes-neuronales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La regularización busca reducir sobreajuste. En redes neuronales densas, las técnicas más comunes son:</p>
+<ul>
+<li><strong>Weight decay:</strong> penaliza pesos grandes. Es parecido a regularización L2.</li>
+<li><strong>Dropout:</strong> apaga neuronas aleatoriamente durante entrenamiento para evitar dependencia excesiva.</li>
+<li><strong>Batch normalization:</strong> estabiliza la distribución interna de activaciones.</li>
+<li><strong>Early stopping:</strong> detiene entrenamiento cuando la pérdida de validación deja de mejorar.</li>
+<li><strong>Reducir arquitectura:</strong> menos capas o menos neuronas también regulariza.</li>
+</ul>
+<div id="weight-decay" class="section level3 hasAnchor" number="10.14.1">
+<h3><span class="header-section-number">10.14.1</span> Weight Decay<a href="introducción-a-redes-neuronales.html#weight-decay" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En PyTorch se agrega desde el optimizador. Este fragmento muestra la configuración; su aplicación completa aparece en el entrenamiento regularizado posterior.</p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb491-1"><a href="introducción-a-redes-neuronales.html#cb491-1" aria-hidden="true" tabindex="-1"></a>weight_decay_example_model <span class="op">=</span> make_base_model()</span>
+<span id="cb491-2"><a href="introducción-a-redes-neuronales.html#cb491-2" aria-hidden="true" tabindex="-1"></a>weight_decay_optimizer <span class="op">=</span> torch.optim.AdamW(</span>
+<span id="cb491-3"><a href="introducción-a-redes-neuronales.html#cb491-3" aria-hidden="true" tabindex="-1"></a>    weight_decay_example_model.parameters(),</span>
+<span id="cb491-4"><a href="introducción-a-redes-neuronales.html#cb491-4" aria-hidden="true" tabindex="-1"></a>    lr<span class="op">=</span><span class="fl">0.001</span>,</span>
+<span id="cb491-5"><a href="introducción-a-redes-neuronales.html#cb491-5" aria-hidden="true" tabindex="-1"></a>    weight_decay<span class="op">=</span><span class="fl">1e-4</span>,</span>
+<span id="cb491-6"><a href="introducción-a-redes-neuronales.html#cb491-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb491-7"><a href="introducción-a-redes-neuronales.html#cb491-7" aria-hidden="true" tabindex="-1"></a>weight_decay_optimizer</span></code></pre></div>
+</div>
+<div id="dropout" class="section level3 hasAnchor" number="10.14.2">
+<h3><span class="header-section-number">10.14.2</span> Dropout<a href="introducción-a-redes-neuronales.html#dropout" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>nn.Dropout(p=0.2)</code> apaga 20% de las activaciones durante entrenamiento. En evaluación se desactiva automáticamente con <code>model.eval()</code>.</p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb492-1"><a href="introducción-a-redes-neuronales.html#cb492-1" aria-hidden="true" tabindex="-1"></a>dropout_demo <span class="op">=</span> nn.Dropout(p<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb492-2"><a href="introducción-a-redes-neuronales.html#cb492-2" aria-hidden="true" tabindex="-1"></a>dropout_demo.train()</span></code></pre></div>
+<pre><code>## Dropout(p=0.5, inplace=False)</code></pre>
+<div class="sourceCode" id="cb494"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb494-1"><a href="introducción-a-redes-neuronales.html#cb494-1" aria-hidden="true" tabindex="-1"></a>dropout_demo(torch.ones(<span class="dv">10</span>))</span></code></pre></div>
+<pre><code>## tensor([2., 2., 0., 0., 0., 0., 2., 0., 2., 0.])</code></pre>
+</div>
+<div id="batch-normalization" class="section level3 hasAnchor" number="10.14.3">
+<h3><span class="header-section-number">10.14.3</span> Batch Normalization<a href="introducción-a-redes-neuronales.html#batch-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>nn.BatchNorm1d</code> normaliza activaciones dentro de la red. Puede hacer el entrenamiento más estable, aunque no siempre mejora todos los problemas tabulares.</p>
+<div class="sourceCode" id="cb496"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb496-1"><a href="introducción-a-redes-neuronales.html#cb496-1" aria-hidden="true" tabindex="-1"></a>batch_norm_demo <span class="op">=</span> nn.BatchNorm1d(num_features<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb496-2"><a href="introducción-a-redes-neuronales.html#cb496-2" aria-hidden="true" tabindex="-1"></a>batch_norm_demo(torch.randn(<span class="dv">5</span>, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>## tensor([[-0.4249, -0.1814, -1.7801,  1.4098],
+##         [ 0.8462, -1.2193,  1.2344,  0.9114],
+##         [ 1.2482,  1.8121,  0.5475, -0.8804],
+##         [-0.0759, -0.4421,  0.0604, -1.1498],
+##         [-1.5936,  0.0307, -0.0623, -0.2910]],
+##        grad_fn=&lt;NativeBatchNormBackward0&gt;)</code></pre>
+</div>
+<div id="early-stopping" class="section level3 hasAnchor" number="10.14.4">
+<h3><span class="header-section-number">10.14.4</span> Early Stopping<a href="introducción-a-redes-neuronales.html#early-stopping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Early stopping guarda el mejor modelo observado en validación y detiene el entrenamiento si deja de mejorar durante varias épocas.</p>
+<div class="sourceCode" id="cb498"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb498-1"><a href="introducción-a-redes-neuronales.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_regularized_model(hidden_1<span class="op">=</span><span class="dv">128</span>, hidden_2<span class="op">=</span><span class="dv">64</span>, dropout<span class="op">=</span><span class="fl">0.25</span>):</span>
+<span id="cb498-2"><a href="introducción-a-redes-neuronales.html#cb498-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> nn.Sequential(</span>
+<span id="cb498-3"><a href="introducción-a-redes-neuronales.html#cb498-3" aria-hidden="true" tabindex="-1"></a>        nn.Linear(n_features, hidden_1),</span>
+<span id="cb498-4"><a href="introducción-a-redes-neuronales.html#cb498-4" aria-hidden="true" tabindex="-1"></a>        nn.BatchNorm1d(hidden_1),</span>
+<span id="cb498-5"><a href="introducción-a-redes-neuronales.html#cb498-5" aria-hidden="true" tabindex="-1"></a>        nn.ReLU(),</span>
+<span id="cb498-6"><a href="introducción-a-redes-neuronales.html#cb498-6" aria-hidden="true" tabindex="-1"></a>        nn.Dropout(dropout),</span>
+<span id="cb498-7"><a href="introducción-a-redes-neuronales.html#cb498-7" aria-hidden="true" tabindex="-1"></a>        nn.Linear(hidden_1, hidden_2),</span>
+<span id="cb498-8"><a href="introducción-a-redes-neuronales.html#cb498-8" aria-hidden="true" tabindex="-1"></a>        nn.BatchNorm1d(hidden_2),</span>
+<span id="cb498-9"><a href="introducción-a-redes-neuronales.html#cb498-9" aria-hidden="true" tabindex="-1"></a>        nn.ReLU(),</span>
+<span id="cb498-10"><a href="introducción-a-redes-neuronales.html#cb498-10" aria-hidden="true" tabindex="-1"></a>        nn.Dropout(dropout),</span>
+<span id="cb498-11"><a href="introducción-a-redes-neuronales.html#cb498-11" aria-hidden="true" tabindex="-1"></a>        nn.Linear(hidden_2, <span class="dv">1</span>),</span>
+<span id="cb498-12"><a href="introducción-a-redes-neuronales.html#cb498-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb498-13"><a href="introducción-a-redes-neuronales.html#cb498-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-14"><a href="introducción-a-redes-neuronales.html#cb498-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-15"><a href="introducción-a-redes-neuronales.html#cb498-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model_early_stopping(</span>
+<span id="cb498-16"><a href="introducción-a-redes-neuronales.html#cb498-16" aria-hidden="true" tabindex="-1"></a>    model,</span>
+<span id="cb498-17"><a href="introducción-a-redes-neuronales.html#cb498-17" aria-hidden="true" tabindex="-1"></a>    optimizer,</span>
+<span id="cb498-18"><a href="introducción-a-redes-neuronales.html#cb498-18" aria-hidden="true" tabindex="-1"></a>    train_loader,</span>
+<span id="cb498-19"><a href="introducción-a-redes-neuronales.html#cb498-19" aria-hidden="true" tabindex="-1"></a>    X_valid_tensor,</span>
+<span id="cb498-20"><a href="introducción-a-redes-neuronales.html#cb498-20" aria-hidden="true" tabindex="-1"></a>    y_valid_tensor,</span>
+<span id="cb498-21"><a href="introducción-a-redes-neuronales.html#cb498-21" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">120</span>,</span>
+<span id="cb498-22"><a href="introducción-a-redes-neuronales.html#cb498-22" aria-hidden="true" tabindex="-1"></a>    patience<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb498-23"><a href="introducción-a-redes-neuronales.html#cb498-23" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb498-24"><a href="introducción-a-redes-neuronales.html#cb498-24" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> model.to(device)</span>
+<span id="cb498-25"><a href="introducción-a-redes-neuronales.html#cb498-25" aria-hidden="true" tabindex="-1"></a>    best_state <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb498-26"><a href="introducción-a-redes-neuronales.html#cb498-26" aria-hidden="true" tabindex="-1"></a>    best_valid_loss <span class="op">=</span> np.inf</span>
+<span id="cb498-27"><a href="introducción-a-redes-neuronales.html#cb498-27" aria-hidden="true" tabindex="-1"></a>    epochs_without_improvement <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb498-28"><a href="introducción-a-redes-neuronales.html#cb498-28" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
+<span id="cb498-29"><a href="introducción-a-redes-neuronales.html#cb498-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-30"><a href="introducción-a-redes-neuronales.html#cb498-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, epochs <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb498-31"><a href="introducción-a-redes-neuronales.html#cb498-31" aria-hidden="true" tabindex="-1"></a>        model.train()</span>
+<span id="cb498-32"><a href="introducción-a-redes-neuronales.html#cb498-32" aria-hidden="true" tabindex="-1"></a>        train_losses <span class="op">=</span> []</span>
+<span id="cb498-33"><a href="introducción-a-redes-neuronales.html#cb498-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-34"><a href="introducción-a-redes-neuronales.html#cb498-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> batch_X, batch_y <span class="kw">in</span> train_loader:</span>
+<span id="cb498-35"><a href="introducción-a-redes-neuronales.html#cb498-35" aria-hidden="true" tabindex="-1"></a>            batch_X <span class="op">=</span> batch_X.to(device)</span>
+<span id="cb498-36"><a href="introducción-a-redes-neuronales.html#cb498-36" aria-hidden="true" tabindex="-1"></a>            batch_y <span class="op">=</span> batch_y.to(device)</span>
+<span id="cb498-37"><a href="introducción-a-redes-neuronales.html#cb498-37" aria-hidden="true" tabindex="-1"></a>            predictions <span class="op">=</span> model(batch_X)</span>
+<span id="cb498-38"><a href="introducción-a-redes-neuronales.html#cb498-38" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">=</span> loss_fn(predictions, batch_y)</span>
+<span id="cb498-39"><a href="introducción-a-redes-neuronales.html#cb498-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-40"><a href="introducción-a-redes-neuronales.html#cb498-40" aria-hidden="true" tabindex="-1"></a>            optimizer.zero_grad()</span>
+<span id="cb498-41"><a href="introducción-a-redes-neuronales.html#cb498-41" aria-hidden="true" tabindex="-1"></a>            loss.backward()</span>
+<span id="cb498-42"><a href="introducción-a-redes-neuronales.html#cb498-42" aria-hidden="true" tabindex="-1"></a>            optimizer.step()</span>
+<span id="cb498-43"><a href="introducción-a-redes-neuronales.html#cb498-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-44"><a href="introducción-a-redes-neuronales.html#cb498-44" aria-hidden="true" tabindex="-1"></a>            train_losses.append(loss.item())</span>
+<span id="cb498-45"><a href="introducción-a-redes-neuronales.html#cb498-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-46"><a href="introducción-a-redes-neuronales.html#cb498-46" aria-hidden="true" tabindex="-1"></a>        model.<span class="bu">eval</span>()</span>
+<span id="cb498-47"><a href="introducción-a-redes-neuronales.html#cb498-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb498-48"><a href="introducción-a-redes-neuronales.html#cb498-48" aria-hidden="true" tabindex="-1"></a>            valid_predictions <span class="op">=</span> model(X_valid_tensor.to(device))</span>
+<span id="cb498-49"><a href="introducción-a-redes-neuronales.html#cb498-49" aria-hidden="true" tabindex="-1"></a>            valid_loss <span class="op">=</span> loss_fn(valid_predictions, y_valid_tensor.to(device)).item()</span>
+<span id="cb498-50"><a href="introducción-a-redes-neuronales.html#cb498-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-51"><a href="introducción-a-redes-neuronales.html#cb498-51" aria-hidden="true" tabindex="-1"></a>        history.append(</span>
+<span id="cb498-52"><a href="introducción-a-redes-neuronales.html#cb498-52" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb498-53"><a href="introducción-a-redes-neuronales.html#cb498-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;epoch&quot;</span>: epoch,</span>
+<span id="cb498-54"><a href="introducción-a-redes-neuronales.html#cb498-54" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;train_loss&quot;</span>: np.mean(train_losses),</span>
+<span id="cb498-55"><a href="introducción-a-redes-neuronales.html#cb498-55" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;valid_loss&quot;</span>: valid_loss,</span>
+<span id="cb498-56"><a href="introducción-a-redes-neuronales.html#cb498-56" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb498-57"><a href="introducción-a-redes-neuronales.html#cb498-57" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb498-58"><a href="introducción-a-redes-neuronales.html#cb498-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-59"><a href="introducción-a-redes-neuronales.html#cb498-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> valid_loss <span class="op">&lt;</span> best_valid_loss:</span>
+<span id="cb498-60"><a href="introducción-a-redes-neuronales.html#cb498-60" aria-hidden="true" tabindex="-1"></a>            best_valid_loss <span class="op">=</span> valid_loss</span>
+<span id="cb498-61"><a href="introducción-a-redes-neuronales.html#cb498-61" aria-hidden="true" tabindex="-1"></a>            best_state <span class="op">=</span> {key: value.detach().cpu().clone() <span class="cf">for</span> key, value <span class="kw">in</span> model.state_dict().items()}</span>
+<span id="cb498-62"><a href="introducción-a-redes-neuronales.html#cb498-62" aria-hidden="true" tabindex="-1"></a>            epochs_without_improvement <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb498-63"><a href="introducción-a-redes-neuronales.html#cb498-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb498-64"><a href="introducción-a-redes-neuronales.html#cb498-64" aria-hidden="true" tabindex="-1"></a>            epochs_without_improvement <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb498-65"><a href="introducción-a-redes-neuronales.html#cb498-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-66"><a href="introducción-a-redes-neuronales.html#cb498-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epochs_without_improvement <span class="op">&gt;=</span> patience:</span>
+<span id="cb498-67"><a href="introducción-a-redes-neuronales.html#cb498-67" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb498-68"><a href="introducción-a-redes-neuronales.html#cb498-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb498-69"><a href="introducción-a-redes-neuronales.html#cb498-69" aria-hidden="true" tabindex="-1"></a>    model.load_state_dict(best_state)</span>
+<span id="cb498-70"><a href="introducción-a-redes-neuronales.html#cb498-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model, pd.DataFrame(history)</span></code></pre></div>
+<div class="sourceCode" id="cb499"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb499-1"><a href="introducción-a-redes-neuronales.html#cb499-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_regularized_experiment():</span>
+<span id="cb499-2"><a href="introducción-a-redes-neuronales.html#cb499-2" aria-hidden="true" tabindex="-1"></a>    torch.manual_seed(<span class="dv">4595</span>)</span>
+<span id="cb499-3"><a href="introducción-a-redes-neuronales.html#cb499-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> make_regularized_model(dropout<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb499-4"><a href="introducción-a-redes-neuronales.html#cb499-4" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> torch.optim.AdamW(</span>
+<span id="cb499-5"><a href="introducción-a-redes-neuronales.html#cb499-5" aria-hidden="true" tabindex="-1"></a>        model.parameters(),</span>
+<span id="cb499-6"><a href="introducción-a-redes-neuronales.html#cb499-6" aria-hidden="true" tabindex="-1"></a>        lr<span class="op">=</span><span class="fl">0.001</span>,</span>
+<span id="cb499-7"><a href="introducción-a-redes-neuronales.html#cb499-7" aria-hidden="true" tabindex="-1"></a>        weight_decay<span class="op">=</span><span class="fl">1e-4</span>,</span>
+<span id="cb499-8"><a href="introducción-a-redes-neuronales.html#cb499-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb499-9"><a href="introducción-a-redes-neuronales.html#cb499-9" aria-hidden="true" tabindex="-1"></a>    model, history <span class="op">=</span> train_model_early_stopping(</span>
+<span id="cb499-10"><a href="introducción-a-redes-neuronales.html#cb499-10" aria-hidden="true" tabindex="-1"></a>        model,</span>
+<span id="cb499-11"><a href="introducción-a-redes-neuronales.html#cb499-11" aria-hidden="true" tabindex="-1"></a>        optimizer,</span>
+<span id="cb499-12"><a href="introducción-a-redes-neuronales.html#cb499-12" aria-hidden="true" tabindex="-1"></a>        base_train_loader,</span>
+<span id="cb499-13"><a href="introducción-a-redes-neuronales.html#cb499-13" aria-hidden="true" tabindex="-1"></a>        X_valid_tensor,</span>
+<span id="cb499-14"><a href="introducción-a-redes-neuronales.html#cb499-14" aria-hidden="true" tabindex="-1"></a>        y_valid_tensor,</span>
+<span id="cb499-15"><a href="introducción-a-redes-neuronales.html#cb499-15" aria-hidden="true" tabindex="-1"></a>        epochs<span class="op">=</span><span class="dv">120</span>,</span>
+<span id="cb499-16"><a href="introducción-a-redes-neuronales.html#cb499-16" aria-hidden="true" tabindex="-1"></a>        patience<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb499-17"><a href="introducción-a-redes-neuronales.html#cb499-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb499-18"><a href="introducción-a-redes-neuronales.html#cb499-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb499-19"><a href="introducción-a-redes-neuronales.html#cb499-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;n_features&quot;</span>: n_features,</span>
+<span id="cb499-20"><a href="introducción-a-redes-neuronales.html#cb499-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;state_dict&quot;</span>: {name: value.detach().cpu() <span class="cf">for</span> name, value <span class="kw">in</span> model.state_dict().items()},</span>
+<span id="cb499-21"><a href="introducción-a-redes-neuronales.html#cb499-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;history&quot;</span>: history,</span>
+<span id="cb499-22"><a href="introducción-a-redes-neuronales.html#cb499-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb499-23"><a href="introducción-a-redes-neuronales.html#cb499-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb499-24"><a href="introducción-a-redes-neuronales.html#cb499-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb499-25"><a href="introducción-a-redes-neuronales.html#cb499-25" aria-hidden="true" tabindex="-1"></a>regularized_result <span class="op">=</span> read_or_create_cache(</span>
+<span id="cb499-26"><a href="introducción-a-redes-neuronales.html#cb499-26" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f&quot;red_regularizada_</span><span class="sc">{</span>CACHE_VERSION<span class="sc">}</span><span class="ss">.pkl&quot;</span>,</span>
+<span id="cb499-27"><a href="introducción-a-redes-neuronales.html#cb499-27" aria-hidden="true" tabindex="-1"></a>    train_regularized_experiment,</span>
+<span id="cb499-28"><a href="introducción-a-redes-neuronales.html#cb499-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb499-29"><a href="introducción-a-redes-neuronales.html#cb499-29" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> regularized_result[<span class="st">&quot;n_features&quot;</span>] <span class="op">!=</span> n_features:</span>
+<span id="cb499-30"><a href="introducción-a-redes-neuronales.html#cb499-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;La caché no corresponde a las variables actuales. Actualice CACHE_VERSION.&quot;</span>)</span>
+<span id="cb499-31"><a href="introducción-a-redes-neuronales.html#cb499-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb499-32"><a href="introducción-a-redes-neuronales.html#cb499-32" aria-hidden="true" tabindex="-1"></a>regularized_model <span class="op">=</span> make_regularized_model(dropout<span class="op">=</span><span class="fl">0.25</span>).to(device)</span>
+<span id="cb499-33"><a href="introducción-a-redes-neuronales.html#cb499-33" aria-hidden="true" tabindex="-1"></a>regularized_model.load_state_dict(regularized_result[<span class="st">&quot;state_dict&quot;</span>])</span></code></pre></div>
+<pre><code>## &lt;All keys matched successfully&gt;</code></pre>
+<div class="sourceCode" id="cb501"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb501-1"><a href="introducción-a-redes-neuronales.html#cb501-1" aria-hidden="true" tabindex="-1"></a>regularized_history <span class="op">=</span> regularized_result[<span class="st">&quot;history&quot;</span>]</span>
+<span id="cb501-2"><a href="introducción-a-redes-neuronales.html#cb501-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb501-3"><a href="introducción-a-redes-neuronales.html#cb501-3" aria-hidden="true" tabindex="-1"></a>regularized_history.tail()</span></code></pre></div>
+<pre><code>##     epoch  train_loss  valid_loss
+## 17     18    0.167354    0.270236
+## 18     19    0.157353    0.267763
+## 19     20    0.157183    0.260200
+## 20     21    0.144358    0.261315
+## 21     22    0.155271    0.261843</code></pre>
+</div>
+</div>
+<div id="contraste-sin-regularizar-vs-regularizada" class="section level2 hasAnchor" number="10.15">
+<h2><span class="header-section-number">10.15</span> Contraste: Sin Regularizar vs Regularizada<a href="introducción-a-redes-neuronales.html#contraste-sin-regularizar-vs-regularizada" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La red sin regularizar suele reducir rápido la pérdida de entrenamiento. La pregunta es si eso también se traduce en mejor validación.</p>
+<p>Evaluemos ambas redes en prueba:</p>
+<div class="sourceCode" id="cb503"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb503-1"><a href="introducción-a-redes-neuronales.html#cb503-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_price(model, X_tensor):</span>
+<span id="cb503-2"><a href="introducción-a-redes-neuronales.html#cb503-2" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">eval</span>()</span>
+<span id="cb503-3"><a href="introducción-a-redes-neuronales.html#cb503-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb503-4"><a href="introducción-a-redes-neuronales.html#cb503-4" aria-hidden="true" tabindex="-1"></a>        predictions_scaled <span class="op">=</span> model(X_tensor.to(device)).cpu().numpy()</span>
+<span id="cb503-5"><a href="introducción-a-redes-neuronales.html#cb503-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> target_scaler.inverse_transform(predictions_scaled).ravel()</span>
+<span id="cb503-6"><a href="introducción-a-redes-neuronales.html#cb503-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb503-7"><a href="introducción-a-redes-neuronales.html#cb503-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb503-8"><a href="introducción-a-redes-neuronales.html#cb503-8" aria-hidden="true" tabindex="-1"></a>unregularized_pred <span class="op">=</span> predict_price(unregularized_model, X_test_tensor)</span>
+<span id="cb503-9"><a href="introducción-a-redes-neuronales.html#cb503-9" aria-hidden="true" tabindex="-1"></a>regularized_pred <span class="op">=</span> predict_price(regularized_model, X_test_tensor)</span>
+<span id="cb503-10"><a href="introducción-a-redes-neuronales.html#cb503-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb503-11"><a href="introducción-a-redes-neuronales.html#cb503-11" aria-hidden="true" tabindex="-1"></a>model_comparison <span class="op">=</span> pd.concat(</span>
+<span id="cb503-12"><a href="introducción-a-redes-neuronales.html#cb503-12" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb503-13"><a href="introducción-a-redes-neuronales.html#cb503-13" aria-hidden="true" tabindex="-1"></a>        regression_metrics(y_test, unregularized_pred).assign(modelo<span class="op">=</span><span class="st">&quot;sin_regularizacion&quot;</span>),</span>
+<span id="cb503-14"><a href="introducción-a-redes-neuronales.html#cb503-14" aria-hidden="true" tabindex="-1"></a>        regression_metrics(y_test, regularized_pred).assign(modelo<span class="op">=</span><span class="st">&quot;regularizada&quot;</span>),</span>
+<span id="cb503-15"><a href="introducción-a-redes-neuronales.html#cb503-15" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb503-16"><a href="introducción-a-redes-neuronales.html#cb503-16" aria-hidden="true" tabindex="-1"></a>    ignore_index<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb503-17"><a href="introducción-a-redes-neuronales.html#cb503-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb503-18"><a href="introducción-a-redes-neuronales.html#cb503-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb503-19"><a href="introducción-a-redes-neuronales.html#cb503-19" aria-hidden="true" tabindex="-1"></a>model_comparison.pivot(index<span class="op">=</span><span class="st">&quot;metric&quot;</span>, columns<span class="op">=</span><span class="st">&quot;modelo&quot;</span>, values<span class="op">=</span><span class="st">&quot;estimate&quot;</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## modelo  regularizada  sin_regularizacion
+## metric                                  
+## ccc             0.85                0.82
+## mae         22551.18            26403.08
+## mape            0.09                0.11
+## rmse        28270.33            33086.52
+## rsq             0.74                0.65</code></pre>
+<p>El objetivo no es que la red regularizada siempre gane en todos los conjuntos. El objetivo es mostrar la lógica: si una red aprende demasiado el entrenamiento, agregamos restricciones para mejorar su comportamiento en datos nuevos.</p>
+</div>
+<div id="qué-conviene-revisar-al-entrenar" class="section level2 hasAnchor" number="10.16">
+<h2><span class="header-section-number">10.16</span> Qué Conviene Revisar al Entrenar<a href="introducción-a-redes-neuronales.html#qué-conviene-revisar-al-entrenar" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Al entrenar redes densas, conviene revisar:</p>
+<ul>
+<li><strong>Escalas:</strong> variables y respuesta en rangos razonables.</li>
+<li><strong>Arquitectura:</strong> número de capas y neuronas.</li>
+<li><strong>Activación:</strong> ReLU o variantes suelen ser un buen inicio.</li>
+<li><strong>Pérdida:</strong> depende del tipo de problema.</li>
+<li><strong>Optimizador:</strong> Adam o AdamW suelen ser buenos puntos de partida.</li>
+<li><strong>Learning rate:</strong> si es muy alto, la pérdida puede explotar; si es muy bajo, aprende lento.</li>
+<li><strong>Batch size:</strong> controla ruido y costo por actualización.</li>
+<li><strong>Regularización:</strong> dropout, weight decay, batch normalization y early stopping.</li>
+<li><strong>Validación:</strong> mirar validación, no sólo entrenamiento.</li>
+</ul>
+</div>
+<div id="siguientes-pasos" class="section level2 hasAnchor" number="10.17">
+<h2><span class="header-section-number">10.17</span> Siguientes Pasos<a href="introducción-a-redes-neuronales.html#siguientes-pasos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En un curso completo de redes neuronales, después de redes densas se estudiarían:</p>
+<ul>
+<li><strong>Redes convolucionales:</strong> útiles para imágenes, visión por computadora y datos con estructura espacial.</li>
+<li><strong>Redes secuenciales y recurrentes:</strong> útiles para texto, series de tiempo y datos ordenados.</li>
+<li><strong>Transformers:</strong> útiles en lenguaje natural, visión moderna y modelos generativos.</li>
+<li><strong>Regularización avanzada:</strong> programación de tasa de aprendizaje, normalización, aumentación y búsqueda de hiperparámetros.</li>
+<li><strong>Interpretabilidad:</strong> cómo entender qué aprende una red y cuándo confiar en ella.</li>
+</ul>
+<p>Por ahora, lo más importante es reconocer que una red neuronal densa es otro modelo supervisado: recibe variables, aprende parámetros y produce predicciones. Lo especial está en que puede combinar muchas transformaciones para aprender relaciones flexibles.</p>
+
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$('.pipehover_incremental tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).prevAll().addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+
+$('.pipehover_select_one_row tr').hover(function() {
+  $(this).removeClass()
+  $(this).prevAll().removeClass()
+  $(this).nextAll().removeClass()
+  $(this).addClass('hover');
+  $(this).closest('div').next().find('img').attr("src", $(this).attr("link"));
+});
+
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="a-b---testing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["amt22_03intro2mls2.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"self_contained": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
